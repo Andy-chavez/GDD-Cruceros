@@ -1,6 +1,41 @@
 USE GD1C2019
 
-create schema [LEISTE_EL_CODIGO?] /*ver esto*/
+if exists (select * from sys.schemas where name =  'LEISTE_EL_CODIGO?')
+begin
+	drop table  [LEISTE_EL_CODIGO?].Operacion
+	drop table  [LEISTE_EL_CODIGO?].Login
+	drop table  [LEISTE_EL_CODIGO?].Usuario
+	drop table  [LEISTE_EL_CODIGO?].FuncionalidadPorRol
+	drop table  [LEISTE_EL_CODIGO?].Rol
+	drop table  [LEISTE_EL_CODIGO?].Funcionalidad
+
+	drop table  [LEISTE_EL_CODIGO?].Voucher
+	drop table  [LEISTE_EL_CODIGO?].Pasaje
+	drop table  [LEISTE_EL_CODIGO?].Cliente
+	drop table  [LEISTE_EL_CODIGO?].Reserva
+	drop table  [LEISTE_EL_CODIGO?].PagoDeViaje	
+	drop table  [LEISTE_EL_CODIGO?].MedioDePago
+
+	drop table  [LEISTE_EL_CODIGO?].Viaje
+	drop table  [LEISTE_EL_CODIGO?].Cabina
+	drop table  [LEISTE_EL_CODIGO?].Crucero
+	drop table  [LEISTE_EL_CODIGO?].TipoCabina
+	drop table  [LEISTE_EL_CODIGO?].Servicio
+
+	drop table  [LEISTE_EL_CODIGO?].Tramo
+	drop table  [LEISTE_EL_CODIGO?].Recorrido
+	drop table  [LEISTE_EL_CODIGO?].Puerto
+
+end
+go
+
+if not exists (select * from sys.schemas where name = 'LEISTE_EL_CODIGO?')
+begin
+	EXEC ('CREATE SCHEMA [LEISTE_EL_CODIGO?] AUTHORIZATION [gdCruceros2019]')
+	print 'Esquema LEISTE_EL_CODIGO? creado'
+end
+go
+
 
 /* Por si necesitamoss*/
 
@@ -153,22 +188,3 @@ create table [LEISTE_EL_CODIGO?].Voucher(
 	id_reserva decimal(18,0) references [LEISTE_EL_CODIGO?].Reserva
 );
 
-
-drop table  [LEISTE_EL_CODIGO?].Login
-drop table  [LEISTE_EL_CODIGO?].FuncionalidadPorRol
-drop table  [LEISTE_EL_CODIGO?].Usuario
-drop table  [LEISTE_EL_CODIGO?].Rol
-drop table  [LEISTE_EL_CODIGO?].Funcionalidad
-drop table  [LEISTE_EL_CODIGO?].Viaje
-drop table  [LEISTE_EL_CODIGO?].Pasaje
-drop table  [LEISTE_EL_CODIGO?].Recorrido
-drop table  [LEISTE_EL_CODIGO?].Puerto
-drop table  [LEISTE_EL_CODIGO?].Crucero
-drop table  [LEISTE_EL_CODIGO?].MedioDePago
-drop table  [LEISTE_EL_CODIGO?].Voucher
-drop table  [LEISTE_EL_CODIGO?].PagoDeViaje
-drop table  [LEISTE_EL_CODIGO?].Reserva
-drop table  [LEISTE_EL_CODIGO?].Operacion
-drop table  [LEISTE_EL_CODIGO?].Cabina
-drop table  [LEISTE_EL_CODIGO?].TipoCabina
-drop table  [LEISTE_EL_CODIGO?].Servicio
