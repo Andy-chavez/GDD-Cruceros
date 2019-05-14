@@ -342,5 +342,6 @@ set id_servicio = 5
 where id_tipo = 'Cabina Balcón'
 
 --Cabinas--
-select * from gd_esquema.Maestra
+select distinct CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO from gd_esquema.Maestra
+group by CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO --DUDA ACAAA
 insert into [LEISTE_EL_CODIGO?].Cabina (numero,piso,id_crucero,
