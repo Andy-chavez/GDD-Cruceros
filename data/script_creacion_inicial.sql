@@ -279,28 +279,43 @@ insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol)
 values('pepita',3)
 
 /* ---------------------------------------------------- Migración ---------------------------------------------------- */
---CLIENTE
+--CLIENTE--
 insert into [LEISTE_EL_CODIGO?].Cliente(nombre,apellido,dni,direccion,telefono,mail,fecha_nacimiento)
 select CLI_NOMBRE,CLI_APELLIDO,CLI_DNI,CLI_DIRECCION,CLI_TELEFONO,CLI_MAIL,CLI_FECHA_NAC
 from gd_esquema.Maestra
 where PASAJE_CODIGO is not null
 
 
---Crucero (son 37 cruceros, se repiten varias veces por cada viaje)
+--Crucero-- (son 37 cruceros, se repiten varias veces por cada viaje)
 select CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO,count(*) from gd_esquema.Maestra
 group by  CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO --para ver la cantidad y corroborar que este bien,despues borrar
 insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,fabricante,modelo)
 select distinct CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO
 from gd_esquema.Maestra
 
---Servicio (tengo dudas de como deberia ser el orden de insert de las cosas)
+--Servicio-- (tengo dudas de como deberia ser el orden de insert de las cosas) y las descripciones cambienlas si quieren
 select count(distinct CABINA_TIPO)
 from gd_esquema.Maestra -- hay 5 tipos de cabinas asique hay 5 servicios asociados a ellas
 select distinct CABINA_TIPO
 from gd_esquema.Maestra --cabina exterior, ejecutivo,cabina estandar,suite,cabina balcon
 
 insert into [LEISTE_EL_CODIGO?].Servicio (id_servicio,descripcion)
+values(1,'vista al mar') --ni idea jajaj, estoy abierto a sugerencias (para cabina exterior)
 
---Cabinas
+insert into [LEISTE_EL_CODIGO?].Servicio (id_servicio,descripcion)
+values(2,'desayuno incluido') --(para ejecutivo)
+
+insert into [LEISTE_EL_CODIGO?].Servicio (id_servicio,descripcion)
+values(3,'solo habitacion') --(para cabina estandar)
+
+insert into [LEISTE_EL_CODIGO?].Servicio (id_servicio,descripcion)
+values(4,'masajes y bebidas incluidas') --(para suite)
+
+insert into [LEISTE_EL_CODIGO?].Servicio (id_servicio,descripcion)
+values(5,'vista a la pileta') --(para cabina balcon)
+
+--Tipo Cabina --
+
+--Cabinas--
 select * from gd_esquema.Maestra
 insert into [LEISTE_EL_CODIGO?].Cabina (numero,piso,id_crucero,
