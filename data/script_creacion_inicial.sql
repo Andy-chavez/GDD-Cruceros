@@ -108,7 +108,7 @@ create table [LEISTE_EL_CODIGO?].Crucero(
 	fecha_reinicio_servicio datetime2(3) null
 );
 create table [LEISTE_EL_CODIGO?].Servicio(
-	id_servicio smallint identity primary key,
+	id_servicio smallint primary key,
 	descripcion nvarchar(255) null
 );
 
@@ -293,7 +293,13 @@ insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,fabricante,modelo)
 select distinct CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO
 from gd_esquema.Maestra
 
---Servicio (tengo dudas de como deberia ser el insert de las cosas)
+--Servicio (tengo dudas de como deberia ser el orden de insert de las cosas)
+select count(distinct CABINA_TIPO)
+from gd_esquema.Maestra -- hay 5 tipos de cabinas asique hay 5 servicios asociados a ellas
+select distinct CABINA_TIPO
+from gd_esquema.Maestra --cabina exterior, ejecutivo,cabina estandar,suite,cabina balcon
+
+insert into [LEISTE_EL_CODIGO?].Servicio (id_servicio,descripcion)
 
 --Cabinas
 select * from gd_esquema.Maestra
