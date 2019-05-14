@@ -86,7 +86,6 @@ create table [LEISTE_EL_CODIGO?].Recorrido(
 create table [LEISTE_EL_CODIGO?].Puerto(
 	id_puerto smallint identity primary key,
 	nombre nvarchar(255) null,
-	ciudad nvarchar(255) null
 );
 
 create table [LEISTE_EL_CODIGO?].Tramo(
@@ -342,9 +341,21 @@ set id_servicio = 5
 where id_tipo = 'Cabina Balcón'
 
 --Cabinas--
---DUDA ACAAA
-begin transaction -- esto seria la forma con una clave subrrogada
-insert into [LEISTE_EL_CODIGO?].Cabina (identity id_cabina,numero,piso,id_crucero,id_tipo)
+insert into [LEISTE_EL_CODIGO?].Cabina (numero,piso,id_crucero,id_tipo)
 select CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO from gd_esquema.Maestra
 group by CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO
-rollback transaction
+
+--Reserva-- (creo que esta mal el DER reserva no tiene que tener el ID_Pago, el pago tiene que tener el ID_Reserva)
+
+
+--Puerto-- (solo va nombre de puerto en la tabla, no va el campo ciudad, es irrelevante)
+select * from gd_esquema.Maestra --hay que borrar despues todos los selects de mas que no son necesarios en el insert
+select count(distinct PUERTO_DESDE) from gd_esquema.Maestra
+where PUERTO_DESDE in (select distinct PUERTO_HASTA from gd_esquema.Maestra) -- para ver que todos los puertos estan en cada fila,con copiar una ya esta
+
+select * from [LEISTE_EL_CODIGO?].Puerto
+insert into [LEISTE_EL_CODIGO?].Puerto(nombre)
+select distinct PUERTO_DESDE from gd_esquema.Maestra
+
+-- Recorrido --
+select 
