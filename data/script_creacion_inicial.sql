@@ -108,7 +108,7 @@ create table [LEISTE_EL_CODIGO?].Crucero(
 	fecha_reinicio_servicio datetime2(3) null
 );
 create table [LEISTE_EL_CODIGO?].Servicio(
-	id_servicio smallint primary key,
+	id_servicio smallint identity primary key,
 	descripcion nvarchar(255) null
 );
 
@@ -292,4 +292,9 @@ group by  CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO --para ver la cant
 insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,fabricante,modelo)
 select distinct CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO
 from gd_esquema.Maestra
---
+
+--Servicio (tengo dudas de como deberia ser el insert de las cosas)
+
+--Cabinas
+select * from gd_esquema.Maestra
+insert into [LEISTE_EL_CODIGO?].Cabina (numero,piso,id_crucero,
