@@ -284,3 +284,12 @@ insert into [LEISTE_EL_CODIGO?].Cliente(nombre,apellido,dni,direccion,telefono,m
 select CLI_NOMBRE,CLI_APELLIDO,CLI_DNI,CLI_DIRECCION,CLI_TELEFONO,CLI_MAIL,CLI_FECHA_NAC
 from gd_esquema.Maestra
 where PASAJE_CODIGO is not null
+
+
+--Crucero (son 37 cruceros, se repiten varias veces por cada viaje)
+select CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO,count(*) from gd_esquema.Maestra
+group by  CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO --para ver la cantidad y corroborar que este bien,despues borrar
+insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,fabricante,modelo)
+select distinct CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO
+from gd_esquema.Maestra
+--
