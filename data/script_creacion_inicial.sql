@@ -315,6 +315,31 @@ insert into [LEISTE_EL_CODIGO?].Servicio (id_servicio,descripcion)
 values(5,'vista a la pileta') --(para cabina balcon)
 
 --Tipo Cabina --
+insert into [LEISTE_EL_CODIGO?].TipoCabina (id_tipo,porcentaje_recargo)
+select CABINA_TIPO,CABINA_TIPO_PORC_RECARGO
+from gd_esquema.Maestra
+group by CABINA_TIPO,CABINA_TIPO_PORC_RECARGO
+
+
+update [LEISTE_EL_CODIGO?].TipoCabina--agregando servicios de cada tipo de cabina
+set id_servicio = 1
+where id_tipo = 'Cabina Exterior'
+
+update [LEISTE_EL_CODIGO?].TipoCabina
+set id_servicio = 2
+where id_tipo = 'Ejecutivo'
+
+update [LEISTE_EL_CODIGO?].TipoCabina
+set id_servicio = 3
+where id_tipo = 'Cabina estandar'
+
+update [LEISTE_EL_CODIGO?].TipoCabina
+set id_servicio = 4
+where id_tipo = 'Suite'
+
+update [LEISTE_EL_CODIGO?].TipoCabina
+set id_servicio = 5
+where id_tipo = 'Cabina Balcón'
 
 --Cabinas--
 select * from gd_esquema.Maestra
