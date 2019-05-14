@@ -119,7 +119,7 @@ create table [LEISTE_EL_CODIGO?].TipoCabina(
 );
 
 create table [LEISTE_EL_CODIGO?].Cabina(
-	id_cabina smallint primary key,
+	id_cabina smallint identity primary key,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	id_tipo nvarchar(255) references [LEISTE_EL_CODIGO?].TipoCabina,
 	numero decimal(18,0) not null,
@@ -342,6 +342,9 @@ set id_servicio = 5
 where id_tipo = 'Cabina Balcón'
 
 --Cabinas--
-select distinct CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO from gd_esquema.Maestra
-group by CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO --DUDA ACAAA
-insert into [LEISTE_EL_CODIGO?].Cabina (numero,piso,id_crucero,
+--DUDA ACAAA
+begin transaction -- esto seria la forma con una clave subrrogada
+insert into [LEISTE_EL_CODIGO?].Cabina (identity id_cabina,numero,piso,id_crucero,id_tipo)
+select CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO from gd_esquema.Maestra
+group by CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO
+rollback transaction
