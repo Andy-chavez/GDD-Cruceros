@@ -80,7 +80,7 @@ create table [LEISTE_EL_CODIGO?].Recorrido(
 	id_recorrido decimal(18,0) primary key,
 	origen nvarchar(255) not null,
 	destino nvarchar(255) not null,
-	estado nchar(1) check(estado in ('A','I'))
+	estado nchar(1) default 'A' check(estado in ('A','I')) -- les parece que por default un recorrido cuando se carga este 'A'?
 );
 
 create table [LEISTE_EL_CODIGO?].Puerto(
@@ -357,5 +357,16 @@ select * from [LEISTE_EL_CODIGO?].Puerto
 insert into [LEISTE_EL_CODIGO?].Puerto(nombre)
 select distinct PUERTO_DESDE from gd_esquema.Maestra
 
--- Recorrido --
-select 
+-- Recorrido -- me parece que hay que cambiar toda la tabla recorrido
+			-- que quede solo con id y estado
+			-- y todos los tramos tengan de donde a donde van y ahi te fijas con el aplicativo el recorrido de donde a donde va
+--para mi deberia ser una cosa asi
+insert into [LEISTE_EL_CODIGO?].Recorrido
+select distinct RECORRIDO_CODIGO
+from gd_esquema.Maestra
+
+--Tramo--
+insert into [LEISTE_EL_CODIGO?].Tramo (id_recorrido,id_origen,id_destino,precio_base)
+select distinct RECORRIDO_CODIGO,PUERTO_DESDE,PUERTO_HASTA,RECORRIDO_PRECIO_BASE
+from gd_esquema.Maestra
+
