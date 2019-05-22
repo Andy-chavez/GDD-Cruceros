@@ -2,23 +2,21 @@ USE GD1C2019
 
 if exists (select * from sys.schemas where name =  'LEISTE_EL_CODIGO?')
 begin
-	drop table  [LEISTE_EL_CODIGO?].Operacion
-	drop table  [LEISTE_EL_CODIGO?].Login
 	drop table  [LEISTE_EL_CODIGO?].Usuario
 	drop table  [LEISTE_EL_CODIGO?].FuncionalidadPorRol
 	drop table  [LEISTE_EL_CODIGO?].Rol
 	drop table  [LEISTE_EL_CODIGO?].Funcionalidad
 
-	drop table  [LEISTE_EL_CODIGO?].Voucher
-	drop table  [LEISTE_EL_CODIGO?].Pasaje
-	drop table  [LEISTE_EL_CODIGO?].Cliente
-	drop table  [LEISTE_EL_CODIGO?].Reserva
 	drop table  [LEISTE_EL_CODIGO?].MedioDePago
 	drop table  [LEISTE_EL_CODIGO?].PagoDeViaje	
+	drop table  [LEISTE_EL_CODIGO?].Reserva
+	drop table  [LEISTE_EL_CODIGO?].Pasaje
+	drop table  [LEISTE_EL_CODIGO?].Cliente
 
 	drop table  [LEISTE_EL_CODIGO?].Viaje
 	drop table  [LEISTE_EL_CODIGO?].Cabina
 	drop table  [LEISTE_EL_CODIGO?].Crucero
+	drop table	[LEISTE_EL_CODIGO?].Fabricante
 	drop table  [LEISTE_EL_CODIGO?].TipoCabina
 	drop table  [LEISTE_EL_CODIGO?].Servicio
 
@@ -45,7 +43,8 @@ create table [LEISTE_EL_CODIGO?].Rol(
 create table [LEISTE_EL_CODIGO?].Usuario(
 	id_usuario nvarchar(50) primary key,
 	id_rol smallint references [LEISTE_EL_CODIGO?].Rol, 
-	contraseña nchar(64)
+	contraseña varbinary(32),
+	intentos_fallidos smallint default 0
 );
 
 create table [LEISTE_EL_CODIGO?].Funcionalidad(
@@ -59,11 +58,6 @@ create table [LEISTE_EL_CODIGO?].FuncionalidadPorRol(
 	primary key (id_rol, id_funcionalidad)
 );
 
-create table [LEISTE_EL_CODIGO?].Login(
-	id_login smallint primary key,
-	id_usuario nvarchar(50) references [LEISTE_EL_CODIGO?].Usuario,
-	intentos_fallidos smallint
-);
 
 create table [LEISTE_EL_CODIGO?].Cliente(
 	id_cliente int identity primary key,
@@ -78,28 +72,29 @@ create table [LEISTE_EL_CODIGO?].Cliente(
 
 create table [LEISTE_EL_CODIGO?].Recorrido(
 	id_recorrido decimal(18,0) primary key,
-	origen nvarchar(255) not null,
-	destino nvarchar(255) not null,
-	estado nchar(1) default 'A' check(estado in ('A','I')) -- les parece que por default un recorrido cuando se carga este 'A'?
+	estado char(1) default 'A' check(estado in ('A','I')) 
 );
 
 create table [LEISTE_EL_CODIGO?].Puerto(
-	id_puerto smallint identity primary key,
-	nombre nvarchar(255) null,
+	id_puerto nvarchar(255) primary key,
 );
 
 create table [LEISTE_EL_CODIGO?].Tramo(
 	id_tramo smallint identity primary key,
 	id_recorrido decimal(18,0) references [LEISTE_EL_CODIGO?].Recorrido,
-	id_origen smallint references [LEISTE_EL_CODIGO?].Puerto,
-	id_destino smallint references [LEISTE_EL_CODIGO?].Puerto,
+	id_origen nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
+	id_destino nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
+	orden smallint,
 	precio_base decimal(18,2) not null
 );
 
+create table [LEISTE_EL_CODIGO?].Fabricante(
+	id_fabricante nvarchar(255) primary key
+);
 
 create table [LEISTE_EL_CODIGO?].Crucero(
 	id_crucero nvarchar(50) primary key,
-	fabricante nvarchar(255) null,
+	id_fabricante nvarchar(255) references [LEISTE_EL_CODIGO?].Fabricante, --@
 	modelo nvarchar(50) null,
 	baja_fuera_de_servicio nchar(1) default 'N' check(baja_fuera_de_servicio in ('S','N')),
 	baja_fuera_vida_util nchar(1) default 'N' check(baja_fuera_vida_util in ('S','N')),
@@ -126,7 +121,7 @@ create table [LEISTE_EL_CODIGO?].Cabina(
 );
 
 create table [LEISTE_EL_CODIGO?].Viaje(
-	id_viaje smallint primary key,
+	id_viaje int identity primary key,
 	id_recorrido decimal(18,0) references [LEISTE_EL_CODIGO?].Recorrido,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	fecha_inicio datetime2(3) not null,
@@ -134,55 +129,66 @@ create table [LEISTE_EL_CODIGO?].Viaje(
 	fecha_finalizacion datetime2(3) not null,
 );
 
-create table [LEISTE_EL_CODIGO?].Operacion(
-	id_operacion smallint primary key,
-	id_login smallint references [LEISTE_EL_CODIGO?].Login,
+create table [LEISTE_EL_CODIGO?].Reserva(
+	id_reserva decimal(18,0) primary key,
+	fecha_actual datetime2(3) not null,
+	vencimiento datetime2(3) null,
+);
+
+
+create table [LEISTE_EL_CODIGO?].Pasaje(
+	id_pasaje decimal(18,0) primary key,
+	id_viaje int references [LEISTE_EL_CODIGO?].Viaje,
 	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
-	id_usuario nvarchar(50) references [LEISTE_EL_CODIGO?].Usuario,
-	id_viaje smallint references [LEISTE_EL_CODIGO?].Viaje
+	id_cabina smallint references [LEISTE_EL_CODIGO?].Cabina,
+	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
+	precio decimal(18,2) not null,
+	cancelacion nchar(1) default 'N' check(cancelacion in ('S','N')),
+	fecha_cancelacion datetime2(3) null,
+	fecha_reprogramacion datetime2(3) null, 
 );
-
 create table [LEISTE_EL_CODIGO?].PagoDeViaje(
-	id_pago smallint primary key,
+	id_pago int primary key identity,
 	fecha_pago datetime2(3) null,
-	detalle nvarchar(255) null,
 	monto_total decimal(8,2) not null,
-	cantidad_de_pasajes smallint check(cantidad_de_pasajes > 0)
+	cantidad_de_pasajes smallint default 1 check(cantidad_de_pasajes > 0),
+	id_reserva decimal(18,0) references [LEISTE_EL_CODIGO?].Reserva,
+	id_pasaje decimal(18,0) references [LEISTE_EL_CODIGO?].Pasaje
 );
-
 create table [LEISTE_EL_CODIGO?].MedioDePago(
 	id_medio_de_pago smallint primary key,
 	cuotas_sin_interes smallint not null,
 	descuento smallint not null,
 	intereses smallint not null,
-	id_pago smallint references [LEISTE_EL_CODIGO?].PagoDeViaje
+	id_pago int references [LEISTE_EL_CODIGO?].PagoDeViaje
 );
-
-create table [LEISTE_EL_CODIGO?].Reserva(
-	id_reserva decimal(18,0) primary key,
-	vencimiento datetime2(3) not null,
-	fecha_actual datetime2(3) not null,
-	id_pago smallint references [LEISTE_EL_CODIGO?].PagoDeViaje
-);
-create table [LEISTE_EL_CODIGO?].Pasaje(
-	id_pasaje decimal(18,0) primary key,
-	id_viaje smallint references [LEISTE_EL_CODIGO?].Viaje,
-	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
-	id_cabina smallint references [LEISTE_EL_CODIGO?].Cabina,
-	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
-	precio decimal(18,2) not null,
-	cancelacion nchar(1) check(cancelacion in ('S','N')),
-	fecha_cancelacion datetime2(3) null,
-	fecha_reprogramacion datetime2(3) null, 
-);
-create table [LEISTE_EL_CODIGO?].Voucher(
-	id_voucher smallint primary key,
-	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
-	id_pasaje decimal(18,0) references [LEISTE_EL_CODIGO?].Pasaje,
-	id_reserva decimal(18,0) references [LEISTE_EL_CODIGO?].Reserva
-);
-
+--------------------TRIGGERS-------------------
+--Trigger de vencimiento para reserva--
+--create trigger fechaVencimiento on [LEISTE_EL_CODIGO?].Reserva
+--after insert
+--as
+--begin
+--	declare @fechaActual datetime2, @id_reserva decimal(18,0)
+--	declare cursorVencimiento cursor for
+--	select fecha_actual,id_reserva
+--	from inserted
+--	open cursorVencimiento
+--	fetch next from cursorVencimiento
+--	into @fechaActual,@id_reserva
+--	while @@FETCH_STATUS =0
+--		begin
+--		update [LEISTE_EL_CODIGO?].Reserva
+--		set vencimiento = DATEADD(day,4,@fechaActual)
+--		where id_reserva = @id_reserva
+--		fetch next from cursorVencimiento
+--		into @fechaActual,@id_reserva
+--		end
+--	close cursorVencimiento
+--	deallocate cursorVencimiento
+--end
+--go;
 /* ---------------------------------------------------- Inserciones ---------------------------------------------------- */
+
 
 -- Funcionalidad
 insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion)
@@ -260,7 +266,7 @@ insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
 values(3,8)
 
 -- Usuario
-declare @hash varbinary(225)
+declare @hash varbinary(32)
 select @hash = hashbytes('SHA2_256', 'w23e');
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contraseña)		--ADMINISTRADOR GENERAL
 values('admin',1,@hash)
@@ -285,10 +291,14 @@ from gd_esquema.Maestra
 where PASAJE_CODIGO is not null
 
 
+--Fabricante--
+insert into [LEISTE_EL_CODIGO?].Fabricante
+select distinct CRU_FABRICANTE
+from gd_esquema.Maestra
 --Crucero-- (son 37 cruceros, se repiten varias veces por cada viaje)
 select CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO,count(*) from gd_esquema.Maestra
 group by  CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO --para ver la cantidad y corroborar que este bien,despues borrar
-insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,fabricante,modelo)
+insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,id_fabricante,modelo)
 select distinct CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO
 from gd_esquema.Maestra
 
@@ -340,33 +350,81 @@ update [LEISTE_EL_CODIGO?].TipoCabina
 set id_servicio = 5
 where id_tipo = 'Cabina Balcón'
 
---Cabinas--
+-------------------Cabinas--------------------------
 insert into [LEISTE_EL_CODIGO?].Cabina (numero,piso,id_crucero,id_tipo)
 select CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO from gd_esquema.Maestra
 group by CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO
 
---Reserva-- (creo que esta mal el DER reserva no tiene que tener el ID_Pago, el pago tiene que tener el ID_Reserva)
+-----------------------------Puerto------------------------------- (solo va nombre de puerto en la tabla, no va el campo ciudad, es irrelevante)
 
-
---Puerto-- (solo va nombre de puerto en la tabla, no va el campo ciudad, es irrelevante)
-select * from gd_esquema.Maestra --hay que borrar despues todos los selects de mas que no son necesarios en el insert
-select count(distinct PUERTO_DESDE) from gd_esquema.Maestra
-where PUERTO_DESDE in (select distinct PUERTO_HASTA from gd_esquema.Maestra) -- para ver que todos los puertos estan en cada fila,con copiar una ya esta
+select t.RECORRIDO_CODIGO,count(*)
+from (select distinct RECORRIDO_CODIGO,PUERTO_DESDE,PUERTO_HASTA from gd_esquema.Maestra
+where PUERTO_DESDE in (select distinct PUERTO_HASTA from gd_esquema.Maestra)) t
+group by t.RECORRIDO_CODIGO
 
 select * from [LEISTE_EL_CODIGO?].Puerto
-insert into [LEISTE_EL_CODIGO?].Puerto(nombre)
-select distinct PUERTO_DESDE from gd_esquema.Maestra
+insert into [LEISTE_EL_CODIGO?].Puerto
+select distinct PUERTO_DESDE from gd_esquema.Maestra where PUERTO_DESDE<> PUERTO_HASTA
 
--- Recorrido -- me parece que hay que cambiar toda la tabla recorrido
-			-- que quede solo con id y estado
-			-- y todos los tramos tengan de donde a donde van y ahi te fijas con el aplicativo el recorrido de donde a donde va
---para mi deberia ser una cosa asi
-insert into [LEISTE_EL_CODIGO?].Recorrido
+------------------------------------------ Recorrido -----------------------------------------------------
+insert into [LEISTE_EL_CODIGO?].Recorrido (id_recorrido)
 select distinct RECORRIDO_CODIGO
 from gd_esquema.Maestra
 
---Tramo--
-insert into [LEISTE_EL_CODIGO?].Tramo (id_recorrido,id_origen,id_destino,precio_base)
+-----------------------------------------Tramo-----------------------------------------------------------
+create table #tramoTemp(
+	id_tramo smallint identity primary key,
+	id_recorrido decimal(18,0) references [LEISTE_EL_CODIGO?].Recorrido,
+	id_origen nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
+	id_destino nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
+	orden smallint,
+	precio_base decimal(18,2) not null
+);
+insert into #tramoTemp (id_recorrido,id_origen,id_destino,precio_base)
 select distinct RECORRIDO_CODIGO,PUERTO_DESDE,PUERTO_HASTA,RECORRIDO_PRECIO_BASE
 from gd_esquema.Maestra
 
+insert into [LEISTE_EL_CODIGO?].Tramo (id_recorrido,orden,id_origen,id_destino,precio_base)
+SELECT DISTINCT id_recorrido, 
+				(CASE 
+					WHEN ((SELECT DISTINCT temp1.id_origen 
+							FROM #tramoTemp temp1
+							WHERE temp.id_recorrido = temp1.id_recorrido AND temp1.id_origen = temp.id_destino) IS NOT NULL )
+						OR
+						((SELECT COUNT (*)
+						FROM #tramoTemp temp2
+						WHERE temp.id_recorrido = temp2.id_recorrido AND temp.id_origen <> temp2.id_origen) = 0)
+					THEN 1
+					ELSE 2 
+				END), 
+				(SELECT id_puerto 
+					FROM [LEISTE_EL_CODIGO?].Puerto
+					WHERE temp.id_origen = id_puerto),
+				(SELECT id_puerto 
+					FROM [LEISTE_EL_CODIGO?].Puerto
+					WHERE temp.id_destino = id_puerto),
+				precio_base
+FROM #tramoTemp temp
+
+
+--Medio de Pago-- (esta la llenamos nosotros)
+
+----------------------------------------Pago de viaje-------------------------------------------- 
+select PASAJE_CODIGO, count(*) from gd_esquema.Maestra where PASAJE_CODIGO is not null group by PASAJE_CODIGO having count(*)>1
+insert into [LEISTE_EL_CODIGO?].PagoDeViaje(id_pasaje,fecha_pago,monto_total)
+select PASAJE_CODIGO,PASAJE_FECHA_COMPRA,PASAJE_PRECIO from gd_esquema.Maestra
+where PASAJE_FECHA_COMPRA is not null and PASAJE_PRECIO is not null
+-------------------------------------------------Reserva-----------------------------------------
+insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual)
+select distinct RESERVA_CODIGO,RESERVA_FECHA
+from gd_esquema.Maestra
+where RESERVA_CODIGO is not null and RESERVA_FECHA is not null
+-------------------------------------------------Viaje------------------------------------------------
+insert into [LEISTE_EL_CODIGO?].Viaje (fecha_inicio,fecha_finalizacion,fecha_finalizacion_estimada,id_crucero,id_recorrido)
+select distinct FECHA_SALIDA,FECHA_LLEGADA,FECHA_LLEGADA_ESTIMADA,CRUCERO_IDENTIFICADOR,RECORRIDO_CODIGO from gd_esquema.Maestra
+
+---------------------------------------------Pasaje-----------------------------------------------------
+--falta ver cabina cliente y viaje del pasaje
+--insert into [LEISTE_EL_CODIGO?].Pasaje (id_pasaje,id_crucero,precio
+--select PASAJE_CODIGO,CRUCERO_IDENTIFICADOR,PASAJE_PRECIO,
+--from gd_esquema.Maestra
