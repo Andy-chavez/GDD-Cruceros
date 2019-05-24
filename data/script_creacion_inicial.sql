@@ -62,7 +62,8 @@ create table [LEISTE_EL_CODIGO?].Usuario(
 	id_usuario nvarchar(50) primary key,
 	id_rol smallint references [LEISTE_EL_CODIGO?].Rol, 
 	contra varbinary(32),
-	intentos_posibles smallint default 3
+	intentos_posibles smallint default 3,
+	habilitado nchar(1) not null default 'A' check(habilitado in ('A','i'))
 )
 go
 create table [LEISTE_EL_CODIGO?].Funcionalidad(
@@ -252,6 +253,9 @@ insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) val
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,8)
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,9)
 go
+
+--******************************************creo que estos inserts feos pueden hacerse de otra forma 
+
 --USUARIO
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(3,7)
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(3,8)
@@ -413,6 +417,8 @@ from gd_esquema.Maestra m
 where m.PASAJE_CODIGO is not null and m.PASAJE_PRECIO is not null
 go
 /*--------------------------------------PROCEDURES-----------------------------------------------*/
+if exists (select * from sys.procedures where name = 'sp_login')
+	drop procedure [LEISTE_EL_CODIGO?].sp_login
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].sp_login(@id_ingresado nvarchar(50), @contra_ingresada nvarchar(32)) -- aca tengo dudas de si en la contra al todavia no estar hasheada, si es de 32 o no
@@ -421,14 +427,15 @@ as
 		declare @intentos_posibles smallint,
 				@contra_hasheada varbinary(32), 
 				@contra_real varbinary(32),
-				@valor_retorno smallint
+				@valor_retorno smallint,
+				@habilitado nchar(1)
 		set @intentos_posibles = (select intentos_posibles from [LEISTE_EL_CODIGO?].Usuario where id_usuario = @id_ingresado)
 		set	@contra_hasheada = hashbytes('SHA2_256',@contra_ingresada)
 		set @contra_real = (select contra from [LEISTE_EL_CODIGO?].Usuario where id_usuario=@id_ingresado)
-		
-		if not exists(select id_usuario from [LEISTE_EL_CODIGO?].Usuario where id_usuario=@id_ingresado) --veo si no existe el usuario, si manejamos baja logica tendria que verificar que este habilitado
+		set @habilitado = (select habilitado from [LEISTE_EL_CODIGO?].Usuario where id_usuario=@id_ingresado)
+		if not exists(select id_usuario from [LEISTE_EL_CODIGO?].Usuario where id_usuario=@id_ingresado and habilitado = 'A') --veo si no existe el usuario
 			set @valor_retorno = -2						--no pudo loggear, no existe el usuario
-		else if(@intentos_posibles>0)					--usuario existe y puede intentar todavia
+		else if(@intentos_posibles>0 and @habilitado = 'A')					--usuario existe y puede intentar todavia
 			begin 
 				if(@contra_real = @contra_hasheada)
 				begin
@@ -445,9 +452,10 @@ as
 					where id_usuario=@id_ingresado
 				end
 			end
-		else --aca habria que ver si manejar baja logica o borrado, por ahora borro fisicamente
+		else 
 			begin
-			delete from [LEISTE_EL_CODIGO?].Usuario 
+				update [LEISTE_EL_CODIGO?].Usuario 
+				set habilitado = 'I'
 				where id_usuario = @id_ingresado
 			set @valor_retorno = -1						--El usuario excedio esas tres oportunidades y fue dado de baja (por ahora borrado)
 			end
