@@ -14,7 +14,7 @@ cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio d
 
   Valores de retorno:
   
-    1  : Se cargo viaje
+     1 : Se cargo viaje
     -1 : Fecha mal ingresada, se quiere generar viaje de fecha anterior a la actual
     -2 : Crucero ocupado entre esas fechas
     -3 : Recorrido inhabilitado
