@@ -482,8 +482,8 @@ as
 				set @valor_retorno = -1 --fecha mal ingresada, se quiere generar viaje de fecha anterior a la actual
 			end
 		else if exists( select id_viaje
-						from [LEISTE_EL_CODIGO?].Viaje join [LEISTE_EL_CODIGO?].Crucero 
-						on (id_crucero = @id_crucero) -- help no se a que refiere eso de ambiguo
+						from [LEISTE_EL_CODIGO?].Viaje join [LEISTE_EL_CODIGO?].Crucero cru
+						on (cru.id_crucero = @id_crucero) -- help no se a que refiere eso de ambiguo
 						where fecha_inicio not between @fecha_inicio and @fecha_finalizacion_estimada
 							and fecha_finalizacion_estimada not between @fecha_inicio and @fecha_finalizacion_estimada)
 			begin
