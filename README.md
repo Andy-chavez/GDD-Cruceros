@@ -1,5 +1,5 @@
 # TPGDD-1C2019
-.: PROCEDURES :.
+...: PROCEDURES :...
 
 sp_login(@id_ingresado nvarchar(50), @contra_ingresada nvarchar(32))
 
