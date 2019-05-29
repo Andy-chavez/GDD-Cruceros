@@ -73,12 +73,13 @@ create table [LEISTE_EL_CODIGO?].Funcionalidad(
 go
 create table [LEISTE_EL_CODIGO?].FuncionalidadPorRol(
 	id_funcionalidad smallint references [LEISTE_EL_CODIGO?].Funcionalidad,
-	id_rol smallint references [LEISTE_EL_CODIGO?].Rol
+	id_rol smallint references [LEISTE_EL_CODIGO?].Rol,
 	primary key (id_rol, id_funcionalidad)
 )
 go
 create table [LEISTE_EL_CODIGO?].Cliente(
 	id_cliente int identity primary key,
+	id_rol smallint default '4' references [LEISTE_EL_CODIGO?].Rol,
 	nombre varchar(255) not null,
 	apellido varchar(255) not null,
 	dni decimal(18, 0) not null,
@@ -90,6 +91,7 @@ create table [LEISTE_EL_CODIGO?].Cliente(
 go
 create table [LEISTE_EL_CODIGO?].Recorrido(
 	id_recorrido decimal(18,0) primary key,
+	id_funcionalidad smallint default '5' references [LEISTE_EL_CODIGO?].Funcionalidad,
 	estado char(1) default 'A' check(estado in ('A','I')) 
 )
 go
@@ -113,6 +115,7 @@ go
 create table [LEISTE_EL_CODIGO?].Crucero(
 	id_crucero nvarchar(50) primary key,
 	id_fabricante nvarchar(255) references [LEISTE_EL_CODIGO?].Fabricante, --@
+	id_funcionalidad smallint default '2' references [LEISTE_EL_CODIGO?].Funcionalidad,
 	modelo nvarchar(50) null,
 	baja_fuera_de_servicio nchar(1) default 'N' check(baja_fuera_de_servicio in ('S','N')),
 	baja_fuera_vida_util nchar(1) default 'N' check(baja_fuera_vida_util in ('S','N')),
@@ -141,6 +144,7 @@ create table [LEISTE_EL_CODIGO?].Cabina(
 go
 create table [LEISTE_EL_CODIGO?].Viaje(
 	id_viaje int identity primary key,
+	id_funcionalidad smallint default '6' references [LEISTE_EL_CODIGO?].Funcionalidad,
 	id_recorrido decimal(18,0) references [LEISTE_EL_CODIGO?].Recorrido,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	fecha_inicio datetime2(3) not null,
@@ -150,6 +154,7 @@ create table [LEISTE_EL_CODIGO?].Viaje(
 go
 create table [LEISTE_EL_CODIGO?].Reserva(
 	id_reserva decimal(18,0) primary key,
+	id_funcionalidad smallint default '7' references [LEISTE_EL_CODIGO?].Funcionalidad,
 	fecha_actual datetime2(3) not null,
 	vencimiento datetime2(3) null,
 )
@@ -170,6 +175,7 @@ create table [LEISTE_EL_CODIGO?].PagoDeViaje(
 	id_pago int primary key identity,
 	fecha_pago datetime2(3) null,
 	monto_total decimal(8,2) not null,
+	id_funcionalidad smallint default '8' references [LEISTE_EL_CODIGO?].Funcionalidad,
 	cantidad_de_pasajes smallint default 1 check(cantidad_de_pasajes > 0),
 	id_reserva decimal(18,0) references [LEISTE_EL_CODIGO?].Reserva,
 	id_pasaje decimal(18,0) references [LEISTE_EL_CODIGO?].Pasaje
@@ -229,6 +235,7 @@ go
 insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('administrador general')			--Rol 1 = administrador general
 insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('administrador')					--Rol 2 = administrador
 insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('usuario')						--Rol 3 = usuario
+insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('cliente')						--Rol 4 = cliente
 go
 -- Funcionalidad por Rol
 --ADMINISTRADOR GENERAL
@@ -421,7 +428,7 @@ if exists (select * from sys.procedures where name = 'sp_login')
 	drop procedure [LEISTE_EL_CODIGO?].sp_login
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].sp_login(@id_ingresado nvarchar(50), @contra_ingresada nvarchar(32)) -- aca tengo dudas de si en la contra al todavia no estar hasheada, si es de 32 o no
+create procedure [LEISTE_EL_CODIGO?].sp_login(@id_ingresado nvarchar(50), @contra_ingresada nvarchar(32)) -- aca tengo dudas de si es la contra al todavia no estar hasheada, si es de 32 o no
 as
 	begin
 		declare @intentos_posibles smallint,
@@ -461,4 +468,41 @@ as
 			end
 		return @valor_retorno
 	end
+go
+if exists (select * from sys.procedures where name = 'cargarViaje')
+	drop procedure [LEISTE_EL_CODIGO?].cargarViaje
+USE GD1C2019
+go
+create procedure cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2, @fecha_actual datetime2)
+as
+	begin
+		declare @valor_retorno tinyint
+		if(@fecha_actual>@fecha_inicio)
+			begin
+				set @valor_retorno = -1 --fecha mal ingresada, se quiere generar viaje de fecha anterior a la actual
+			end
+		else if exists( select id_viaje
+						from [LEISTE_EL_CODIGO?].Viaje join [LEISTE_EL_CODIGO?].Crucero 
+						on (id_crucero = @id_crucero) -- help no se a que refiere eso de ambiguo
+						where fecha_inicio not between @fecha_inicio and @fecha_finalizacion_estimada
+							and fecha_finalizacion_estimada not between @fecha_inicio and @fecha_finalizacion_estimada)
+			begin
+				set @valor_retorno = -2 -- crucero ocupado
+			end
+		else if exists(select id_recorrido from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido = @id_recorrido and estado = 'I')
+			begin
+				set @valor_retorno = -3 --recorrido inhabilitado
+			end
+		else if exists(select id_crucero from [LEISTE_EL_CODIGO?].Crucero where id_crucero = @id_crucero and baja_fuera_de_servicio ='S' or baja_fuera_vida_util = 'S')
+			begin
+				set @valor_retorno = -4 --crucero inhabilitado
+			end
+		else
+			begin
+				insert into [LEISTE_EL_CODIGO?].Viaje(id_recorrido,id_crucero,fecha_inicio,fecha_finalizacion_estimada)
+				values(@id_recorrido,@id_crucero, @fecha_inicio, @fecha_finalizacion_estimada)
+				set @valor_retorno = 1 --se cargo viaje
+			end
+		return @valor_retorno
+end
 go
