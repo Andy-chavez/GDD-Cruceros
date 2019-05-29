@@ -1,1 +1,0 @@
-sqlcmd -S localhost\SQLSERVER2012 -U gdCruceros2019 -P gd2019 -i script_creacion_inicial.sql  -a 32767 -o resultado_output.txt
