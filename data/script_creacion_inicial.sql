@@ -473,7 +473,7 @@ if exists (select * from sys.procedures where name = 'cargarViaje')
 	drop procedure [LEISTE_EL_CODIGO?].cargarViaje
 USE GD1C2019
 go
-create procedure cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2, @fecha_actual datetime2)
+create procedure [LEISTE_EL_CODIGO?].cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2, @fecha_actual datetime2)
 as
 	begin
 		declare @valor_retorno tinyint
@@ -505,4 +505,20 @@ as
 			end
 		return @valor_retorno
 end
+go
+
+/*--------------------------------------VISTAS-----------------------------------------------*/
+if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	begin
+		drop view [LEISTE_EL_CODIGO?].CrucerosDisponibles
+	end
+go
+USE GD1C2019
+go
+
+create view [LEISTE_EL_CODIGO?].CrucerosDisponibles
+as
+		select id_crucero,id_fabricante,modelo
+		from [LEISTE_EL_CODIGO?].Crucero
+		where baja_fuera_vida_util = 'N' and baja_fuera_de_servicio = 'N'
 go
