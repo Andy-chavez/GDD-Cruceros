@@ -483,7 +483,7 @@ as
 			end
 		else if exists( select id_viaje
 						from [LEISTE_EL_CODIGO?].Viaje join [LEISTE_EL_CODIGO?].Crucero cru
-						on (cru.id_crucero = @id_crucero) -- help no se a que refiere eso de ambiguo
+						on (cru.id_crucero = @id_crucero)
 						where fecha_inicio not between @fecha_inicio and @fecha_finalizacion_estimada
 							and fecha_finalizacion_estimada not between @fecha_inicio and @fecha_finalizacion_estimada)
 			begin
@@ -507,7 +507,7 @@ as
 end
 go
 
-/*--------------------------------------VISTAS-----------------------------------------------*/
+/*--------------------------------------VISTAS C/ DROP PREVIO-----------------------------------------------*/
 if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
 		drop view [LEISTE_EL_CODIGO?].CrucerosDisponibles
