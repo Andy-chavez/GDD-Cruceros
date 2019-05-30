@@ -3,14 +3,6 @@ go
 
 if exists (select * from sys.schemas where name =  'LEISTE_EL_CODIGO?')
 begin
-	if exists(select * from sys.tables where object_name(object_id)='Usuario' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-		drop table  [LEISTE_EL_CODIGO?].Usuario
-	if exists(select * from sys.tables where object_name(object_id)='FuncionalidadPorRol'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-		drop table  [LEISTE_EL_CODIGO?].FuncionalidadPorRol
-	if exists(select * from sys.tables where object_name(object_id)='Rol'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-		drop table  [LEISTE_EL_CODIGO?].Rol
-	if exists(select * from sys.tables where object_name(object_id)='Funcionalidad'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-		drop table  [LEISTE_EL_CODIGO?].Funcionalidad
 
 	if exists(select * from sys.tables where object_name(object_id)='MedioDePago'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].MedioDePago
@@ -23,6 +15,12 @@ begin
 	if exists(select * from sys.tables where object_name(object_id)='Cliente'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].Cliente
 
+	if exists(select * from sys.tables where object_name(object_id)='Usuario' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+		drop table  [LEISTE_EL_CODIGO?].Usuario
+	if exists(select * from sys.tables where object_name(object_id)='FuncionalidadPorRol'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+		drop table  [LEISTE_EL_CODIGO?].FuncionalidadPorRol
+	if exists(select * from sys.tables where object_name(object_id)='Rol'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+		drop table  [LEISTE_EL_CODIGO?].Rol
 	if exists(select * from sys.tables where object_name(object_id)='Viaje'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].Viaje
 	if exists(select * from sys.tables where object_name(object_id)='Cabina'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
@@ -43,6 +41,8 @@ begin
 	if exists(select * from sys.tables where object_name(object_id)='Puerto'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].Puerto
 
+	if exists(select * from sys.tables where object_name(object_id)='Funcionalidad'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+		drop table  [LEISTE_EL_CODIGO?].Funcionalidad
 end
 else
 begin
