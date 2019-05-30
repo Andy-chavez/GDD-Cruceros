@@ -423,7 +423,8 @@ select distinct(select id_cabina
 from gd_esquema.Maestra m
 where m.PASAJE_CODIGO is not null and m.PASAJE_PRECIO is not null
 go
-/*--------------------------------------PROCEDURES-----------------------------------------------*/
+/*--------------------------------------PROCEDURES C/DROP-----------------------------------------------*/
+		--LOGIN--
 if exists (select * from sys.procedures where name = 'sp_login')
 	drop procedure [LEISTE_EL_CODIGO?].sp_login
 USE GD1C2019
@@ -469,6 +470,7 @@ as
 		return @valor_retorno
 	end
 go
+		--CARGAR VIAJE--
 if exists (select * from sys.procedures where name = 'cargarViaje')
 	drop procedure [LEISTE_EL_CODIGO?].cargarViaje
 USE GD1C2019
@@ -504,9 +506,36 @@ as
 				set @valor_retorno = 1 --se cargo viaje
 			end
 		return @valor_retorno
-end
+	end
+go
+		--DAR CRUCERO DE BAJA DEFINITIVA--
+if exists (select * from sys.procedures where name = 'darDeBajaDefinitivaCrucero')
+	drop procedure [LEISTE_EL_CODIGO?].darDeBajaDefinitivaCrucero
+USE GD1C2019
 go
 
+create procedure [LEISTE_EL_CODIGO?].darDeBajaDefinitivaCrucero(@id_crucero nvarchar(50),@fecha_actual datetime2)
+as
+	begin
+		update [LEISTE_EL_CODIGO?].Crucero
+		set baja_fuera_vida_util = 'S',fecha_baja_definitiva = @fecha_actual
+		where id_crucero = @id_crucero
+	end
+go
+		--DAR CRUCERO DE BAJA TEMPORAL--
+if exists (select * from sys.procedures where name = 'darDeBajaTemporalCrucero')
+	drop procedure [LEISTE_EL_CODIGO?].darDeBajaTemporalCrucero
+USE GD1C2019
+go
+
+create procedure [LEISTE_EL_CODIGO?].darDeBajaTemporalCrucero(@id_crucero nvarchar(50),@fecha_reinicio datetime2)
+as
+	begin
+		update [LEISTE_EL_CODIGO?].Crucero
+		set baja_fuera_de_servicio = 'S',fecha_reinicio_servicio = @fecha_reinicio
+		where id_crucero = @id_crucero
+	end
+go
 /*--------------------------------------VISTAS C/ DROP PREVIO-----------------------------------------------*/
 if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
