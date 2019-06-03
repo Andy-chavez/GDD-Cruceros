@@ -35,6 +35,11 @@
     1: se cargo todo joya
     -2: No existe funcionalidad
     -3: el rol ya tiene esa funcionalidad
+#### darAltaRol (@idRol smallint)
+#### darBajaRol (@idRol smallint)
+   Valores de retorno:
+    1: se cargo todo joya
+    -1: no existe el rol
 # ...: VIEWS :...
 
 #### ~ CrucerosDisponibles

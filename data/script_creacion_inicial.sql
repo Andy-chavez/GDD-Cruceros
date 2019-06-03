@@ -650,6 +650,57 @@ begin
 end
 go
 
+----------------------------Dar de baja un rol-----------------------------------
+
+if exists (select * from sys.procedures where name = 'darBajaRol')
+	drop procedure [LEISTE_EL_CODIGO?].darBajaRol
+USE GD1C2019
+go
+
+create procedure [LEISTE_EL_CODIGO?].darBajaRol (@idRol smallint)
+as
+	begin
+		declare @valor_retorno smallint
+		if
+		(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 -- no existe rol
+		else 
+			begin
+				update [LEISTE_EL_CODIGO?].Rol
+				set baja_logica = 'S'
+				where id_rol = @idRol
+
+				update [LEISTE_EL_CODIGO?].Usuario
+				set id_rol = NULL
+				where id_rol = @idRol
+				update [LEISTE_EL_CODIGO?].Cliente
+				set id_rol = NULL
+				where id_rol = @idRol
+			end
+		return @valor_retorno
+	end
+go		
+	
+-------------------------------Habilitar un rol inhabilitado ---------------------------------
+if exists (select * from sys.procedures where name = 'darAltaRol')
+	drop procedure [LEISTE_EL_CODIGO?].darAltaRol
+USE GD1C2019
+go
+
+create procedure [LEISTE_EL_CODIGO?].darAltaRol (@idRol smallint)
+as
+	begin
+		declare @valor_retorno smallint
+		if
+		(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 -- no existe rol
+		else 
+			begin
+				update [LEISTE_EL_CODIGO?].Rol
+				set baja_logica = 'N'
+				where id_rol = @idRol	
+			end
+		return @valor_retorno
+	end
+go
 
 /*--------------------------------------VISTAS C/ DROP PREVIO-----------------------------------------------*/
 if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
