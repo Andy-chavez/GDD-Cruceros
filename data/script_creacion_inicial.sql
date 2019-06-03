@@ -121,7 +121,8 @@ create table [LEISTE_EL_CODIGO?].Crucero(
 	baja_fuera_de_servicio nchar(1) default 'N' check(baja_fuera_de_servicio in ('S','N')),
 	baja_fuera_vida_util nchar(1) default 'N' check(baja_fuera_vida_util in ('S','N')),
 	fecha_baja_definitiva datetime2(3) null,
-	fecha_reinicio_servicio datetime2(3) null
+	fecha_reinicio_servicio datetime2(3) null,
+	cantidadDeCabinas int not null
 )
 go
 create table [LEISTE_EL_CODIGO?].Servicio(
@@ -196,7 +197,6 @@ go
 --Trigger de vencimiento para reserva--
 --IF OBJECT_ID ('fechaVencimiento', 'TR') IS NOT NULL  
 --   DROP TRIGGER fechaVencimiento; nose porque esto no funca
-go
 create trigger fechaVencimiento on [LEISTE_EL_CODIGO?].Reserva
 after insert
 as
@@ -295,11 +295,6 @@ insert into [LEISTE_EL_CODIGO?].Fabricante
 select distinct CRU_FABRICANTE
 from gd_esquema.Maestra
 go
---Crucero-- (son 37 cruceros, se repiten varias veces por cada viaje)
-insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,id_fabricante,modelo)
-select distinct CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO
-from gd_esquema.Maestra
-go
 --Servicio-- (tengo dudas de como deberia ser el orden de insert de las cosas) y las descripciones cambienlas si quieren
 --select count(distinct CABINA_TIPO)
 --from gd_esquema.Maestra -- hay 5 tipos de cabinas asique hay 5 servicios asociados a ellas
@@ -342,6 +337,15 @@ go
 insert into [LEISTE_EL_CODIGO?].Cabina (numero,piso,id_crucero,id_tipo)
 select CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO from gd_esquema.Maestra
 group by CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO
+go
+
+--Crucero-- (son 37 cruceros, se repiten varias veces por cada viaje)
+insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,id_fabricante,modelo,cantidadDeCabinas)
+select distinct CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO,
+					(SELECT count(*)
+					FROM [LEISTE_EL_CODIGO?].Cabina c
+					WHERE c.id_crucero = m.CRUCERO_IDENTIFICADOR)
+FROM gd_esquema.Maestra m
 go
 -----------------------------Puerto------------------------------- (solo va nombre de puerto en la tabla, no va el campo ciudad, es irrelevante)
 
@@ -704,6 +708,22 @@ as
 				where id_rol = @idRol	
 			end
 		return @valor_retorno
+	end
+go
+
+----------------------------viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --------
+if exists (select * from sys.procedures where name = 'mostrarViajesDisponibles')
+	drop procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles
+USE GD1C2019
+go
+
+select * from [LEISTE_EL_CODIGO?].Cabina
+create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
+as
+	begin
+		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo tipoDeCabina,
+		from [LEISTE_EL_CODIGO?].Viaje v 
+		join [LEISTE_EL_CODIGO?].Cabina ca
 	end
 go
 
