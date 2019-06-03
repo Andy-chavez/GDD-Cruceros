@@ -538,10 +538,10 @@ as
 go
 
 
-		--Agregar nueva funcionalidad a un rol-- REQUERIMIENTO: 
+		------Agregar nueva funcionalidad a un rol-------REQUERIMIENTO: 
 		--En la modificación de un rol solo se pueden alterar ambos campos: el nombre y el
 		--listado de funcionalidades.
-if exists (select * from sys.procedures where name = 'crearRol')
+if exists (select * from sys.procedures where name = 'agregarFuncionalidadPorRol')
 	drop procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol
 USE GD1C2019
 go
@@ -555,7 +555,9 @@ as
 		if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 --no existe rol
 		else if
 		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idNuevaFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
-		
+		else if
+		(not exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
+						where id_funcionalidad= @idNuevaFuncionalidad and id_rol = @idRol)) set @valor_retorno = -3 -- el rol ya tiene esa funcionalidad
 		else
 			begin
 				insert into [LEISTE_EL_CODIGO?].Rol(nombre)
@@ -575,8 +577,60 @@ as
 	end
 go
 
-		-------
+		-------eliminar funcionalidad de un rol-----------
 
+if exists (select * from sys.procedures where name = 'eliminarFuncionalidadRol')
+	drop procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol
+USE GD1C2019
+go
+
+create procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol (@idRol smallint,@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
+as
+	begin
+		declare @valor_retorno smallint
+		if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 --no existe rol
+		else if
+		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidadAEliminar)) set @valor_retorno = -2 -- no existe funcionalidad
+		else if
+		(not exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
+						where id_funcionalidad= @idFuncionalidadAEliminar and id_rol = @idRol)) set @valor_retorno = -3 -- no tiene esa funcionalidad
+		
+		else
+			begin
+				insert into [LEISTE_EL_CODIGO?].Rol(nombre)
+				values(@nuevoNombreRol) --agrego rol en la tabla
+		
+				declare @idNuevoRol smallint
+				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
+				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) -- todas menos la funcionalidad a eliminar 
+				select @idNuevoRol,id_funcionalidad
+				from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
+				where id_rol= @idRol and id_funcionalidad <> @idFuncionalidadAEliminar
+
+				set @valor_retorno = 1 -- se cargo correctamente el nuevo rol
+			end
+	end
+go
+
+		-------- Crear Nuevo Rol --------- deberia usarse dentro de un while, lo hago para uno a la vez por ahora
+if exists (select * from sys.procedures where name = 'eliminarFuncionalidadRol')
+	drop procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol
+USE GD1C2019
+go
+
+create procedure [LEISTE_EL_CODIGO?].crearNuevoRol (@idFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
+as
+begin
+		declare @valor_retorno smallint
+		if
+		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
+		else
+			begin
+				insert into [LEISTE_EL_CODIGO?].Rol(nombre)
+				values(@nuevoNombreRol) --agrego rol en la tabla
+		
+				declare @idNuevoRol smallint
+				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
 
 /*--------------------------------------VISTAS C/ DROP PREVIO-----------------------------------------------*/
 if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')

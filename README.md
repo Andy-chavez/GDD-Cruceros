@@ -23,10 +23,12 @@
     -4 : Crucero inhabilitado
 
 #### agregarFuncionalidadPorRol (@idRol smallint,@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
+#### eliminarFuncionalidadRol (@idRol smallint,@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
   Valores de retorno:
     1: se cargo todo joya
     -1: no existe el rol
     -2: No existe funcionalidad
+    -3: el rol ya tiene esa funcionalidad(agregar) o no tiene esa funcionalidad(eliminar)
 # ...: VIEWS :...
 
 #### ~ CrucerosDisponibles
