@@ -29,6 +29,12 @@
     -1: no existe el rol
     -2: No existe funcionalidad
     -3: el rol ya tiene esa funcionalidad(agregar) o no tiene esa funcionalidad(eliminar)
+
+#### crearNuevoRol (@idFuncionalidad smallint,@NombreRol nvarchar(255))
+  Valores de retorno:
+    1: se cargo todo joya
+    -2: No existe funcionalidad
+    -3: el rol ya tiene esa funcionalidad (esto no seria necesario si le tiramos una lista)
 # ...: VIEWS :...
 
 #### ~ CrucerosDisponibles

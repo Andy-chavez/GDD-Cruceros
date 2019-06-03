@@ -556,7 +556,7 @@ as
 		else if
 		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idNuevaFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
 		else if
-		(not exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
+		(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
 						where id_funcionalidad= @idNuevaFuncionalidad and id_rol = @idRol)) set @valor_retorno = -3 -- el rol ya tiene esa funcionalidad
 		else
 			begin
@@ -574,6 +574,7 @@ as
 				values(@idNuevoRol, @idNuevaFuncionalidad)
 				set @valor_retorno = 1 -- se cargo correctamente el nuevo rol
 			end
+		return @valor_retorno
 	end
 go
 
@@ -592,7 +593,7 @@ as
 		else if
 		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidadAEliminar)) set @valor_retorno = -2 -- no existe funcionalidad
 		else if
-		(not exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
+		(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
 						where id_funcionalidad= @idFuncionalidadAEliminar and id_rol = @idRol)) set @valor_retorno = -3 -- no tiene esa funcionalidad
 		
 		else
@@ -609,16 +610,17 @@ as
 
 				set @valor_retorno = 1 -- se cargo correctamente el nuevo rol
 			end
+		return @valor_retorno
 	end
 go
 
 		-------- Crear Nuevo Rol --------- deberia usarse dentro de un while, lo hago para uno a la vez por ahora
-if exists (select * from sys.procedures where name = 'eliminarFuncionalidadRol')
+if exists (select * from sys.procedures where name = 'crearNuevoRol')
 	drop procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol
 USE GD1C2019
 go
 
-create procedure [LEISTE_EL_CODIGO?].crearNuevoRol (@idFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].crearNuevoRol (@idFuncionalidad smallint,@NombreRol nvarchar(255))
 as
 begin
 		declare @valor_retorno smallint
@@ -626,11 +628,27 @@ begin
 		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
 		else
 			begin
-				insert into [LEISTE_EL_CODIGO?].Rol(nombre)
-				values(@nuevoNombreRol) --agrego rol en la tabla
+				if(not exists (select nombre from [LEISTE_EL_CODIGO?].Rol where nombre= @NombreRol)) -- si es la primer vez que lo carga
+					begin
+						insert into [LEISTE_EL_CODIGO?].Rol(nombre)
+						values(@NombreRol) --agrego rol en la tabla
+					end
 		
 				declare @idNuevoRol smallint
-				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
+				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @NombreRol
+
+				if
+					(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
+								where id_funcionalidad= @idFuncionalidad and id_rol = @idNuevoRol)) set @valor_retorno = -3 -- ya tiene esa funcionalidad
+
+				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
+				values(@idNuevoRol,@idFuncionalidad)
+				set @valor_retorno = 1
+			end
+		return @valor_retorno
+end
+go
+
 
 /*--------------------------------------VISTAS C/ DROP PREVIO-----------------------------------------------*/
 if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
