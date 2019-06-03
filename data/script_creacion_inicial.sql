@@ -582,7 +582,7 @@ go
 		-------eliminar funcionalidad de un rol-----------
 
 if exists (select * from sys.procedures where name = 'eliminarFuncionalidadRol')
-	drop procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol
+	drop procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol
 USE GD1C2019
 go
 
@@ -617,7 +617,7 @@ go
 
 		-------- Crear Nuevo Rol --------- deberia usarse dentro de un while, lo hago para uno a la vez por ahora
 if exists (select * from sys.procedures where name = 'crearNuevoRol')
-	drop procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol
+	drop procedure [LEISTE_EL_CODIGO?].crearNuevoRol
 USE GD1C2019
 go
 
@@ -665,4 +665,19 @@ as
 		select id_crucero,id_fabricante,modelo
 		from [LEISTE_EL_CODIGO?].Crucero
 		where baja_fuera_vida_util = 'N' and baja_fuera_de_servicio = 'N'
+go
+-------------------Vista de roles habilitados--------------------------------
+if exists(select * from sys.views where object_name(object_id)='RolesHabilitados' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	begin
+		drop view [LEISTE_EL_CODIGO?].RolesHabilitados
+	end
+go
+USE GD1C2019
+go
+
+create view [LEISTE_EL_CODIGO?].RolesHabilitados
+as
+		select id_rol,nombre
+		from [LEISTE_EL_CODIGO?].Rol
+		where baja_logica = 'N' -- ver despues si es necesario tambien hacer una vista con todos los roles, habilitados o no.
 go
