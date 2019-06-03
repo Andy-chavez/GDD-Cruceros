@@ -34,7 +34,7 @@
   Valores de retorno:
     1: se cargo todo joya
     -2: No existe funcionalidad
-    -3: el rol ya tiene esa funcionalidad (esto no seria necesario si le tiramos una lista)
+    -3: el rol ya tiene esa funcionalidad
 # ...: VIEWS :...
 
 #### ~ CrucerosDisponibles

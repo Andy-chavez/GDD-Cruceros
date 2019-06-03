@@ -56,6 +56,7 @@ go
 create table [LEISTE_EL_CODIGO?].Rol(
 	nombre nvarchar(255) not null,
 	id_rol smallint identity primary key,
+	baja_logica char(1) not null default 'N' check(baja_logica in ('S','N')) 
 )
 go
 create table [LEISTE_EL_CODIGO?].Usuario(
@@ -63,7 +64,7 @@ create table [LEISTE_EL_CODIGO?].Usuario(
 	id_rol smallint references [LEISTE_EL_CODIGO?].Rol, 
 	contra varbinary(32),
 	intentos_posibles smallint default 3,
-	habilitado nchar(1) not null default 'A' check(habilitado in ('A','i'))
+	habilitado nchar(1) not null default 'A' check(habilitado in ('A','I'))
 )
 go
 create table [LEISTE_EL_CODIGO?].Funcionalidad(
