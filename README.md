@@ -22,6 +22,11 @@
     -3 : Recorrido inhabilitado
     -4 : Crucero inhabilitado
 
+#### agregarFuncionalidadPorRol (@idRol smallint,@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
+  Valores de retorno:
+    1: se cargo todo joya
+    -1: no existe el rol
+    -2: No existe funcionalidad
 # ...: VIEWS :...
 
 #### ~ CrucerosDisponibles
