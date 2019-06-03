@@ -194,6 +194,9 @@ go
 USE GD1C2019
 go
 --Trigger de vencimiento para reserva--
+--IF OBJECT_ID ('fechaVencimiento', 'TR') IS NOT NULL  
+--   DROP TRIGGER fechaVencimiento; nose porque esto no funca
+go
 create trigger fechaVencimiento on [LEISTE_EL_CODIGO?].Reserva
 after insert
 as
@@ -356,6 +359,8 @@ select distinct RECORRIDO_CODIGO
 from gd_esquema.Maestra
 go
 -----------------------------------------Tramo-----------------------------------------------------------
+IF OBJECT_ID('tempdb..#tramoTemp') IS NOT NULL DROP TABLE #tramoTemp
+go
 create table #tramoTemp(
 	id_tramo smallint identity primary key,
 	id_recorrido decimal(18,0) references [LEISTE_EL_CODIGO?].Recorrido,
