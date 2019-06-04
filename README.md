@@ -25,6 +25,7 @@
 #### agregarFuncionalidadPorRol (@idRol smallint,@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
 #### eliminarFuncionalidadRol (@idRol smallint,@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
   Valores de retorno:
+
     1: se cargo todo joya
     -1: no existe el rol
     -2: No existe funcionalidad
@@ -32,12 +33,14 @@
 
 #### crearNuevoRol (@idFuncionalidad smallint,@NombreRol nvarchar(255))
   Valores de retorno:
+
     1: se cargo todo joya
     -2: No existe funcionalidad
     -3: el rol ya tiene esa funcionalidad
 #### darAltaRol (@idRol smallint)
 #### darBajaRol (@idRol smallint)
    Valores de retorno:
+
     1: se cargo todo joya
     -1: no existe el rol
 # ...: VIEWS :...
