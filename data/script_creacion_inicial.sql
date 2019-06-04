@@ -161,6 +161,7 @@ create table [LEISTE_EL_CODIGO?].Reserva(
 	id_funcionalidad smallint default 7 references [LEISTE_EL_CODIGO?].Funcionalidad,
 	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
 	id_viaje int references [LEISTE_EL_CODIGO?].Viaje,
+	id_cabina smallint references [LEISTE_EL_CODIGO?].Cabina,
 	fecha_actual datetime2(3) not null,
 	vencimiento datetime2(3) null,
 )
@@ -409,7 +410,6 @@ go
 
 ----------------------------------------Pago de viaje-------------------------------------------- 
 --select PASAJE_CODIGO, count(*) from gd_esquema.Maestra where PASAJE_CODIGO is not null group by PASAJE_CODIGO having count(*)>1
-begin transaction
 insert into [LEISTE_EL_CODIGO?].PagoDeViaje(id_pasaje,fecha_pago,monto_total)
 select PASAJE_CODIGO,PASAJE_FECHA_COMPRA,PASAJE_PRECIO
 from gd_esquema.Maestra m
@@ -419,7 +419,7 @@ go
 select m.PASAJE_CODIGO, m.PASAJE_FECHA_COMPRA,m.RESERVA_FECHA,m.RESERVA_CODIGO, m.CRUCERO_IDENTIFICADOR,CABINA_TIPO,CABINA_NRO,CABINA_NRO
 from gd_esquema.Maestra m
 -------------------------------------------------Reserva-----------------------------------------
-insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual,id_cliente,id_crucero)
+insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual,id_cliente,id_crucero,)
 select distinct RESERVA_CODIGO,RESERVA_FECHA,
 		(select id_cliente
 		from [LEISTE_EL_CODIGO?].Cliente
