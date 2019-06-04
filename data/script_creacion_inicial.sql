@@ -92,13 +92,11 @@ create table [LEISTE_EL_CODIGO?].Cliente(
 go
 create table [LEISTE_EL_CODIGO?].Recorrido(
 	id_recorrido decimal(18,0) primary key,
-	id_funcionalidad smallint default 5 references [LEISTE_EL_CODIGO?].Funcionalidad,
 	estado char(1) default 'A' check(estado in ('A','I')) 
 )
 go
 create table [LEISTE_EL_CODIGO?].Puerto(
 	id_puerto nvarchar(255) primary key,
-	id_funcionalidad smallint default 4 references [LEISTE_EL_CODIGO?].Funcionalidad,
 )
 go
 create table [LEISTE_EL_CODIGO?].Tramo(
@@ -117,7 +115,6 @@ go
 create table [LEISTE_EL_CODIGO?].Crucero(
 	id_crucero nvarchar(50) primary key,
 	id_fabricante nvarchar(255) references [LEISTE_EL_CODIGO?].Fabricante, --@
-	id_funcionalidad smallint default 2 references [LEISTE_EL_CODIGO?].Funcionalidad,
 	modelo nvarchar(50) null,
 	baja_fuera_de_servicio nchar(1) default 'N' check(baja_fuera_de_servicio in ('S','N')),
 	baja_fuera_vida_util nchar(1) default 'N' check(baja_fuera_vida_util in ('S','N')),
@@ -147,7 +144,6 @@ create table [LEISTE_EL_CODIGO?].Cabina(
 go
 create table [LEISTE_EL_CODIGO?].Viaje(
 	id_viaje int identity primary key,
-	id_funcionalidad smallint default 6 references [LEISTE_EL_CODIGO?].Funcionalidad,
 	id_recorrido decimal(18,0) references [LEISTE_EL_CODIGO?].Recorrido,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	fecha_inicio datetime2(3) not null,
@@ -158,12 +154,27 @@ go
 create table [LEISTE_EL_CODIGO?].Reserva(
 	id_reserva decimal(18,0) primary key,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
-	id_funcionalidad smallint default 7 references [LEISTE_EL_CODIGO?].Funcionalidad,
 	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
 	id_viaje int references [LEISTE_EL_CODIGO?].Viaje,
 	id_cabina smallint references [LEISTE_EL_CODIGO?].Cabina,
 	fecha_actual datetime2(3) not null,
 	vencimiento datetime2(3) null,
+)
+go
+create table [LEISTE_EL_CODIGO?].MedioDePago(
+	id_medio_de_pago int primary key identity,
+	cuotas_sin_interes smallint not null,
+	descuento smallint not null,
+	intereses smallint not null,
+)
+go
+create table [LEISTE_EL_CODIGO?].PagoDeViaje(
+	id_pago int primary key identity,
+	fecha_pago datetime2(3) null,
+	monto_total decimal(8,2) not null,
+	cantidad_de_pasajes smallint default 1 check(cantidad_de_pasajes > 0),
+	id_reserva decimal(18,0) references [LEISTE_EL_CODIGO?].Reserva,
+	id_medio_de_pago int references [LEISTE_EL_CODIGO?].MedioDePago,
 )
 go
 create table [LEISTE_EL_CODIGO?].Pasaje(
@@ -172,28 +183,11 @@ create table [LEISTE_EL_CODIGO?].Pasaje(
 	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
 	id_cabina smallint references [LEISTE_EL_CODIGO?].Cabina,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
+	id_pago int references [LEISTE_EL_CODIGO?].PagoDeViaje,
 	precio decimal(18,2) not null,
 	cancelacion nchar(1) default 'N' check(cancelacion in ('S','N')),
 	fecha_cancelacion datetime2(3) null,
-	fecha_reprogramacion datetime2(3) null, 
-)
-go
-create table [LEISTE_EL_CODIGO?].PagoDeViaje(
-	id_pago int primary key identity,
-	fecha_pago datetime2(3) null,
-	monto_total decimal(8,2) not null,
-	id_funcionalidad smallint default 8 references [LEISTE_EL_CODIGO?].Funcionalidad,
-	cantidad_de_pasajes smallint default 1 check(cantidad_de_pasajes > 0),
-	id_reserva decimal(18,0) references [LEISTE_EL_CODIGO?].Reserva,
-	id_pasaje decimal(18,0) references [LEISTE_EL_CODIGO?].Pasaje
-)
-go
-create table [LEISTE_EL_CODIGO?].MedioDePago(
-	id_medio_de_pago smallint primary key,
-	cuotas_sin_interes smallint not null,
-	descuento smallint not null,
-	intereses smallint not null,
-	id_pago int references [LEISTE_EL_CODIGO?].PagoDeViaje
+	fecha_reprogramacion datetime2(3) null,
 )
 go
 /*--------------------------------------TRIGGERS-----------------------------------------------*/
@@ -736,8 +730,6 @@ if exists (select * from sys.procedures where name = 'mostrarViajesDisponibles')
 USE GD1C2019
 go
 
-select * from [LEISTE_EL_CODIGO?].PagoDeViaje
-select * from [LEISTE_EL_CODIGO?].Cabina --supongo que lo que esta en la tabla reserva aun esta en vigencia
 create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
 as
 	begin
@@ -750,6 +742,66 @@ as
 		join [LEISTE_EL_CODIGO?].Cabina ca on v.id_crucero = ca.id_crucero
 	end
 go
+
+-------------------------todo despues de seleccionar un viaje----------------- ingresar cliente
+if exists (select * from sys.procedures where name = 'ingresarCliente')
+	drop procedure [LEISTE_EL_CODIGO?].ingresarCliente
+USE GD1C2019
+go
+
+create procedure [LEISTE_EL_CODIGO?].ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
+													@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255))
+as
+	begin
+		insert into [LEISTE_EL_CODIGO?].Cliente(nombre,apellido,dni,telefono,mail,fecha_nacimiento,direccion)
+		values(@nombre,@apellido,@dni,@telefono,@mail,@fecha_nacimiento,@direccion)
+	end
+go
+-----------------------------------buscarPorDni------------------------------------
+if exists (select * from sys.procedures where name = 'buscarPorDni')
+	drop procedure [LEISTE_EL_CODIGO?].buscarPorDni
+USE GD1C2019
+go
+
+create procedure [LEISTE_EL_CODIGO?].buscarPorDni (@dni decimal(18, 0)) 
+as
+	begin
+		select id_cliente,nombre,apellido,dni,direccion,telefono,mail,fecha_nacimiento 
+		from [LEISTE_EL_CODIGO?].Cliente
+		where dni=@dni
+	end
+go
+
+----------------------------actualizar usuario------------------------
+if exists (select * from sys.procedures where name = 'buscarPorDni')
+	drop procedure [LEISTE_EL_CODIGO?].buscarPorDni
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].actualizarUsuario (@idCliente int,@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
+													@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255)) 
+as
+	begin
+		update [LEISTE_EL_CODIGO?].Cliente
+		set nombre = coalesce(@nombre,nombre),
+		apellido = coalesce(@apellido,apellido),
+		dni = coalesce(@dni,dni), telefono = coalesce(@telefono,telefono),
+		mail = coalesce(@mail,mail),
+		fecha_nacimiento = coalesce(@fecha_nacimiento,fecha_nacimiento),
+		direccion= coalesce(@direccion,direccion)
+		where id_cliente = @idCliente
+	end
+go
+----------------------------------pagarPasaje--------------------------------
+if exists (select * from sys.procedures where name = 'pagarPasaje')
+	drop procedure [LEISTE_EL_CODIGO?].pagarPasaje
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].pagarPasaje (@idPasaje int,@cantidadDePasajes smallint,@idMedioPago int)
+as	
+	begin
+		insert into [LEISTE_EL_CODIGO?].PagoDeViaje(
+	end
+		
 
 /*--------------------------------------VISTAS C/ DROP PREVIO-----------------------------------------------*/
 if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')

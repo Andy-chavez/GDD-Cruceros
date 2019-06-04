@@ -43,7 +43,17 @@
 
     1: se cargo todo joya
     -1: no existe el rol
+#### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
+#### ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255))
+                seria el caso que tenes que cargar un cliente de cero
+####actualizarUsuario (@idCliente int,@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
+													@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255)) 
+                         ingresa los atributos que quieras modificar y los demas dejalos en NULL.
+                         EXCEPTO ID_CLIENTE ESE ES OBLIGATORIO.
+                         Porque no se puede buscar por DNI
+   
 # ...: VIEWS :...
+
 
 #### ~ CrucerosDisponibles
 #### ~ RolesHabilitados
