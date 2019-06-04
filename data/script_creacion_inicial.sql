@@ -92,12 +92,13 @@ create table [LEISTE_EL_CODIGO?].Cliente(
 go
 create table [LEISTE_EL_CODIGO?].Recorrido(
 	id_recorrido decimal(18,0) primary key,
-	id_funcionalidad smallint default '5' references [LEISTE_EL_CODIGO?].Funcionalidad,
+	id_funcionalidad smallint default 5 references [LEISTE_EL_CODIGO?].Funcionalidad,
 	estado char(1) default 'A' check(estado in ('A','I')) 
 )
 go
 create table [LEISTE_EL_CODIGO?].Puerto(
 	id_puerto nvarchar(255) primary key,
+	id_funcionalidad smallint default 4 references [LEISTE_EL_CODIGO?].Funcionalidad,
 )
 go
 create table [LEISTE_EL_CODIGO?].Tramo(
@@ -116,7 +117,7 @@ go
 create table [LEISTE_EL_CODIGO?].Crucero(
 	id_crucero nvarchar(50) primary key,
 	id_fabricante nvarchar(255) references [LEISTE_EL_CODIGO?].Fabricante, --@
-	id_funcionalidad smallint default '2' references [LEISTE_EL_CODIGO?].Funcionalidad,
+	id_funcionalidad smallint default 2 references [LEISTE_EL_CODIGO?].Funcionalidad,
 	modelo nvarchar(50) null,
 	baja_fuera_de_servicio nchar(1) default 'N' check(baja_fuera_de_servicio in ('S','N')),
 	baja_fuera_vida_util nchar(1) default 'N' check(baja_fuera_vida_util in ('S','N')),
@@ -146,7 +147,7 @@ create table [LEISTE_EL_CODIGO?].Cabina(
 go
 create table [LEISTE_EL_CODIGO?].Viaje(
 	id_viaje int identity primary key,
-	id_funcionalidad smallint default '6' references [LEISTE_EL_CODIGO?].Funcionalidad,
+	id_funcionalidad smallint default 6 references [LEISTE_EL_CODIGO?].Funcionalidad,
 	id_recorrido decimal(18,0) references [LEISTE_EL_CODIGO?].Recorrido,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	fecha_inicio datetime2(3) not null,
@@ -156,7 +157,10 @@ create table [LEISTE_EL_CODIGO?].Viaje(
 go
 create table [LEISTE_EL_CODIGO?].Reserva(
 	id_reserva decimal(18,0) primary key,
-	id_funcionalidad smallint default '7' references [LEISTE_EL_CODIGO?].Funcionalidad,
+	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
+	id_funcionalidad smallint default 7 references [LEISTE_EL_CODIGO?].Funcionalidad,
+	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
+	id_viaje int references [LEISTE_EL_CODIGO?].Viaje,
 	fecha_actual datetime2(3) not null,
 	vencimiento datetime2(3) null,
 )
@@ -177,7 +181,7 @@ create table [LEISTE_EL_CODIGO?].PagoDeViaje(
 	id_pago int primary key identity,
 	fecha_pago datetime2(3) null,
 	monto_total decimal(8,2) not null,
-	id_funcionalidad smallint default '8' references [LEISTE_EL_CODIGO?].Funcionalidad,
+	id_funcionalidad smallint default 8 references [LEISTE_EL_CODIGO?].Funcionalidad,
 	cantidad_de_pasajes smallint default 1 check(cantidad_de_pasajes > 0),
 	id_reserva decimal(18,0) references [LEISTE_EL_CODIGO?].Reserva,
 	id_pasaje decimal(18,0) references [LEISTE_EL_CODIGO?].Pasaje
@@ -333,6 +337,7 @@ update [LEISTE_EL_CODIGO?].TipoCabina
 set id_servicio = 5
 where id_tipo = 'Cabina Balcón'
 go
+
 -------------------Cabinas--------------------------
 insert into [LEISTE_EL_CODIGO?].Cabina (numero,piso,id_crucero,id_tipo)
 select CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO from gd_esquema.Maestra
@@ -404,15 +409,30 @@ go
 
 ----------------------------------------Pago de viaje-------------------------------------------- 
 --select PASAJE_CODIGO, count(*) from gd_esquema.Maestra where PASAJE_CODIGO is not null group by PASAJE_CODIGO having count(*)>1
+begin transaction
 insert into [LEISTE_EL_CODIGO?].PagoDeViaje(id_pasaje,fecha_pago,monto_total)
-select PASAJE_CODIGO,PASAJE_FECHA_COMPRA,PASAJE_PRECIO from gd_esquema.Maestra
+select PASAJE_CODIGO,PASAJE_FECHA_COMPRA,PASAJE_PRECIO
+from gd_esquema.Maestra m
 where PASAJE_FECHA_COMPRA is not null and PASAJE_PRECIO is not null
 go
+
+select m.PASAJE_CODIGO, m.PASAJE_FECHA_COMPRA,m.RESERVA_FECHA,m.RESERVA_CODIGO, m.CRUCERO_IDENTIFICADOR,CABINA_TIPO,CABINA_NRO,CABINA_NRO
+from gd_esquema.Maestra m
 -------------------------------------------------Reserva-----------------------------------------
-insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual)
-select distinct RESERVA_CODIGO,RESERVA_FECHA
-from gd_esquema.Maestra
-where RESERVA_CODIGO is not null and RESERVA_FECHA is not null
+insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual,id_cliente,id_crucero)
+select distinct RESERVA_CODIGO,RESERVA_FECHA,
+		(select id_cliente
+		from [LEISTE_EL_CODIGO?].Cliente
+		where nombre=m.CLI_NOMBRE and apellido=m.CLI_APELLIDO and dni=m.CLI_DNI and telefono=m.CLI_TELEFONO and fecha_nacimiento = m.CLI_FECHA_NAC),
+		m.CRUCERO_IDENTIFICADOR,
+		(select id_viaje
+		from [LEISTE_EL_CODIGO?].Viaje
+		where id_recorrido=m.RECORRIDO_CODIGO and fecha_inicio=m.FECHA_SALIDA and fecha_finalizacion= m.FECHA_LLEGADA 
+		and fecha_finalizacion_estimada=m.FECHA_LLEGADA_ESTIMADA and id_crucero = m.CRUCERO_IDENTIFICADOR),
+		
+from gd_esquema.Maestra m
+where RESERVA_CODIGO is not null and RESERVA_FECHA is not null 
+	
 go
 -------------------------------------------------Viaje------------------------------------------------
 insert into [LEISTE_EL_CODIGO?].Viaje (fecha_inicio,fecha_finalizacion,fecha_finalizacion_estimada,id_crucero,id_recorrido)
@@ -428,7 +448,7 @@ select distinct(select id_cabina
 		where nombre=m.CLI_NOMBRE and apellido=m.CLI_APELLIDO and dni=m.CLI_DNI and telefono=m.CLI_TELEFONO and fecha_nacimiento = m.CLI_FECHA_NAC)cliente,
 		(select id_viaje
 		from [LEISTE_EL_CODIGO?].Viaje
-		where id_recorrido=m.RECORRIDO_CODIGO and fecha_inicio=m.FECHA_SALIDA and fecha_finalizacion= m.FECHA_LLEGADA and fecha_finalizacion_estimada=m.FECHA_LLEGADA_ESTIMADA and id_crucero = m.CRUCERO_IDENTIFICADOR)idViaje,
+		where id_recorrido=m.RECORRIDO_CODIGO and fecha_inicio=m.FECHA_SALIDA and fecha_finalizacion= m.FECHA_LLEGADA and fecha_finalizacion_estimada=m.FECHA_LLEGADA_ESTIMADA and id_crucero = m.CRUCERO_IDENTIFICADOR),
 		m.CRUCERO_IDENTIFICADOR,m.PASAJE_PRECIO,m.PASAJE_CODIGO
 from gd_esquema.Maestra m
 where m.PASAJE_CODIGO is not null and m.PASAJE_PRECIO is not null
@@ -555,7 +575,6 @@ if exists (select * from sys.procedures where name = 'agregarFuncionalidadPorRol
 	drop procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol
 USE GD1C2019
 go
-
 
 
 create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol (@idRol smallint,@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
@@ -717,13 +736,18 @@ if exists (select * from sys.procedures where name = 'mostrarViajesDisponibles')
 USE GD1C2019
 go
 
-select * from [LEISTE_EL_CODIGO?].Cabina
+select * from [LEISTE_EL_CODIGO?].PagoDeViaje
+select * from [LEISTE_EL_CODIGO?].Cabina --supongo que lo que esta en la tabla reserva aun esta en vigencia
 create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
 as
 	begin
-		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo tipoDeCabina,
+		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo tipoDeCabina,cr.cantidadDeCabinas -
+		(select count(*) 
+		from [LEISTE_EL_CODIGO?].Reserva
+		where 
 		from [LEISTE_EL_CODIGO?].Viaje v 
-		join [LEISTE_EL_CODIGO?].Cabina ca
+		join [LEISTE_EL_CODIGO?].Crucero cr on v.id_crucero = cr.id_crucero
+		join [LEISTE_EL_CODIGO?].Cabina ca on v.id_crucero = ca.id_crucero
 	end
 go
 
