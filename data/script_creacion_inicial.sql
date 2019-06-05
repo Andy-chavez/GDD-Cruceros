@@ -725,23 +725,29 @@ as
 go
 
 ----------------------------viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --------
-if exists (select * from sys.procedures where name = 'mostrarViajesDisponibles')
-	drop procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles
-USE GD1C2019
-go
+--if exists (select * from sys.procedures where name = 'mostrarViajesDisponibles')
+--	drop procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles
+--USE GD1C2019
+--go
 
-create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
-as
-	begin
-		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo tipoDeCabina,cr.cantidadDeCabinas -
-		(select count(*) 
-		from [LEISTE_EL_CODIGO?].Reserva
-		where 
-		from [LEISTE_EL_CODIGO?].Viaje v 
-		join [LEISTE_EL_CODIGO?].Crucero cr on v.id_crucero = cr.id_crucero
-		join [LEISTE_EL_CODIGO?].Cabina ca on v.id_crucero = ca.id_crucero
-	end
-go
+--create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
+--as
+--	begin
+--		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo tipoDeCabina,cr.cantidadDeCabinas -
+--		(select count(*) 
+--		from [LEISTE_EL_CODIGO?].Reserva r
+--		where r.id_viaje = v.id_viaje)-
+--		(select count(*)
+--		from [LEISTE_EL_CODIGO?].Pasaje p
+--		where p.id_viaje = v.id_viaje) cantidadDeCabinasDisponibles
+--		from [LEISTE_EL_CODIGO?].Viaje v 
+--		join [LEISTE_EL_CODIGO?].Crucero cr on v.id_crucero = cr.id_crucero
+--		join [LEISTE_EL_CODIGO?].Cabina ca on v.id_crucero = ca.id_crucero
+--		join [LEISTE_EL_CODIGO?].Recorrido r on v.id_recorrido = r.id_recorrido
+--		join [LEISTE_EL_CODIGO?].Tramo t on r.id_recorrido = t.id_recorrido
+--		where (t.id_origen = @origen and t.orden = 1) and (t.id_destino = @destino and t.orden = 2) -- suponemos que los recorridos son de dos tramos
+--	end
+--go
 
 -------------------------todo despues de seleccionar un viaje----------------- ingresar cliente
 if exists (select * from sys.procedures where name = 'ingresarCliente')
@@ -772,9 +778,9 @@ as
 	end
 go
 
-----------------------------actualizar usuario------------------------
-if exists (select * from sys.procedures where name = 'buscarPorDni')
-	drop procedure [LEISTE_EL_CODIGO?].buscarPorDni
+----------------------------actualizar usuario------------------------------------
+if exists (select * from sys.procedures where name = 'actualizarUsuario')
+	drop procedure [LEISTE_EL_CODIGO?].actualizarUsuario
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].actualizarUsuario (@idCliente int,@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
@@ -791,17 +797,21 @@ as
 		where id_cliente = @idCliente
 	end
 go
-----------------------------------pagarPasaje--------------------------------
-if exists (select * from sys.procedures where name = 'pagarPasaje')
-	drop procedure [LEISTE_EL_CODIGO?].pagarPasaje
+----------------------------------devolverIdPago--------------------------------
+if exists (select * from sys.procedures where name = 'devolverIdPago')
+	drop procedure [LEISTE_EL_CODIGO?].devolverIdPago
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].pagarPasaje (@idPasaje int,@cantidadDePasajes smallint,@idMedioPago int)
+create procedure [LEISTE_EL_CODIGO?].devolverIdPago (@cantidadDePasajes smallint,@idMedioPago int,@montoTotal int)
 as	
 	begin
-		insert into [LEISTE_EL_CODIGO?].PagoDeViaje(
+		declare @idPago int
+		insert into [LEISTE_EL_CODIGO?].PagoDeViaje(fecha_pago,monto_total,cantidad_de_pasajes,id_medio_de_pago)
+		values(CAST(SYSDATETIME() as datetime2(3)),@montoTotal,@cantidadDePasajes,@idMedioPago)
+		SELECT @idPago= SCOPE_IDENTITY()
+		return @idPago
 	end
-		
+go		
 
 /*--------------------------------------VISTAS C/ DROP PREVIO-----------------------------------------------*/
 if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
@@ -833,3 +843,24 @@ as
 		from [LEISTE_EL_CODIGO?].Rol
 		where baja_logica = 'N' -- ver despues si es necesario tambien hacer una vista con todos los roles, habilitados o no.
 go
+
+
+
+
+-----------------------------------------LISTADOS ESTADISTICOS------------------------------------
+if exists (select * from sys.procedures where name = 'recorridosConMasPasajesComprados')
+	drop procedure [LEISTE_EL_CODIGO?].recorridosConMasPasajesComprados
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].recorridosConMasPasajesComprados (@anio int, @semestre int)
+as	
+	declare @mesInicial int
+	if @semestre = 1
+	@mesInicial = 1
+	else if @semestre
+	begin
+		
+	end
+go		
+
+
