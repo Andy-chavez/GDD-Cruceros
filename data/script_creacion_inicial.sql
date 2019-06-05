@@ -129,6 +129,7 @@ create table [LEISTE_EL_CODIGO?].Crucero(
 	baja_fuera_vida_util nchar(1) default 'N' check(baja_fuera_vida_util in ('S','N')),
 	fecha_baja_definitiva datetime2(3) null,
 	fecha_reinicio_servicio datetime2(3) null,
+	fecha_baja_por_vida_util datetime2(3) null,
 	cantidadDeCabinas int,
 )
 go
@@ -656,7 +657,7 @@ create procedure [LEISTE_EL_CODIGO?].darDeBajaTemporalCrucero(@id_crucero nvarch
 as
 	begin
 		update [LEISTE_EL_CODIGO?].Crucero
-		set baja_fuera_de_servicio = 'S',fecha_reinicio_servicio = @fecha_reinicio
+		set baja_fuera_de_servicio = 'S',fecha_reinicio_servicio = @fecha_reinicio, f
 		where id_crucero = @id_crucero
 	end
 go
@@ -1025,6 +1026,32 @@ go
 --set @semestre = 2
 --exec [LEISTE_EL_CODIGO?].topMasCabinasLibres @anio, @semestre (para testear)
 
+-------------------------------TOP 5 CRUCEROS CON MAYOR CANTIDAD DE DIAS FUERA DE SERVICIO-------------------
+if exists (select * from sys.procedures where name = 'topCrucerosFueraDeServicio')
+	drop procedure [LEISTE_EL_CODIGO?].topCrucerosFueraDeServicio
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].topCrucerosFueraDeServicio (@anio int, @semestre int)
+as	
+	declare @mesInicial smallint,@mesFinal smallint
+	if @semestre = 1
+		begin
+			set @mesInicial = 1
+			set @mesFinal = 6
+		end
+	else if @semestre=2
+		begin
+			set @mesInicial = 6
+			set @mesFinal = 12
+		end
+	begin
+		select top 5 id_crucero, count(
+		from [LEISTE_EL_CODIGO?].Crucero
+		where year(v.fecha_finalizacion) = @anio and MONTH(v.fecha_finalizacion) between @mesInicial and @mesFinal
+		group by r.id_recorrido, r.id_origen, r.id_destino
+		order by 2 desc
+	end
+go	
 /*--------------------------------------VISTAS C/ DROP PREVIO-----------------------------------------------*/
 if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
