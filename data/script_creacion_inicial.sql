@@ -425,7 +425,7 @@ from gd_esquema.Maestra m
 where PASAJE_FECHA_COMPRA is not null and PASAJE_PRECIO is not null
 go
 -------------------------------------------------Reserva-----------------------------------------
-insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual,id_cliente,id_crucero,)
+/*insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual,id_cliente,id_crucero,)
 select distinct RESERVA_CODIGO,RESERVA_FECHA,
 		(select id_cliente
 		from [LEISTE_EL_CODIGO?].Cliente
@@ -439,7 +439,7 @@ select distinct RESERVA_CODIGO,RESERVA_FECHA,
 from gd_esquema.Maestra m
 where RESERVA_CODIGO is not null and RESERVA_FECHA is not null 
 	
-go
+go*/
 -------------------------------------------------Viaje------------------------------------------------
 insert into [LEISTE_EL_CODIGO?].Viaje (fecha_inicio,fecha_finalizacion,fecha_finalizacion_estimada,id_crucero,id_recorrido)
 select distinct FECHA_SALIDA,FECHA_LLEGADA,FECHA_LLEGADA_ESTIMADA,CRUCERO_IDENTIFICADOR,RECORRIDO_CODIGO from gd_esquema.Maestra
@@ -544,6 +544,34 @@ as
 		return @valor_retorno
 	end
 go
+		--CARGAR CRUCERO--
+if exists (select * from sys.procedures where name = 'cargarCrucero')
+	drop procedure [LEISTE_EL_CODIGO?].cargarCrucero
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].cargarCrucero(@id_crucero nvarchar(50),@id_fabricante nvarchar(255),@modelo nvarchar(50),@cantidadDeCabinas int)
+as
+	begin
+		declare @valor_retorno tinyint
+		if not exists( select id_fabricante
+						from [LEISTE_EL_CODIGO?].Fabricante 
+						where id_fabricante=@id_fabricante)
+			begin
+				set @valor_retorno = -1 -- no existe el fabricante
+			end
+		else if (@cantidadDeCabinas < 0)
+			begin
+				set @valor_retorno = -2 -- cantidad de cabinas invalida
+			end
+		else
+			begin
+				insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,id_fabricante,modelo,cantidadDeCabinas)
+				values(@id_crucero,@id_fabricante, @modelo, @cantidadDeCabinas)
+				set @valor_retorno = 1 --se cargo el crucero
+			end
+		return @valor_retorno
+	end
+go											     
 		--DAR CRUCERO DE BAJA DEFINITIVA--
 if exists (select * from sys.procedures where name = 'darDeBajaDefinitivaCrucero')
 	drop procedure [LEISTE_EL_CODIGO?].darDeBajaDefinitivaCrucero
