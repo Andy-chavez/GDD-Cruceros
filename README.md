@@ -62,6 +62,8 @@
                         Nota: ingresa los atributos que quieras modificar y los demas dejalos en NULL.
                          EXCEPTO ID_CLIENTE ESE ES OBLIGATORIO.
                          Porque no se puede buscar por DNI
+        
+#### create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
    
 # ...: VIEWS :...
 
