@@ -1,5 +1,9 @@
 USE GD1C2019
 go
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 
 if exists (select * from sys.schemas where name =  'LEISTE_EL_CODIGO?')
 begin
@@ -11,6 +15,8 @@ begin
 	if exists(select * from sys.tables where object_name(object_id)='MedioDePago'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].MedioDePago
 
+	if exists(select * from sys.tables where object_name(object_id)='Reserva'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+		drop table  [LEISTE_EL_CODIGO?].Reserva
 	if exists(select * from sys.tables where object_name(object_id)='Cliente'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].Cliente
 	if exists(select * from sys.tables where object_name(object_id)='Usuario' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
@@ -39,8 +45,6 @@ begin
 		drop table  [LEISTE_EL_CODIGO?].Recorrido
 	if exists(select * from sys.tables where object_name(object_id)='Puerto'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].Puerto
-	if exists(select * from sys.tables where object_name(object_id)='Reserva'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-		drop table  [LEISTE_EL_CODIGO?].Reserva
 
 	if exists(select * from sys.tables where object_name(object_id)='Funcionalidad'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].Funcionalidad
@@ -81,7 +85,7 @@ create table [LEISTE_EL_CODIGO?].FuncionalidadPorRol(
 go
 create table [LEISTE_EL_CODIGO?].Cliente(
 	id_cliente int identity primary key,
-	id_rol smallint default '4' references [LEISTE_EL_CODIGO?].Rol,
+	id_rol smallint default '3' references [LEISTE_EL_CODIGO?].Rol,
 	nombre varchar(255) not null,
 	apellido varchar(255) not null,
 	dni decimal(18, 0) not null,
@@ -123,7 +127,7 @@ create table [LEISTE_EL_CODIGO?].Crucero(
 	baja_fuera_vida_util nchar(1) default 'N' check(baja_fuera_vida_util in ('S','N')),
 	fecha_baja_definitiva datetime2(3) null,
 	fecha_reinicio_servicio datetime2(3) null,
-	cantidadDeCabinas int not null
+	cantidadDeCabinas int,
 )
 go
 create table [LEISTE_EL_CODIGO?].Servicio(
@@ -133,6 +137,7 @@ create table [LEISTE_EL_CODIGO?].Servicio(
 go
 create table [LEISTE_EL_CODIGO?].TipoCabina(
 	id_tipo nvarchar(255) primary key,
+	--tipo_cabina varchar(255),
 	id_servicio smallint references [LEISTE_EL_CODIGO?].Servicio,
 	porcentaje_recargo decimal(18, 2) not null
 )
@@ -173,6 +178,7 @@ create table [LEISTE_EL_CODIGO?].MedioDePago(
 go
 create table [LEISTE_EL_CODIGO?].PagoDeViaje(
 	id_pago int primary key identity,
+	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
 	fecha_pago datetime2(3) null,
 	monto_total decimal(8,2) not null,
 	cantidad_de_pasajes smallint default 1 check(cantidad_de_pasajes > 0),
@@ -239,8 +245,7 @@ go
 -- Rol
 insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('administrador general')			--Rol 1 = administrador general
 insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('administrador')					--Rol 2 = administrador
-insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('usuario')						--Rol 3 = usuario
-insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('cliente')						--Rol 4 = cliente
+insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('cliente')						--Rol 3 = cliente
 go
 -- Funcionalidad por Rol
 --ADMINISTRADOR GENERAL
@@ -268,11 +273,11 @@ go
 
 --******************************************creo que estos inserts feos pueden hacerse de otra forma 
 
---USUARIO
+--Cliente
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(3,7)
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(3,8)
 go
--- Usuario
+----Contraseñas
 declare @hash varbinary(32)
 select @hash = hashbytes('SHA2_256', 'w23e')
 --ADMINISTRADOR GENERAL
@@ -280,7 +285,7 @@ insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin'
 --ADMINISTRADORES
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('adminNuestro',2,@hash)
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin2',2,@hash)
---USUARIOS
+--Cliente
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepe',3)
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepita',3)
 go
@@ -330,25 +335,57 @@ update [LEISTE_EL_CODIGO?].TipoCabina
 set id_servicio = 4
 where id_tipo = 'Suite'
 go
+
 update [LEISTE_EL_CODIGO?].TipoCabina
 set id_servicio = 5
-where id_tipo = 'Cabina Balcón'
-go
-
--------------------Cabinas--------------------------
-insert into [LEISTE_EL_CODIGO?].Cabina (numero,piso,id_crucero,id_tipo)
-select CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO from gd_esquema.Maestra
-group by CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO
+where id_tipo like 'Cabina Ba%'
 go
 
 --Crucero-- (son 37 cruceros, se repiten varias veces por cada viaje)
-insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,id_fabricante,modelo,cantidadDeCabinas)
-select distinct CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO,
-					(SELECT count(*)
-					FROM [LEISTE_EL_CODIGO?].Cabina c
-					WHERE c.id_crucero = m.CRUCERO_IDENTIFICADOR)
+insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,id_fabricante,modelo)
+select distinct CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO
+					--(SELECT count(id_cabina)
+					--FROM [LEISTE_EL_CODIGO?].Cabina c
+					--WHERE c.id_crucero = m.CRUCERO_IDENTIFICADOR)
 FROM gd_esquema.Maestra m
 go
+-------------------Cabinas--------------------------
+use GD1C2019
+go
+insert into [LEISTE_EL_CODIGO?].Cabina (numero,piso,id_crucero,id_tipo)
+select CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO
+from gd_esquema.Maestra
+group by CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO
+go
+
+-------------------------cursor para cantidad de cabinas------------
+declare @id_crucero nvarchar(50)
+declare cursor_cant cursor for
+select id_crucero
+from [LEISTE_EL_CODIGO?].Crucero
+
+open cursor_cant
+fetch next from cursor_cant
+into @id_crucero
+	while @@FETCH_STATUS =0
+		begin
+			declare @cant_cabinas int
+			select @cant_cabinas = count(id_cabina)
+			from [LEISTE_EL_CODIGO?].Cabina c
+			where c.id_crucero = @id_crucero
+			print @cant_cabinas
+
+			update [LEISTE_EL_CODIGO?].Crucero
+			set cantidadDeCabinas = @cant_cabinas
+			where id_crucero = @id_crucero
+
+			fetch next from cursor_cant
+			into @id_crucero
+		end
+	close cursor_cant
+	deallocate cursor_cant
+go
+
 -----------------------------Puerto------------------------------- (solo va nombre de puerto en la tabla, no va el campo ciudad, es irrelevante)
 
 --select t.RECORRIDO_CODIGO,count(*)
@@ -369,9 +406,9 @@ IF OBJECT_ID('tempdb..#tramoTemp') IS NOT NULL DROP TABLE #tramoTemp
 go
 create table #tramoTemp(
 	id_tramo smallint identity primary key,
-	id_recorrido decimal(18,0) references [LEISTE_EL_CODIGO?].Recorrido,
-	id_origen nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
-	id_destino nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
+	id_recorrido decimal(18,0),
+	id_origen nvarchar(255),
+	id_destino nvarchar(255),
 	orden smallint,
 	precio_base decimal(18,2) not null
 );
@@ -422,8 +459,11 @@ where (Recorrido.id_recorrido = t1.id_recorrido and t1.orden = 2)
 
 ----------------------------------------Pago de viaje-------------------------------------------- 
 --select PASAJE_CODIGO, count(*) from gd_esquema.Maestra where PASAJE_CODIGO is not null group by PASAJE_CODIGO having count(*)>1
-insert into [LEISTE_EL_CODIGO?].PagoDeViaje(fecha_pago,monto_total)
-select PASAJE_FECHA_COMPRA,PASAJE_PRECIO
+insert into [LEISTE_EL_CODIGO?].PagoDeViaje(fecha_pago,monto_total,id_cliente)
+select PASAJE_FECHA_COMPRA,PASAJE_PRECIO,(select id_cliente
+										from [LEISTE_EL_CODIGO?].Cliente
+									where nombre=m.CLI_NOMBRE and apellido=m.CLI_APELLIDO and dni=m.CLI_DNI and telefono=m.CLI_TELEFONO and fecha_nacimiento = m.CLI_FECHA_NAC)cliente
+		 
 from gd_esquema.Maestra m
 where PASAJE_FECHA_COMPRA is not null and PASAJE_PRECIO is not null
 go
@@ -452,8 +492,8 @@ insert into [LEISTE_EL_CODIGO?].Pasaje (id_cabina,id_cliente,id_viaje,id_crucero
 select distinct(select id_cabina
 		from [LEISTE_EL_CODIGO?].Cabina
 		where numero= m.CABINA_NRO and id_crucero= m.CRUCERO_IDENTIFICADOR and piso = m.CABINA_PISO and id_tipo = m.CABINA_TIPO)idCabina,
-		(select id_cliente
-		from [LEISTE_EL_CODIGO?].Cliente
+		(select c.id_cliente
+		from [LEISTE_EL_CODIGO?].Cliente c
 		where nombre=m.CLI_NOMBRE and apellido=m.CLI_APELLIDO and dni=m.CLI_DNI and telefono=m.CLI_TELEFONO and fecha_nacimiento = m.CLI_FECHA_NAC)cliente,
 		(select id_viaje
 		from [LEISTE_EL_CODIGO?].Viaje
@@ -461,6 +501,12 @@ select distinct(select id_cabina
 		m.CRUCERO_IDENTIFICADOR,m.PASAJE_PRECIO,m.PASAJE_CODIGO
 from gd_esquema.Maestra m
 where m.PASAJE_CODIGO is not null and m.PASAJE_PRECIO is not null
+
+go
+update [LEISTE_EL_CODIGO?].Pasaje
+set id_pago = p.id_pago
+from [LEISTE_EL_CODIGO?].PagoDeViaje p
+where Pasaje.id_cliente = p.id_cliente
 go
 /*--------------------------------------PROCEDURES C/DROP-----------------------------------------------*/
 		--LOGIN--
