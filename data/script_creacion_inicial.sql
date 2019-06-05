@@ -3,18 +3,16 @@ go
 
 if exists (select * from sys.schemas where name =  'LEISTE_EL_CODIGO?')
 begin
-
+	if exists(select * from sys.tables where object_name(object_id)='Reserva'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+		drop table  [LEISTE_EL_CODIGO?].Reserva
 	if exists(select * from sys.tables where object_name(object_id)='MedioDePago'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].MedioDePago
 	if exists(select * from sys.tables where object_name(object_id)='PagoDeViaje'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].PagoDeViaje	
-	if exists(select * from sys.tables where object_name(object_id)='Reserva'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-		drop table  [LEISTE_EL_CODIGO?].Reserva
 	if exists(select * from sys.tables where object_name(object_id)='Pasaje'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].Pasaje
 	if exists(select * from sys.tables where object_name(object_id)='Cliente'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].Cliente
-
 	if exists(select * from sys.tables where object_name(object_id)='Usuario' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].Usuario
 	if exists(select * from sys.tables where object_name(object_id)='FuncionalidadPorRol'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
