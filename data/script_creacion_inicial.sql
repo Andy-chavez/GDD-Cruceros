@@ -661,7 +661,21 @@ as
 	end
 go
 
-------------------auditoria de crucero -------------------------------
+--------------------------auditar cancelacion de pasajes ------------------
+if exists (select * from sys.procedures where name = 'auditarCancelacion')
+	drop procedure [LEISTE_EL_CODIGO?].auditarCancelacion
+USE GD1C2019
+go
+
+create procedure [LEISTE_EL_CODIGO?].auditarCancelacion(@id_crucero nvarchar(50),@motivo varchar(256))
+as
+	begin
+		insert into [LEISTE_EL_CODIGO?].AuditoriaDeCruceros(id_crucero,motivo)
+		values(@id_crucero,@motivo)
+	end
+go
+
+------------------cancelarPasajes -------------------------------
 if exists (select * from sys.procedures where name = 'cancelarPasajes')
 	drop procedure [LEISTE_EL_CODIGO?].cancelarPasajes
 USE GD1C2019
@@ -670,9 +684,12 @@ go
 create procedure [LEISTE_EL_CODIGO?].cancelarPasajes(@id_crucero nvarchar(50),@fecha_actual datetime2,@motivo varchar(256))
 as
 	begin
-		update [LEISTE_EL_CODIGO?].Crucero
-		set baja_fuera_de_servicio = 'S',fecha_reinicio_servicio = @fecha_reinicio
-		where id_crucero = @id_crucero
+		update [LEISTE_EL_CODIGO?].Pasaje
+		set cancelacion = 'S',fecha_cancelacion = @fecha_actual
+		from [LEISTE_EL_CODIGO?].Viaje v
+		where Pasaje.id_crucero = @id_crucero and (Pasaje.id_viaje = v.id_viaje and v.fecha_inicio>=@fecha_actual)
+
+		exec [LEISTE_EL_CODIGO?].auditarCancelacion @id_crucero, @motivo
 	end
 go
 
