@@ -468,8 +468,8 @@ from gd_esquema.Maestra m
 where PASAJE_FECHA_COMPRA is not null and PASAJE_PRECIO is not null
 go
 -------------------------------------------------Reserva-----------------------------------------
-/*insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual,id_cliente,id_crucero,)
-select distinct RESERVA_CODIGO,RESERVA_FECHA,
+insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual,id_cliente,id_crucero,id_viaje,id_cabina)
+select RESERVA_CODIGO,RESERVA_FECHA,
 		(select id_cliente
 		from [LEISTE_EL_CODIGO?].Cliente
 		where nombre=m.CLI_NOMBRE and apellido=m.CLI_APELLIDO and dni=m.CLI_DNI and telefono=m.CLI_TELEFONO and fecha_nacimiento = m.CLI_FECHA_NAC),
@@ -478,14 +478,16 @@ select distinct RESERVA_CODIGO,RESERVA_FECHA,
 		from [LEISTE_EL_CODIGO?].Viaje
 		where id_recorrido=m.RECORRIDO_CODIGO and fecha_inicio=m.FECHA_SALIDA and fecha_finalizacion= m.FECHA_LLEGADA 
 		and fecha_finalizacion_estimada=m.FECHA_LLEGADA_ESTIMADA and id_crucero = m.CRUCERO_IDENTIFICADOR),
-		
+		(select id_cabina
+		from [LEISTE_EL_CODIGO?].Cabina
+		where numero= m.CABINA_NRO and id_crucero= m.CRUCERO_IDENTIFICADOR and piso = m.CABINA_PISO and id_tipo = m.CABINA_TIPO)
 from gd_esquema.Maestra m
 where RESERVA_CODIGO is not null and RESERVA_FECHA is not null 
-	
-go*/
+go
 -------------------------------------------------Viaje------------------------------------------------
 insert into [LEISTE_EL_CODIGO?].Viaje (fecha_inicio,fecha_finalizacion,fecha_finalizacion_estimada,id_crucero,id_recorrido)
-select distinct FECHA_SALIDA,FECHA_LLEGADA,FECHA_LLEGADA_ESTIMADA,CRUCERO_IDENTIFICADOR,RECORRIDO_CODIGO from gd_esquema.Maestra
+select distinct FECHA_SALIDA,FECHA_LLEGADA,FECHA_LLEGADA_ESTIMADA,CRUCERO_IDENTIFICADOR,RECORRIDO_CODIGO 
+from gd_esquema.Maestra
 go
 ---------------------------------------------Pasaje-----------------------------------------------------
 insert into [LEISTE_EL_CODIGO?].Pasaje (id_cabina,id_cliente,id_viaje,id_crucero,precio,id_pasaje)
@@ -627,12 +629,13 @@ if exists (select * from sys.procedures where name = 'darDeBajaDefinitivaCrucero
 USE GD1C2019
 go
 
-create procedure [LEISTE_EL_CODIGO?].darDeBajaDefinitivaCrucero(@id_crucero nvarchar(50),@fecha_actual datetime2)
+create procedure [LEISTE_EL_CODIGO?].darDeBajaDefinitivaCrucero(@id_crucero nvarchar(50),@fecha_actual datetime2) --@motivo
 as
 	begin
 		update [LEISTE_EL_CODIGO?].Crucero
 		set baja_fuera_vida_util = 'S',fecha_baja_definitiva = @fecha_actual
 		where id_crucero = @id_crucero
+		--exec de procedure y que pase motivo x parametro y id_crucero, idem abajo
 	end
 go
 		--DAR CRUCERO DE BAJA TEMPORAL--
@@ -814,30 +817,37 @@ as
 go
 
 ----------------------------viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --------
---if exists (select * from sys.procedures where name = 'mostrarViajesDisponibles')
---	drop procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles
---USE GD1C2019
---go
+if exists (select * from sys.procedures where name = 'mostrarViajesDisponibles')
+	drop procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles
+USE GD1C2019
+go
 
---create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
---as
---	begin
---		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo tipoDeCabina,cr.cantidadDeCabinas -
---		(select count(*) 
---		from [LEISTE_EL_CODIGO?].Reserva r
---		where r.id_viaje = v.id_viaje)-
---		(select count(*)
---		from [LEISTE_EL_CODIGO?].Pasaje p
---		where p.id_viaje = v.id_viaje) cantidadDeCabinasDisponibles
---		from [LEISTE_EL_CODIGO?].Viaje v 
---		join [LEISTE_EL_CODIGO?].Crucero cr on v.id_crucero = cr.id_crucero
---		join [LEISTE_EL_CODIGO?].Cabina ca on v.id_crucero = ca.id_crucero
---		join [LEISTE_EL_CODIGO?].Recorrido r on v.id_recorrido = r.id_recorrido
---		join [LEISTE_EL_CODIGO?].Tramo t on r.id_recorrido = t.id_recorrido
---		where (t.id_origen = @origen and t.orden = 1) and (t.id_destino = @destino and t.orden = 2) -- suponemos que los recorridos son de dos tramos
---	end
---go
+create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
+as
+	begin
+		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo tipoDeCabina,cr.cantidadDeCabinas -
+		(select count(*) 
+		from [LEISTE_EL_CODIGO?].Reserva r
+		where r.id_viaje = v.id_viaje)-
+		(select count(*)
+		from [LEISTE_EL_CODIGO?].Pasaje p
+		where p.id_viaje = v.id_viaje) cantidadDeCabinasDisponibles
+		from [LEISTE_EL_CODIGO?].Viaje v 
+		join [LEISTE_EL_CODIGO?].Crucero cr on v.id_crucero = cr.id_crucero
+		join [LEISTE_EL_CODIGO?].Cabina ca on v.id_crucero = ca.id_crucero
+		join [LEISTE_EL_CODIGO?].Recorrido rec on v.id_recorrido = rec.id_recorrido
+		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
+		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
+	end
+go ---CVDUGH-82620
+--2018-06-22 04:00:00.000   //43820892   PORT LOUIS  NUAKCHOT
+--2018-07-05 07:00:00.000   //43820875  EL CAIRO	ASMARA
+--declare @fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255)
+--set @fecha_inicio = '2018-04-23 03:00:00.000'
+--set @origen ='LUANDA'
+--set @destino = 'ARGEL'
 
+--exec [LEISTE_EL_CODIGO?].mostrarViajesDisponibles @fecha_inicio, @origen, @destino
 -------------------------todo despues de seleccionar un viaje----------------- ingresar cliente
 if exists (select * from sys.procedures where name = 'ingresarCliente')
 	drop procedure [LEISTE_EL_CODIGO?].ingresarCliente
