@@ -90,13 +90,15 @@ create table [LEISTE_EL_CODIGO?].Cliente(
 	fecha_nacimiento datetime2(3) NULL,
 )
 go
-create table [LEISTE_EL_CODIGO?].Recorrido(
-	id_recorrido decimal(18,0) primary key,
-	estado char(1) default 'A' check(estado in ('A','I')) 
-)
-go
 create table [LEISTE_EL_CODIGO?].Puerto(
 	id_puerto nvarchar(255) primary key,
+)
+go
+create table [LEISTE_EL_CODIGO?].Recorrido(
+	id_recorrido decimal(18,0) primary key,
+	estado char(1) default 'A' check(estado in ('A','I')),
+	id_origen nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
+	id_destino nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
 )
 go
 create table [LEISTE_EL_CODIGO?].Tramo(
@@ -173,7 +175,6 @@ create table [LEISTE_EL_CODIGO?].PagoDeViaje(
 	fecha_pago datetime2(3) null,
 	monto_total decimal(8,2) not null,
 	cantidad_de_pasajes smallint default 1 check(cantidad_de_pasajes > 0),
-	id_reserva decimal(18,0) references [LEISTE_EL_CODIGO?].Reserva,
 	id_medio_de_pago int references [LEISTE_EL_CODIGO?].MedioDePago,
 )
 go
@@ -400,18 +401,31 @@ SELECT DISTINCT id_recorrido,
 				precio_base
 FROM #tramoTemp temp
 go
+------agrego un insert para hacer mas facil la busqueda en recorrido---------------
+--- ver si se les ocurre una manera un poco mas linda de hacerlo
+update [LEISTE_EL_CODIGO?].Recorrido
+set id_origen = t1.id_origen
+from [LEISTE_EL_CODIGO?].Tramo t1
+where Recorrido.id_recorrido = t1.id_recorrido and t1.orden = 1
+
+update [LEISTE_EL_CODIGO?].Recorrido
+set id_destino = t1.id_destino
+from [LEISTE_EL_CODIGO?].Tramo t1
+where (t1.id_recorrido = 43820864 or t1.id_recorrido = 43820908) and Recorrido.id_recorrido = t1.id_recorrido
+
+update [LEISTE_EL_CODIGO?].Recorrido
+set id_destino= t1.id_destino
+from [LEISTE_EL_CODIGO?].Tramo t1
+where (Recorrido.id_recorrido = t1.id_recorrido and t1.orden = 2)
 ----------------------------------Medio de Pago--------------------------------- (esta la llenamos nosotros)
 
 ----------------------------------------Pago de viaje-------------------------------------------- 
 --select PASAJE_CODIGO, count(*) from gd_esquema.Maestra where PASAJE_CODIGO is not null group by PASAJE_CODIGO having count(*)>1
-insert into [LEISTE_EL_CODIGO?].PagoDeViaje(id_pasaje,fecha_pago,monto_total)
-select PASAJE_CODIGO,PASAJE_FECHA_COMPRA,PASAJE_PRECIO
+insert into [LEISTE_EL_CODIGO?].PagoDeViaje(fecha_pago,monto_total)
+select PASAJE_FECHA_COMPRA,PASAJE_PRECIO
 from gd_esquema.Maestra m
 where PASAJE_FECHA_COMPRA is not null and PASAJE_PRECIO is not null
 go
-
-select m.PASAJE_CODIGO, m.PASAJE_FECHA_COMPRA,m.RESERVA_FECHA,m.RESERVA_CODIGO, m.CRUCERO_IDENTIFICADOR,CABINA_TIPO,CABINA_NRO,CABINA_NRO
-from gd_esquema.Maestra m
 -------------------------------------------------Reserva-----------------------------------------
 insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual,id_cliente,id_crucero,)
 select distinct RESERVA_CODIGO,RESERVA_FECHA,
@@ -854,12 +868,19 @@ USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].recorridosConMasPasajesComprados (@anio int, @semestre int)
 as	
-	declare @mesInicial int
+	declare @mesInicial smallint,@mesFinal smallint
 	if @semestre = 1
-	@mesInicial = 1
-	else if @semestre
+	set @mesInicial = 1
+	else if @semestre=2
+		set @mesInicial = 6
+		set @mesFinal = 12
 	begin
-		
+		select top 5 r.id_recorrido, count(p.id_pasaje) cantidadDePasajesVendidos,
+		from [LEISTE_EL_CODIGO?].Recorrido r 
+		join [LEISTE_EL_CODIGO?].Viaje v on r.id_recorrido = v.id_recorrido
+		join [LEISTE_EL_CODIGO?].Pasaje p on v.id_viaje = p.id_viaje
+		where 
+		order by count(r.id_recorrido) desc
 	end
 go		
 
