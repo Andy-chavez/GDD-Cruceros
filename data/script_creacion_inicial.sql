@@ -952,27 +952,79 @@ as
 go		
 
 -----------------------------------------ABM 10 <LISTADOS ESTADISTICOS>------------------------------------
-if exists (select * from sys.procedures where name = 'recorridosConMasPasajesComprados')
-	drop procedure [LEISTE_EL_CODIGO?].recorridosConMasPasajesComprados
+
+--------------TOP RECORRIDOS CON MAS PASAJES VENDIDOS----------------------------
+if exists (select * from sys.procedures where name = 'topRecorridosConMasPasajesComprados')
+	drop procedure [LEISTE_EL_CODIGO?].topRecorridosConMasPasajesComprados
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].recorridosConMasPasajesComprados (@anio int, @semestre int)
-as	
+create procedure [LEISTE_EL_CODIGO?].topRecorridosConMasPasajesComprados (@anio int, @semestre int)
+as
 	declare @mesInicial smallint,@mesFinal smallint
 	if @semestre = 1
-	set @mesInicial = 1
+		begin
+			set @mesInicial = 1
+			set @mesFinal = 6
+		end
 	else if @semestre=2
-		set @mesInicial = 6
-		set @mesFinal = 12
+		begin
+			set @mesInicial = 6
+			set @mesFinal = 12
+		end
 	begin
-		select top 5 r.id_recorrido, count(p.id_pasaje) cantidadDePasajesVendidos,
+		select top 5 r.id_recorrido, count(p.id_pasaje) cantidadDePasajesVendidos, r.id_origen origen, r.id_destino destino
 		from [LEISTE_EL_CODIGO?].Recorrido r 
 		join [LEISTE_EL_CODIGO?].Viaje v on r.id_recorrido = v.id_recorrido
 		join [LEISTE_EL_CODIGO?].Pasaje p on v.id_viaje = p.id_viaje
-		where 
+		join [LEISTE_EL_CODIGO?].PagoDeViaje pa on p.id_pago = pa.id_pago
+		where year(pa.fecha_pago) = @anio and MONTH(pa.fecha_pago) between @mesInicial and @mesFinal
+		group by r.id_recorrido, r.id_origen, r.id_destino
 		order by count(r.id_recorrido) desc
 	end
 go		
+--declare @anio int, @semestre int
+--set @anio = 2018
+--set @semestre = 1
+--exec [LEISTE_EL_CODIGO?].topRecorridosConMasPasajesComprados @anio, @semestre (para testear)
+
+-------------------------------TOP 5 RECORRIDOS CON MAS CABINAS LIBRES EN VIAJES REALIZADOS-------------------
+if exists (select * from sys.procedures where name = 'topMasCabinasLibres')
+	drop procedure [LEISTE_EL_CODIGO?].topMasCabinasLibres
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].topMasCabinasLibres (@anio int, @semestre int)
+as	
+	declare @mesInicial smallint,@mesFinal smallint
+	if @semestre = 1
+		begin
+			set @mesInicial = 1
+			set @mesFinal = 6
+		end
+	else if @semestre=2
+		begin
+			set @mesInicial = 6
+			set @mesFinal = 12
+		end
+	begin
+		select top 5 r.id_recorrido, r.id_origen origen, r.id_destino destino,
+		sum(cr.cantidadDeCabinas) - (select count(*)
+									from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].Viaje v
+									on p.id_viaje = v.id_viaje
+									where v.id_recorrido = r.id_recorrido and
+									year(v.fecha_finalizacion) = @anio and MONTH(v.fecha_finalizacion) between @mesInicial and @mesFinal) cabinasLibres
+		from [LEISTE_EL_CODIGO?].Recorrido r 
+		join [LEISTE_EL_CODIGO?].Viaje v on r.id_recorrido = v.id_recorrido
+		join [LEISTE_EL_CODIGO?].Crucero cr on  v.id_crucero=cr.id_crucero
+		where year(v.fecha_finalizacion) = @anio and MONTH(v.fecha_finalizacion) between @mesInicial and @mesFinal
+		group by r.id_recorrido, r.id_origen, r.id_destino
+		order by 4 desc
+	end
+go	
+--declare @anio int, @semestre int
+--set @anio = 2018
+--set @semestre = 2
+--exec [LEISTE_EL_CODIGO?].topMasCabinasLibres @anio, @semestre (para testear)
+
 /*--------------------------------------VISTAS C/ DROP PREVIO-----------------------------------------------*/
 if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin

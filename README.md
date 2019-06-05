@@ -67,10 +67,11 @@
 #### cancelarPasajes(@id_crucero nvarchar(50),@fecha_actual datetime2,@motivo varchar(256))
 #### auditarCancelacion(@id_crucero nvarchar(50),@motivo varchar(256)) -- este se usa desde la base de datos
 
-LISTADO ESTADISTICOS:
+# LISTADO ESTADISTICOS:
 
 #### topRecorridosConMasPasajesComprados (@anio int, @semestre int)
- 
+#### topMasCabinasLibres (@anio int, @semestre int)
+
 # ...: VIEWS :...
 
 
