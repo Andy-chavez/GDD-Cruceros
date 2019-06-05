@@ -12,6 +12,14 @@
 
 #### darDeBajaDefinitivaCrucero(@id_crucero nvarchar(50),@fecha_actual datetime2)
 #### darDeBajaTemporalCrucero(@id_crucero nvarchar(50),@fecha_reinicio datetime2)
+#### cargarCrucero(@id_crucero nvarchar(50),@id_fabricante nvarchar(255),@modelo nvarchar(50),@cantidadDeCabinas int)
+
+  Valores de retorno:
+  
+     1 : Se cargo crucero
+    -1 : No existe ese fabricante
+    -2 : cantidad de cabinas menor a cero
+    
 #### cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2, @fecha_actual datetime2)
 
   Valores de retorno:
@@ -24,6 +32,7 @@
 
 #### agregarFuncionalidadPorRol (@idRol smallint,@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
 #### eliminarFuncionalidadRol (@idRol smallint,@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
+
   Valores de retorno:
 
     1: se cargo todo joya
@@ -32,6 +41,7 @@
     -3: el rol ya tiene esa funcionalidad(agregar) o no tiene esa funcionalidad(eliminar)
 
 #### crearNuevoRol (@idFuncionalidad smallint,@NombreRol nvarchar(255))
+
   Valores de retorno:
 
     1: se cargo todo joya
@@ -39,16 +49,17 @@
     -3: el rol ya tiene esa funcionalidad
 #### darAltaRol (@idRol smallint)
 #### darBajaRol (@idRol smallint)
+
    Valores de retorno:
 
     1: se cargo todo joya
     -1: no existe el rol
+    
 #### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
 #### ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255))
                 seria el caso que tenes que cargar un cliente de cero
-####actualizarUsuario (@idCliente int,@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
-													@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255)) 
-                         ingresa los atributos que quieras modificar y los demas dejalos en NULL.
+#### actualizarUsuario (@idCliente int,@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),	@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255)) 
+                        Nota: ingresa los atributos que quieras modificar y los demas dejalos en NULL.
                          EXCEPTO ID_CLIENTE ESE ES OBLIGATORIO.
                          Porque no se puede buscar por DNI
    
