@@ -1060,16 +1060,16 @@ go
 --set @dia1 = '2018-06-22 04:00:00.000'
 --set @dia2 = '2018-07-05 07:00:00.000'
 --print datediff(day, @dia1, @dia2)
-begin transaction
-update [LEISTE_EL_CODIGO?].Crucero
-set fecha_baja_por_fuera_de_servicio = '2018-04-22 04:00:00.000',
-fecha_reinicio_servicio = '2018-05-05 07:00:00.000'
-where id_crucero = 'ASHFLJ-66175'
-declare @anio int, @semestre int
-set @anio = 2018
-set @semestre = 1
-exec [LEISTE_EL_CODIGO?].topCrucerosFueraDeServicio @anio, @semestre --(para testear)
-ROLLBACK TRANSACTION
+--begin transaction
+--update [LEISTE_EL_CODIGO?].Crucero
+--set fecha_baja_por_fuera_de_servicio = '2018-04-22 04:00:00.000',
+--fecha_reinicio_servicio = '2018-05-05 07:00:00.000'
+--where id_crucero = 'ASHFLJ-66175'
+--declare @anio int, @semestre int
+--set @anio = 2018
+--set @semestre = 1
+--exec [LEISTE_EL_CODIGO?].topCrucerosFueraDeServicio @anio, @semestre --(para testear)
+--ROLLBACK TRANSACTION
 
 /*--------------------------------------VISTAS C/ DROP PREVIO-----------------------------------------------*/
 if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
