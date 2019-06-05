@@ -66,6 +66,11 @@
 #### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
 #### cancelarPasajes(@id_crucero nvarchar(50),@fecha_actual datetime2,@motivo varchar(256))
 #### auditarCancelacion(@id_crucero nvarchar(50),@motivo varchar(256)) -- este se usa desde la base de datos
+
+LISTADO ESTADISTICOS:
+
+#### topRecorridosConMasPasajesComprados (@anio int, @semestre int)
+ 
 # ...: VIEWS :...
 
 

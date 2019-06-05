@@ -951,6 +951,28 @@ as
 	end
 go		
 
+-----------------------------------------ABM 10 <LISTADOS ESTADISTICOS>------------------------------------
+if exists (select * from sys.procedures where name = 'recorridosConMasPasajesComprados')
+	drop procedure [LEISTE_EL_CODIGO?].recorridosConMasPasajesComprados
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].recorridosConMasPasajesComprados (@anio int, @semestre int)
+as	
+	declare @mesInicial smallint,@mesFinal smallint
+	if @semestre = 1
+	set @mesInicial = 1
+	else if @semestre=2
+		set @mesInicial = 6
+		set @mesFinal = 12
+	begin
+		select top 5 r.id_recorrido, count(p.id_pasaje) cantidadDePasajesVendidos,
+		from [LEISTE_EL_CODIGO?].Recorrido r 
+		join [LEISTE_EL_CODIGO?].Viaje v on r.id_recorrido = v.id_recorrido
+		join [LEISTE_EL_CODIGO?].Pasaje p on v.id_viaje = p.id_viaje
+		where 
+		order by count(r.id_recorrido) desc
+	end
+go		
 /*--------------------------------------VISTAS C/ DROP PREVIO-----------------------------------------------*/
 if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
@@ -985,27 +1007,5 @@ go
 
 
 
------------------------------------------LISTADOS ESTADISTICOS------------------------------------
-if exists (select * from sys.procedures where name = 'recorridosConMasPasajesComprados')
-	drop procedure [LEISTE_EL_CODIGO?].recorridosConMasPasajesComprados
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].recorridosConMasPasajesComprados (@anio int, @semestre int)
-as	
-	declare @mesInicial smallint,@mesFinal smallint
-	if @semestre = 1
-	set @mesInicial = 1
-	else if @semestre=2
-		set @mesInicial = 6
-		set @mesFinal = 12
-	begin
-		select top 5 r.id_recorrido, count(p.id_pasaje) cantidadDePasajesVendidos,
-		from [LEISTE_EL_CODIGO?].Recorrido r 
-		join [LEISTE_EL_CODIGO?].Viaje v on r.id_recorrido = v.id_recorrido
-		join [LEISTE_EL_CODIGO?].Pasaje p on v.id_viaje = p.id_viaje
-		where 
-		order by count(r.id_recorrido) desc
-	end
-go		
 
 
