@@ -29,6 +29,8 @@ begin
 		drop table  [LEISTE_EL_CODIGO?].Viaje
 	if exists(select * from sys.tables where object_name(object_id)='Cabina'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].Cabina
+	if exists(select * from sys.tables where object_name(object_id)='AuditoriaDeCruceros'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+		drop table  [LEISTE_EL_CODIGO?].AuditoriaDeCruceros
 	if exists(select * from sys.tables where object_name(object_id)='Crucero'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].Crucero
 
@@ -198,6 +200,12 @@ create table [LEISTE_EL_CODIGO?].Pasaje(
 	fecha_reprogramacion datetime2(3) null,
 )
 go
+
+create table [LEISTE_EL_CODIGO?].AuditoriaDeCruceros(
+	id_auditoria int identity primary key,
+	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
+	motivo varchar(256)
+)
 /*--------------------------------------TRIGGERS-----------------------------------------------*/
 USE GD1C2019
 go
@@ -573,7 +581,7 @@ as
 		else if exists( select id_viaje
 						from [LEISTE_EL_CODIGO?].Viaje join [LEISTE_EL_CODIGO?].Crucero cru
 						on (cru.id_crucero = @id_crucero)
-						where fecha_inicio not between @fecha_inicio and @fecha_finalizacion_estimada
+						where fecha_inicio not between @fecha_inicio and @fecha_finalizacion_estimada --fijarse cambiar los between
 							and fecha_finalizacion_estimada not between @fecha_inicio and @fecha_finalizacion_estimada)
 			begin
 				set @valor_retorno = -2 -- crucero ocupado
@@ -653,8 +661,22 @@ as
 	end
 go
 
+------------------auditoria de crucero -------------------------------
+if exists (select * from sys.procedures where name = 'cancelarPasajes')
+	drop procedure [LEISTE_EL_CODIGO?].cancelarPasajes
+USE GD1C2019
+go
 
-		------Agregar nueva funcionalidad a un rol-------REQUERIMIENTO: 
+create procedure [LEISTE_EL_CODIGO?].cancelarPasajes(@id_crucero nvarchar(50),@fecha_actual datetime2,@motivo varchar(256))
+as
+	begin
+		update [LEISTE_EL_CODIGO?].Crucero
+		set baja_fuera_de_servicio = 'S',fecha_reinicio_servicio = @fecha_reinicio
+		where id_crucero = @id_crucero
+	end
+go
+
+------Agregar nueva funcionalidad a un rol-------REQUERIMIENTO: 
 		--En la modificación de un rol solo se pueden alterar ambos campos: el nombre y el
 		--listado de funcionalidades.
 if exists (select * from sys.procedures where name = 'agregarFuncionalidadPorRol')
