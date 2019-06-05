@@ -71,6 +71,7 @@
 
 #### topRecorridosConMasPasajesComprados (@anio int, @semestre int)
 #### topMasCabinasLibres (@anio int, @semestre int)
+#### topCrucerosFueraDeServicio (@anio int, @semestre int)
 
 # ...: VIEWS :...
 

@@ -127,7 +127,7 @@ create table [LEISTE_EL_CODIGO?].Crucero(
 	modelo nvarchar(50) null,
 	baja_fuera_de_servicio nchar(1) default 'N' check(baja_fuera_de_servicio in ('S','N')),
 	baja_fuera_vida_util nchar(1) default 'N' check(baja_fuera_vida_util in ('S','N')),
-	fecha_baja_definitiva datetime2(3) null,
+	fecha_baja_por_fuera_de_servicio datetime2(3) null,
 	fecha_reinicio_servicio datetime2(3) null,
 	fecha_baja_por_vida_util datetime2(3) null,
 	cantidadDeCabinas int,
@@ -642,7 +642,7 @@ create procedure [LEISTE_EL_CODIGO?].darDeBajaDefinitivaCrucero(@id_crucero nvar
 as
 	begin
 		update [LEISTE_EL_CODIGO?].Crucero
-		set baja_fuera_vida_util = 'S',fecha_baja_definitiva = @fecha_actual
+		set baja_fuera_vida_util = 'S',fecha_baja_por_vida_util = @fecha_actual --fijarse ese fuera
 		where id_crucero = @id_crucero
 		--exec de procedure y que pase motivo x parametro y id_crucero, idem abajo
 	end
@@ -657,7 +657,8 @@ create procedure [LEISTE_EL_CODIGO?].darDeBajaTemporalCrucero(@id_crucero nvarch
 as
 	begin
 		update [LEISTE_EL_CODIGO?].Crucero
-		set baja_fuera_de_servicio = 'S',fecha_reinicio_servicio = @fecha_reinicio, f
+		set baja_fuera_de_servicio = 'S',fecha_reinicio_servicio = @fecha_reinicio, 
+		fecha_baja_por_fuera_de_servicio= GETDATE()
 		where id_crucero = @id_crucero
 	end
 go
@@ -879,7 +880,9 @@ as
 		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
 		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
 	end
-go ---CVDUGH-82620
+go
+
+---CVDUGH-82620
 --2018-06-22 04:00:00.000   //43820892   PORT LOUIS  NUAKCHOT
 --2018-07-05 07:00:00.000   //43820875  EL CAIRO	ASMARA
 --declare @fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255)
@@ -1045,13 +1048,29 @@ as
 			set @mesFinal = 12
 		end
 	begin
-		select top 5 id_crucero, count(
-		from [LEISTE_EL_CODIGO?].Crucero
-		where year(v.fecha_finalizacion) = @anio and MONTH(v.fecha_finalizacion) between @mesInicial and @mesFinal
-		group by r.id_recorrido, r.id_origen, r.id_destino
+		select top 5 id_crucero, DATEDIFF(day,c.fecha_baja_por_fuera_de_servicio,c.fecha_reinicio_servicio) CantidadDiasDeBaja
+		from [LEISTE_EL_CODIGO?].Crucero c
+		where year(c.fecha_baja_por_fuera_de_servicio) = @anio and MONTH(c.fecha_baja_por_fuera_de_servicio) between @mesInicial and @mesFinal
+		and year(c.fecha_reinicio_servicio) = @anio and MONTH(c.fecha_reinicio_servicio) between @mesInicial and @mesFinal
+		--group by id_crucero
 		order by 2 desc
 	end
 go	
+--declare @dia1 datetime2, @dia2 datetime2
+--set @dia1 = '2018-06-22 04:00:00.000'
+--set @dia2 = '2018-07-05 07:00:00.000'
+--print datediff(day, @dia1, @dia2)
+begin transaction
+update [LEISTE_EL_CODIGO?].Crucero
+set fecha_baja_por_fuera_de_servicio = '2018-04-22 04:00:00.000',
+fecha_reinicio_servicio = '2018-05-05 07:00:00.000'
+where id_crucero = 'ASHFLJ-66175'
+declare @anio int, @semestre int
+set @anio = 2018
+set @semestre = 1
+exec [LEISTE_EL_CODIGO?].topCrucerosFueraDeServicio @anio, @semestre --(para testear)
+ROLLBACK TRANSACTION
+
 /*--------------------------------------VISTAS C/ DROP PREVIO-----------------------------------------------*/
 if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
