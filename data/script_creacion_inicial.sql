@@ -236,6 +236,35 @@ begin
 deallocate cursorVencimiento
 end
 go
+
+-- Trigger para borrar reservas vencidas cada vez que haya un login
+USE GD1C2019
+go
+create trigger eliminarReservasVencidas
+on all server for logon
+as
+	begin
+	delete from [LEISTE_EL_CODIGO?].Reserva
+	where SYSDATETIME() > vencimiento
+	end
+go
+
+/*----------STARTUP-----------*/ --@@deberia correr en master
+--Procedure de control de reservas vencidas
+/*
+USE MASTER
+GO
+
+create procedure DBO.eliminarReservasVencidas
+as
+delete from [LEISTE_EL_CODIGO?].Reserva
+where SYSDATETIME() > vencimiento
+go
+
+USE GD1C2019
+go
+*/
+
 /* ---------------------------------------------------- Inserciones ---------------------------------------------------- */
 
 -- Funcionalidad
@@ -955,13 +984,19 @@ as
 	end
 go		
 
+--@#
+
 --Fran dudas: @@@
 --			el id de recorrido me lo pasa él o lo tengo q poner yo?
 --			creo q el minimo de tramos por recorrido es 1 no 2 como pusieron en el doc
 --			no se podrá dar de baja un recorrido que tenga pasajes vendidos sin haber realizado el viaje. : debe estar mal escrito y hablar de modificar
 --			error? tanto pasaje como viaje guardan el crucero
+--			no toy chequeando q cumpla con lo q dijo en recorrido en cuanto a origen y destino
+--			tengo q revisar en la creacion de reserva q el cliente no tenga un viaje en la misma fecha? o eso ya se hace antes?
+--			cuando creo la reserva tengo q bloquear la cabina, o eso se hace antes?
 
 ----------------------------------crearTramo--------------------------------
+--la creacion debe ir en orden, del 1 al  ultimo
 if exists (select * from sys.procedures where name = 'crearTramo')
 	drop procedure [LEISTE_EL_CODIGO?].cargarTramo
 USE GD1C2019
@@ -1001,20 +1036,6 @@ as
 	--end catch
 go
 
-----------------------------------darDeBajaRecorrido--------------------------------
-if exists (select * from sys.procedures where name = 'crearRecorrido')
-	drop procedure [LEISTE_EL_CODIGO?].darDeBajaRecorrido
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].darDeBajaRecorrido
-(@idRecorrido decimal(18,0))
-as
-	update [LEISTE_EL_CODIGO?].Recorrido
-	set estado = 'I'
-	where id_recorrido = @idRecorrido
-	--@no se q onda con el tema de si ya tiene pasajes vendidos
-go
-
 ----------------------------------modificarRecorrido--------------------------------
 --si el retorno es correcto entonces podes avanzar a modificar los tramos
 if exists (select * from sys.procedures where name = 'modificarRecorrido')
@@ -1043,7 +1064,7 @@ if exists (select * from sys.procedures where name = 'modificarTramo')
 	drop procedure [LEISTE_EL_CODIGO?].modificarTramo
 USE GD1C2019
 go
-create procedure modificarTramo
+create procedure [LEISTE_EL_CODIGO?].modificarTramo
 (@idTramo smallint,@origen nvarchar(255),@destino nvarchar(255),@precio decimal(18,2))
 as
 	begin
@@ -1059,16 +1080,53 @@ as
 	end
 go
 
+----------------------------------darDeBajaRecorrido--------------------------------
+if exists (select * from sys.procedures where name = 'crearRecorrido')
+	drop procedure [LEISTE_EL_CODIGO?].darDeBajaRecorrido
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].darDeBajaRecorrido
+(@idRecorrido decimal(18,0))
+as
+	update [LEISTE_EL_CODIGO?].Recorrido
+	set estado = 'I'
+	where id_recorrido = @idRecorrido
+	--@no se q onda con el tema de si ya tiene pasajes vendidos
+go
 
 ----------------------------------eliminarTramo--------------------------------
 if exists (select * from sys.procedures where name = 'eliminarTramo')
 	drop procedure [LEISTE_EL_CODIGO?].eliminarTramo
 USE GD1C2019
 go
-create procedure eliminarTramo(@id_tramo smallint)
+create procedure [LEISTE_EL_CODIGO?].eliminarTramo(@id_tramo smallint)
 as
 	delete from [LEISTE_EL_CODIGO?].Tramo where id_tramo=@id_tramo
 go
+
+----------------------------------crearReserva--------------------------------
+if exists (select * from sys.procedures where name = 'crearReserva')
+	drop procedure [LEISTE_EL_CODIGO?].reservarViaje
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].crearReserva
+(@idReserva decimal(18,0),@idCrucero nvarchar(50),@idCliente int,@idViaje int,@idCabina smallint)
+as
+	begin
+	if exists(select id_reserva from [LEISTE_EL_CODIGO?].Reserva where id_reserva = @idReserva) return -1 --ese id ya está en uso
+	insert into [LEISTE_EL_CODIGO?].Reserva(id_reserva,id_crucero,id_cliente,id_viaje,id_cabina,fecha_actual)
+	values(@idReserva,@idCrucero,@idCliente,@idViaje,@idCabina,CAST(SYSDATETIME() as datetime2(3)))
+	return 1 --todo bien
+	end
+go
+
+
+
+
+
+--@#
+
+
 -----------------------------------------ABM 10 <LISTADOS ESTADISTICOS>------------------------------------
 
 --------------TOP RECORRIDOS CON MAS PASAJES VENDIDOS----------------------------

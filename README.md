@@ -82,7 +82,7 @@ Nota: tenés que usarlo antes de modificar sus tramos
 
 ####darDeBajaRecorrido(@idRecorrido decimal(18,0))
 
-####Tramo
+####Tramo:
 
 ####crearTramo(@idRecorrido decimal(18,0),@origen nvarchar(255),@destino nvarchar(255),@orden smallint,@precio decimal(18,2))
 Nota: la creacion debe ir en orden, arrancando en 1 y hasta el ultimo
@@ -101,6 +101,15 @@ Nota: la creacion debe ir en orden, arrancando en 1 y hasta el ultimo
      1: todo bien, ya podés modificar el próximo tramo
 
 ####eliminarTramo(@id_tramo smallint)
+
+####Reserva:
+
+####crearReserva(@idReserva decimal(18,0),@idCrucero nvarchar(50),@idCliente int,@idViaje int,@idCabina smallint)
+
+  Valores de retorno:
+    -1: el id de reserva ya está en uso
+     1: todo bien
+
 
 # LISTADO ESTADISTICOS:
 
