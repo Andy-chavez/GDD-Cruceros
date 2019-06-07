@@ -998,7 +998,7 @@ go
 ----------------------------------crearTramo--------------------------------
 --la creacion debe ir en orden, del 1 al  ultimo
 if exists (select * from sys.procedures where name = 'crearTramo')
-	drop procedure [LEISTE_EL_CODIGO?].cargarTramo
+	drop procedure [LEISTE_EL_CODIGO?].crearTramo
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].crearTramo
