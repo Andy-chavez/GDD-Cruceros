@@ -113,7 +113,7 @@ create table [LEISTE_EL_CODIGO?].Tramo(
 	id_recorrido decimal(18,0) references [LEISTE_EL_CODIGO?].Recorrido,
 	id_origen nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
 	id_destino nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
-	orden smallint,
+	orden smallint not null check (orden>0),
 	precio_base decimal(18,2) not null
 )
 go
@@ -955,6 +955,120 @@ as
 	end
 go		
 
+--Fran dudas: @@@
+--			el id de recorrido me lo pasa él o lo tengo q poner yo?
+--			creo q el minimo de tramos por recorrido es 1 no 2 como pusieron en el doc
+--			no se podrá dar de baja un recorrido que tenga pasajes vendidos sin haber realizado el viaje. : debe estar mal escrito y hablar de modificar
+--			error? tanto pasaje como viaje guardan el crucero
+
+----------------------------------crearTramo--------------------------------
+if exists (select * from sys.procedures where name = 'crearTramo')
+	drop procedure [LEISTE_EL_CODIGO?].cargarTramo
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].crearTramo
+(@idRecorrido decimal(18,0),@origen nvarchar(255),@destino nvarchar(255),@orden smallint,@precio decimal(18,2))
+as
+	begin
+	--confio que va a cumplir con el origen y destino que indicó en recorrido asi q no chequeo eso
+	if @origen = @destino return -1 --origen y destino son el mismo
+	else if @orden<>1 and @origen <> (select id_destino from [LEISTE_EL_CODIGO?].Tramo where id_recorrido = @idRecorrido and orden = @orden-1)
+		return -2 --el origen de este tramo no es el destino del tramo anterior
+	
+	insert into [LEISTE_EL_CODIGO?].Tramo(id_recorrido,id_origen,id_destino,orden,precio_base)
+	values(@idRecorrido,@origen,@destino,@orden,@precio)
+	return 1
+	end
+go
+
+----------------------------------crearRecorrido--------------------------------
+if exists (select * from sys.procedures where name = 'crearRecorrido')
+	drop procedure [LEISTE_EL_CODIGO?].crearRecorrido
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].crearRecorrido
+(@idRecorrido decimal(18,0),@origen nvarchar(255),@destino nvarchar(255))
+as
+	--begin try
+	--if exists(select id_recorrido from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido=@idRecorrido) return -1 --el id ya existe
+	insert into [LEISTE_EL_CODIGO?].Recorrido(id_recorrido,estado,id_origen,id_destino)
+	values(@idRecorrido,'A',@origen,@destino)
+	--return 1 --se creo el recorrido
+	--end try
+	--begin catch
+	--if ERROR_NUMBER()=2627 return -1--el id de recorrido ya esta en uso
+	--else if ERROR_NUMBER()=547 return -2 --uno o los dos puertos no existen
+	--end catch
+go
+
+----------------------------------darDeBajaRecorrido--------------------------------
+if exists (select * from sys.procedures where name = 'crearRecorrido')
+	drop procedure [LEISTE_EL_CODIGO?].darDeBajaRecorrido
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].darDeBajaRecorrido
+(@idRecorrido decimal(18,0))
+as
+	update [LEISTE_EL_CODIGO?].Recorrido
+	set estado = 'I'
+	where id_recorrido = @idRecorrido
+	--@no se q onda con el tema de si ya tiene pasajes vendidos
+go
+
+----------------------------------modificarRecorrido--------------------------------
+--si el retorno es correcto entonces podes avanzar a modificar los tramos
+if exists (select * from sys.procedures where name = 'modificarRecorrido')
+	drop procedure [LEISTE_EL_CODIGO?].modificarRecorrido
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].modificarRecorrido
+(@idRecorrido decimal(13,0),@origen nvarchar(255),@destino nvarchar(255))
+as
+	begin
+	if exists(select p.id_viaje from [LEISTE_EL_CODIGO?].Pasaje p 
+				join [LEISTE_EL_CODIGO?].Viaje v 
+				on p.id_viaje = v.id_viaje and v.fecha_inicio > SYSDATETIME() and (fecha_reprogramacion is null or fecha_reprogramacion>SYSDATETIME())
+				where p.cancelacion = 'N'
+	) return -1 --no se puede modificar xq todavia hay pasajes vendidos q no hicieron el viaje
+	update [LEISTE_EL_CODIGO?].Recorrido
+	set id_origen=@origen,id_destino=@destino
+	where id_recorrido= @idRecorrido
+	return 1
+	end
+go
+
+----------------------------------modificarTramo--------------------------------
+--se debe hacer tmb en orden del 1 al ultimo
+if exists (select * from sys.procedures where name = 'modificarTramo')
+	drop procedure [LEISTE_EL_CODIGO?].modificarTramo
+USE GD1C2019
+go
+create procedure modificarTramo
+(@idTramo smallint,@origen nvarchar(255),@destino nvarchar(255),@precio decimal(18,2))
+as
+	begin
+		if @origen = @destino return -1 --origen y destino son el mismo
+		else if (select orden from [LEISTE_EL_CODIGO?].Tramo where id_tramo=@idTramo) <> 1 and 
+				 @origen <> (select id_destino from [LEISTE_EL_CODIGO?].Tramo 
+								where id_recorrido = (select id_recorrido from [LEISTE_EL_CODIGO?].Tramo t where @idTramo = t.id_tramo)
+									and orden = (select t2.orden from [LEISTE_EL_CODIGO?].Tramo t2 where @idTramo = t2.id_tramo) -1)
+		return -2 --el origen de este tramo no es el destino del tramo anterior  
+		update [LEISTE_EL_CODIGO?].Tramo
+		set id_origen=@origen,id_destino=@destino,precio_base=@precio
+		return 1
+	end
+go
+
+
+----------------------------------eliminarTramo--------------------------------
+if exists (select * from sys.procedures where name = 'eliminarTramo')
+	drop procedure [LEISTE_EL_CODIGO?].eliminarTramo
+USE GD1C2019
+go
+create procedure eliminarTramo(@id_tramo smallint)
+as
+	delete from [LEISTE_EL_CODIGO?].Tramo where id_tramo=@id_tramo
+go
 -----------------------------------------ABM 10 <LISTADOS ESTADISTICOS>------------------------------------
 
 --------------TOP RECORRIDOS CON MAS PASAJES VENDIDOS----------------------------
