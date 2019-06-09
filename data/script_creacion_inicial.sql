@@ -146,7 +146,7 @@ create table [LEISTE_EL_CODIGO?].TipoCabina(
 )
 go
 create table [LEISTE_EL_CODIGO?].Cabina(
-	id_cabina smallint identity primary key,
+	id_cabina int identity primary key,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	id_tipo nvarchar(255) references [LEISTE_EL_CODIGO?].TipoCabina,
 	numero decimal(18,0) not null,
@@ -167,7 +167,7 @@ create table [LEISTE_EL_CODIGO?].Reserva(
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
 	id_viaje int references [LEISTE_EL_CODIGO?].Viaje,
-	id_cabina smallint references [LEISTE_EL_CODIGO?].Cabina,
+	id_cabina int references [LEISTE_EL_CODIGO?].Cabina,
 	fecha_actual datetime2(3) not null,
 	vencimiento datetime2(3) null,
 )
@@ -194,13 +194,12 @@ create table [LEISTE_EL_CODIGO?].Pasaje(
 	id_pasaje decimal(18,0) primary key identity,
 	id_viaje int references [LEISTE_EL_CODIGO?].Viaje,
 	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
-	id_cabina smallint references [LEISTE_EL_CODIGO?].Cabina,
+	id_cabina int references [LEISTE_EL_CODIGO?].Cabina,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	id_pago int references [LEISTE_EL_CODIGO?].PagoDeViaje,
 	precio decimal(18,2) not null,
 	cancelacion nchar(1) default 'N' check(cancelacion in ('S','N')),
 	fecha_cancelacion datetime2(3) null,
-	fecha_reprogramacion datetime2(3) null,
 )
 go
 
@@ -378,7 +377,7 @@ go
 
 update [LEISTE_EL_CODIGO?].TipoCabina
 set id_servicio = 5
-where id_tipo like 'Cabina Ba%'
+where id_tipo like 'Cabina Balc%'
 go
 
 --Crucero-- (son 37 cruceros, se repiten varias veces por cada viaje)
@@ -708,8 +707,107 @@ as
 		values(@id_crucero,@motivo)
 	end
 go
+----------------------------------Posponer por baja de crucero ---------------------------
+if exists (select * from sys.procedures where name = 'posponerPasajes')
+	drop procedure [LEISTE_EL_CODIGO?].posponerPasajes
+USE GD1C2019
+go
 
-------------------cancelarPasajes -------------------------------
+create procedure [LEISTE_EL_CODIGO?].posponerPasajes(@id_crucero nvarchar(50),@diasCorrimiento int)
+as
+	begin
+		update [LEISTE_EL_CODIGO?].Viaje
+		set fecha_inicio = DATEADD(DAY,@diasCorrimiento,fecha_inicio),
+		fecha_finalizacion_estimada = DATEADD(DAY,@diasCorrimiento,fecha_inicio)
+		where id_crucero = @id_crucero
+	end
+go
+-------------------------calcular cabinas por tipo -------------------------
+if exists (select * from sys.procedures where name = 'calcularCabinaPorTipo')
+	drop procedure [LEISTE_EL_CODIGO?].calcularCabinaPorTipo
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].calcularCabinaPorTipo (@idCrucero nvarchar(50),@tipoCabina nvarchar(255),@retorno int out)
+as
+	begin
+		if(@tipoCabina like 'Cabina Balc%') --por el acento a veces no lo agarra el batch
+			begin
+				select retorno = count(*)
+				from [LEISTE_EL_CODIGO?].Cabina 
+				where id_crucero = @idCrucero and id_tipo = @tipoCabina
+			end
+		else
+			begin
+				select retorno = count(*)
+				from [LEISTE_EL_CODIGO?].Cabina 
+				where id_crucero = @idCrucero and id_tipo = @tipoCabina
+			end
+	end
+go
+
+--------------------------------reemplazarViajesCruceroPorOtro------------------------
+if exists (select * from sys.procedures where name = 'reemplazarViajesCruceroPorOtro')
+	drop procedure [LEISTE_EL_CODIGO?].reemplazarViajesCruceroPorOtro
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].reemplazarViajesCruceroPorOtro(@id_crucero nvarchar(50))
+as 
+	begin--cambiar los de ahora en mas
+		declare @idCruceroReemplazante nvarchar(50),@cantidadCabinasBalcon int, @cantidadEstandar int, @cantidadExterior int,
+		@cantidadEjecutivo int, @cantidadSuite int,@cantidadCabinasBalcon2 int, @cantidadEstandar2 int, @cantidadExterior2 int,
+		@cantidadEjecutivo2 int, @cantidadSuite2 int
+		exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Balcón',@cantidadCabinasBalcon out
+		exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Estandar',@cantidadEstandar out
+		exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Exterior',@cantidadExterior out
+		exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Ejecutivo',@cantidadEjecutivo out
+		exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Suite',@cantidadSuite out
+
+		declare cursorCrucero cursor for
+		select id_crucero from [LEISTE_EL_CODIGO?].Crucero
+
+		open cursorCrucero
+		fetch next from cursorCrucero
+		into @idCruceroReemplazante
+		while @@FETCH_STATUS = 0
+			begin
+				exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Balcón',@cantidadCabinasBalcon2 out
+				exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Estandar',@cantidadEstandar2 out
+				exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Exterior',@cantidadExterior2 out
+				exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Ejecutivo',@cantidadEjecutivo2 out
+				exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Suite',@cantidadSuite2 out
+
+				if(@cantidadCabinasBalcon = @cantidadCabinasBalcon2 and @cantidadEjecutivo = @cantidadEjecutivo2
+				and @cantidadEstandar = @cantidadEstandar2 and @cantidadSuite = @cantidadSuite2 and @cantidadExterior = @cantidadExterior2)
+				begin
+					declare @cantidad int
+					select @cantidad =count(*)
+					from (
+					select fecha_inicio, fecha_finalizacion_estimada
+					from [LEISTE_EL_CODIGO?].Crucero cr join [LEISTE_EL_CODIGO?].Viaje v
+					on cr.id_crucero = v.id_crucero
+					where cr.id_crucero = @id_crucero
+					intersect
+					select fecha_inicio, fecha_finalizacion_estimada
+					from [LEISTE_EL_CODIGO?].Crucero cr join [LEISTE_EL_CODIGO?].Viaje v
+					on cr.id_crucero = v.id_crucero
+					where cr.id_crucero = @idCruceroReemplazante
+					)interseccionDeTablas
+						if(@cantidad=0)
+							begin
+								update [LEISTE_EL_CODIGO?].Viaje
+								set id_crucero = @idCruceroReemplazante
+								where id_crucero = @id_crucero
+
+								update [LEISTE_EL_CODIGO?].Pasaje
+								set id_crucero = @idCruceroReemplazante
+								where id_crucero = @id_crucero
+							end
+
+				end
+			end
+	end
+go
+----------------------------------cancelarPasajes -------------------------------
 if exists (select * from sys.procedures where name = 'cancelarPasajes')
 	drop procedure [LEISTE_EL_CODIGO?].cancelarPasajes
 USE GD1C2019
@@ -953,7 +1051,7 @@ as
 	begin
 	if exists(select p.id_viaje from [LEISTE_EL_CODIGO?].Pasaje p 
 				join [LEISTE_EL_CODIGO?].Viaje v 
-				on p.id_viaje = v.id_viaje and v.fecha_inicio > SYSDATETIME() and (fecha_reprogramacion is null or fecha_reprogramacion>SYSDATETIME())
+				on p.id_viaje = v.id_viaje and v.fecha_inicio > SYSDATETIME()
 				where p.cancelacion = 'N'
 	) return -1 --no se puede modificar xq todavia hay pasajes vendidos q no hicieron el viaje
 	update [LEISTE_EL_CODIGO?].Recorrido
@@ -1015,7 +1113,7 @@ if exists (select * from sys.procedures where name = 'crearReserva')
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].crearReserva
-(@idReserva decimal(18,0),@idCrucero nvarchar(50),@idCliente int,@idViaje int,@idCabina smallint)
+(@idReserva decimal(18,0),@idCrucero nvarchar(50),@idCliente int,@idViaje int,@idCabina int)
 as
 	begin
 	if exists(select id_reserva from [LEISTE_EL_CODIGO?].Reserva where id_reserva = @idReserva) return -1 --ese id ya está en uso
@@ -1154,31 +1252,26 @@ go
 if exists (select * from sys.procedures where name = 'comprarPasajes')
 	drop procedure [LEISTE_EL_CODIGO?].comprarPasajes
 USE GD1C2019
-go
-create table hola(
-	id decimal(18,0) primary key identity,
-	algo varchar(256),
-)
-insert into hola (algo)
-values('como anda')
-SET IDENTITY_INSERT hola ON
-
-INSERT INTO hola
-/*Note the column list is REQUIRED here, not optional*/
-            (id,
-             algo)
-VALUES      (20,
-             'Hierachy Update')
-
-SET IDENTITY_INSERT hola OFF 
-select * from hola
-
-create procedure [LEISTE_EL_CODIGO?].comprarPasajes (@idCliente int,@idCabina,)
+go --ver funcion de precio pasaje
+create procedure [LEISTE_EL_CODIGO?].comprarPasajes (@idCliente int,@idViaje int,@idCabina int,@idCrucero int,@idPago,)
 as
 	begin
 		
+		return @idPasaje
 	end
 go
+
+if exists (select * from sys.procedures where name = 'verVoucher')
+	drop procedure [LEISTE_EL_CODIGO?].verVoucher
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].verVoucher (@idPago int) --porque con este puedo sacar todos los pasajes comprados por esta persona
+as
+
+	begin
+		select 
+		from [LEISTE_EL_CODIGO?].Pasaje
+	end
 -----------------------------------------ABM 10 <LISTADOS ESTADISTICOS>------------------------------------
 
 --------------TOP RECORRIDOS CON MAS PASAJES VENDIDOS----------------------------
@@ -1325,6 +1418,7 @@ as
 		from [LEISTE_EL_CODIGO?].Rol
 		where baja_logica = 'N' -- ver despues si es necesario tambien hacer una vista con todos los roles, habilitados o no.
 go
+
 
 
 
