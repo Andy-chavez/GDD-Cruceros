@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{11BD0A38-F064-4794-9845-D4C99E7D45E9}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FrbaCrucero</RootNamespace>
+    <AssemblyName>FrbaCrucero</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publicar\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbmCrucero\VentanaDeAltaCrucero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\VentanaDeAltaCrucero.Designer.cs">
+      <DependentUpon>VentanaDeAltaCrucero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmCrucero\VentanaGestionCrucero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\VentanaGestionCrucero.Designer.cs">
+      <DependentUpon>VentanaGestionCrucero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmCrucero\VentanaListadoCrucero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\VentanaListado.Designer.cs">
+      <DependentUpon>VentanaListadoCrucero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmCrucero\VentanaSeleccionCrucero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\VentanaSeleccionCrucero.Designer.cs">
+      <DependentUpon>VentanaSeleccionCrucero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmPuerto\VentanaDeAltaPuerto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmPuerto\VentanaDeAltaPuerto.Designer.cs">
+      <DependentUpon>VentanaDeAltaPuerto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmPuerto\VentanaGestionarPuerto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmPuerto\VentanaGestionarPuerto.Designer.cs">
+      <DependentUpon>VentanaGestionarPuerto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmPuerto\VentanaListadoPuerto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmPuerto\VentanaListadoPuerto.Designer.cs">
+      <DependentUpon>VentanaListadoPuerto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmPuerto\VentanaSeleccionPuerto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmPuerto\VentanaSeleccionPuerto.Designer.cs">
+      <DependentUpon>VentanaSeleccionPuerto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRecorrido\VentanaDeAltaRecorrido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRecorrido\VentanaDeAltaRecorrido.Designer.cs">
+      <DependentUpon>VentanaDeAltaRecorrido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRecorrido\VentanaGestionRecorrido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRecorrido\VentanaGestionRecorrido.Designer.cs">
+      <DependentUpon>VentanaGestionRecorrido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRecorrido\VentanaListadoRecorrido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRecorrido\VentanaListadoRecorrido.Designer.cs">
+      <DependentUpon>VentanaListadoRecorrido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRecorrido\VentanaSeleccionRecorrido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRecorrido\VentanaSeleccionRecorrido.Designer.cs">
+      <DependentUpon>VentanaSeleccionRecorrido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\VentanaDeAltaRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\VentanaDeAltaRol.Designer.cs">
+      <DependentUpon>VentanaDeAltaRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\VentanaGestionRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\VentanaGestionRol.Designer.cs">
+      <DependentUpon>VentanaGestionRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\VentanaListadoRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\VentanaListadoRol.Designer.cs">
+      <DependentUpon>VentanaListadoRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\VentanaSeleccionRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\VentanaSeleccionRol.Designer.cs">
+      <DependentUpon>VentanaSeleccionRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Clases\Cabina.cs" />
+    <Compile Include="Clases\BaseDeDato.cs" />
+    <Compile Include="Clases\Cliente.cs" />
+    <Compile Include="Clases\Login.cs" />
+    <Compile Include="Clases\Pasaje.cs" />
+    <Compile Include="Clases\Viaje.cs" />
+    <Compile Include="Clases\Tramo.cs" />
+    <Compile Include="Clases\Recorrido.cs" />
+    <Compile Include="Clases\Puerto.cs" />
+    <Compile Include="Clases\Reserva.cs" />
+    <Compile Include="Clases\Funcionalidad.cs" />
+    <Compile Include="Clases\Rol.cs" />
+    <Compile Include="Clases\Crucero.cs" />
+    <Compile Include="Clases\Usuario.cs" />
+    <Compile Include="CompraReservaPasaje\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompraReservaPasaje\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="VentanaMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VentanaMenu.Designer.cs">
+      <DependentUpon>VentanaMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VentanaPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VentanaPrincipal.Designer.cs">
+      <DependentUpon>VentanaPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GeneracionViaje\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneracionViaje\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListadoEstadistico\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListadoEstadistico\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PagoReserva\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PagoReserva\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AbmCrucero\VentanaDeAltaCrucero.resx">
+      <DependentUpon>VentanaDeAltaCrucero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\VentanaGestionCrucero.resx">
+      <DependentUpon>VentanaGestionCrucero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\VentanaListadoCrucero.resx">
+      <DependentUpon>VentanaListadoCrucero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\VentanaSeleccionCrucero.resx">
+      <DependentUpon>VentanaSeleccionCrucero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmPuerto\VentanaDeAltaPuerto.resx">
+      <DependentUpon>VentanaDeAltaPuerto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmPuerto\VentanaGestionarPuerto.resx">
+      <DependentUpon>VentanaGestionarPuerto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmPuerto\VentanaListadoPuerto.resx">
+      <DependentUpon>VentanaListadoPuerto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmPuerto\VentanaSeleccionPuerto.resx">
+      <DependentUpon>VentanaSeleccionPuerto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRecorrido\VentanaDeAltaRecorrido.resx">
+      <DependentUpon>VentanaDeAltaRecorrido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRecorrido\VentanaGestionRecorrido.resx">
+      <DependentUpon>VentanaGestionRecorrido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRecorrido\VentanaListadoRecorrido.resx">
+      <DependentUpon>VentanaListadoRecorrido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRecorrido\VentanaSeleccionRecorrido.resx">
+      <DependentUpon>VentanaSeleccionRecorrido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\VentanaDeAltaRol.resx">
+      <DependentUpon>VentanaDeAltaRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\VentanaGestionRol.resx">
+      <DependentUpon>VentanaGestionRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\VentanaListadoRol.resx">
+      <DependentUpon>VentanaListadoRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\VentanaSeleccionRol.resx">
+      <DependentUpon>VentanaSeleccionRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VentanaMenu.resx">
+      <DependentUpon>VentanaMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VentanaPrincipal.resx">
+      <DependentUpon>VentanaPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
