@@ -177,6 +177,8 @@ create table [LEISTE_EL_CODIGO?].MedioDePago(
 	cuotas_sin_interes smallint not null,
 	descuento smallint not null,
 	intereses smallint not null,
+	tipo_de_tarjeta varchar(256),
+	nombre_tarjeta varchar(256),
 )
 go
 create table [LEISTE_EL_CODIGO?].PagoDeViaje(
@@ -189,7 +191,7 @@ create table [LEISTE_EL_CODIGO?].PagoDeViaje(
 )
 go
 create table [LEISTE_EL_CODIGO?].Pasaje(
-	id_pasaje decimal(18,0) primary key,
+	id_pasaje decimal(18,0) primary key identity,
 	id_viaje int references [LEISTE_EL_CODIGO?].Viaje,
 	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
 	id_cabina smallint references [LEISTE_EL_CODIGO?].Cabina,
@@ -528,6 +530,7 @@ select distinct FECHA_SALIDA,FECHA_LLEGADA,FECHA_LLEGADA_ESTIMADA,CRUCERO_IDENTI
 from gd_esquema.Maestra
 go
 ---------------------------------------------Pasaje-----------------------------------------------------
+SET IDENTITY_INSERT [LEISTE_EL_CODIGO?].Pasaje  ON
 insert into [LEISTE_EL_CODIGO?].Pasaje (id_cabina,id_cliente,id_viaje,id_crucero,precio,id_pasaje)
 select distinct(select id_cabina
 		from [LEISTE_EL_CODIGO?].Cabina
@@ -541,7 +544,7 @@ select distinct(select id_cabina
 		m.CRUCERO_IDENTIFICADOR,m.PASAJE_PRECIO,m.PASAJE_CODIGO
 from gd_esquema.Maestra m
 where m.PASAJE_CODIGO is not null and m.PASAJE_PRECIO is not null
-
+SET IDENTITY_INSERT [LEISTE_EL_CODIGO?].Pasaje  OFF 
 go
 update [LEISTE_EL_CODIGO?].Pasaje
 set id_pago = p.id_pago
@@ -884,105 +887,7 @@ as
 			end
 		return @valor_retorno
 	end
-go
-
-----------------------------viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --------
-if exists (select * from sys.procedures where name = 'mostrarViajesDisponibles')
-	drop procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles
-USE GD1C2019
-go
-
-create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
-as
-	begin
-		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo tipoDeCabina,cr.cantidadDeCabinas -
-		(select count(*) 
-		from [LEISTE_EL_CODIGO?].Reserva r
-		where r.id_viaje = v.id_viaje)-
-		(select count(*)
-		from [LEISTE_EL_CODIGO?].Pasaje p
-		where p.id_viaje = v.id_viaje) cantidadDeCabinasDisponibles
-		from [LEISTE_EL_CODIGO?].Viaje v 
-		join [LEISTE_EL_CODIGO?].Crucero cr on v.id_crucero = cr.id_crucero
-		join [LEISTE_EL_CODIGO?].Cabina ca on v.id_crucero = ca.id_crucero
-		join [LEISTE_EL_CODIGO?].Recorrido rec on v.id_recorrido = rec.id_recorrido
-		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
-		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
-	end
-go
-
----CVDUGH-82620
---2018-06-22 04:00:00.000   //43820892   PORT LOUIS  NUAKCHOT
---2018-07-05 07:00:00.000   //43820875  EL CAIRO	ASMARA
---declare @fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255)
---set @fecha_inicio = '2018-04-23 03:00:00.000'
---set @origen ='LUANDA'
---set @destino = 'ARGEL'
-
---exec [LEISTE_EL_CODIGO?].mostrarViajesDisponibles @fecha_inicio, @origen, @destino
--------------------------todo despues de seleccionar un viaje----------------- ingresar cliente
-if exists (select * from sys.procedures where name = 'ingresarCliente')
-	drop procedure [LEISTE_EL_CODIGO?].ingresarCliente
-USE GD1C2019
-go
-
-create procedure [LEISTE_EL_CODIGO?].ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
-													@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255))
-as
-	begin
-		insert into [LEISTE_EL_CODIGO?].Cliente(nombre,apellido,dni,telefono,mail,fecha_nacimiento,direccion)
-		values(@nombre,@apellido,@dni,@telefono,@mail,@fecha_nacimiento,@direccion)
-	end
-go
------------------------------------buscarPorDni------------------------------------
-if exists (select * from sys.procedures where name = 'buscarPorDni')
-	drop procedure [LEISTE_EL_CODIGO?].buscarPorDni
-USE GD1C2019
-go
-
-create procedure [LEISTE_EL_CODIGO?].buscarPorDni (@dni decimal(18, 0)) 
-as
-	begin
-		select id_cliente,nombre,apellido,dni,direccion,telefono,mail,fecha_nacimiento 
-		from [LEISTE_EL_CODIGO?].Cliente
-		where dni=@dni
-	end
-go
-
-----------------------------actualizar usuario------------------------------------
-if exists (select * from sys.procedures where name = 'actualizarUsuario')
-	drop procedure [LEISTE_EL_CODIGO?].actualizarUsuario
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].actualizarUsuario (@idCliente int,@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
-													@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255)) 
-as
-	begin
-		update [LEISTE_EL_CODIGO?].Cliente
-		set nombre = coalesce(@nombre,nombre),
-		apellido = coalesce(@apellido,apellido),
-		dni = coalesce(@dni,dni), telefono = coalesce(@telefono,telefono),
-		mail = coalesce(@mail,mail),
-		fecha_nacimiento = coalesce(@fecha_nacimiento,fecha_nacimiento),
-		direccion= coalesce(@direccion,direccion)
-		where id_cliente = @idCliente
-	end
-go
-----------------------------------devolverIdPago--------------------------------
-if exists (select * from sys.procedures where name = 'devolverIdPago')
-	drop procedure [LEISTE_EL_CODIGO?].devolverIdPago
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].devolverIdPago (@cantidadDePasajes smallint,@idMedioPago int,@montoTotal int)
-as	
-	begin
-		declare @idPago int
-		insert into [LEISTE_EL_CODIGO?].PagoDeViaje(fecha_pago,monto_total,cantidad_de_pasajes,id_medio_de_pago)
-		values(CAST(SYSDATETIME() as datetime2(3)),@montoTotal,@cantidadDePasajes,@idMedioPago)
-		SELECT @idPago= SCOPE_IDENTITY()
-		return @idPago
-	end
-go		
+go	
 
 --@#
 
@@ -1081,7 +986,7 @@ as
 go
 
 ----------------------------------darDeBajaRecorrido--------------------------------
-if exists (select * from sys.procedures where name = 'crearRecorrido')
+if exists (select * from sys.procedures where name = 'darDeBajaRecorrido')
 	drop procedure [LEISTE_EL_CODIGO?].darDeBajaRecorrido
 USE GD1C2019
 go
@@ -1124,9 +1029,156 @@ go
 
 
 
---@#
+----------------------<ABM 8> COMPRA Y/O RESERVA DE VIAJE----------------
 
+----------------------------viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --------
+if exists (select * from sys.procedures where name = 'mostrarViajesDisponibles')
+	drop procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles
+USE GD1C2019
+go
 
+create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
+as
+	begin
+		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo tipoDeCabina,rec.id_recorrido,rec.id_origen origen,rec.id_destino destino,
+		cr.cantidadDeCabinas -
+		(select count(*) 
+		from [LEISTE_EL_CODIGO?].Reserva r
+		where r.id_viaje = v.id_viaje)-
+		(select count(*)
+		from [LEISTE_EL_CODIGO?].Pasaje p
+		where p.id_viaje = v.id_viaje) cantidadDeCabinasDisponibles
+		from [LEISTE_EL_CODIGO?].Viaje v 
+		join [LEISTE_EL_CODIGO?].Crucero cr on v.id_crucero = cr.id_crucero
+		join [LEISTE_EL_CODIGO?].Cabina ca on v.id_crucero = ca.id_crucero
+		join [LEISTE_EL_CODIGO?].Recorrido rec on v.id_recorrido = rec.id_recorrido
+		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
+		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
+		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
+	end
+go --fijarse si hay que hacer un return id_viaje
+
+---CVDUGH-82620
+--2018-06-22 04:00:00.000   //43820892   PORT LOUIS  NUAKCHOT
+--2018-07-05 07:00:00.000   //43820875  EL CAIRO	ASMARA
+--declare @fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255)
+--set @fecha_inicio = '2018-04-23 03:00:00.000'
+--set @origen ='LUANDA'
+--set @destino = 'ARGEL'
+
+--exec [LEISTE_EL_CODIGO?].mostrarViajesDisponibles @fecha_inicio, @origen, @destino
+
+-------------------------todo despues de seleccionar un viaje----------------- ingresar cliente
+if exists (select * from sys.procedures where name = 'ingresarCliente')
+	drop procedure [LEISTE_EL_CODIGO?].ingresarCliente
+USE GD1C2019
+go
+
+create procedure [LEISTE_EL_CODIGO?].ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
+													@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255))
+as
+	begin
+		declare @idCLiente int 
+		insert into [LEISTE_EL_CODIGO?].Cliente(nombre,apellido,dni,telefono,mail,fecha_nacimiento,direccion)
+		values(@nombre,@apellido,@dni,@telefono,@mail,@fecha_nacimiento,@direccion)
+		select @idCLiente = SCOPE_IDENTITY()
+		return @idCLiente
+	end
+go
+-----------------------------------buscarPorDni------------------------------------
+if exists (select * from sys.procedures where name = 'buscarPorDni')
+	drop procedure [LEISTE_EL_CODIGO?].buscarPorDni
+USE GD1C2019
+go
+
+create procedure [LEISTE_EL_CODIGO?].buscarPorDni (@dni decimal(18, 0)) 
+as
+	begin
+		select id_cliente,nombre,apellido,dni,direccion,telefono,mail,fecha_nacimiento 
+		from [LEISTE_EL_CODIGO?].Cliente
+		where dni=@dni
+	end
+go
+
+----------------------------actualizar usuario------------------------------------
+if exists (select * from sys.procedures where name = 'actualizarUsuario')
+	drop procedure [LEISTE_EL_CODIGO?].actualizarUsuario
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].actualizarUsuario (@idCliente int,@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
+													@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255)) 
+as
+	begin
+		update [LEISTE_EL_CODIGO?].Cliente
+		set nombre = coalesce(@nombre,nombre),
+		apellido = coalesce(@apellido,apellido),
+		dni = coalesce(@dni,dni), telefono = coalesce(@telefono,telefono),
+		mail = coalesce(@mail,mail),
+		fecha_nacimiento = coalesce(@fecha_nacimiento,fecha_nacimiento),
+		direccion= coalesce(@direccion,direccion)
+		where id_cliente = @idCliente
+	end
+go
+----------------------------------cargarMedioDePago----------------------------------
+if exists (select * from sys.procedures where name = 'cargarMedioDePago')
+	drop procedure [LEISTE_EL_CODIGO?].cargarMedioDePago
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].cargarMedioDePago (@cuotas smallint,@tipoTarjeta varchar(256),@nombreTarjeta varchar(256))
+as
+	begin
+		declare @idMedioDePago int
+		insert into [LEISTE_EL_CODIGO?].MedioDePago(cuotas_sin_interes, tipo_de_tarjeta,nombre_tarjeta)
+		values (@cuotas,@tipoTarjeta,@nombreTarjeta)
+		SELECT @idMedioDePago= SCOPE_IDENTITY()
+		return @idMedioDePago
+	end
+go --hacerlo la cantidad de veces que quiera el usuario pero despues elegir con cual pagar
+----------------------------------devolverIdPago--------------------------------
+if exists (select * from sys.procedures where name = 'devolverIdPago')
+	drop procedure [LEISTE_EL_CODIGO?].devolverIdPago
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].devolverIdPago (@cantidadDePasajes smallint,@idMedioPago int,@montoTotal int)
+as	
+	begin
+		declare @idPago int
+		insert into [LEISTE_EL_CODIGO?].PagoDeViaje(fecha_pago,monto_total,cantidad_de_pasajes,id_medio_de_pago)
+		values(CAST(SYSDATETIME() as datetime2(3)),@montoTotal,@cantidadDePasajes,@idMedioPago)
+		SELECT @idPago= SCOPE_IDENTITY()
+		return @idPago
+	end
+go	
+
+---------------------COMPRAR PASAJE--------------------------(lo ultimo que se hace) ver tema de seleccionar viaje y devolver voucher
+if exists (select * from sys.procedures where name = 'comprarPasajes')
+	drop procedure [LEISTE_EL_CODIGO?].comprarPasajes
+USE GD1C2019
+go
+create table hola(
+	id decimal(18,0) primary key identity,
+	algo varchar(256),
+)
+insert into hola (algo)
+values('como anda')
+SET IDENTITY_INSERT hola ON
+
+INSERT INTO hola
+/*Note the column list is REQUIRED here, not optional*/
+            (id,
+             algo)
+VALUES      (20,
+             'Hierachy Update')
+
+SET IDENTITY_INSERT hola OFF 
+select * from hola
+
+create procedure [LEISTE_EL_CODIGO?].comprarPasajes (@idCliente int,@idCabina,)
+as
+	begin
+		
+	end
+go
 -----------------------------------------ABM 10 <LISTADOS ESTADISTICOS>------------------------------------
 
 --------------TOP RECORRIDOS CON MAS PASAJES VENDIDOS----------------------------

@@ -55,7 +55,9 @@
     1: se cargo todo joya
     -1: no existe el rol
     
-#### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
+#### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255)) 
+cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de recorrido y el id de cabina para poder generar el pasaje
+#### comprarPasaje
 #### ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255))
                 seria el caso que tenes que cargar un cliente de cero
 #### actualizarUsuario (@idCliente int,@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),	@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255)) 
