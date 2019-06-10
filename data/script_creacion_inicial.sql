@@ -1362,17 +1362,26 @@ create proc [LEISTE_EL_CODIGO?].mostrarReserva(@idReserva decimal(18,0))
 as
 	select * from [LEISTE_EL_CODIGO?].Reserva where id_reserva=@idReserva
 go
-/*
+
 use GD1C2019
 go
-create proc [LEISTE_EL_CODIGO?].pagarReserva
-(@idReserva decimal(18,0))
+create proc [LEISTE_EL_CODIGO?].comprarPasajeReservado
+(@idReserva decimal(18,0),@idPago int)
 as
 begin
-	--@@TERMINAR CUANDO ESTÉ EL PAGO DE VIAJE
+	declare @idCliente int,@idViaje int,@idCabina int,@idCrucero int
+	declare @retorno int
+	select @idCliente=id_cliente,@idViaje=id_viaje,@idCabina=id_cabina,@idCrucero=id_crucero
+	from [LEISTE_EL_CODIGO?].Reserva where id_reserva = @idReserva
+	
+	exec @retorno= [LEISTE_EL_CODIGO?].comprarPasaje @idCliente,@idViaje,@idCabina,@idCrucero,@idPago
+
+	if(@retorno=1)delete from [LEISTE_EL_CODIGO?].Reserva where id_reserva=@idReserva
+
+	return @retorno -- -1:ya tiene viajes en esa fecha, 1 se compró el pasaje reservado
 end
 go
-*/
+
 --........................................<ABM 10> LISTADOS ESTADISTICOS	......................................................							  					  
 --TOP RECORRIDOS CON MAS PASAJES VENDIDOS--
 USE GD1C2019

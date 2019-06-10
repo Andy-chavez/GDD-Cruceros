@@ -147,6 +147,12 @@ Nota: se debe hacer en orden del orden mas chico q quieras cambiar al ultimo
 
 ####mostrarReserva(@idReserva decimal(18,0))
 
+####comprarPasajeReservado(@idReserva decimal(18,0),@idPago int)
+
+  Valores de retorno:
+      -1: el cliente ya tiene viajes en esa fecha
+      1: todo bien, se compró el pasaje reservado
+
 # LISTADO ESTADISTICOS:
 
 #### topRecorridosConMasPasajesComprados (@anio int, @semestre int)
