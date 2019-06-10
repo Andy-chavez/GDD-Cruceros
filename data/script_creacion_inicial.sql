@@ -126,6 +126,8 @@ if exists (select * from sys.procedures where name = 'topCrucerosFueraDeServicio
 	drop procedure [LEISTE_EL_CODIGO?].topCrucerosFueraDeServicio
 if exists (select * from sys.procedures where name = 'eliminarReservasVencidas')
 	drop procedure [LEISTE_EL_CODIGO?].eliminarReservasVencidas
+if exists (select * from sys.procedures where name = 'mostrarReserva')
+	drop procedure [LEISTE_EL_CODIGO?].mostrarReserva
 go
  if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
@@ -783,24 +785,16 @@ go
 --........................................<ABM 3> REGISTRO DE USUARIOS-no se hace......................................................
 --........................................<ABM 4> PUERTOS-no se hace		......................................................
 --........................................<ABM 5> RECORRIDO			......................................................
---Fran dudas: @@@
---			el id de recorrido me lo pasa él o lo tengo q poner yo?
---			creo q el minimo de tramos por recorrido es 1 no 2 como pusieron en el doc
---			no se podrá dar de baja un recorrido que tenga pasajes vendidos sin haber realizado el viaje. : debe estar mal escrito y hablar de modificar
---			error? tanto pasaje como viaje guardan el crucero
---			no toy chequeando q cumpla con lo q dijo en recorrido en cuanto a origen y destino
---			tengo q revisar en la creacion de reserva q el cliente no tenga un viaje en la misma fecha? o eso ya se hace antes?
---			cuando creo la reserva tengo q bloquear la cabina, o eso se hace antes?
 
 --crearTramo--
---la creacion debe ir en orden, del 1 al  ultimo
+--la creacion debe ir en orden, del 1 al ultimo
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].crearTramo
 (@idRecorrido decimal(18,0),@origen nvarchar(255),@destino nvarchar(255),@orden smallint,@precio decimal(18,2))
 as
 	begin
-	--confio que va a cumplir con el origen y destino que indicó en recorrido asi q no chequeo eso
+	--confio que va a cumplir con el destino que indicó en recorrido asi q no chequeo eso
 	if @origen = @destino return -1 --origen y destino son el mismo
 	else if @orden<>1 and @origen <> (select id_destino from [LEISTE_EL_CODIGO?].Tramo where id_recorrido = @idRecorrido and orden = @orden-1)
 		return -2 --el origen de este tramo no es el destino del tramo anterior
@@ -811,7 +805,7 @@ as
 	end
 go
 --modificarTramo--
---se debe hacer tmb en orden del 1 al ultimo
+--se debe hacer tmb en orden del 1ero q quieras cambiar al ultimo
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].modificarTramo
@@ -1239,12 +1233,21 @@ as
 */
 --........................................<ABM 9> PAGO DE RESERVA		......................................................
 
-/*use GD1C2019
+use GD1C2019
 go
 create proc [LEISTE_EL_CODIGO?].mostrarReserva(@idReserva decimal(18,0))
 as
-begin
 	select * from [LEISTE_EL_CODIGO?].Reserva where id_reserva=@idReserva
+go
+/*
+use GD1C2019
+go
+create proc [LEISTE_EL_CODIGO?].pagarReserva
+(@idReserva decimal(18,0))
+as
+begin
+	--@@TERMINAR CUANDO ESTÉ EL PAGO DE VIAJE
+end
 go
 */
 --........................................<ABM 10> LISTADOS ESTADISTICOS	......................................................							  					  

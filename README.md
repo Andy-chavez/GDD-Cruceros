@@ -119,7 +119,7 @@ Nota: la creacion debe ir en orden, arrancando en 1 y hasta el ultimo
      1: todo bien, ya podés ingresar el próximo tramo
 
 #### modificarTramo(@idTramo smallint,@origen nvarchar(255),@destino nvarchar(255),@precio decimal(18,2))
-Nota: la creacion debe ir en orden, arrancando en 1 y hasta el ultimo
+Nota: se debe hacer en orden del orden mas chico q quieras cambiar al ultimo
 
   Valores de retorno:
   
@@ -135,9 +135,10 @@ Nota: la creacion debe ir en orden, arrancando en 1 y hasta el ultimo
 
   Valores de retorno:
   
-    -1: el id de reserva ya está en uso
-     1: todo bien
+    -1: el cliente ya tiene un viaje en esa fecha
+     numero mayor a 0: el id de la reserva
 
+####mostrarReserva(@idReserva decimal(18,0))
 
 # LISTADO ESTADISTICOS:
 
