@@ -126,6 +126,8 @@ if exists (select * from sys.procedures where name = 'topCrucerosFueraDeServicio
 	drop procedure [LEISTE_EL_CODIGO?].topCrucerosFueraDeServicio
 if exists (select * from sys.procedures where name = 'eliminarReservasVencidas')
 	drop procedure [LEISTE_EL_CODIGO?].eliminarReservasVencidas
+if exists (select * from sys.procedures where name = 'actualizarMontoTotal')
+	drop procedure [LEISTE_EL_CODIGO?].actualizarMontoTotal
 go
  if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
@@ -271,7 +273,7 @@ create table [LEISTE_EL_CODIGO?].PagoDeViaje(
 	id_pago int primary key identity,
 	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
 	fecha_pago datetime2(3) null,
-	monto_total decimal(8,2) not null,
+	monto_total decimal(18,2) not null,
 	cantidad_de_pasajes smallint default 1 check(cantidad_de_pasajes > 0),
 	id_medio_de_pago int references [LEISTE_EL_CODIGO?].MedioDePago,
 )
@@ -1208,35 +1210,108 @@ go --hacerlo la cantidad de veces que quiera el usuario pero despues elegir con 
 --devolverIdPago--
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].devolverIdPago (@cantidadDePasajes smallint,@idMedioPago int,@montoTotal int)
+create procedure [LEISTE_EL_CODIGO?].devolverIdPago (@idMedioPago int)
 as	
 	begin
 		declare @idPago int
-		insert into [LEISTE_EL_CODIGO?].PagoDeViaje(fecha_pago,monto_total,cantidad_de_pasajes,id_medio_de_pago)
-		values(CAST(SYSDATETIME() as datetime2(3)),@montoTotal,@cantidadDePasajes,@idMedioPago)
+		insert into [LEISTE_EL_CODIGO?].PagoDeViaje(fecha_pago,id_medio_de_pago)
+		values(CAST(SYSDATETIME() as datetime2(3)),@idMedioPago)
 		SELECT @idPago= SCOPE_IDENTITY()
 		return @idPago
 	end
-go	
----------------------COMPRAR PASAJE-#-----------------------(lo ultimo que se hace) ver tema de seleccionar viaje y devolver voucher
-/*USE GD1C2019
-go --ver funcion de precio pasaje
-create procedure [LEISTE_EL_CODIGO?].comprarPasajes (@idCliente int,@idViaje int,@idCabina int,@idCrucero int,@idPago,)
-as
-	begin
-		return @idPasaje
-	end
 go
+
+---------------------------------actualizarMontoTotal-----------------------------
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].verVoucher (@idPago int) --porque con este puedo sacar todos los pasajes comprados por esta persona
+create procedure [LEISTE_EL_CODIGO?].actualizarMontoTotal (@idPago int)
+as	
+	begin
+		declare @cantidadDePasajes smallint, @montoTotal  decimal(18,2)
+	end
+go
+-------------------------------VER VOUCHER FINALIZADA LA COMPRA-------------------------------
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].verVoucher (@idPago int) 
 as
 
 	begin
-		select 
-		from [LEISTE_EL_CODIGO?].Pasaje
+		select @idPago voucher,c.nombre +',' + c.apellido nombrePasajero,v.fecha_inicio,v.id_crucero Crucero,r.id_origen Origen,r.id_destino Destino
+		from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].Cliente c
+		ON p.id_cliente = c.id_cliente
+		join [LEISTE_EL_CODIGO?].Viaje v 
+		on p.id_viaje = v.id_viaje
+		join [LEISTE_EL_CODIGO?].Recorrido r on v.id_recorrido = r.id_recorrido
+		where p.id_pago = @idPago
 	end
-*/
+go
+-------------------------------CALCULAR PRECIO PASAJE------------------------------
+USE GD1C2019
+GO
+if exists (select * from sys.procedures where name = 'calcularPrecioPasaje')
+	drop procedure [LEISTE_EL_CODIGO?].calcularPrecioPasaje
+GO
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].calcularPrecioPasaje (@idPasaje int,@precio decimal (18,2) out)
+as
+	begin
+		declare @precioTramo decimal (18,2) 
+		declare @recargoCabina decimal (18,2)
+		declare cursorPrecio cursor for
+		select t.precio_base
+		from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].Viaje v
+		on p.id_viaje = v.id_viaje
+		join [LEISTE_EL_CODIGO?].Recorrido r on v.id_recorrido = r.id_recorrido
+		join [LEISTE_EL_CODIGO?].Tramo t on r.id_recorrido = t.id_tramo 
+		where p.id_pasaje = @idPasaje
+
+		open cursorPrecio
+		fetch next from cursorPrecio
+		into @precioTramo
+			while @@FETCH_STATUS = 0
+				begin
+					set @precio = @precio + @precioTramo
+					fetch next from cursorPrecio
+					into @precioTramo
+				end
+			close cursorPrecio
+			deallocate cursorPrecio
+		select @recargoCabina = tc.porcentaje_recargo
+		from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].Cabina c ON p.id_cabina = c.id_cabina
+		join [LEISTE_EL_CODIGO?].TipoCabina tc ON c.id_tipo = tc.id_tipo
+		where p.id_pasaje = @idPasaje
+
+		set @precio = @precio*@recargoCabina
+	end
+go
+---------------------COMPRAR PASAJE-#-----------------------(lo ultimo que se hace) ver tema de seleccionar viaje y devolver voucher
+USE GD1C2019
+go --ver funcion de precio pasaje
+create procedure [LEISTE_EL_CODIGO?].comprarPasaje (@idCliente int,@idViaje int,@idCabina int,@idCrucero int,@idPago int)
+as
+	begin
+		declare @fecha datetime2(3),@retorno int,@idPasaje int
+		declare @precioPasaje decimal (18,2)
+		select @fecha = fecha_inicio
+		from [LEISTE_EL_CODIGO?].Viaje
+		exec @retorno = [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha @fecha,@idCliente
+		if(@retorno =1)
+			return -1 -- ya tiene viajes en esa fecha, ERROR
+
+		insert into [LEISTE_EL_CODIGO?].Pasaje (id_cliente,id_viaje,id_cabina,id_crucero,id_pago)
+		values(@idCliente,@idViaje,@idCabina,@idCrucero,@idPago)
+		set @idPasaje = SCOPE_IDENTITY()
+		
+		exec [LEISTE_EL_CODIGO?].calcularPrecioPasaje @idPasaje,@precioPasaje out
+		update [LEISTE_EL_CODIGO?].Pasaje
+		set precio = @precioPasaje
+		where id_pasaje = @idPasaje -- para poner el precio ya aca automaticamente.
+		return 1
+	end
+go
+
 --........................................<ABM 9> PAGO DE RESERVA		......................................................
 
 /*use GD1C2019

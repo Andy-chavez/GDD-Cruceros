@@ -73,11 +73,18 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
 
 #### cargarMedioDePago (@cuotas smallint,@tipoTarjeta varchar(256),@nombreTarjeta varchar(256))
 
-#### devolverIdPago (@cantidadDePasajes smallint,@idMedioPago int,@montoTotal int)
+#### devolverIdPago (@idMedioPago int) -- mas facil asi, cargo desde la base de datos el total y la cantidad, cuando compras el pasaje.
 
-#### comprarPasajes (@idCliente int,@idViaje int,@idCabina int,@idCrucero int,@idPago,)
+#### comprarPasaje (@idCliente int,@idViaje int,@idCabina int,@idCrucero int,@idPago,)
+Valores de retorno:
 
-#### verVoucher (@idPago int)
+    1: se cargo todo joya
+    -1: el cliente que quiere comprar ya tiene un viaje en esa fecha
+####calcularPrecioPasaje (@idPasaje int,@precio decimal (18,2) out)
+
+####actualizarMontoTotal (@idPago) esto lo hago apenas se completa la compra de un pasaje
+
+#### verVoucher (@idPago int) -- pasarle el mismo idPago que se usa en comprarPasajes para mostrar todos los pasajes de esa compra
 
 #### ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255))
                 seria el caso que tenes que cargar un cliente de cero
