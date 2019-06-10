@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FrbaCrucero.GeneracionViaje
 {
-    public partial class Form1 : Form
+    public partial class SeleccionarViaje : Form
     {
-        public Form1()
+        public SeleccionarViaje()
         {
             InitializeComponent();
         }

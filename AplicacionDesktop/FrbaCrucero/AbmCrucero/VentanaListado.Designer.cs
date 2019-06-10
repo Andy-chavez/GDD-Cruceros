@@ -173,6 +173,7 @@
             this.grupoFiltro.TabIndex = 13;
             this.grupoFiltro.TabStop = false;
             this.grupoFiltro.Text = "Filtros de busqueda";
+            this.grupoFiltro.Enter += new System.EventHandler(this.grupoFiltro_Enter);
             // 
             // planillaDeResultados
             // 

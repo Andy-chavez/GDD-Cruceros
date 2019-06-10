@@ -35,7 +35,7 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonModificar_Click(object sender, EventArgs e)
         {
-            new VentanaSeleccionCrucero().Show();
+            new VentanaModificarCrucero().Show();
         }
 
         private void botonListado_Click(object sender, EventArgs e)
@@ -46,6 +46,11 @@ namespace FrbaCrucero.AbmCrucero
         private void VentanaGestionCrucero_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void botonBaja_Click(object sender, EventArgs e)
+        {
+            new ventanaDeBajaCrucero().Show();
         }
     }
 }

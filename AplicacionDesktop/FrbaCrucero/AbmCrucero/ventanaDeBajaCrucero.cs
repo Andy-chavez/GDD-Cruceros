@@ -7,14 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FrbaCrucero.Clases;
 
-namespace FrbaCrucero.CompraPasaje
+namespace FrbaCrucero.AbmCrucero
 {
-    public partial class Form1 : Form
+    public partial class ventanaDeBajaCrucero : VentanaModificarCrucero
     {
-        public Form1()
+        public ventanaDeBajaCrucero()
         {
             InitializeComponent();
+        }
+
+        private void ventanaDeBajaCrucero_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace FrbaCrucero.GeneracionViaje
+﻿namespace FrbaCrucero.AbmCrucero
 {
-    partial class Form1
+    partial class VentanaSeleccion
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            ((System.ComponentModel.ISupportInitialize)(this.dt)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // VentanaSeleccion
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(509, 395);
+            this.Name = "VentanaSeleccion";
+            this.Text = "VentanaSeleccion";
+            this.Load += new System.EventHandler(this.VentanaSeleccion_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dt)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion

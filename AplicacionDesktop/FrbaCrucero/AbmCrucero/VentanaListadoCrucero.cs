@@ -59,7 +59,9 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonLimpiar_Click(object sender, EventArgs e)
         {
-
+            this.limpiarBoxes();
+            planillaDeResultados.Rows.Clear();
+            planillaDeResultados.Refresh();
         }
         private void botonBuscar_Click(object sender, EventArgs e) { 
 
@@ -95,9 +97,9 @@ namespace FrbaCrucero.AbmCrucero
         }
 
 
-        private void botonSeleccionar_Click(object sender, EventArgs e)
+        protected void botonSeleccionar_Click(object sender, EventArgs e)
         {
-            new VentanaListadoCrucero().Show();
+            new VentanaSeleccion().Show();
         }
 
         private void filtro3_SelectedIndexChanged(object sender, EventArgs e)
@@ -149,14 +151,24 @@ namespace FrbaCrucero.AbmCrucero
 
         private void VentanaListado_Load(object sender, EventArgs e)
         {
-            this.llenardataGridView(planillaDeResultados);
-           /* this.crucerosDisponiblesTableAdapter.Fill(this.dataSet1.CrucerosDisponibles); */
+            /*this.llenardataGridView(planillaDeResultados); */
+           
           
         }
 
         private void grupoFiltro_Enter(object sender, EventArgs e, TextBox filtro)
         {
 
+        }
+
+        private void grupoFiltro_Enter(object sender, EventArgs e)
+        {
+
+        }
+        public void limpiarBoxes() 
+        {
+            foreach (TextBox box in (new List<TextBox> { this.filtro1, this.filtro2 }))
+                box.Clear();
         }
         
     }

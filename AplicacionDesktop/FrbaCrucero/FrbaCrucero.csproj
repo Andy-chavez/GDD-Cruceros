@@ -59,6 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbmCrucero\ventanaDeBajaCrucero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\ventanaDeBaja.Designer.cs">
+      <DependentUpon>ventanaDeBajaCrucero.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmCrucero\VentanaDeAltaCrucero.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,11 +83,17 @@
     <Compile Include="AbmCrucero\VentanaListado.Designer.cs">
       <DependentUpon>VentanaListadoCrucero.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmCrucero\VentanaSeleccionCrucero.cs">
+    <Compile Include="AbmCrucero\VentanaModificarCrucero.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmCrucero\VentanaSeleccionCrucero.Designer.cs">
-      <DependentUpon>VentanaSeleccionCrucero.cs</DependentUpon>
+    <Compile Include="AbmCrucero\VentanaModificarCrucero.Designer.cs">
+      <DependentUpon>VentanaModificarCrucero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmCrucero\VentanaSeleccion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\VentanaSeleccion.Designer.cs">
+      <DependentUpon>VentanaSeleccion.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmPuerto\VentanaDeAltaPuerto.cs">
       <SubType>Form</SubType>
@@ -169,16 +181,22 @@
     <Compile Include="Clases\Rol.cs" />
     <Compile Include="Clases\Crucero.cs" />
     <Compile Include="Clases\Usuario.cs" />
-    <Compile Include="CompraReservaPasaje\Form1.cs">
+    <Compile Include="CompraReservaPasaje\VentanaSeleccionarviaje.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CompraReservaPasaje\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="CompraReservaPasaje\VentanaSeleccionarviaje.Designer.cs">
+      <DependentUpon>VentanaSeleccionarviaje.cs</DependentUpon>
     </Compile>
     <Compile Include="DataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GeneracionViaje\VentanaOperacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneracionViaje\VentanaOperacion.Designer.cs">
+      <DependentUpon>VentanaOperacion.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="TablaCrucero.Designer.cs">
@@ -198,11 +216,11 @@
     <Compile Include="VentanaPrincipal.Designer.cs">
       <DependentUpon>VentanaPrincipal.cs</DependentUpon>
     </Compile>
-    <Compile Include="GeneracionViaje\Form1.cs">
+    <Compile Include="GeneracionViaje\SeleccionarViaje.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GeneracionViaje\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="GeneracionViaje\SeleccionarViaje.Designer.cs">
+      <DependentUpon>SeleccionarViaje.cs</DependentUpon>
     </Compile>
     <Compile Include="ListadoEstadistico\Form1.cs">
       <SubType>Form</SubType>
@@ -220,14 +238,20 @@
     <EmbeddedResource Include="AbmCrucero\VentanaDeAltaCrucero.resx">
       <DependentUpon>VentanaDeAltaCrucero.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\ventanaDeBajaCrucero.resx">
+      <DependentUpon>ventanaDeBajaCrucero.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmCrucero\VentanaGestionCrucero.resx">
       <DependentUpon>VentanaGestionCrucero.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCrucero\VentanaListadoCrucero.resx">
       <DependentUpon>VentanaListadoCrucero.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmCrucero\VentanaSeleccionCrucero.resx">
-      <DependentUpon>VentanaSeleccionCrucero.cs</DependentUpon>
+    <EmbeddedResource Include="AbmCrucero\VentanaModificarCrucero.resx">
+      <DependentUpon>VentanaModificarCrucero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\VentanaSeleccion.resx">
+      <DependentUpon>VentanaSeleccion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmPuerto\VentanaDeAltaPuerto.resx">
       <DependentUpon>VentanaDeAltaPuerto.cs</DependentUpon>
@@ -264,6 +288,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\VentanaSeleccionRol.resx">
       <DependentUpon>VentanaSeleccionRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CompraReservaPasaje\VentanaSeleccionarviaje.resx">
+      <DependentUpon>VentanaSeleccionarviaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeneracionViaje\VentanaOperacion.resx">
+      <DependentUpon>VentanaOperacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VentanaMenu.resx">
       <DependentUpon>VentanaMenu.cs</DependentUpon>
