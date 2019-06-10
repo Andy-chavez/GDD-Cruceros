@@ -1178,7 +1178,7 @@ as
 	end
 go	
 ---------------------COMPRAR PASAJE-#-----------------------(lo ultimo que se hace) ver tema de seleccionar viaje y devolver voucher
-USE GD1C2019
+/*USE GD1C2019
 go --ver funcion de precio pasaje
 create procedure [LEISTE_EL_CODIGO?].comprarPasajes (@idCliente int,@idViaje int,@idCabina int,@idCrucero int,@idPago,)
 as
@@ -1195,6 +1195,7 @@ as
 		select 
 		from [LEISTE_EL_CODIGO?].Pasaje
 	end
+*/
 --........................................<ABM 9> PAGO DE RESERVA		......................................................
 --........................................<ABM 10> LISTADOS ESTADISTICOS	......................................................							  					  
 --TOP RECORRIDOS CON MAS PASAJES VENDIDOS--
