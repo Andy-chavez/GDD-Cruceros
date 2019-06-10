@@ -7,6 +7,8 @@ GO
 --........................................ DROPS POR SI EXISTEN PREVIAMENTE ......................................................
 if exists (select * from sys.schemas where name =  'LEISTE_EL_CODIGO?')
 begin
+	if exists(select * from sys.tables where object_name(object_id)='AuditoriaReservasVencidas'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+		drop table  [LEISTE_EL_CODIGO?].AuditoriaReservasVencidas
 	if exists(select * from sys.tables where object_name(object_id)='Pasaje'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].Pasaje
 	if exists(select * from sys.tables where object_name(object_id)='PagoDeViaje'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
@@ -145,6 +147,9 @@ if exists(select * from sys.views where object_name(object_id)='RolesHabilitados
 go
 if exists (select * from sys.triggers where object_name(object_id)='fechaVencimiento') --and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	drop trigger [LEISTE_EL_CODIGO?].fechaVencimiento
+go
+if exists (select * from sys.triggers where object_name(object_id)='auditarReservas') 
+	drop trigger [LEISTE_EL_CODIGO?].auditarReservas
 go
 IF OBJECT_ID('tempdb..#tramoTemp') IS NOT NULL 
 	DROP TABLE #tramoTemp
@@ -300,6 +305,16 @@ create table [LEISTE_EL_CODIGO?].AuditoriaDeCruceros(
 	motivo varchar(256)
 )
 go
+create table [LEISTE_EL_CODIGO?].AuditoriaReservasVencidas(
+	id_reservaVencida decimal(18,0) identity primary key,
+	id_crucero nvarchar(50),
+	id_cliente int,
+	id_viaje int,
+	id_cabina int,
+	fecha_actual datetime2(3) not null,
+	vencimiento datetime2(3) null,
+) 
+go
 --........................................ TRIGGERS ......................................................
 USE GD1C2019
 go
@@ -325,6 +340,18 @@ begin
 	close cursorVencimiento
 deallocate cursorVencimiento
 end
+go
+
+--------------------------------trigger para auditar las reservas vencidas-----------------------(porque sino a la primera que se ejecuta el
+																							-----aplicativo se borran todas las reservas porque estan vencidas
+create trigger auditarReservas on [LEISTE_EL_CODIGO?].Reserva
+after delete
+as
+	begin
+		insert into [LEISTE_EL_CODIGO?].AuditoriaReservasVencidas(id_reservaVencida,id_cabina,id_cliente,id_crucero,id_viaje,fecha_actual,vencimiento)
+		select id_reserva,id_cabina,id_cliente,id_crucero,id_viaje,fecha_actual,vencimiento
+		from deleted
+	end
 go
 
 --........................................ INSERCIONES ......................................................
@@ -1487,3 +1514,4 @@ as
 		select *
 		from [LEISTE_EL_CODIGO?].Puerto
 go
+
