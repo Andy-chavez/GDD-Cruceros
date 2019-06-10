@@ -10,6 +10,8 @@
     -1 : El usuario excede las tres oportunidades y es dado de baja
     -2 : El usuario no existe en la base de datos
 
+##### buscarPorDni (@dni decimal(18, 0))
+
 ### Crucero:
 
 #### darDeBajaDefinitivaCrucero(@id_crucero nvarchar(50),@fecha_actual datetime2)
@@ -21,7 +23,11 @@
      1 : Se cargo crucero
     -1 : No existe ese fabricante
     -2 : cantidad de cabinas menor a cero
-    
+
+#### posponerPasajes(@id_crucero nvarchar(50),@diasCorrimiento int)
+
+#### reemplazarViajesCruceroPorOtro(@id_crucero nvarchar(50))
+
 ### Viaje:
 
 #### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255)) 
@@ -65,10 +71,18 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
 
 ### Pasaje:
 
-#### comprarPasaje
+#### cargarMedioDePago (@cuotas smallint,@tipoTarjeta varchar(256),@nombreTarjeta varchar(256))
+
+#### devolverIdPago (@cantidadDePasajes smallint,@idMedioPago int,@montoTotal int)
+
+#### comprarPasajes (@idCliente int,@idViaje int,@idCabina int,@idCrucero int,@idPago,)
+
+#### verVoucher (@idPago int)
+
 #### ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255))
                 seria el caso que tenes que cargar un cliente de cero
 #### cancelarPasajes(@id_crucero nvarchar(50),@fecha_actual datetime2,@motivo varchar(256))
+
 #### auditarCancelacion(@id_crucero nvarchar(50),@motivo varchar(256)) -- este se usa desde la base de datos
 
 ### Usuario:
