@@ -150,3 +150,6 @@ Nota: la creacion debe ir en orden, arrancando en 1 y hasta el ultimo
 
 #### ~ CrucerosDisponibles
 #### ~ RolesHabilitados
+#### ~ PuertosDisponibles
+#### ~ RecorridosDisponibles
+#### ~ TramosDisponibles
