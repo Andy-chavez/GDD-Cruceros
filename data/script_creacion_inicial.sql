@@ -4,7 +4,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
---........................................DROPS POR SI EXISTEN PREVIAMENTE......................................................
+--........................................ DROPS POR SI EXISTEN PREVIAMENTE ......................................................
 if exists (select * from sys.schemas where name =  'LEISTE_EL_CODIGO?')
 begin
 	if exists(select * from sys.tables where object_name(object_id)='Pasaje'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
@@ -132,7 +132,14 @@ if exists(select * from sys.views where object_name(object_id)='RolesHabilitados
 		drop view [LEISTE_EL_CODIGO?].RolesHabilitados
 	end
 go
-/* ---------------------------------------------------- Creacion de tablas ----------------------------------------------------*/
+if exists (select * from sys.triggers where object_name(object_id)='fechaVencimiento' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	drop trigger [LEISTE_EL_CODIGO?].fechaVencimiento
+if exists (select * from sys.triggers where object_name(object_id)='eliminarReservasVencidas' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	drop trigger [LEISTE_EL_CODIGO?].eliminarReservasVencidas
+IF OBJECT_ID('tempdb..#tramoTemp') IS NOT NULL 
+	DROP TABLE #tramoTemp
+go
+--........................................ CREACION DE TABLAS ......................................................
 USE GD1C2019
 go
 create table [LEISTE_EL_CODIGO?].Rol(
@@ -201,8 +208,7 @@ create table [LEISTE_EL_CODIGO?].Crucero(
 create table [LEISTE_EL_CODIGO?].Servicio(
 	id_servicio smallint primary key,
 	descripcion nvarchar(255) null
-)
-go
+)go
 create table [LEISTE_EL_CODIGO?].TipoCabina(
 	id_tipo nvarchar(255) primary key,
 	--tipo_cabina varchar(255),
@@ -265,12 +271,9 @@ create table [LEISTE_EL_CODIGO?].AuditoriaDeCruceros(
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	motivo varchar(256)
 )go
-/*--------------------------------------TRIGGERS-----------------------------------------------*/
+--........................................ TRIGGERS ......................................................
 USE GD1C2019
 go
---Trigger de vencimiento para reserva--
---IF OBJECT_ID ('fechaVencimiento', 'TR') IS NOT NULL  
---   DROP TRIGGER fechaVencimiento; nose porque esto no funca
 create trigger fechaVencimiento on [LEISTE_EL_CODIGO?].Reserva
 after insert
 as
@@ -294,7 +297,6 @@ begin
 deallocate cursorVencimiento
 end
 go
-
 -- Trigger para borrar reservas vencidas cada vez que haya un login
 USE GD1C2019
 go
@@ -306,7 +308,6 @@ as
 	where SYSDATETIME() > vencimiento
 	end
 go
-
 /*----------STARTUP-----------*/ --@@deberia correr en master
 --Procedure de control de reservas vencidas
 /*
@@ -320,9 +321,7 @@ go
 USE GD1C2019
 go
 */
-
-/* ---------------------------------------------------- Inserciones ---------------------------------------------------- */
-
+--........................................ INSERCIONES ......................................................
 -- Funcionalidad
 insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('abm de rol')						-- Funcionalidad = 1
 insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('abm de cruceros')				-- Funcionalidad = 2
@@ -335,7 +334,6 @@ insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('pago de reser
 insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('listado estadistico')			-- Funcionalidad = 9
 insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('login y seguridad')				-- Funcionalidad = 10
 go
-
 -- Rol
 insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('administrador general')			--Rol 1 = administrador general
 insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('administrador')					--Rol 2 = administrador
@@ -366,7 +364,6 @@ insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) val
 go
 
 --******************************************creo que estos inserts feos pueden hacerse de otra forma 
-
 --Cliente
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(3,7)
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(3,8)
@@ -383,7 +380,7 @@ insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin2
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepe',3)
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepita',3)
 go
-/* ---------------------------------------------------- Migración ---------------------------------------------------- */
+--........................................ MIGRACION ......................................................
 --CLIENTE--
 insert into [LEISTE_EL_CODIGO?].Cliente(nombre,apellido,dni,direccion,telefono,mail,fecha_nacimiento)
 select CLI_NOMBRE,CLI_APELLIDO,CLI_DNI,CLI_DIRECCION,CLI_TELEFONO,CLI_MAIL,CLI_FECHA_NAC
@@ -395,13 +392,10 @@ insert into [LEISTE_EL_CODIGO?].Fabricante
 select distinct CRU_FABRICANTE
 from gd_esquema.Maestra
 go
---Servicio-- (tengo dudas de como deberia ser el orden de insert de las cosas) y las descripciones cambienlas si quieren
---select count(distinct CABINA_TIPO)
---from gd_esquema.Maestra -- hay 5 tipos de cabinas asique hay 5 servicios asociados a ellas
---select distinct CABINA_TIPO
---from gd_esquema.Maestra --cabina exterior, ejecutivo,cabina estandar,suite,cabina balcon
-
-insert into [LEISTE_EL_CODIGO?].Servicio (id_servicio,descripcion) values(1,'vista al mar') --ni idea jajaj, estoy abierto a sugerencias (para cabina exterior)
+--Servicio--
+-- hay 5 tipos de cabinas asique hay 5 servicios asociados a ellas
+--cabina exterior, ejecutivo,cabina estandar,suite,cabina balcon
+insert into [LEISTE_EL_CODIGO?].Servicio (id_servicio,descripcion) values(1,'vista al mar') --(para cabina exterior)
 insert into [LEISTE_EL_CODIGO?].Servicio (id_servicio,descripcion) values(2,'desayuno incluido') --(para ejecutivo)
 insert into [LEISTE_EL_CODIGO?].Servicio (id_servicio,descripcion) values(3,'solo habitacion') --(para cabina estandar)
 insert into [LEISTE_EL_CODIGO?].Servicio (id_servicio,descripcion) values(4,'masajes y bebidas incluidas') --(para suite)
@@ -434,13 +428,9 @@ update [LEISTE_EL_CODIGO?].TipoCabina
 set id_servicio = 5
 where id_tipo like 'Cabina Balc%'
 go
-
 --Crucero-- (son 37 cruceros, se repiten varias veces por cada viaje)
 insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,id_fabricante,modelo)
 select distinct CRUCERO_IDENTIFICADOR,CRU_FABRICANTE,CRUCERO_MODELO
-					--(SELECT count(id_cabina)
-					--FROM [LEISTE_EL_CODIGO?].Cabina c
-					--WHERE c.id_crucero = m.CRUCERO_IDENTIFICADOR)
 FROM gd_esquema.Maestra m
 go
 -------------------Cabinas--------------------------
@@ -451,13 +441,11 @@ select CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO
 from gd_esquema.Maestra
 group by CABINA_NRO,CABINA_PISO,CRUCERO_IDENTIFICADOR,CABINA_TIPO
 go
-
 -------------------------cursor para cantidad de cabinas------------
 declare @id_crucero nvarchar(50)
 declare cursor_cant cursor for
 select id_crucero
 from [LEISTE_EL_CODIGO?].Crucero
-
 open cursor_cant
 fetch next from cursor_cant
 into @id_crucero
@@ -479,14 +467,7 @@ into @id_crucero
 	close cursor_cant
 	deallocate cursor_cant
 go
-
 -----------------------------Puerto------------------------------- lo va nombre de puerto en la tabla, no va el campo ciudad, es irrelevante)
-
---select t.RECORRIDO_CODIGO,count(*)
---from (select distinct RECORRIDO_CODIGO,PUERTO_DESDE,PUERTO_HASTA from gd_esquema.Maestra
---where PUERTO_DESDE in (select distinct PUERTO_HASTA from gd_esquema.Maestra)) t
---group by t.RECORRIDO_CODIGO
-
 insert into [LEISTE_EL_CODIGO?].Puerto
 select distinct PUERTO_DESDE from gd_esquema.Maestra where PUERTO_DESDE<> PUERTO_HASTA
 go
@@ -496,8 +477,6 @@ select distinct RECORRIDO_CODIGO
 from gd_esquema.Maestra
 go
 -----------------------------------------Tramo----------------------------------------------------------
-IF OBJECT_ID('tempdb..#tramoTemp') IS NOT NULL DROP TABLE #tramoTemp
-go
 create table #tramoTemp(
 	id_tramo smallint identity primary key,
 	id_recorrido decimal(18,0),
@@ -505,8 +484,7 @@ create table #tramoTemp(
 	id_destino nvarchar(255),
 	orden smallint,
 	precio_base decimal(18,2) not null
-);
-go
+)go
 insert into #tramoTemp (id_recorrido,id_origen,id_destino,precio_base)
 select distinct RECORRIDO_CODIGO,PUERTO_DESDE,PUERTO_HASTA,RECORRIDO_PRECIO_BASE
 from gd_esquema.Maestra
@@ -549,9 +527,8 @@ update [LEISTE_EL_CODIGO?].Recorrido
 set id_destino= t1.id_destino
 from [LEISTE_EL_CODIGO?].Tramo t1
 where (Recorrido.id_recorrido = t1.id_recorrido and t1.orden = 2)
-----------------------------------Medio de Pago--------------------------------- (esta la llenamos nosotros)
-
-----------------------------------------Pago de viaje-------------------------------------------- 
+----------------------------------Medio de Pago--(esta la llenamos nosotros)
+----------------------------------------Pago de viaje--
 --select PASAJE_CODIGO, count(*) from gd_esquema.Maestra where PASAJE_CODIGO is not null group by PASAJE_CODIGO having count(*)>1
 insert into [LEISTE_EL_CODIGO?].PagoDeViaje(fecha_pago,monto_total,id_cliente)
 select PASAJE_FECHA_COMPRA,PASAJE_PRECIO,(select id_cliente
@@ -560,7 +537,7 @@ select PASAJE_FECHA_COMPRA,PASAJE_PRECIO,(select id_cliente
 from gd_esquema.Maestra m
 where PASAJE_FECHA_COMPRA is not null and PASAJE_PRECIO is not null
 go
--------------------------------------------------Reserva-----------------------------------------
+-------------------------------------------------Reserva--
 insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual,id_cliente,id_crucero,id_viaje,id_cabina)
 select RESERVA_CODIGO,RESERVA_FECHA,
 		(select id_cliente
@@ -577,12 +554,12 @@ select RESERVA_CODIGO,RESERVA_FECHA,
 from gd_esquema.Maestra m
 where RESERVA_CODIGO is not null and RESERVA_FECHA is not null 
 go
--------------------------------------------------Viaje------------------------------------------------
+-------------------------------------------------Viaje--
 insert into [LEISTE_EL_CODIGO?].Viaje (fecha_inicio,fecha_finalizacion,fecha_finalizacion_estimada,id_crucero,id_recorrido)
 select distinct FECHA_SALIDA,FECHA_LLEGADA,FECHA_LLEGADA_ESTIMADA,CRUCERO_IDENTIFICADOR,RECORRIDO_CODIGO 
 from gd_esquema.Maestra
 go
----------------------------------------------Pasaje-----------------------------------------------------
+---------------------------------------------Pasaje--
 SET IDENTITY_INSERT [LEISTE_EL_CODIGO?].Pasaje  ON
 insert into [LEISTE_EL_CODIGO?].Pasaje (id_cabina,id_cliente,id_viaje,id_crucero,precio,id_pasaje)
 select distinct(select id_cabina
@@ -604,8 +581,149 @@ set id_pago = p.id_pago
 from [LEISTE_EL_CODIGO?].PagoDeViaje p
 where Pasaje.id_cliente = p.id_cliente
 go
-/*--------------------------------------PROCEDURES C/DROP-----------------------------------------------*/
-		--LOGIN--#
+--........................................ PROCEDURES ......................................................
+--........................................<ABM 1> ROL				......................................................
+------Agregar nueva funcionalidad a un rol-------REQUERIMIENTO: 
+		--En la modificación de un rol solo se pueden alterar ambos campos: el nombre y el
+		--listado de funcionalidades.
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol (@idRol smallint,@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
+as
+	begin
+		declare @valor_retorno smallint
+		if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 --no existe rol
+		else if
+		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idNuevaFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
+		else if
+		(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
+						where id_funcionalidad= @idNuevaFuncionalidad and id_rol = @idRol)) set @valor_retorno = -3 -- el rol ya tiene esa funcionalidad
+		else
+			begin
+				insert into [LEISTE_EL_CODIGO?].Rol(nombre)
+				values(@nuevoNombreRol) --agrego rol en la tabla
+		
+				declare @idNuevoRol smallint
+				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
+				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) -- aca le pongo al nuevo rol las funcionalidades del otro rol
+				select @idNuevoRol,id_funcionalidad
+				from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
+				where id_rol= @idRol
+
+				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) --aca agrego la nueva funcionalidad
+				values(@idNuevoRol, @idNuevaFuncionalidad)
+				set @valor_retorno = 1 -- se cargo correctamente el nuevo rol
+			end
+		return @valor_retorno
+	end
+go
+--eliminar funcionalidad de un rol--
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol (@idRol smallint,@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
+as
+	begin
+		declare @valor_retorno smallint
+		if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 --no existe rol
+		else if
+		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidadAEliminar)) set @valor_retorno = -2 -- no existe funcionalidad
+		else if
+		(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
+						where id_funcionalidad= @idFuncionalidadAEliminar and id_rol = @idRol)) set @valor_retorno = -3 -- no tiene esa funcionalidad
+		
+		else
+			begin
+				insert into [LEISTE_EL_CODIGO?].Rol(nombre)
+				values(@nuevoNombreRol) --agrego rol en la tabla
+		
+				declare @idNuevoRol smallint
+				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
+				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) -- todas menos la funcionalidad a eliminar 
+				select @idNuevoRol,id_funcionalidad
+				from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
+				where id_rol= @idRol and id_funcionalidad <> @idFuncionalidadAEliminar
+
+				set @valor_retorno = 1 -- se cargo correctamente el nuevo rol
+			end
+		return @valor_retorno
+	end
+go
+--Crear Nuevo Rol -- deberia usarse dentro de un while, lo hago para uno a la vez por ahora
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].crearNuevoRol (@idFuncionalidad smallint,@NombreRol nvarchar(255))
+as
+begin
+		declare @valor_retorno smallint
+		if
+		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
+		else
+			begin
+				if(not exists (select nombre from [LEISTE_EL_CODIGO?].Rol where nombre= @NombreRol)) -- si es la primer vez que lo carga
+					begin
+						insert into [LEISTE_EL_CODIGO?].Rol(nombre)
+						values(@NombreRol) --agrego rol en la tabla
+					end
+		
+				declare @idNuevoRol smallint
+				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @NombreRol
+
+				if
+					(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
+								where id_funcionalidad= @idFuncionalidad and id_rol = @idNuevoRol)) set @valor_retorno = -3 -- ya tiene esa funcionalidad
+
+				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
+				values(@idNuevoRol,@idFuncionalidad)
+				set @valor_retorno = 1
+			end
+		return @valor_retorno
+end
+go
+--Dar de baja un rol--
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].darBajaRol (@idRol smallint)
+as
+	begin
+		declare @valor_retorno smallint
+		if
+		(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 -- no existe rol
+		else 
+			begin
+				update [LEISTE_EL_CODIGO?].Rol
+				set baja_logica = 'S'
+				where id_rol = @idRol
+
+				update [LEISTE_EL_CODIGO?].Usuario
+				set id_rol = NULL
+				where id_rol = @idRol
+				update [LEISTE_EL_CODIGO?].Cliente
+				set id_rol = NULL
+				where id_rol = @idRol
+			end
+		return @valor_retorno
+	end
+go		
+	
+--Habilitar un rol inhabilitado --
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].darAltaRol (@idRol smallint)
+as
+	begin
+		declare @valor_retorno smallint
+		if
+		(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 -- no existe rol
+		else 
+			begin
+				update [LEISTE_EL_CODIGO?].Rol
+				set baja_logica = 'N'
+				where id_rol = @idRol	
+			end
+		return @valor_retorno
+	end
+go	
+--........................................<ABM 2> LOGIN Y SEGURIDAD		......................................................
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].sp_login(@id_ingresado nvarchar(50), @contra_ingresada nvarchar(32)) -- aca tengo dudas de si es la contra al todavia no estar hasheada, si es de 32 o no
@@ -649,43 +767,111 @@ as
 		return @valor_retorno
 	end
 go
-		--CARGAR VIAJE--#
+--........................................<ABM 3> REGISTRO DE USUARIOS		......................................................
+--........................................<ABM 4> PUERTOS			......................................................
+--........................................<ABM 5> RECORRIDO			......................................................
+--Fran dudas: @@@
+--			el id de recorrido me lo pasa él o lo tengo q poner yo?
+--			creo q el minimo de tramos por recorrido es 1 no 2 como pusieron en el doc
+--			no se podrá dar de baja un recorrido que tenga pasajes vendidos sin haber realizado el viaje. : debe estar mal escrito y hablar de modificar
+--			error? tanto pasaje como viaje guardan el crucero
+--			no toy chequeando q cumpla con lo q dijo en recorrido en cuanto a origen y destino
+--			tengo q revisar en la creacion de reserva q el cliente no tenga un viaje en la misma fecha? o eso ya se hace antes?
+--			cuando creo la reserva tengo q bloquear la cabina, o eso se hace antes?
+
+--crearTramo--
+--la creacion debe ir en orden, del 1 al  ultimo
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2, @fecha_actual datetime2)
+create procedure [LEISTE_EL_CODIGO?].crearTramo
+(@idRecorrido decimal(18,0),@origen nvarchar(255),@destino nvarchar(255),@orden smallint,@precio decimal(18,2))
 as
 	begin
-		declare @valor_retorno tinyint
-		if(@fecha_actual>@fecha_inicio)
-			begin
-				set @valor_retorno = -1 --fecha mal ingresada, se quiere generar viaje de fecha anterior a la actual
-			end
-		else if exists( select id_viaje
-						from [LEISTE_EL_CODIGO?].Viaje join [LEISTE_EL_CODIGO?].Crucero cru
-						on (cru.id_crucero = @id_crucero)
-						where fecha_inicio not between @fecha_inicio and @fecha_finalizacion_estimada --fijarse cambiar los between
-							and fecha_finalizacion_estimada not between @fecha_inicio and @fecha_finalizacion_estimada)
-			begin
-				set @valor_retorno = -2 -- crucero ocupado
-			end
-		else if exists(select id_recorrido from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido = @id_recorrido and estado = 'I')
-			begin
-				set @valor_retorno = -3 --recorrido inhabilitado
-			end
-		else if exists(select id_crucero from [LEISTE_EL_CODIGO?].Crucero where id_crucero = @id_crucero and baja_fuera_de_servicio ='S' or baja_fuera_vida_util = 'S')
-			begin
-				set @valor_retorno = -4 --crucero inhabilitado
-			end
-		else
-			begin
-				insert into [LEISTE_EL_CODIGO?].Viaje(id_recorrido,id_crucero,fecha_inicio,fecha_finalizacion_estimada)
-				values(@id_recorrido,@id_crucero, @fecha_inicio, @fecha_finalizacion_estimada)
-				set @valor_retorno = 1 --se cargo viaje
-			end
-		return @valor_retorno
+	--confio que va a cumplir con el origen y destino que indicó en recorrido asi q no chequeo eso
+	if @origen = @destino return -1 --origen y destino son el mismo
+	else if @orden<>1 and @origen <> (select id_destino from [LEISTE_EL_CODIGO?].Tramo where id_recorrido = @idRecorrido and orden = @orden-1)
+		return -2 --el origen de este tramo no es el destino del tramo anterior
+	
+	insert into [LEISTE_EL_CODIGO?].Tramo(id_recorrido,id_origen,id_destino,orden,precio_base)
+	values(@idRecorrido,@origen,@destino,@orden,@precio)
+	return 1
 	end
 go
-		--CARGAR CRUCERO--#
+--modificarTramo--
+--se debe hacer tmb en orden del 1 al ultimo
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].modificarTramo
+(@idTramo smallint,@origen nvarchar(255),@destino nvarchar(255),@precio decimal(18,2))
+as
+	begin
+		if @origen = @destino return -1 --origen y destino son el mismo
+		else if (select orden from [LEISTE_EL_CODIGO?].Tramo where id_tramo=@idTramo) <> 1 and 
+				 @origen <> (select id_destino from [LEISTE_EL_CODIGO?].Tramo 
+								where id_recorrido = (select id_recorrido from [LEISTE_EL_CODIGO?].Tramo t where @idTramo = t.id_tramo)
+									and orden = (select t2.orden from [LEISTE_EL_CODIGO?].Tramo t2 where @idTramo = t2.id_tramo) -1)
+		return -2 --el origen de este tramo no es el destino del tramo anterior  
+		update [LEISTE_EL_CODIGO?].Tramo
+		set id_origen=@origen,id_destino=@destino,precio_base=@precio
+		return 1
+	end
+go
+--eliminarTramo--
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].eliminarTramo(@id_tramo smallint)
+as
+	delete from [LEISTE_EL_CODIGO?].Tramo where id_tramo=@id_tramo
+go
+--crearRecorrido--
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].crearRecorrido
+(@idRecorrido decimal(18,0),@origen nvarchar(255),@destino nvarchar(255))
+as
+	--begin try
+	--if exists(select id_recorrido from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido=@idRecorrido) return -1 --el id ya existe
+	insert into [LEISTE_EL_CODIGO?].Recorrido(id_recorrido,estado,id_origen,id_destino)
+	values(@idRecorrido,'A',@origen,@destino)
+	--return 1 --se creo el recorrido
+	--end try
+	--begin catch
+	--if ERROR_NUMBER()=2627 return -1--el id de recorrido ya esta en uso
+	--else if ERROR_NUMBER()=547 return -2 --uno o los dos puertos no existen
+	--end catch
+go
+
+--modificarRecorrido--
+--si el retorno es correcto entonces podes avanzar a modificar los tramos
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].modificarRecorrido
+(@idRecorrido decimal(13,0),@origen nvarchar(255),@destino nvarchar(255))
+as
+	begin
+	if exists(select p.id_viaje from [LEISTE_EL_CODIGO?].Pasaje p 
+				join [LEISTE_EL_CODIGO?].Viaje v 
+				on p.id_viaje = v.id_viaje and v.fecha_inicio > SYSDATETIME()
+				where p.cancelacion = 'N'
+	) return -1 --no se puede modificar xq todavia hay pasajes vendidos q no hicieron el viaje
+	update [LEISTE_EL_CODIGO?].Recorrido
+	set id_origen=@origen,id_destino=@destino
+	where id_recorrido= @idRecorrido
+	return 1
+	end
+go
+--darDeBajaRecorrido--
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].darDeBajaRecorrido
+(@idRecorrido decimal(18,0))
+as
+	update [LEISTE_EL_CODIGO?].Recorrido
+	set estado = 'I'
+	where id_recorrido = @idRecorrido
+	--@no se q onda con el tema de si ya tiene pasajes vendidos
+go
+--........................................<ABM 6> CRUCEROS			......................................................
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].cargarCrucero(@id_crucero nvarchar(50),@id_fabricante nvarchar(255),@modelo nvarchar(50),@cantidadDeCabinas int)
@@ -711,7 +897,7 @@ as
 		return @valor_retorno
 	end
 go											     
-		--DAR CRUCERO DE BAJA DEFINITIVA--
+--DAR CRUCERO DE BAJA DEFINITIVA--
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].darDeBajaDefinitivaCrucero(@id_crucero nvarchar(50),@fecha_actual datetime2) --@motivo
@@ -723,7 +909,7 @@ as
 		--exec de procedure y que pase motivo x parametro y id_crucero, idem abajo
 	end
 go
-		--DAR CRUCERO DE BAJA TEMPORAL--
+--DAR CRUCERO DE BAJA TEMPORAL--
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].darDeBajaTemporalCrucero(@id_crucero nvarchar(50),@fecha_reinicio datetime2)
@@ -735,8 +921,7 @@ as
 		where id_crucero = @id_crucero
 	end
 go
-
---------------------------auditar cancelacion de pasajes ------------------#
+--auditar cancelacion de pasajes --
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].auditarCancelacion(@id_crucero nvarchar(50),@motivo varchar(256))
@@ -746,7 +931,7 @@ as
 		values(@id_crucero,@motivo)
 	end
 go
-----------------------------------Posponer por baja de crucero ---------------------------
+--Posponer por baja de crucero --
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].posponerPasajes(@id_crucero nvarchar(50),@diasCorrimiento int)
@@ -758,7 +943,7 @@ as
 		where id_crucero = @id_crucero
 	end
 go
--------------------------calcular cabinas por tipo -------------------------
+--calcular cabinas por tipo --
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].calcularCabinaPorTipo (@idCrucero nvarchar(50),@tipoCabina nvarchar(255),@retorno int out)
@@ -778,7 +963,7 @@ as
 			end
 	end
 go
---------------------------------reemplazarViajesCruceroPorOtro------------------------
+--reemplazarViajesCruceroPorOtro--
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].reemplazarViajesCruceroPorOtro(@id_crucero nvarchar(50))
@@ -840,7 +1025,7 @@ as
 			end
 	end
 go
-----------------------------------cancelarPasajes -------------------------------
+--cancelarPasajes --
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].cancelarPasajes(@id_crucero nvarchar(50),@fecha_actual datetime2,@motivo varchar(256))
@@ -850,259 +1035,52 @@ as
 		set cancelacion = 'S',fecha_cancelacion = @fecha_actual
 		from [LEISTE_EL_CODIGO?].Viaje v
 		where Pasaje.id_crucero = @id_crucero and (Pasaje.id_viaje = v.id_viaje and v.fecha_inicio>=@fecha_actual)
-
 		exec [LEISTE_EL_CODIGO?].auditarCancelacion @id_crucero, @motivo
 	end
 go
-
-------Agregar nueva funcionalidad a un rol-------REQUERIMIENTO: 
-		--En la modificación de un rol solo se pueden alterar ambos campos: el nombre y el
-		--listado de funcionalidades.
+--........................................<ABM 7> GENERAR VIAJE			......................................................
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol (@idRol smallint,@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2, @fecha_actual datetime2)
 as
 	begin
-		declare @valor_retorno smallint
-		if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 --no existe rol
-		else if
-		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idNuevaFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
-		else if
-		(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
-						where id_funcionalidad= @idNuevaFuncionalidad and id_rol = @idRol)) set @valor_retorno = -3 -- el rol ya tiene esa funcionalidad
+		declare @valor_retorno tinyint
+		if(@fecha_actual>@fecha_inicio)
+			begin
+				set @valor_retorno = -1 --fecha mal ingresada, se quiere generar viaje de fecha anterior a la actual
+			end
+		else if exists( select id_viaje
+						from [LEISTE_EL_CODIGO?].Viaje join [LEISTE_EL_CODIGO?].Crucero cru
+						on (cru.id_crucero = @id_crucero)
+						where fecha_inicio not between @fecha_inicio and @fecha_finalizacion_estimada --fijarse cambiar los between
+							and fecha_finalizacion_estimada not between @fecha_inicio and @fecha_finalizacion_estimada)
+			begin
+				set @valor_retorno = -2 -- crucero ocupado
+			end
+		else if exists(select id_recorrido from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido = @id_recorrido and estado = 'I')
+			begin
+				set @valor_retorno = -3 --recorrido inhabilitado
+			end
+		else if exists(select id_crucero from [LEISTE_EL_CODIGO?].Crucero where id_crucero = @id_crucero and baja_fuera_de_servicio ='S' or baja_fuera_vida_util = 'S')
+			begin
+				set @valor_retorno = -4 --crucero inhabilitado
+			end
 		else
 			begin
-				insert into [LEISTE_EL_CODIGO?].Rol(nombre)
-				values(@nuevoNombreRol) --agrego rol en la tabla
-		
-				declare @idNuevoRol smallint
-				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
-				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) -- aca le pongo al nuevo rol las funcionalidades del otro rol
-				select @idNuevoRol,id_funcionalidad
-				from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
-				where id_rol= @idRol
-
-				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) --aca agrego la nueva funcionalidad
-				values(@idNuevoRol, @idNuevaFuncionalidad)
-				set @valor_retorno = 1 -- se cargo correctamente el nuevo rol
+				insert into [LEISTE_EL_CODIGO?].Viaje(id_recorrido,id_crucero,fecha_inicio,fecha_finalizacion_estimada)
+				values(@id_recorrido,@id_crucero, @fecha_inicio, @fecha_finalizacion_estimada)
+				set @valor_retorno = 1 --se cargo viaje
 			end
 		return @valor_retorno
 	end
 go
-		-------eliminar funcionalidad de un rol-----------#
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol (@idRol smallint,@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
-as
-	begin
-		declare @valor_retorno smallint
-		if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 --no existe rol
-		else if
-		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidadAEliminar)) set @valor_retorno = -2 -- no existe funcionalidad
-		else if
-		(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
-						where id_funcionalidad= @idFuncionalidadAEliminar and id_rol = @idRol)) set @valor_retorno = -3 -- no tiene esa funcionalidad
-		
-		else
-			begin
-				insert into [LEISTE_EL_CODIGO?].Rol(nombre)
-				values(@nuevoNombreRol) --agrego rol en la tabla
-		
-				declare @idNuevoRol smallint
-				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
-				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) -- todas menos la funcionalidad a eliminar 
-				select @idNuevoRol,id_funcionalidad
-				from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
-				where id_rol= @idRol and id_funcionalidad <> @idFuncionalidadAEliminar
+--........................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE	......................................................
 
-				set @valor_retorno = 1 -- se cargo correctamente el nuevo rol
-			end
-		return @valor_retorno
-	end
-go
-		-------- Crear Nuevo Rol --------- deberia usarse dentro de un while, lo hago para uno a la vez por ahora
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].crearNuevoRol (@idFuncionalidad smallint,@NombreRol nvarchar(255))
-as
-begin
-		declare @valor_retorno smallint
-		if
-		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
-		else
-			begin
-				if(not exists (select nombre from [LEISTE_EL_CODIGO?].Rol where nombre= @NombreRol)) -- si es la primer vez que lo carga
-					begin
-						insert into [LEISTE_EL_CODIGO?].Rol(nombre)
-						values(@NombreRol) --agrego rol en la tabla
-					end
-		
-				declare @idNuevoRol smallint
-				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @NombreRol
+--........................................<ABM 9> PAGO DE RESERVA		......................................................
 
-				if
-					(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
-								where id_funcionalidad= @idFuncionalidad and id_rol = @idNuevoRol)) set @valor_retorno = -3 -- ya tiene esa funcionalidad
 
-				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-				values(@idNuevoRol,@idFuncionalidad)
-				set @valor_retorno = 1
-			end
-		return @valor_retorno
-end
-go
-----------------------------Dar de baja un rol-----------------------------------
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].darBajaRol (@idRol smallint)
-as
-	begin
-		declare @valor_retorno smallint
-		if
-		(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 -- no existe rol
-		else 
-			begin
-				update [LEISTE_EL_CODIGO?].Rol
-				set baja_logica = 'S'
-				where id_rol = @idRol
-
-				update [LEISTE_EL_CODIGO?].Usuario
-				set id_rol = NULL
-				where id_rol = @idRol
-				update [LEISTE_EL_CODIGO?].Cliente
-				set id_rol = NULL
-				where id_rol = @idRol
-			end
-		return @valor_retorno
-	end
-go		
-	
--------------------------------Habilitar un rol inhabilitado ---------------------------------
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].darAltaRol (@idRol smallint)
-as
-	begin
-		declare @valor_retorno smallint
-		if
-		(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 -- no existe rol
-		else 
-			begin
-				update [LEISTE_EL_CODIGO?].Rol
-				set baja_logica = 'N'
-				where id_rol = @idRol	
-			end
-		return @valor_retorno
-	end
-go	
-
---@
---Fran dudas: @@@
---			el id de recorrido me lo pasa él o lo tengo q poner yo?
---			creo q el minimo de tramos por recorrido es 1 no 2 como pusieron en el doc
---			no se podrá dar de baja un recorrido que tenga pasajes vendidos sin haber realizado el viaje. : debe estar mal escrito y hablar de modificar
---			error? tanto pasaje como viaje guardan el crucero
---			no toy chequeando q cumpla con lo q dijo en recorrido en cuanto a origen y destino
---			tengo q revisar en la creacion de reserva q el cliente no tenga un viaje en la misma fecha? o eso ya se hace antes?
---			cuando creo la reserva tengo q bloquear la cabina, o eso se hace antes?
-
-----------------------------------crearTramo--------------------------------#
---la creacion debe ir en orden, del 1 al  ultimo
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].crearTramo
-(@idRecorrido decimal(18,0),@origen nvarchar(255),@destino nvarchar(255),@orden smallint,@precio decimal(18,2))
-as
-	begin
-	--confio que va a cumplir con el origen y destino que indicó en recorrido asi q no chequeo eso
-	if @origen = @destino return -1 --origen y destino son el mismo
-	else if @orden<>1 and @origen <> (select id_destino from [LEISTE_EL_CODIGO?].Tramo where id_recorrido = @idRecorrido and orden = @orden-1)
-		return -2 --el origen de este tramo no es el destino del tramo anterior
-	
-	insert into [LEISTE_EL_CODIGO?].Tramo(id_recorrido,id_origen,id_destino,orden,precio_base)
-	values(@idRecorrido,@origen,@destino,@orden,@precio)
-	return 1
-	end
-go
-
-----------------------------------crearRecorrido--------------------------------#
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].crearRecorrido
-(@idRecorrido decimal(18,0),@origen nvarchar(255),@destino nvarchar(255))
-as
-	--begin try
-	--if exists(select id_recorrido from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido=@idRecorrido) return -1 --el id ya existe
-	insert into [LEISTE_EL_CODIGO?].Recorrido(id_recorrido,estado,id_origen,id_destino)
-	values(@idRecorrido,'A',@origen,@destino)
-	--return 1 --se creo el recorrido
-	--end try
-	--begin catch
-	--if ERROR_NUMBER()=2627 return -1--el id de recorrido ya esta en uso
-	--else if ERROR_NUMBER()=547 return -2 --uno o los dos puertos no existen
-	--end catch
-go
-
-----------------------------------modificarRecorrido--------------------------------
---si el retorno es correcto entonces podes avanzar a modificar los tramos
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].modificarRecorrido
-(@idRecorrido decimal(13,0),@origen nvarchar(255),@destino nvarchar(255))
-as
-	begin
-	if exists(select p.id_viaje from [LEISTE_EL_CODIGO?].Pasaje p 
-				join [LEISTE_EL_CODIGO?].Viaje v 
-				on p.id_viaje = v.id_viaje and v.fecha_inicio > SYSDATETIME()
-				where p.cancelacion = 'N'
-	) return -1 --no se puede modificar xq todavia hay pasajes vendidos q no hicieron el viaje
-	update [LEISTE_EL_CODIGO?].Recorrido
-	set id_origen=@origen,id_destino=@destino
-	where id_recorrido= @idRecorrido
-	return 1
-	end
-go
-----------------------------------modificarTramo--------------------------------
---se debe hacer tmb en orden del 1 al ultimo
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].modificarTramo
-(@idTramo smallint,@origen nvarchar(255),@destino nvarchar(255),@precio decimal(18,2))
-as
-	begin
-		if @origen = @destino return -1 --origen y destino son el mismo
-		else if (select orden from [LEISTE_EL_CODIGO?].Tramo where id_tramo=@idTramo) <> 1 and 
-				 @origen <> (select id_destino from [LEISTE_EL_CODIGO?].Tramo 
-								where id_recorrido = (select id_recorrido from [LEISTE_EL_CODIGO?].Tramo t where @idTramo = t.id_tramo)
-									and orden = (select t2.orden from [LEISTE_EL_CODIGO?].Tramo t2 where @idTramo = t2.id_tramo) -1)
-		return -2 --el origen de este tramo no es el destino del tramo anterior  
-		update [LEISTE_EL_CODIGO?].Tramo
-		set id_origen=@origen,id_destino=@destino,precio_base=@precio
-		return 1
-	end
-go
-
-----------------------------------darDeBajaRecorrido--------------------------------
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].darDeBajaRecorrido
-(@idRecorrido decimal(18,0))
-as
-	update [LEISTE_EL_CODIGO?].Recorrido
-	set estado = 'I'
-	where id_recorrido = @idRecorrido
-	--@no se q onda con el tema de si ya tiene pasajes vendidos
-go
-
-----------------------------------eliminarTramo--------------------------------
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].eliminarTramo(@id_tramo smallint)
-as
-	delete from [LEISTE_EL_CODIGO?].Tramo where id_tramo=@id_tramo
-go
-
-----------------------------------crearReserva--------------------------------#
+--........................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE......................................................
+--crearReserva--
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].crearReserva
@@ -1115,7 +1093,6 @@ as
 	return 1 --todo bien
 	end
 go
---........................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE......................................................
 ----------------------------viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --------
 USE GD1C2019
 go
@@ -1139,7 +1116,7 @@ as
 		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
 	end
 go --fijarse si hay que hacer un return id_viaje
--------------------------todo despues de seleccionar un viaje----------------- ingresar cliente
+--todo despues de seleccionar un viaje--ingresar cliente
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
@@ -1213,7 +1190,6 @@ go --ver funcion de precio pasaje
 create procedure [LEISTE_EL_CODIGO?].comprarPasajes (@idCliente int,@idViaje int,@idCabina int,@idCrucero int,@idPago,)
 as
 	begin
-		
 		return @idPasaje
 	end
 go
@@ -1226,8 +1202,8 @@ as
 		select 
 		from [LEISTE_EL_CODIGO?].Pasaje
 	end
------------------------------------------ABM 10 <LISTADOS ESTADISTICOS>------------------------------------
---------------TOP RECORRIDOS CON MAS PASAJES VENDIDOS----------------------------
+--........................................<ABM 10> LISTADOS ESTADISTICOS	......................................................							  					  
+--TOP RECORRIDOS CON MAS PASAJES VENDIDOS--
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].topRecorridosConMasPasajesComprados (@anio int, @semestre int)
@@ -1254,7 +1230,7 @@ as
 		order by count(r.id_recorrido) desc
 	end
 go		
--------------------------------TOP 5 RECORRIDOS CON MAS CABINAS LIBRES EN VIAJES REALIZADOS-------------------
+--TOP 5 RECORRIDOS CON MAS CABINAS LIBRES EN VIAJES REALIZADOS--
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].topMasCabinasLibres (@anio int, @semestre int)
@@ -1285,12 +1261,7 @@ as
 		order by 4 desc
 	end
 go	
---declare @anio int, @semestre int
---set @anio = 2018
---set @semestre = 2
---exec [LEISTE_EL_CODIGO?].topMasCabinasLibres @anio, @semestre (para testear)
-
--------------------------------TOP 5 CRUCEROS CON MAYOR CANTIDAD DE DIAS FUERA DE SERVICIO-------------------
+--TOP 5 CRUCEROS CON MAYOR CANTIDAD DE DIAS FUERA DE SERVICIO--
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].topCrucerosFueraDeServicio (@anio int, @semestre int)
@@ -1315,22 +1286,9 @@ as
 		order by 2 desc
 	end
 go	
---declare @dia1 datetime2, @dia2 datetime2
---set @dia1 = '2018-06-22 04:00:00.000'
---set @dia2 = '2018-07-05 07:00:00.000'
---print datediff(day, @dia1, @dia2)
---begin transaction
---update [LEISTE_EL_CODIGO?].Crucero
---set fecha_baja_por_fuera_de_servicio = '2018-04-22 04:00:00.000',
---fecha_reinicio_servicio = '2018-05-05 07:00:00.000'
---where id_crucero = 'ASHFLJ-66175'
---declare @anio int, @semestre int
---set @anio = 2018
---set @semestre = 1
---exec [LEISTE_EL_CODIGO?].topCrucerosFueraDeServicio @anio, @semestre --(para testear)
---ROLLBACK TRANSACTION
 
 --........................................VISTAS PARA APLICATIVO......................................................
+--Vista de CRUCEROS DISPONIBLES--
 USE GD1C2019
 go
 create view [LEISTE_EL_CODIGO?].CrucerosDisponibles
@@ -1339,7 +1297,7 @@ as
 		from [LEISTE_EL_CODIGO?].Crucero
 		where baja_fuera_vida_util = 'N' and baja_fuera_de_servicio = 'N'
 go
--------------------Vista de roles habilitados--------------------------------
+--Vista de ROLES HABILITADOS--
 USE GD1C2019
 go
 create view [LEISTE_EL_CODIGO?].RolesHabilitados
