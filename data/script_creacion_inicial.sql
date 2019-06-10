@@ -298,7 +298,7 @@ deallocate cursorVencimiento
 end
 go
 -- Trigger para borrar reservas vencidas cada vez que haya un login
-USE GD1C2019
+/*USE GD1C2019
 go
 create trigger eliminarReservasVencidas
 on all server for logon
@@ -307,7 +307,7 @@ as
 	delete from [LEISTE_EL_CODIGO?].Reserva
 	where SYSDATETIME() > vencimiento
 	end
-go
+go*/
 /*----------STARTUP-----------*/ --@@deberia correr en master
 --Procedure de control de reservas vencidas
 /*
