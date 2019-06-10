@@ -1300,10 +1300,15 @@ as
 		from [LEISTE_EL_CODIGO?].Rol
 		where baja_logica = 'N' -- ver despues si es necesario tambien hacer una vista con todos los roles, habilitados o no.
 go
-
-
-
-
-
-
-
+if exists(select * from sys.views where object_name(object_id)='Recorridos' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	begin
+		drop view [LEISTE_EL_CODIGO?].Recorridos
+	end
+go
+USE GD1C2019
+go
+create view [LEISTE_EL_CODIGO?].Recorridos --che esto me parece innecesario
+as
+		select id_recorrido, id_origen, id_destino
+		from [LEISTE_EL_CODIGO?].Recorrido
+go
