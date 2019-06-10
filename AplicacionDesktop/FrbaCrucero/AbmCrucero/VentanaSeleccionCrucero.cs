@@ -73,6 +73,10 @@ namespace FrbaCrucero.AbmCrucero
         {
             monthCalendar1.Visible = true;
         }
+        private void botonSeleccion_Click(object sender, EventArgs e)
+        {
+            new VentanaDeAltaCrucero().Show();
+        }
 
         private void filtro3_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -118,12 +122,23 @@ namespace FrbaCrucero.AbmCrucero
 
         private void planillaDeResultados_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            this.botonSeleccion_Click(sender,e);
         }
 
         private void VentanaListado_Load(object sender, EventArgs e)
         {
+            // TODO: esta línea de código carga datos en la tabla 'tablaCrucero.Crucero' Puede moverla o quitarla según sea necesario.
+            this.cruceroTableAdapter.Fill(this.tablaCrucero.Crucero);
+            this.dataGridViewAgregarBotonSeleccionar(planillaDeResultados);
 
+        }
+        public void dataGridViewAgregarBotonSeleccionar(DataGridView dataGridView)
+        {
+            DataGridViewButtonColumn botonSeleccion = new DataGridViewButtonColumn();
+            botonSeleccion.HeaderText = "Seleccionar";
+            botonSeleccion.Text = "Seleccionar";
+            botonSeleccion.UseColumnTextForButtonValue = true;
+            dataGridView.Columns.Add(botonSeleccion);
         }
     }
 }

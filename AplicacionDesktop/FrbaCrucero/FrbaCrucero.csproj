@@ -181,6 +181,11 @@
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="TablaCrucero.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TablaCrucero.xsd</DependentUpon>
+    </Compile>
     <Compile Include="VentanaMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -295,6 +300,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="TablaCrucero.xsc">
+      <DependentUpon>TablaCrucero.xsd</DependentUpon>
+    </None>
+    <None Include="TablaCrucero.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TablaCrucero.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TablaCrucero.xss">
+      <DependentUpon>TablaCrucero.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.l1 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.filtro1 = new System.Windows.Forms.TextBox();
@@ -42,8 +43,22 @@
             this.grupoFiltro = new System.Windows.Forms.GroupBox();
             this.planillaDeResultados = new System.Windows.Forms.DataGridView();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.tablaCrucero = new FrbaCrucero.TablaCrucero();
+            this.cruceroBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.cruceroTableAdapter = new FrbaCrucero.TablaCruceroTableAdapters.CruceroTableAdapter();
+            this.idcruceroDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idfabricanteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.modeloDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bajafueradeservicioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bajafueravidautilDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechabajaporfueradeservicioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechareinicioservicioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechabajaporvidautilDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantidadDeCabinasDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grupoFiltro.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.planillaDeResultados)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tablaCrucero)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cruceroBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // l1
@@ -167,8 +182,20 @@
             // 
             // planillaDeResultados
             // 
+            this.planillaDeResultados.AutoGenerateColumns = false;
             this.planillaDeResultados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.planillaDeResultados.Location = new System.Drawing.Point(12, 173);
+            this.planillaDeResultados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idcruceroDataGridViewTextBoxColumn,
+            this.idfabricanteDataGridViewTextBoxColumn,
+            this.modeloDataGridViewTextBoxColumn,
+            this.bajafueradeservicioDataGridViewTextBoxColumn,
+            this.bajafueravidautilDataGridViewTextBoxColumn,
+            this.fechabajaporfueradeservicioDataGridViewTextBoxColumn,
+            this.fechareinicioservicioDataGridViewTextBoxColumn,
+            this.fechabajaporvidautilDataGridViewTextBoxColumn,
+            this.cantidadDeCabinasDataGridViewTextBoxColumn});
+            this.planillaDeResultados.DataSource = this.cruceroBindingSource;
+            this.planillaDeResultados.Location = new System.Drawing.Point(12, 172);
             this.planillaDeResultados.Name = "planillaDeResultados";
             this.planillaDeResultados.ReadOnly = true;
             this.planillaDeResultados.Size = new System.Drawing.Size(432, 150);
@@ -183,7 +210,84 @@
             this.monthCalendar1.Visible = false;
             this.monthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged_1);
             // 
-            // VentanaSelecionPuerto
+            // tablaCrucero
+            // 
+            this.tablaCrucero.DataSetName = "TablaCrucero";
+            this.tablaCrucero.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // cruceroBindingSource
+            // 
+            this.cruceroBindingSource.DataMember = "Crucero";
+            this.cruceroBindingSource.DataSource = this.tablaCrucero;
+            // 
+            // cruceroTableAdapter
+            // 
+            this.cruceroTableAdapter.ClearBeforeFill = true;
+            // 
+            // idcruceroDataGridViewTextBoxColumn
+            // 
+            this.idcruceroDataGridViewTextBoxColumn.DataPropertyName = "id_crucero";
+            this.idcruceroDataGridViewTextBoxColumn.HeaderText = "id_crucero";
+            this.idcruceroDataGridViewTextBoxColumn.Name = "idcruceroDataGridViewTextBoxColumn";
+            this.idcruceroDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // idfabricanteDataGridViewTextBoxColumn
+            // 
+            this.idfabricanteDataGridViewTextBoxColumn.DataPropertyName = "id_fabricante";
+            this.idfabricanteDataGridViewTextBoxColumn.HeaderText = "id_fabricante";
+            this.idfabricanteDataGridViewTextBoxColumn.Name = "idfabricanteDataGridViewTextBoxColumn";
+            this.idfabricanteDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // modeloDataGridViewTextBoxColumn
+            // 
+            this.modeloDataGridViewTextBoxColumn.DataPropertyName = "modelo";
+            this.modeloDataGridViewTextBoxColumn.HeaderText = "modelo";
+            this.modeloDataGridViewTextBoxColumn.Name = "modeloDataGridViewTextBoxColumn";
+            this.modeloDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // bajafueradeservicioDataGridViewTextBoxColumn
+            // 
+            this.bajafueradeservicioDataGridViewTextBoxColumn.DataPropertyName = "baja_fuera_de_servicio";
+            this.bajafueradeservicioDataGridViewTextBoxColumn.HeaderText = "baja_fuera_de_servicio";
+            this.bajafueradeservicioDataGridViewTextBoxColumn.Name = "bajafueradeservicioDataGridViewTextBoxColumn";
+            this.bajafueradeservicioDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // bajafueravidautilDataGridViewTextBoxColumn
+            // 
+            this.bajafueravidautilDataGridViewTextBoxColumn.DataPropertyName = "baja_fuera_vida_util";
+            this.bajafueravidautilDataGridViewTextBoxColumn.HeaderText = "baja_fuera_vida_util";
+            this.bajafueravidautilDataGridViewTextBoxColumn.Name = "bajafueravidautilDataGridViewTextBoxColumn";
+            this.bajafueravidautilDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // fechabajaporfueradeservicioDataGridViewTextBoxColumn
+            // 
+            this.fechabajaporfueradeservicioDataGridViewTextBoxColumn.DataPropertyName = "fecha_baja_por_fuera_de_servicio";
+            this.fechabajaporfueradeservicioDataGridViewTextBoxColumn.HeaderText = "fecha_baja_por_fuera_de_servicio";
+            this.fechabajaporfueradeservicioDataGridViewTextBoxColumn.Name = "fechabajaporfueradeservicioDataGridViewTextBoxColumn";
+            this.fechabajaporfueradeservicioDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // fechareinicioservicioDataGridViewTextBoxColumn
+            // 
+            this.fechareinicioservicioDataGridViewTextBoxColumn.DataPropertyName = "fecha_reinicio_servicio";
+            this.fechareinicioservicioDataGridViewTextBoxColumn.HeaderText = "fecha_reinicio_servicio";
+            this.fechareinicioservicioDataGridViewTextBoxColumn.Name = "fechareinicioservicioDataGridViewTextBoxColumn";
+            this.fechareinicioservicioDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // fechabajaporvidautilDataGridViewTextBoxColumn
+            // 
+            this.fechabajaporvidautilDataGridViewTextBoxColumn.DataPropertyName = "fecha_baja_por_vida_util";
+            this.fechabajaporvidautilDataGridViewTextBoxColumn.HeaderText = "fecha_baja_por_vida_util";
+            this.fechabajaporvidautilDataGridViewTextBoxColumn.Name = "fechabajaporvidautilDataGridViewTextBoxColumn";
+            this.fechabajaporvidautilDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // cantidadDeCabinasDataGridViewTextBoxColumn
+            // 
+            this.cantidadDeCabinasDataGridViewTextBoxColumn.DataPropertyName = "cantidadDeCabinas";
+            this.cantidadDeCabinasDataGridViewTextBoxColumn.HeaderText = "cantidadDeCabinas";
+            this.cantidadDeCabinasDataGridViewTextBoxColumn.Name = "cantidadDeCabinasDataGridViewTextBoxColumn";
+            this.cantidadDeCabinasDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // VentanaSeleccionCrucero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -193,12 +297,14 @@
             this.Controls.Add(this.grupoFiltro);
             this.Controls.Add(this.botonLimpiar);
             this.Controls.Add(this.botonBuscar);
-            this.Name = "VentanaListado";
+            this.Name = "VentanaSeleccionCrucero";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.VentanaListado_Load);
             this.grupoFiltro.ResumeLayout(false);
             this.grupoFiltro.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.planillaDeResultados)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tablaCrucero)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cruceroBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -219,5 +325,17 @@
         private System.Windows.Forms.GroupBox grupoFiltro;
         private System.Windows.Forms.DataGridView planillaDeResultados;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
+        private TablaCrucero tablaCrucero;
+        private System.Windows.Forms.BindingSource cruceroBindingSource;
+        private TablaCruceroTableAdapters.CruceroTableAdapter cruceroTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idcruceroDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idfabricanteDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn modeloDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bajafueradeservicioDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bajafueravidautilDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechabajaporfueradeservicioDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechareinicioservicioDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechabajaporvidautilDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cantidadDeCabinasDataGridViewTextBoxColumn;
     }
 }

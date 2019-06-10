@@ -22,6 +22,8 @@ namespace FrbaCrucero.AbmCrucero
 
         }
 
+        public BaseDeDato bd = new BaseDeDato();
+        public DataTable dt = new DataTable();
 
         #region DataGridView
 
@@ -31,29 +33,19 @@ namespace FrbaCrucero.AbmCrucero
         {
             dataGridView.DataSource = vista;
         }
-
-     /*   public static void dataGridViewAgregarBoton(DataGridView dataGridView, string textoBoton)
-        {
-            DataGridViewButtonColumn botonModificar = new DataGridViewButtonColumn();
-            botonModificar.HeaderText = "Accion";
-            botonModificar.Text = textoBoton;
-            botonModificar.UseColumnTextForButtonValue = true;
-            dataGridView.Columns.Add(botonModificar);
+        public void llenardataGridView(DataGridView dgv)
+        
+        {         
+            bd.conectar();
+            SqlCommand command = bd.ejecutarConsulta("SELECT * FROM [LEISTE_EL_CODIGO?].CrucerosDisponibles");
+            SqlDataAdapter adapter = new SqlDataAdapter(command);         
+            adapter.Fill(dt);
+            dgv.DataSource = dt;
         }
-*/
        
-       /* public static void dataGridViewAgregarBotonAgregar(DataGridView dataGridView)
-        {
-            VentanaBase.dataGridViewAgregarBoton(dataGridView, "         Agregar         ");
-        } */
-
         #endregion
 
-        /* public DataView crucerosDisponibles();
-
-        private BaseDeDato baseDeDato = new BaseDeDato();
-        baseDeDato.crearConsulta(string consulta); */
-
+   
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -69,15 +61,43 @@ namespace FrbaCrucero.AbmCrucero
         {
 
         }
+        private void botonBuscar_Click(object sender, EventArgs e) { 
 
-        private void botonBuscar_Click(object sender, EventArgs e)
-        {
+            
+            var lst = dt.Select(string.Format("id_crucero = '{0}'",filtro2.Text));
 
+           //Declaras un nuevo dataTable para asignarlo a grid y no afectar el original
+           var table = new DataTable();
+           var column = new DataColumn();
+           //Agregas las columnas correspondientes al nuevo dataTable
+            column.DataType = System.Type.GetType("System.String");
+            column.ColumnName = "id_crucero";
+            table.Columns.Add(column);
+
+            column = new DataColumn();
+            column.DataType = Type.GetType("System.String");
+            column.ColumnName = "id_fabricante";
+            table.Columns.Add(column);
+
+            column = new DataColumn();
+            column.DataType = Type.GetType("System.String");
+            column.ColumnName = "modelo";
+            table.Columns.Add(column);
+         
+
+            //LLenas el dataTable con el resultado de la busqueda
+            foreach (DataRow row in lst)
+            {
+                table.ImportRow(row);
+            }
+           //Asignas el nuevo dataTable al grid
+            planillaDeResultados.DataSource = table;
         }
+
 
         private void botonSeleccionar_Click(object sender, EventArgs e)
         {
-            monthCalendar1.Visible = true;
+            new VentanaListadoCrucero().Show();
         }
 
         private void filtro3_SelectedIndexChanged(object sender, EventArgs e)
@@ -87,7 +107,7 @@ namespace FrbaCrucero.AbmCrucero
 
         private void filtro1_TextChanged(object sender, EventArgs e)
         {
-
+            
         }
 
         private void filtro2_TextChanged(object sender, EventArgs e)
@@ -129,9 +149,15 @@ namespace FrbaCrucero.AbmCrucero
 
         private void VentanaListado_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dataSet1.CrucerosDisponibles' Puede moverla o quitarla según sea necesario.
-            this.crucerosDisponiblesTableAdapter.Fill(this.dataSet1.CrucerosDisponibles);
+            this.llenardataGridView(planillaDeResultados);
+           /* this.crucerosDisponiblesTableAdapter.Fill(this.dataSet1.CrucerosDisponibles); */
           
         }
+
+        private void grupoFiltro_Enter(object sender, EventArgs e, TextBox filtro)
+        {
+
+        }
+        
     }
 }

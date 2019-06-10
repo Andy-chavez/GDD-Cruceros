@@ -42,17 +42,17 @@
             this.botonLimpiar = new System.Windows.Forms.Button();
             this.grupoFiltro = new System.Windows.Forms.GroupBox();
             this.planillaDeResultados = new System.Windows.Forms.DataGridView();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
-            this.dataSet1 = new FrbaCrucero.DataSet1();
-            this.crucerosDisponiblesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.crucerosDisponiblesTableAdapter = new FrbaCrucero.DataSet1TableAdapters.CrucerosDisponiblesTableAdapter();
             this.idcruceroDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idfabricanteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.modeloDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.crucerosDisponiblesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataSet1 = new FrbaCrucero.DataSet1();
+            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.crucerosDisponiblesTableAdapter = new FrbaCrucero.DataSet1TableAdapters.CrucerosDisponiblesTableAdapter();
             this.grupoFiltro.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.planillaDeResultados)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crucerosDisponiblesBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.SuspendLayout();
             // 
             // l1
@@ -176,6 +176,10 @@
             // 
             // planillaDeResultados
             // 
+            this.planillaDeResultados.AllowUserToAddRows = false;
+            this.planillaDeResultados.AllowUserToDeleteRows = false;
+            this.planillaDeResultados.AllowUserToResizeColumns = false;
+            this.planillaDeResultados.AllowUserToResizeRows = false;
             this.planillaDeResultados.AutoGenerateColumns = false;
             this.planillaDeResultados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.planillaDeResultados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -189,28 +193,6 @@
             this.planillaDeResultados.Size = new System.Drawing.Size(432, 150);
             this.planillaDeResultados.TabIndex = 14;
             this.planillaDeResultados.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.planillaDeResultados_CellContentClick);
-            // 
-            // monthCalendar1
-            // 
-            this.monthCalendar1.Location = new System.Drawing.Point(230, 122);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 15;
-            this.monthCalendar1.Visible = false;
-            this.monthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged_1);
-            // 
-            // dataSet1
-            // 
-            this.dataSet1.DataSetName = "DataSet1";
-            this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // crucerosDisponiblesBindingSource
-            // 
-            this.crucerosDisponiblesBindingSource.DataMember = "CrucerosDisponibles";
-            this.crucerosDisponiblesBindingSource.DataSource = this.dataSet1;
-            // 
-            // crucerosDisponiblesTableAdapter
-            // 
-            this.crucerosDisponiblesTableAdapter.ClearBeforeFill = true;
             // 
             // idcruceroDataGridViewTextBoxColumn
             // 
@@ -233,6 +215,28 @@
             this.modeloDataGridViewTextBoxColumn.Name = "modeloDataGridViewTextBoxColumn";
             this.modeloDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // crucerosDisponiblesBindingSource
+            // 
+            this.crucerosDisponiblesBindingSource.DataMember = "CrucerosDisponibles";
+            this.crucerosDisponiblesBindingSource.DataSource = this.dataSet1;
+            // 
+            // dataSet1
+            // 
+            this.dataSet1.DataSetName = "DataSet1";
+            this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // monthCalendar1
+            // 
+            this.monthCalendar1.Location = new System.Drawing.Point(230, 122);
+            this.monthCalendar1.Name = "monthCalendar1";
+            this.monthCalendar1.TabIndex = 15;
+            this.monthCalendar1.Visible = false;
+            this.monthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged_1);
+            // 
+            // crucerosDisponiblesTableAdapter
+            // 
+            this.crucerosDisponiblesTableAdapter.ClearBeforeFill = true;
+            // 
             // VentanaListadoCrucero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -249,8 +253,8 @@
             this.grupoFiltro.ResumeLayout(false);
             this.grupoFiltro.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.planillaDeResultados)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.crucerosDisponiblesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
             this.ResumeLayout(false);
 
         }

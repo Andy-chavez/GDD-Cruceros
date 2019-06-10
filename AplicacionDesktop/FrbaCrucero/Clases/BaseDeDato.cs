@@ -20,7 +20,7 @@ namespace FrbaCrucero.Clases
 
         private static string configuracionConexionSql = @"Data Source= localhost\SQLSERVER2012; Persist Security Info=True;User ID=gdCruceros2019;Password=gd2019";
 
-        private static SqlConnection conexion = new SqlConnection(configuracionConexionSql); 
+        public SqlConnection conexion = new SqlConnection(configuracionConexionSql); 
 
         #endregion
 
@@ -33,13 +33,35 @@ namespace FrbaCrucero.Clases
 
         public  void conectar()
         {
-            conexion.Open();
+            try
+            {
+                conexion.Open();
+            }
+            catch (Exception excepcion)
+            {
+                ventanaErrorBD(excepcion);
+            }
         }
 
         public  void desconectar()
         {
             conexion.Close();
         }
+
+        public SqlCommand ejecutarConsulta(string consulta){
+
+            SqlCommand command = new SqlCommand(consulta, this.obtenerConexion());
+            try
+            {
+               command.ExecuteNonQuery();
+            }
+            catch (Exception excepcion)
+            {
+                ventanaErrorBD(excepcion);
+            }
+            return command;
+        }
+
 
         public static void ventanaErrorBD(Exception excepcion)
         {
@@ -50,16 +72,7 @@ namespace FrbaCrucero.Clases
 
         #region Consultas
 
-        public DataSet ejecutarConsulta(string consulta)
-        {
-           this.conectar();
-           SqlDataAdapter adapter = new SqlDataAdapter(consulta,conexion);
-           DataSet dataSet = new DataSet();
-           adapter.Fill(dataSet);
-           return dataSet;
-
-       }
-          
+        
 
   
         #endregion 
