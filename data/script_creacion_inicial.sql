@@ -114,8 +114,8 @@ if exists (select * from sys.procedures where name = 'cargarMedioDePago')
 	drop procedure [LEISTE_EL_CODIGO?].cargarMedioDePago
 if exists (select * from sys.procedures where name = 'devolverIdPago')
 	drop procedure [LEISTE_EL_CODIGO?].devolverIdPago
-if exists (select * from sys.procedures where name = 'comprarPasajes')
-	drop procedure [LEISTE_EL_CODIGO?].comprarPasajes
+if exists (select * from sys.procedures where name = 'comprarPasaje')
+	drop procedure [LEISTE_EL_CODIGO?].comprarPasaje
 if exists (select * from sys.procedures where name = 'verVoucher')
 	drop procedure [LEISTE_EL_CODIGO?].verVoucher
 if exists (select * from sys.procedures where name = 'topRecorridosConMasPasajesComprados')
@@ -128,6 +128,8 @@ if exists (select * from sys.procedures where name = 'eliminarReservasVencidas')
 	drop procedure [LEISTE_EL_CODIGO?].eliminarReservasVencidas
 if exists (select * from sys.procedures where name = 'actualizarMontoTotal')
 	drop procedure [LEISTE_EL_CODIGO?].actualizarMontoTotal
+if exists (select * from sys.procedures where name = 'calcularPrecioPasaje')
+	drop procedure [LEISTE_EL_CODIGO?].calcularPrecioPasaje
 go
  if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
@@ -1227,7 +1229,30 @@ go
 create procedure [LEISTE_EL_CODIGO?].actualizarMontoTotal (@idPago int)
 as	
 	begin
-		declare @cantidadDePasajes smallint, @montoTotal  decimal(18,2)
+		declare @cantidadDePasajes smallint, @montoTotal  decimal(18,2), @precio decimal(18,2)
+
+		declare sumador cursor for
+		select precio
+		from [LEISTE_EL_CODIGO?].Pasaje
+		where id_pago = @idPago
+		
+		open sumador
+		fetch next from sumador
+		into @precio
+			while @@FETCH_STATUS = 0
+				begin
+					set @cantidadDePasajes = @cantidadDePasajes+1
+					set @montoTotal = @montoTotal+@precio
+					
+					fetch next from sumador
+					into @precio
+				end
+			close sumador
+			deallocate sumador
+		update [LEISTE_EL_CODIGO?].PagoDeViaje
+		set cantidad_de_pasajes = @cantidadDePasajes,
+		monto_total = @montoTotal*@cantidadDePasajes
+		where id_pago=@idPago
 	end
 go
 -------------------------------VER VOUCHER FINALIZADA LA COMPRA-------------------------------
@@ -1237,7 +1262,8 @@ create procedure [LEISTE_EL_CODIGO?].verVoucher (@idPago int)
 as
 
 	begin
-		select @idPago voucher,c.nombre +',' + c.apellido nombrePasajero,v.fecha_inicio,v.id_crucero Crucero,r.id_origen Origen,r.id_destino Destino
+		exec [LEISTE_EL_CODIGO?].actualizarMontoTotal @idPago --porque cuando se ejecuta voucher es que se termino la compra
+		select @idPago voucher,c.nombre +',' + c.apellido nombrePasajero,v.fecha_inicio,v.id_crucero Crucero,r.id_origen Origen,r.id_destino Destino,p.precio precioPasaje
 		from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].Cliente c
 		ON p.id_cliente = c.id_cliente
 		join [LEISTE_EL_CODIGO?].Viaje v 
@@ -1247,11 +1273,6 @@ as
 	end
 go
 -------------------------------CALCULAR PRECIO PASAJE------------------------------
-USE GD1C2019
-GO
-if exists (select * from sys.procedures where name = 'calcularPrecioPasaje')
-	drop procedure [LEISTE_EL_CODIGO?].calcularPrecioPasaje
-GO
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].calcularPrecioPasaje (@idPasaje int,@precio decimal (18,2) out)
@@ -1288,7 +1309,7 @@ as
 go
 ---------------------COMPRAR PASAJE-#-----------------------(lo ultimo que se hace) ver tema de seleccionar viaje y devolver voucher
 USE GD1C2019
-go --ver funcion de precio pasaje
+go 
 create procedure [LEISTE_EL_CODIGO?].comprarPasaje (@idCliente int,@idViaje int,@idCabina int,@idCrucero int,@idPago int)
 as
 	begin

@@ -82,9 +82,9 @@ Valores de retorno:
     -1: el cliente que quiere comprar ya tiene un viaje en esa fecha
 ####calcularPrecioPasaje (@idPasaje int,@precio decimal (18,2) out)
 
-####actualizarMontoTotal (@idPago) esto lo hago apenas se completa la compra de un pasaje
+####actualizarMontoTotal (@idPago) esto lo hago apenas se completa la compra de un pasaje, para no tener que hacer desde aplicativo la cantidad y el monto total
 
-#### verVoucher (@idPago int) -- pasarle el mismo idPago que se usa en comprarPasajes para mostrar todos los pasajes de esa compra
+#### verVoucher (@idPago int) -- (esto es lo ultimo que se hace)pasarle el mismo idPago que se usa en comprarPasajes para mostrar todos los pasajes de esa compra
 
 #### ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255))
                 seria el caso que tenes que cargar un cliente de cero
