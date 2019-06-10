@@ -124,6 +124,9 @@ if exists (select * from sys.procedures where name = 'topMasCabinasLibres')
 	drop procedure [LEISTE_EL_CODIGO?].topMasCabinasLibres
 if exists (select * from sys.procedures where name = 'topCrucerosFueraDeServicio')
 	drop procedure [LEISTE_EL_CODIGO?].topCrucerosFueraDeServicio
+if exists (select * from sys.procedures where name = 'eliminarReservasVencidas')
+	drop procedure [LEISTE_EL_CODIGO?].eliminarReservasVencidas
+go
  if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
 		drop view [LEISTE_EL_CODIGO?].CrucerosDisponibles
@@ -134,9 +137,9 @@ if exists(select * from sys.views where object_name(object_id)='RolesHabilitados
 		drop view [LEISTE_EL_CODIGO?].RolesHabilitados
 	end
 go
-if exists (select * from sys.triggers where object_name(object_id)='fechaVencimiento' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+if exists (select * from sys.triggers where object_name(object_id)='fechaVencimiento') --and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	drop trigger [LEISTE_EL_CODIGO?].fechaVencimiento
-
+go
 IF OBJECT_ID('tempdb..#tramoTemp') IS NOT NULL 
 	DROP TABLE #tramoTemp
 go
@@ -147,23 +150,27 @@ create table [LEISTE_EL_CODIGO?].Rol(
 	nombre nvarchar(255) not null,
 	id_rol smallint identity primary key,
 	baja_logica char(1) not null default 'N' check(baja_logica in ('S','N')) 
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Usuario(
 	id_usuario nvarchar(50) primary key,
 	id_rol smallint references [LEISTE_EL_CODIGO?].Rol, 
 	contra varbinary(32),
 	intentos_posibles smallint default 3,
 	habilitado nchar(1) not null default 'A' check(habilitado in ('A','I'))
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Funcionalidad(
 	id_funcionalidad smallint identity primary key,
 	descripcion nvarchar(100) not null
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].FuncionalidadPorRol(
 	id_funcionalidad smallint references [LEISTE_EL_CODIGO?].Funcionalidad,
 	id_rol smallint references [LEISTE_EL_CODIGO?].Rol,
 	primary key (id_rol, id_funcionalidad)
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Cliente(
 	id_cliente int identity primary key,
 	id_rol smallint default '3' references [LEISTE_EL_CODIGO?].Rol,
@@ -174,16 +181,19 @@ create table [LEISTE_EL_CODIGO?].Cliente(
 	telefono int not null,
 	mail nvarchar(255) NULL,
 	fecha_nacimiento datetime2(3) NULL,
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Puerto(
 	id_puerto nvarchar(255) primary key,
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Recorrido(
 	id_recorrido decimal(18,0) primary key,
 	estado char(1) default 'A' check(estado in ('A','I')),
 	id_origen nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
 	id_destino nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Tramo(
 	id_tramo smallint identity primary key,
 	id_recorrido decimal(18,0) references [LEISTE_EL_CODIGO?].Recorrido,
@@ -191,10 +201,12 @@ create table [LEISTE_EL_CODIGO?].Tramo(
 	id_destino nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
 	orden smallint not null check (orden>0),
 	precio_base decimal(18,2) not null
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Fabricante(
 	id_fabricante nvarchar(255) primary key
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Crucero(
 	id_crucero nvarchar(50) primary key,
 	id_fabricante nvarchar(255) references [LEISTE_EL_CODIGO?].Fabricante, --@
@@ -205,24 +217,28 @@ create table [LEISTE_EL_CODIGO?].Crucero(
 	fecha_reinicio_servicio datetime2(3) null,
 	fecha_baja_por_vida_util datetime2(3) null,
 	cantidadDeCabinas int,
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Servicio(
 	id_servicio smallint primary key,
 	descripcion nvarchar(255) null
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].TipoCabina(
 	id_tipo nvarchar(255) primary key,
 	--tipo_cabina varchar(255),
 	id_servicio smallint references [LEISTE_EL_CODIGO?].Servicio,
 	porcentaje_recargo decimal(18, 2) not null
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Cabina(
 	id_cabina int identity primary key,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	id_tipo nvarchar(255) references [LEISTE_EL_CODIGO?].TipoCabina,
 	numero decimal(18,0) not null,
 	piso decimal(18,0) not null
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Viaje(
 	id_viaje int identity primary key,
 	id_recorrido decimal(18,0) references [LEISTE_EL_CODIGO?].Recorrido,
@@ -230,7 +246,8 @@ create table [LEISTE_EL_CODIGO?].Viaje(
 	fecha_inicio datetime2(3) not null,
 	fecha_finalizacion_estimada datetime2(3) not null,
 	fecha_finalizacion datetime2(3) not null,
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Reserva(
 	id_reserva decimal(18,0) identity primary key,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
@@ -239,7 +256,8 @@ create table [LEISTE_EL_CODIGO?].Reserva(
 	id_cabina int references [LEISTE_EL_CODIGO?].Cabina,
 	fecha_actual datetime2(3) not null,
 	vencimiento datetime2(3) null,
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].MedioDePago(
 	id_medio_de_pago int primary key identity,
 	cuotas_sin_interes smallint not null,
@@ -247,7 +265,8 @@ create table [LEISTE_EL_CODIGO?].MedioDePago(
 	intereses smallint not null,
 	tipo_de_tarjeta varchar(256),
 	nombre_tarjeta varchar(256),
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].PagoDeViaje(
 	id_pago int primary key identity,
 	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
@@ -255,7 +274,8 @@ create table [LEISTE_EL_CODIGO?].PagoDeViaje(
 	monto_total decimal(8,2) not null,
 	cantidad_de_pasajes smallint default 1 check(cantidad_de_pasajes > 0),
 	id_medio_de_pago int references [LEISTE_EL_CODIGO?].MedioDePago,
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].Pasaje(
 	id_pasaje decimal(18,0) primary key identity,
 	id_viaje int references [LEISTE_EL_CODIGO?].Viaje,
@@ -266,12 +286,14 @@ create table [LEISTE_EL_CODIGO?].Pasaje(
 	precio decimal(18,2) not null,
 	cancelacion nchar(1) default 'N' check(cancelacion in ('S','N')),
 	fecha_cancelacion datetime2(3) null,
-)go
+)
+go
 create table [LEISTE_EL_CODIGO?].AuditoriaDeCruceros(
 	id_auditoria int identity primary key,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	motivo varchar(256)
-)go
+)
+go
 --........................................ TRIGGERS ......................................................
 USE GD1C2019
 go
@@ -432,7 +454,6 @@ into @id_crucero
 			select @cant_cabinas = count(id_cabina)
 			from [LEISTE_EL_CODIGO?].Cabina c
 			where c.id_crucero = @id_crucero
-			print @cant_cabinas
 
 			update [LEISTE_EL_CODIGO?].Crucero
 			set cantidadDeCabinas = @cant_cabinas
@@ -461,7 +482,8 @@ create table #tramoTemp(
 	id_destino nvarchar(255),
 	orden smallint,
 	precio_base decimal(18,2) not null
-)go
+)
+go
 insert into #tramoTemp (id_recorrido,id_origen,id_destino,precio_base)
 select distinct RECORRIDO_CODIGO,PUERTO_DESDE,PUERTO_HASTA,RECORRIDO_PRECIO_BASE
 from gd_esquema.Maestra
@@ -516,7 +538,7 @@ where PASAJE_FECHA_COMPRA is not null and PASAJE_PRECIO is not null
 go
 -------------------------------------------------Reserva--
 SET IDENTITY_INSERT [LEISTE_EL_CODIGO?].Reserva  ON
-insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,id_cliente,id_crucero,id_viaje,id_cabina)
+insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual,id_cliente,id_crucero,id_viaje,id_cabina)
 select RESERVA_CODIGO,RESERVA_FECHA,
 		(select id_cliente
 		from [LEISTE_EL_CODIGO?].Cliente
