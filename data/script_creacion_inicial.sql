@@ -100,6 +100,8 @@ if exists (select * from sys.procedures where name = 'eliminarTramo')
 	drop procedure [LEISTE_EL_CODIGO?].eliminarTramo
 if exists (select * from sys.procedures where name = 'crearReserva')
 	drop procedure [LEISTE_EL_CODIGO?].crearReserva
+if exists (select * from sys.procedures where name = 'pasajeroYaTieneViajeEnLaFecha')
+	drop procedure [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha
 if exists (select * from sys.procedures where name = 'mostrarViajesDisponibles')
 	drop procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles
 if exists (select * from sys.procedures where name = 'ingresarCliente')
@@ -134,8 +136,7 @@ if exists(select * from sys.views where object_name(object_id)='RolesHabilitados
 go
 if exists (select * from sys.triggers where object_name(object_id)='fechaVencimiento' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	drop trigger [LEISTE_EL_CODIGO?].fechaVencimiento
-if exists (select * from sys.triggers where object_name(object_id)='eliminarReservasVencidas' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-	drop trigger [LEISTE_EL_CODIGO?].eliminarReservasVencidas
+
 IF OBJECT_ID('tempdb..#tramoTemp') IS NOT NULL 
 	DROP TABLE #tramoTemp
 go
@@ -231,7 +232,7 @@ create table [LEISTE_EL_CODIGO?].Viaje(
 	fecha_finalizacion datetime2(3) not null,
 )go
 create table [LEISTE_EL_CODIGO?].Reserva(
-	id_reserva decimal(18,0) primary key,
+	id_reserva decimal(18,0) identity primary key,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
 	id_viaje int references [LEISTE_EL_CODIGO?].Viaje,
@@ -297,30 +298,7 @@ begin
 deallocate cursorVencimiento
 end
 go
--- Trigger para borrar reservas vencidas cada vez que haya un login
-/*USE GD1C2019
-go
-create trigger eliminarReservasVencidas
-on all server for logon
-as
-	begin
-	delete from [LEISTE_EL_CODIGO?].Reserva
-	where SYSDATETIME() > vencimiento
-	end
-go*/
-/*----------STARTUP-----------*/ --@@deberia correr en master
---Procedure de control de reservas vencidas
-/*
-USE MASTER
-GO
-create procedure DBO.eliminarReservasVencidas
-as
-delete from [LEISTE_EL_CODIGO?].Reserva
-where SYSDATETIME() > vencimiento
-go
-USE GD1C2019
-go
-*/
+
 --........................................ INSERCIONES ......................................................
 -- Funcionalidad
 insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('abm de rol')						-- Funcionalidad = 1
@@ -537,7 +515,8 @@ from gd_esquema.Maestra m
 where PASAJE_FECHA_COMPRA is not null and PASAJE_PRECIO is not null
 go
 -------------------------------------------------Reserva--
-insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual,id_cliente,id_crucero,id_viaje,id_cabina)
+SET IDENTITY_INSERT [LEISTE_EL_CODIGO?].Reserva  ON
+insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,id_cliente,id_crucero,id_viaje,id_cabina)
 select RESERVA_CODIGO,RESERVA_FECHA,
 		(select id_cliente
 		from [LEISTE_EL_CODIGO?].Cliente
@@ -552,7 +531,9 @@ select RESERVA_CODIGO,RESERVA_FECHA,
 		where numero= m.CABINA_NRO and id_crucero= m.CRUCERO_IDENTIFICADOR and piso = m.CABINA_PISO and id_tipo = m.CABINA_TIPO)
 from gd_esquema.Maestra m
 where RESERVA_CODIGO is not null and RESERVA_FECHA is not null 
+SET IDENTITY_INSERT [LEISTE_EL_CODIGO?].Reserva  OFF
 go
+
 -------------------------------------------------Viaje--
 insert into [LEISTE_EL_CODIGO?].Viaje (fecha_inicio,fecha_finalizacion,fecha_finalizacion_estimada,id_crucero,id_recorrido)
 select distinct FECHA_SALIDA,FECHA_LLEGADA,FECHA_LLEGADA_ESTIMADA,CRUCERO_IDENTIFICADOR,RECORRIDO_CODIGO 
@@ -725,6 +706,16 @@ go
 --........................................<ABM 2> LOGIN Y SEGURIDAD		......................................................
 USE GD1C2019
 go
+create procedure [LEISTE_EL_CODIGO?].eliminarReservasVencidas
+as
+	begin
+	delete from [LEISTE_EL_CODIGO?].Reserva
+	where SYSDATETIME() > vencimiento	
+	end
+go
+
+USE GD1C2019
+go
 create procedure [LEISTE_EL_CODIGO?].sp_login(@id_ingresado nvarchar(50), @contra_ingresada nvarchar(32)) -- aca tengo dudas de si es la contra al todavia no estar hasheada, si es de 32 o no
 as
 	begin
@@ -747,6 +738,7 @@ as
 					update [LEISTE_EL_CODIGO?].Usuario 
 						set intentos_posibles = 3 
 					where id_usuario=@id_ingresado
+					exec [LEISTE_EL_CODIGO?].eliminarReservasVencidas
 				end
 				else
 				begin
@@ -1073,19 +1065,45 @@ as
 	end
 go
 --........................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE	......................................................
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha
+(@fecha datetime2(3),@idPasajero int)
+as
+	begin
+	if (exists(select id_cliente from [LEISTE_EL_CODIGO?].Pasaje p 
+					join [LEISTE_EL_CODIGO?].Viaje v on p.id_viaje=v.id_viaje
+					where id_cliente=@idPasajero and v.fecha_inicio=@fecha
+		) )
+		return 1
+	return 0
+
+	end
+go
+
 --crearReserva--
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].crearReserva
-(@idReserva decimal(18,0),@idCrucero nvarchar(50),@idCliente int,@idViaje int,@idCabina int)
+(@idCrucero nvarchar(50),@idCliente int,@idViaje int,@idCabina int)
 as
 	begin
-	if exists(select id_reserva from [LEISTE_EL_CODIGO?].Reserva where id_reserva = @idReserva) return -1 --ese id ya está en uso
-	insert into [LEISTE_EL_CODIGO?].Reserva(id_reserva,id_crucero,id_cliente,id_viaje,id_cabina,fecha_actual)
-	values(@idReserva,@idCrucero,@idCliente,@idViaje,@idCabina,CAST(SYSDATETIME() as datetime2(3)))
-	return 1 --todo bien
+	declare @fecha datetime2(3)
+	declare @retorno int
+	
+	select @fecha = fecha_inicio
+	from [LEISTE_EL_CODIGO?].Viaje
+	where id_viaje=@idViaje
+
+	exec @retorno = [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha @fecha,@idCliente
+	
+	if( @retorno = 1) return -1 --el cliente ya tiene un viaje en esa fecha
+	insert into [LEISTE_EL_CODIGO?].Reserva(id_crucero,id_cliente,id_viaje,id_cabina,fecha_actual)
+	values(@idCrucero,@idCliente,@idViaje,@idCabina,CAST(SYSDATETIME() as datetime2(3)))
+	return SCOPE_IDENTITY()--todo bien
 	end
 go
+
 --viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --
 USE GD1C2019
 go
@@ -1107,6 +1125,7 @@ as
 		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
 		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
 		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
+		and v.fecha_inicio > SYSDATETIME()
 	end
 go --fijarse si hay que hacer un return id_viaje
 --todo despues de seleccionar un viaje--ingresar cliente
@@ -1197,6 +1216,15 @@ as
 	end
 */
 --........................................<ABM 9> PAGO DE RESERVA		......................................................
+
+/*use GD1C2019
+go
+create proc [LEISTE_EL_CODIGO?].mostrarReserva(@idReserva decimal(18,0))
+as
+begin
+	select * from [LEISTE_EL_CODIGO?].Reserva where id_reserva=@idReserva
+go
+*/
 --........................................<ABM 10> LISTADOS ESTADISTICOS	......................................................							  					  
 --TOP RECORRIDOS CON MAS PASAJES VENDIDOS--
 USE GD1C2019
