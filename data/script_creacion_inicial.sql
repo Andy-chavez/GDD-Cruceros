@@ -99,7 +99,7 @@ if exists (select * from sys.procedures where name = 'darDeBajaRecorrido')
 if exists (select * from sys.procedures where name = 'eliminarTramo')
 	drop procedure [LEISTE_EL_CODIGO?].eliminarTramo
 if exists (select * from sys.procedures where name = 'crearReserva')
-	drop procedure [LEISTE_EL_CODIGO?].reservarViaje
+	drop procedure [LEISTE_EL_CODIGO?].crearReserva
 if exists (select * from sys.procedures where name = 'mostrarViajesDisponibles')
 	drop procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles
 if exists (select * from sys.procedures where name = 'ingresarCliente')
