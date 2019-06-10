@@ -423,7 +423,6 @@ update [LEISTE_EL_CODIGO?].TipoCabina
 set id_servicio = 4
 where id_tipo = 'Suite'
 go
-
 update [LEISTE_EL_CODIGO?].TipoCabina
 set id_servicio = 5
 where id_tipo like 'Cabina Balc%'
@@ -767,8 +766,8 @@ as
 		return @valor_retorno
 	end
 go
---........................................<ABM 3> REGISTRO DE USUARIOS		......................................................
---........................................<ABM 4> PUERTOS			......................................................
+--........................................<ABM 3> REGISTRO DE USUARIOS-no se hace......................................................
+--........................................<ABM 4> PUERTOS-no se hace		......................................................
 --........................................<ABM 5> RECORRIDO			......................................................
 --Fran dudas: @@@
 --			el id de recorrido me lo pasa él o lo tengo q poner yo?
@@ -1020,7 +1019,6 @@ as
 								
 								break
 							end
-
 				end
 			end
 	end
@@ -1075,11 +1073,6 @@ as
 	end
 go
 --........................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE	......................................................
-
---........................................<ABM 9> PAGO DE RESERVA		......................................................
-
-
---........................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE......................................................
 --crearReserva--
 USE GD1C2019
 go
@@ -1093,7 +1086,7 @@ as
 	return 1 --todo bien
 	end
 go
-----------------------------viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --------
+--viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
@@ -1130,7 +1123,7 @@ as
 		return @idCLiente
 	end
 go
------------------------------------buscarPorDni------------------------------------
+--buscarPorDni--
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].buscarPorDni (@dni decimal(18, 0)) 
@@ -1141,7 +1134,7 @@ as
 		where dni=@dni
 	end
 go
-----------------------------actualizar usuario------------------------------------
+--actualizar usuario--
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].actualizarUsuario (@idCliente int,@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
@@ -1158,7 +1151,7 @@ as
 		where id_cliente = @idCliente
 	end
 go
-----------------------------------cargarMedioDePago----------------------------------
+--cargarMedioDePago--
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].cargarMedioDePago (@cuotas smallint,@tipoTarjeta varchar(256),@nombreTarjeta varchar(256))
@@ -1171,7 +1164,7 @@ as
 		return @idMedioDePago
 	end
 go --hacerlo la cantidad de veces que quiera el usuario pero despues elegir con cual pagar
-----------------------------------devolverIdPago--------------------------------
+--devolverIdPago--
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].devolverIdPago (@cantidadDePasajes smallint,@idMedioPago int,@montoTotal int)
@@ -1202,6 +1195,7 @@ as
 		select 
 		from [LEISTE_EL_CODIGO?].Pasaje
 	end
+--........................................<ABM 9> PAGO DE RESERVA		......................................................
 --........................................<ABM 10> LISTADOS ESTADISTICOS	......................................................							  					  
 --TOP RECORRIDOS CON MAS PASAJES VENDIDOS--
 USE GD1C2019
