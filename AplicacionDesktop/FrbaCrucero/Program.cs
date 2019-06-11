@@ -16,7 +16,7 @@ namespace FrbaCrucero
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new VentanaMenu(new VentanaPrincipal()));
+            Application.Run(new VentanaPrincipal());
         }
     }
 }

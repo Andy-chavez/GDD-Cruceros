@@ -15,6 +15,7 @@ namespace FrbaCrucero.Clases
         public string nombre { get; set; }
         public bool bajaLogica { get; set; }
         public List< Funcionalidad> funcionalidades { get; set; }
+        public BaseDeDato bd = new BaseDeDato();
         
 
         #endregion
@@ -35,6 +36,19 @@ namespace FrbaCrucero.Clases
             this.funcionalidades = funcionalidades;   
         }
 
+        public Rol() { 
+        }
+
         #endregion
+
+        public void crearRol(String nombreRol, String idFuncionalidad)
+        {
+            BaseDeDato.ejecutarSP("LEISTE_EL_CODIGO?.CrearNuevoRol", "@nombreRol", nombreRol, "@idFuncionalidad", idFuncionalidad);
+        }
+        public void eliminarRol(String idRol)
+        {
+
+            BaseDeDato.ejecutarSP("LEISTE_EL_CODIGO?.darBajaRol", "@idRol", idRol);
+        }
     }
 }

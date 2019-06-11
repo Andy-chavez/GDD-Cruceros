@@ -7,8 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
+using FrbaCrucero.Clases;
+using System.Data.SqlTypes;
 
-namespace FrbaCrucero
+namespace FrbaCrucero.AbmRol
 {
     public partial class VentanaDeAltaRol : Form
     {
@@ -16,36 +19,74 @@ namespace FrbaCrucero
         {
             InitializeComponent();
         }
-        private VentanaListadoRol ventanaListado = new VentanaListadoRol();
 
-        private void groupBox1_Enter(object sender, EventArgs e)
+        Rol rol = new Rol();
+
+        private void VentanaDeAltaRol_Load(object sender, EventArgs e)
+        {
+          
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        private void botonCrear_Click(object sender, EventArgs e)
+        {
+            this.agregarRol();
+        }
+
+        
+        private void textoNombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void botonAgregar_Click(object sender, EventArgs e) { 
+        
+        
+        }
+        private void agregarRol()
+        {
+            if (textoNombre.Text != "")
+            {
+
+                rol.crearRol(textoNombre.Text, listaFunc.SelectedValue.ToString());
+             DialogResult result = MessageBox.Show("Rol creado exitosamente", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            
+            else
+            {
+                MessageBox.Show("Nombre de rol vacío. Inserte el nombre del rol", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void listaFuncionalidades_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void botonSeleccionar_Click(object sender, EventArgs e)
+        private void botonLimpiar_Click(object sender, EventArgs e)
         {
-            ventanaListado.Show();
+            textoNombre.Clear();
         }
 
-        private void botonSeleccionar2_Click(object sender, EventArgs e)
+        private void botonVolver_Click(object sender, EventArgs e)
         {
-            ventanaListado.Show();
+            this.Close();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void VentanaDeAlta_Load(object sender, EventArgs e)
+        public void llenarItems(ComboBox cb)
         {
 
         }
+
+        private void listaFunc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+       
     }
 }

@@ -25,6 +25,8 @@ namespace FrbaCrucero
          
         }
 
+        VentanaMenu menu = new VentanaMenu();
+
         private void label4_Click(object sender, EventArgs e)
         {
 
@@ -47,7 +49,7 @@ namespace FrbaCrucero
 
         private void botonSesionUsuario_Click(object sender, EventArgs e)
         {
-            
+            menu.Show();
            
             this.Hide() ;
            
@@ -55,8 +57,9 @@ namespace FrbaCrucero
 
         private void botonSesionCliente_Click(object sender, EventArgs e)
         {
-            
-            this.Hide();
+            menu.Show();
+            menu.ocultarBotones();
+           
             
 
         }

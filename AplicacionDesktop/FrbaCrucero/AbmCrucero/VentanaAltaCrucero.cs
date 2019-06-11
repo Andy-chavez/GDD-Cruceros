@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FrbaCrucero.AbmCrucero
 {
-    public partial class VentanaModificarCrucero : Form
+    public partial class VentanaAltaCrucero : Form
     {
-        public VentanaModificarCrucero()
+        public VentanaAltaCrucero()
         {
             InitializeComponent();
         }

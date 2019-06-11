@@ -30,7 +30,7 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
             dataGridView.DataSource = vista;
         }
-        public void llenardataGridView(DataGridView dgv)
+      /*  public void llenardataGridView(DataGridView dgv)
         {
             bd.conectar();
             SqlCommand command = bd.ejecutarConsulta("SELECT * FROM [LEISTE_EL_CODIGO?].CrucerosDisponibles");
@@ -38,7 +38,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             adapter.Fill(dt);
             dgv.DataSource = dt;
         }
-
+        */
         public void dataGridViewAgregarBotonSeleccionar(DataGridView dataGridView)
         {
             DataGridViewButtonColumn botonSeleccion = new DataGridViewButtonColumn();

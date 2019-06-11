@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.botonAdmCrucero = new System.Windows.Forms.Button();
-            this.botonAdmPuertos = new System.Windows.Forms.Button();
             this.botonAdmRecorrido = new System.Windows.Forms.Button();
             this.botonAbmRol = new System.Windows.Forms.Button();
             this.botonReserva = new System.Windows.Forms.Button();
@@ -49,19 +48,9 @@
             this.botonAdmCrucero.UseVisualStyleBackColor = true;
             this.botonAdmCrucero.Click += new System.EventHandler(this.botonAdmCrucero_Click);
             // 
-            // botonAdmPuertos
-            // 
-            this.botonAdmPuertos.Location = new System.Drawing.Point(77, 173);
-            this.botonAdmPuertos.Name = "botonAdmPuertos";
-            this.botonAdmPuertos.Size = new System.Drawing.Size(229, 23);
-            this.botonAdmPuertos.TabIndex = 1;
-            this.botonAdmPuertos.Text = "Gestionar Puertos";
-            this.botonAdmPuertos.UseVisualStyleBackColor = true;
-            this.botonAdmPuertos.Click += new System.EventHandler(this.botonAdmPuertos_Click);
-            // 
             // botonAdmRecorrido
             // 
-            this.botonAdmRecorrido.Location = new System.Drawing.Point(77, 214);
+            this.botonAdmRecorrido.Location = new System.Drawing.Point(77, 169);
             this.botonAdmRecorrido.Name = "botonAdmRecorrido";
             this.botonAdmRecorrido.Size = new System.Drawing.Size(229, 23);
             this.botonAdmRecorrido.TabIndex = 2;
@@ -71,7 +60,7 @@
             // 
             // botonAbmRol
             // 
-            this.botonAbmRol.Location = new System.Drawing.Point(77, 253);
+            this.botonAbmRol.Location = new System.Drawing.Point(77, 213);
             this.botonAbmRol.Name = "botonAbmRol";
             this.botonAbmRol.Size = new System.Drawing.Size(229, 23);
             this.botonAbmRol.TabIndex = 3;
@@ -91,7 +80,7 @@
             // 
             // botonViaje
             // 
-            this.botonViaje.Location = new System.Drawing.Point(77, 297);
+            this.botonViaje.Location = new System.Drawing.Point(77, 259);
             this.botonViaje.Name = "botonViaje";
             this.botonViaje.Size = new System.Drawing.Size(229, 23);
             this.botonViaje.TabIndex = 5;
@@ -111,7 +100,7 @@
             // 
             // botonEstadisticas
             // 
-            this.botonEstadisticas.Location = new System.Drawing.Point(77, 336);
+            this.botonEstadisticas.Location = new System.Drawing.Point(77, 299);
             this.botonEstadisticas.Name = "botonEstadisticas";
             this.botonEstadisticas.Size = new System.Drawing.Size(229, 23);
             this.botonEstadisticas.TabIndex = 7;
@@ -121,7 +110,7 @@
             // 
             // botonSalir
             // 
-            this.botonSalir.Location = new System.Drawing.Point(77, 378);
+            this.botonSalir.Location = new System.Drawing.Point(77, 345);
             this.botonSalir.Name = "botonSalir";
             this.botonSalir.Size = new System.Drawing.Size(229, 23);
             this.botonSalir.TabIndex = 8;
@@ -141,7 +130,6 @@
             this.Controls.Add(this.botonReserva);
             this.Controls.Add(this.botonAbmRol);
             this.Controls.Add(this.botonAdmRecorrido);
-            this.Controls.Add(this.botonAdmPuertos);
             this.Controls.Add(this.botonAdmCrucero);
             this.Name = "VentanaMenu";
             this.Text = "Menu operaciones";
@@ -153,7 +141,6 @@
         #endregion
 
         private System.Windows.Forms.Button botonAdmCrucero;
-        private System.Windows.Forms.Button botonAdmPuertos;
         private System.Windows.Forms.Button botonAdmRecorrido;
         private System.Windows.Forms.Button botonAbmRol;
         private System.Windows.Forms.Button botonReserva;

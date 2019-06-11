@@ -59,65 +59,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbmCrucero\ventanaDeBajaCrucero.cs">
+    <Compile Include="AbmCrucero\VentanaGestion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmCrucero\ventanaDeBaja.Designer.cs">
-      <DependentUpon>ventanaDeBajaCrucero.cs</DependentUpon>
+    <Compile Include="AbmCrucero\VentanaGestion.Designer.cs">
+      <DependentUpon>VentanaGestion.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmCrucero\VentanaDeAltaCrucero.cs">
+    <Compile Include="AbmCrucero\VentanaAltaCrucero.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmCrucero\VentanaDeAltaCrucero.Designer.cs">
-      <DependentUpon>VentanaDeAltaCrucero.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmCrucero\VentanaGestionCrucero.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmCrucero\VentanaGestionCrucero.Designer.cs">
-      <DependentUpon>VentanaGestionCrucero.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmCrucero\VentanaListadoCrucero.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmCrucero\VentanaListado.Designer.cs">
-      <DependentUpon>VentanaListadoCrucero.cs</DependentUpon>
+    <Compile Include="AbmCrucero\VentanaAltaCrucero.Designer.cs">
+      <DependentUpon>VentanaAltaCrucero.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmCrucero\VentanaModificarCrucero.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AbmCrucero\VentanaModificarCrucero.Designer.cs">
       <DependentUpon>VentanaModificarCrucero.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmCrucero\VentanaSeleccion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmCrucero\VentanaSeleccion.Designer.cs">
-      <DependentUpon>VentanaSeleccion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmPuerto\VentanaDeAltaPuerto.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmPuerto\VentanaDeAltaPuerto.Designer.cs">
-      <DependentUpon>VentanaDeAltaPuerto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmPuerto\VentanaGestionarPuerto.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmPuerto\VentanaGestionarPuerto.Designer.cs">
-      <DependentUpon>VentanaGestionarPuerto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmPuerto\VentanaListadoPuerto.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmPuerto\VentanaListadoPuerto.Designer.cs">
-      <DependentUpon>VentanaListadoPuerto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmPuerto\VentanaSeleccionPuerto.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmPuerto\VentanaSeleccionPuerto.Designer.cs">
-      <DependentUpon>VentanaSeleccionPuerto.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRecorrido\VentanaDeAltaRecorrido.cs">
       <SubType>Form</SubType>
@@ -155,17 +113,17 @@
     <Compile Include="AbmRol\VentanaGestionRol.Designer.cs">
       <DependentUpon>VentanaGestionRol.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\VentanaListadoRol.cs">
+    <Compile Include="AbmRol\VentanaModificarRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\VentanaListadoRol.Designer.cs">
-      <DependentUpon>VentanaListadoRol.cs</DependentUpon>
+    <Compile Include="AbmRol\VentanaModificarRol.Designer.cs">
+      <DependentUpon>VentanaModificarRol.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\VentanaSeleccionRol.cs">
+    <Compile Include="AbmRol\VentanaRolSeleccionado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\VentanaSeleccionRol.Designer.cs">
-      <DependentUpon>VentanaSeleccionRol.cs</DependentUpon>
+    <Compile Include="AbmRol\VentanaRolSeleccionado.Designer.cs">
+      <DependentUpon>VentanaRolSeleccionado.cs</DependentUpon>
     </Compile>
     <Compile Include="Clases\Cabina.cs" />
     <Compile Include="Clases\BaseDeDato.cs" />
@@ -191,6 +149,31 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet2.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet3.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet3.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet4.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet4.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSetFunc.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetFunc.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSetFuncMod.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetFuncMod.xsd</DependentUpon>
     </Compile>
     <Compile Include="GeneracionViaje\VentanaOperacion.cs">
       <SubType>Form</SubType>
@@ -235,35 +218,8 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AbmCrucero\VentanaDeAltaCrucero.resx">
-      <DependentUpon>VentanaDeAltaCrucero.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmCrucero\ventanaDeBajaCrucero.resx">
-      <DependentUpon>ventanaDeBajaCrucero.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmCrucero\VentanaGestionCrucero.resx">
-      <DependentUpon>VentanaGestionCrucero.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmCrucero\VentanaListadoCrucero.resx">
-      <DependentUpon>VentanaListadoCrucero.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmCrucero\VentanaModificarCrucero.resx">
-      <DependentUpon>VentanaModificarCrucero.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmCrucero\VentanaSeleccion.resx">
-      <DependentUpon>VentanaSeleccion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmPuerto\VentanaDeAltaPuerto.resx">
-      <DependentUpon>VentanaDeAltaPuerto.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmPuerto\VentanaGestionarPuerto.resx">
-      <DependentUpon>VentanaGestionarPuerto.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmPuerto\VentanaListadoPuerto.resx">
-      <DependentUpon>VentanaListadoPuerto.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmPuerto\VentanaSeleccionPuerto.resx">
-      <DependentUpon>VentanaSeleccionPuerto.cs</DependentUpon>
+    <EmbeddedResource Include="AbmCrucero\VentanaGestion.resx">
+      <DependentUpon>VentanaGestion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRecorrido\VentanaDeAltaRecorrido.resx">
       <DependentUpon>VentanaDeAltaRecorrido.cs</DependentUpon>
@@ -283,11 +239,11 @@
     <EmbeddedResource Include="AbmRol\VentanaGestionRol.resx">
       <DependentUpon>VentanaGestionRol.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmRol\VentanaListadoRol.resx">
-      <DependentUpon>VentanaListadoRol.cs</DependentUpon>
+    <EmbeddedResource Include="AbmRol\VentanaModificarRol.resx">
+      <DependentUpon>VentanaModificarRol.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmRol\VentanaSeleccionRol.resx">
-      <DependentUpon>VentanaSeleccionRol.cs</DependentUpon>
+    <EmbeddedResource Include="AbmRol\VentanaRolSeleccionado.resx">
+      <DependentUpon>VentanaRolSeleccionado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\VentanaSeleccionarviaje.resx">
       <DependentUpon>VentanaSeleccionarviaje.cs</DependentUpon>
@@ -320,6 +276,61 @@
     </None>
     <None Include="DataSet1.xss">
       <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet2.xsc">
+      <DependentUpon>DataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet2.xss">
+      <DependentUpon>DataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet3.xsc">
+      <DependentUpon>DataSet3.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet3.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet3.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet3.xss">
+      <DependentUpon>DataSet3.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet4.xsc">
+      <DependentUpon>DataSet4.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet4.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet4.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet4.xss">
+      <DependentUpon>DataSet4.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetFunc.xsc">
+      <DependentUpon>DataSetFunc.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetFunc.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetFunc.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSetFunc.xss">
+      <DependentUpon>DataSetFunc.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetFuncMod.xsc">
+      <DependentUpon>DataSetFuncMod.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetFuncMod.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetFuncMod.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSetFuncMod.xss">
+      <DependentUpon>DataSetFuncMod.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -362,6 +373,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
