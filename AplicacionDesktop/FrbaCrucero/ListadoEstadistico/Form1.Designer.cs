@@ -1,6 +1,6 @@
 ﻿namespace FrbaCrucero.ListadoEstadistico
 {
-    partial class Form1
+    partial class ListadoEstadistico
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,105 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.top5_rec_pasajes = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.comboBoxAnio = new System.Windows.Forms.ComboBox();
+            this.comboBoxSemestre = new System.Windows.Forms.ComboBox();
+            this.SuspendLayout();
+            // 
+            // top5_rec_pasajes
+            // 
+            this.top5_rec_pasajes.Location = new System.Drawing.Point(185, 70);
+            this.top5_rec_pasajes.Name = "top5_rec_pasajes";
+            this.top5_rec_pasajes.Size = new System.Drawing.Size(257, 23);
+            this.top5_rec_pasajes.TabIndex = 0;
+            this.top5_rec_pasajes.Text = "Top 5 Recorridos con más Pasajes Comprados";
+            this.top5_rec_pasajes.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(185, 110);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(257, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Top 5 Recorridos con más Cabinas Libres por Viaje";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(185, 150);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(257, 23);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Top 5 Cruceros con más Días fuera de Servicio";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(185, 190);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(120, 20);
+            this.textBox1.TabIndex = 3;
+            this.textBox1.Text = "Ingrese Año y Semestre";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // comboBoxAnio
+            // 
+            this.comboBoxAnio.FormattingEnabled = true;
+            this.comboBoxAnio.Items.AddRange(new object[] {
+            "2019",
+            "2018",
+            "2017",
+            "2016",
+            "2015",
+            "2014",
+            "2013",
+            "2012",
+            "2011",
+            "2010"});
+            this.comboBoxAnio.Location = new System.Drawing.Point(185, 249);
+            this.comboBoxAnio.Name = "comboBoxAnio";
+            this.comboBoxAnio.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxAnio.TabIndex = 4;
+            // 
+            // comboBoxSemestre
+            // 
+            this.comboBoxSemestre.FormattingEnabled = true;
+            this.comboBoxSemestre.Items.AddRange(new object[] {
+            "1",
+            "2"});
+            this.comboBoxSemestre.Location = new System.Drawing.Point(313, 248);
+            this.comboBoxSemestre.Name = "comboBoxSemestre";
+            this.comboBoxSemestre.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxSemestre.TabIndex = 5;
+            // 
+            // ListadoEstadistico
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(627, 633);
+            this.Controls.Add(this.comboBoxSemestre);
+            this.Controls.Add(this.comboBoxAnio);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.top5_rec_pasajes);
+            this.Name = "ListadoEstadistico";
+            this.Text = "Listado Estadístico";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button top5_rec_pasajes;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox comboBoxAnio;
+        private System.Windows.Forms.ComboBox comboBoxSemestre;
     }
 }
