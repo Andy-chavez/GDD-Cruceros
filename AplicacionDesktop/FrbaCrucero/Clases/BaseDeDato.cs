@@ -31,7 +31,7 @@ namespace FrbaCrucero.Clases
             return conexion;
         }
 
-        public static void conectar()
+        public void conectar()
         {
             try
             {
@@ -43,7 +43,7 @@ namespace FrbaCrucero.Clases
             }
         }
 
-        public static void desconectar()
+        public void desconectar()
         {
             conexion.Close();
         }
@@ -59,44 +59,55 @@ namespace FrbaCrucero.Clases
 
         #region Consultas
 
-        public static int ejecutarConsulta(string nombreConsulta)
+        public void ejecutarConsulta(string nombreConsulta)
         {
             SqlCommand consulta = new SqlCommand(nombreConsulta, conexion);
-
-            int resultado = 0;
-            conectar();
             try
             {
-                resultado = consulta.ExecuteNonQuery();
+                conectar();
+                consulta.ExecuteNonQuery();
             }
             catch (Exception excepcion)
             {
                 ventanaErrorBD(excepcion);
             }
             desconectar();
-            return resultado;
         }
 
-        public static DataSet obtenerDataSet(SqlCommand consulta)
+        public  int obtenerIntDeConsulta(string nombreConsulta)
         {
-            DataSet dataSet = new DataSet();
-            try
-            {
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(consulta);
-                dataAdapter.Fill(dataSet);
-            }
-            catch (Exception excepcion)
-            {
-                ventanaErrorBD(excepcion);
-            }
+            SqlCommand consulta = new SqlCommand(nombreConsulta, conexion);
+            int entero = 0;
+            conectar();
+            entero = consulta.ExecuteNonQuery();
+            desconectar();
+            return entero;
+        }
+
+
+        public  DataSet obtenerDataSet(SqlCommand consulta)
+        {     
+            DataSet dataSet = new DataSet(); 
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(consulta);
+            dataAdapter.Fill(dataSet);    
             return dataSet;
         }
 
-        public static DataTable obtenerTabla(SqlCommand consulta)
+        public  DataTable obtenerDataTable(SqlCommand consulta)
         {
             DataSet dataSet = obtenerDataSet(consulta);
             DataTable tabla = dataSet.Tables[0];
             return tabla;
+        }
+
+        public  List<string> obtenerListaDeDatos(SqlCommand consulta)
+        {
+            DataTable tabla = obtenerDataTable(consulta);
+            List<string> columna = new List<string>();
+            if (tabla.Rows.Count > 0)
+                foreach (DataRow fila in tabla.Rows)
+                    columna.Add(fila[0].ToString());
+            return columna;
         }
 
 

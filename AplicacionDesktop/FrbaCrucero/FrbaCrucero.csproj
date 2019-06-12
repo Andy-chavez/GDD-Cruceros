@@ -77,11 +77,17 @@
     <Compile Include="AbmCrucero\VentanaModificarCrucero.Designer.cs">
       <DependentUpon>VentanaModificarCrucero.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRecorrido\VentanaDeAltaRecorrido.cs">
+    <Compile Include="AbmRecorrido\VentanaAltaRecorrido.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRecorrido\VentanaDeAltaRecorrido.Designer.cs">
-      <DependentUpon>VentanaDeAltaRecorrido.cs</DependentUpon>
+    <Compile Include="AbmRecorrido\VentanaAltaRecorrido.Designer.cs">
+      <DependentUpon>VentanaAltaRecorrido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRecorrido\VentanaModificarRecorrido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRecorrido\VentanaModificarRecorrido.Designer.cs">
+      <DependentUpon>VentanaModificarRecorrido.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRecorrido\VentanaGestionRecorrido.cs">
       <SubType>Form</SubType>
@@ -89,17 +95,11 @@
     <Compile Include="AbmRecorrido\VentanaGestionRecorrido.Designer.cs">
       <DependentUpon>VentanaGestionRecorrido.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRecorrido\VentanaListadoRecorrido.cs">
+    <Compile Include="AbmRecorrido\VentanaTramo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRecorrido\VentanaListadoRecorrido.Designer.cs">
-      <DependentUpon>VentanaListadoRecorrido.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmRecorrido\VentanaSeleccionRecorrido.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmRecorrido\VentanaSeleccionRecorrido.Designer.cs">
-      <DependentUpon>VentanaSeleccionRecorrido.cs</DependentUpon>
+    <Compile Include="AbmRecorrido\VentanaTramo.Designer.cs">
+      <DependentUpon>VentanaTramo.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRol\VentanaDeAltaRol.cs">
       <SubType>Form</SubType>
@@ -165,6 +165,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet4.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DataSet5.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet5.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DataSetFunc.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -174,6 +179,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSetFuncMod.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSetTramo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetTramo.xsd</DependentUpon>
     </Compile>
     <Compile Include="GeneracionViaje\VentanaOperacion.cs">
       <SubType>Form</SubType>
@@ -221,17 +231,14 @@
     <EmbeddedResource Include="AbmCrucero\VentanaGestion.resx">
       <DependentUpon>VentanaGestion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmRecorrido\VentanaDeAltaRecorrido.resx">
-      <DependentUpon>VentanaDeAltaRecorrido.cs</DependentUpon>
+    <EmbeddedResource Include="AbmRecorrido\VentanaAltaRecorrido.resx">
+      <DependentUpon>VentanaAltaRecorrido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRecorrido\VentanaGestionRecorrido.resx">
       <DependentUpon>VentanaGestionRecorrido.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmRecorrido\VentanaListadoRecorrido.resx">
-      <DependentUpon>VentanaListadoRecorrido.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmRecorrido\VentanaSeleccionRecorrido.resx">
-      <DependentUpon>VentanaSeleccionRecorrido.cs</DependentUpon>
+    <EmbeddedResource Include="AbmRecorrido\VentanaTramo.resx">
+      <DependentUpon>VentanaTramo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\VentanaDeAltaRol.resx">
       <DependentUpon>VentanaDeAltaRol.cs</DependentUpon>
@@ -310,6 +317,17 @@
     <None Include="DataSet4.xss">
       <DependentUpon>DataSet4.xsd</DependentUpon>
     </None>
+    <None Include="DataSet5.xsc">
+      <DependentUpon>DataSet5.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet5.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet5.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet5.xss">
+      <DependentUpon>DataSet5.xsd</DependentUpon>
+    </None>
     <None Include="DataSetFunc.xsc">
       <DependentUpon>DataSetFunc.xsd</DependentUpon>
     </None>
@@ -331,6 +349,17 @@
     </None>
     <None Include="DataSetFuncMod.xss">
       <DependentUpon>DataSetFuncMod.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetTramo.xsc">
+      <DependentUpon>DataSetTramo.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetTramo.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetTramo.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSetTramo.xss">
+      <DependentUpon>DataSetTramo.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

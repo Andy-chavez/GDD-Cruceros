@@ -31,7 +31,6 @@
             this.botonAlta = new System.Windows.Forms.Button();
             this.botonBaja = new System.Windows.Forms.Button();
             this.botonModificar = new System.Windows.Forms.Button();
-            this.botonListado = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // botonAlta
@@ -64,22 +63,11 @@
             this.botonModificar.UseVisualStyleBackColor = true;
             this.botonModificar.Click += new System.EventHandler(this.botonModificar_Click);
             // 
-            // botonListado
-            // 
-            this.botonListado.Location = new System.Drawing.Point(66, 183);
-            this.botonListado.Name = "botonListado";
-            this.botonListado.Size = new System.Drawing.Size(139, 23);
-            this.botonListado.TabIndex = 3;
-            this.botonListado.Text = "Listado";
-            this.botonListado.UseVisualStyleBackColor = true;
-            this.botonListado.Click += new System.EventHandler(this.botonListado_Click);
-            // 
             // VentanaGestionRecorrido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.botonListado);
+            this.ClientSize = new System.Drawing.Size(284, 197);
             this.Controls.Add(this.botonModificar);
             this.Controls.Add(this.botonBaja);
             this.Controls.Add(this.botonAlta);
@@ -95,6 +83,5 @@
         private System.Windows.Forms.Button botonAlta;
         private System.Windows.Forms.Button botonBaja;
         private System.Windows.Forms.Button botonModificar;
-        private System.Windows.Forms.Button botonListado;
     }
 }

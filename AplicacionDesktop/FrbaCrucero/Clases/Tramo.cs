@@ -31,6 +31,37 @@ namespace FrbaCrucero.Clases
          
         }
 
+        public Tramo(Puerto origen, Puerto destino, int precio)
+        {
+            this.origen = origen;
+            this.destino = destino;
+            this.precio = precio;
+        }
+        public Tramo( ){
+        }
+
         #endregion
+
+        #region Metodos
+
+        public void crearTramo(Puerto origen, Puerto destino, int precio) {
+
+            BaseDeDato.ejecutarSP("LEISTE_EL_CODIGO?.crearTramo", "@idRecorrido", "@origen", origen, "@destino", destino,"@orden","@precio",precio);
+            this.origen = origen;
+            this.destino = destino;
+            this.precio = precio;
+        }
+
+        public void eliminarTramo(Puerto origen, Puerto destino, int precio)
+        {
+            BaseDeDato.ejecutarSP("LEISTE_EL_CODIGO?.eliminarTramo", "@origen", origen, "@destino", destino, "@orden", "@precio", precio);
+     
+        }
+
+        #endregion
+
     }
+
+
+
 }

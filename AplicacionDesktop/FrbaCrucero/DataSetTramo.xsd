@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSetTramo" targetNamespace="http://tempuri.org/DataSetTramo.xsd" xmlns:mstns="http://tempuri.org/DataSetTramo.xsd" xmlns="http://tempuri.org/DataSetTramo.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.FrbaCrucero.Properties.Settings.GlobalReference.Default.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="TramosDisponiblesTableAdapter" GeneratorDataComponentClassName="TramosDisponiblesTableAdapter" Name="TramosDisponibles" UserDataComponentName="TramosDisponiblesTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectName="GD1C2019.[LEISTE_EL_CODIGO?].TramosDisponibles" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT id_tramo, id_recorrido, id_origen, id_destino, orden, precio_base FROM [LEISTE_EL_CODIGO?].TramosDisponibles</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="id_tramo" DataSetColumn="id_tramo" />
+              <Mapping SourceColumn="id_recorrido" DataSetColumn="id_recorrido" />
+              <Mapping SourceColumn="id_origen" DataSetColumn="id_origen" />
+              <Mapping SourceColumn="id_destino" DataSetColumn="id_destino" />
+              <Mapping SourceColumn="orden" DataSetColumn="orden" />
+              <Mapping SourceColumn="precio_base" DataSetColumn="precio_base" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSetTramo" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DataSetTramo" msprop:Generator_UserDSName="DataSetTramo">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TramosDisponibles" msprop:Generator_TableClassName="TramosDisponiblesDataTable" msprop:Generator_TableVarName="tableTramosDisponibles" msprop:Generator_TablePropName="TramosDisponibles" msprop:Generator_RowDeletingName="TramosDisponiblesRowDeleting" msprop:Generator_RowChangingName="TramosDisponiblesRowChanging" msprop:Generator_RowEvHandlerName="TramosDisponiblesRowChangeEventHandler" msprop:Generator_RowDeletedName="TramosDisponiblesRowDeleted" msprop:Generator_UserTableName="TramosDisponibles" msprop:Generator_RowChangedName="TramosDisponiblesRowChanged" msprop:Generator_RowEvArgName="TramosDisponiblesRowChangeEvent" msprop:Generator_RowClassName="TramosDisponiblesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id_tramo" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnid_tramo" msprop:Generator_ColumnPropNameInRow="id_tramo" msprop:Generator_ColumnPropNameInTable="id_tramoColumn" msprop:Generator_UserColumnName="id_tramo" type="xs:short" />
+              <xs:element name="id_recorrido" msprop:Generator_ColumnVarNameInTable="columnid_recorrido" msprop:Generator_ColumnPropNameInRow="id_recorrido" msprop:Generator_ColumnPropNameInTable="id_recorridoColumn" msprop:Generator_UserColumnName="id_recorrido" type="xs:decimal" minOccurs="0" />
+              <xs:element name="id_origen" msprop:Generator_ColumnVarNameInTable="columnid_origen" msprop:Generator_ColumnPropNameInRow="id_origen" msprop:Generator_ColumnPropNameInTable="id_origenColumn" msprop:Generator_UserColumnName="id_origen" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="id_destino" msprop:Generator_ColumnVarNameInTable="columnid_destino" msprop:Generator_ColumnPropNameInRow="id_destino" msprop:Generator_ColumnPropNameInTable="id_destinoColumn" msprop:Generator_UserColumnName="id_destino" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="orden" msprop:Generator_ColumnVarNameInTable="columnorden" msprop:Generator_ColumnPropNameInRow="orden" msprop:Generator_ColumnPropNameInTable="ordenColumn" msprop:Generator_UserColumnName="orden" type="xs:short" />
+              <xs:element name="precio_base" msprop:Generator_ColumnVarNameInTable="columnprecio_base" msprop:Generator_ColumnPropNameInRow="precio_base" msprop:Generator_ColumnPropNameInTable="precio_baseColumn" msprop:Generator_UserColumnName="precio_base" type="xs:decimal" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TramosDisponibles" />
+      <xs:field xpath="mstns:id_tramo" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

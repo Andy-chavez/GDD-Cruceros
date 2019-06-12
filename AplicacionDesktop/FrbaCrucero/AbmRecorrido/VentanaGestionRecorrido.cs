@@ -32,7 +32,7 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void botonAlta_Click(object sender, EventArgs e)
         {
-            new VentanaDeAltaRecorrido().Show();
+            new VentanaAltaRecorrido().Show();
         }
 
         private void botonBaja_Click(object sender, EventArgs e)
@@ -42,12 +42,9 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void botonModificar_Click(object sender, EventArgs e)
         {
-            new VentanaSeleccionRecorrido().Show();
+            new VentanaModificarRecorrido().Show();
         }
 
-        private void botonListado_Click(object sender, EventArgs e)
-        {
-            new VentanaListadoRecorrido().Show();
-        }
+        
     }
 }
