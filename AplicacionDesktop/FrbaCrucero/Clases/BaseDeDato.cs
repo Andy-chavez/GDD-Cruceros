@@ -82,9 +82,8 @@ namespace FrbaCrucero.Clases
         }
         public int ejecutarConsultaDevuelveInt(SqlCommand consulta)
         {
-            int resultado = 0;
             conectar();
-            consulta.ExecuteNonQuery();
+            int resultado= consulta.ExecuteNonQuery();
             desconectar();
             return resultado;
         }
