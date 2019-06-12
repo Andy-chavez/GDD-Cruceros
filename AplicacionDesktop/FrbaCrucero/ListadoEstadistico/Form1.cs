@@ -16,5 +16,20 @@ namespace FrbaCrucero.ListadoEstadistico
         {
             InitializeComponent();
         }
+
+        private void comboBoxAnio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ListadoEstadistico_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void top5_rec_pasajes_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

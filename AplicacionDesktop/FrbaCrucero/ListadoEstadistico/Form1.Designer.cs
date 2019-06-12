@@ -34,6 +34,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBoxAnio = new System.Windows.Forms.ComboBox();
             this.comboBoxSemestre = new System.Windows.Forms.ComboBox();
+            this.dataGridViewTop5s = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTop5s)).BeginInit();
             this.SuspendLayout();
             // 
             // top5_rec_pasajes
@@ -44,6 +46,7 @@
             this.top5_rec_pasajes.TabIndex = 0;
             this.top5_rec_pasajes.Text = "Top 5 Recorridos con más Pasajes Comprados";
             this.top5_rec_pasajes.UseVisualStyleBackColor = true;
+            this.top5_rec_pasajes.Click += new System.EventHandler(this.top5_rec_pasajes_Click);
             // 
             // button1
             // 
@@ -65,7 +68,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(185, 190);
+            this.textBox1.Location = new System.Drawing.Point(185, 201);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(120, 20);
             this.textBox1.TabIndex = 3;
@@ -74,6 +77,7 @@
             // 
             // comboBoxAnio
             // 
+            this.comboBoxAnio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAnio.FormattingEnabled = true;
             this.comboBoxAnio.Items.AddRange(new object[] {
             "2019",
@@ -90,9 +94,11 @@
             this.comboBoxAnio.Name = "comboBoxAnio";
             this.comboBoxAnio.Size = new System.Drawing.Size(121, 21);
             this.comboBoxAnio.TabIndex = 4;
+            this.comboBoxAnio.SelectedIndexChanged += new System.EventHandler(this.comboBoxAnio_SelectedIndexChanged);
             // 
             // comboBoxSemestre
             // 
+            this.comboBoxSemestre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSemestre.FormattingEnabled = true;
             this.comboBoxSemestre.Items.AddRange(new object[] {
             "1",
@@ -102,11 +108,20 @@
             this.comboBoxSemestre.Size = new System.Drawing.Size(121, 21);
             this.comboBoxSemestre.TabIndex = 5;
             // 
+            // dataGridViewTop5s
+            // 
+            this.dataGridViewTop5s.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTop5s.Location = new System.Drawing.Point(12, 304);
+            this.dataGridViewTop5s.Name = "dataGridViewTop5s";
+            this.dataGridViewTop5s.Size = new System.Drawing.Size(603, 317);
+            this.dataGridViewTop5s.TabIndex = 6;
+            // 
             // ListadoEstadistico
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 633);
+            this.Controls.Add(this.dataGridViewTop5s);
             this.Controls.Add(this.comboBoxSemestre);
             this.Controls.Add(this.comboBoxAnio);
             this.Controls.Add(this.textBox1);
@@ -115,6 +130,9 @@
             this.Controls.Add(this.top5_rec_pasajes);
             this.Name = "ListadoEstadistico";
             this.Text = "Listado Estadístico";
+            this.TopMost = true;
+            this.Load += new System.EventHandler(this.ListadoEstadistico_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTop5s)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -128,5 +146,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ComboBox comboBoxAnio;
         private System.Windows.Forms.ComboBox comboBoxSemestre;
+        private System.Windows.Forms.DataGridView dataGridViewTop5s;
     }
 }
