@@ -635,7 +635,7 @@ from [LEISTE_EL_CODIGO?].Reserva r
 where exists(select id_pasaje
 				from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].PagoDeViaje pv ON p.id_pago = pv.id_pago
 				where r.id_cabina = p.id_cabina and r.id_cliente = p.id_cliente and r.id_crucero = p.id_crucero
-				and r.id_viaje = p.id_viaje and (pv.fecha_pago between fecha_actual and DATEADD(day,fecha_actual,3))
+				and r.id_viaje = p.id_viaje and (pv.fecha_pago between fecha_actual and DATEADD(day,fecha_actual,3)))
 delete from [LEISTE_EL_CODIGO?].Reserva
 where id_reserva in (select id_reserva
 						from [LEISTE_EL_CODIGO?].ReservasPagadas)
