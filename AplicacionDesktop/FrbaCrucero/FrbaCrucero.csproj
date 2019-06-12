@@ -219,6 +219,9 @@
     <EmbeddedResource Include="GeneracionViaje\VentanaOperacion.resx">
       <DependentUpon>VentanaOperacion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VentanaMenu.resx">
       <DependentUpon>VentanaMenu.cs</DependentUpon>
     </EmbeddedResource>

@@ -80,9 +80,9 @@ Valores de retorno:
 
     1: se cargo todo joya
     -1: el cliente que quiere comprar ya tiene un viaje en esa fecha
-####calcularPrecioPasaje (@idPasaje int,@precio decimal (18,2) out)
+#### calcularPrecioPasaje (@idPasaje int,@precio decimal (18,2) out)
 
-####actualizarMontoTotal (@idPago) esto lo hago apenas se completa la compra de un pasaje, para no tener que hacer desde aplicativo la cantidad y el monto total
+#### actualizarMontoTotal (@idPago) esto lo hago apenas se completa la compra de un pasaje, para no tener que hacer desde aplicativo la cantidad y el monto total
 
 #### verVoucher (@idPago int) -- (esto es lo ultimo que se hace)pasarle el mismo idPago que se usa en comprarPasajes para mostrar todos los pasajes de esa compra
 
@@ -145,11 +145,12 @@ Nota: se debe hacer en orden del orden mas chico q quieras cambiar al ultimo
     -1: el cliente ya tiene un viaje en esa fecha
      numero mayor a 0: el id de la reserva
 
-####mostrarReserva(@idReserva decimal(18,0))
+#### mostrarReserva(@idReserva decimal(18,0))
 
-####comprarPasajeReservado(@idReserva decimal(18,0),@idPago int)
+#### comprarPasajeReservado(@idReserva decimal(18,0),@idPago int)
 
   Valores de retorno:
+      -2 : no existe una reserva o la reserva se vencio
       -1: el cliente ya tiene viajes en esa fecha
       1: todo bien, se compró el pasaje reservado
 

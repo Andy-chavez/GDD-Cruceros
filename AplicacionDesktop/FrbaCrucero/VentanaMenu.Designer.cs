@@ -133,6 +133,7 @@
             this.Controls.Add(this.botonAdmCrucero);
             this.Name = "VentanaMenu";
             this.Text = "Menu operaciones";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaMenu_Load);
             this.ResumeLayout(false);
 

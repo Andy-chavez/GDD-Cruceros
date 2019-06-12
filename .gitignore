@@ -2,3 +2,4 @@
 */resultado_output.txt
 *.lock
 */.vs/
+*/obj/
