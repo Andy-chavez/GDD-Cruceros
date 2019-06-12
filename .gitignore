@@ -1,6 +1,12 @@
 */ejecutarScript_inicial.bat
 */resultado_output.txt
 *.lock
+*.ide
+*.ide-wal
+*.Cache
+*.cache
+*.suo
+*.sou
 */.vs/
 */obj/
 */bin/
