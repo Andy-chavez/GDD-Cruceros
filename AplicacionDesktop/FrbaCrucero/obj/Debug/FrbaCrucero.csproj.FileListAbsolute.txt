@@ -1,52 +1,3 @@
-\\VBOXSVR\FrbaBus_1°C_2019\src\FrbaCrucero\bin\Debug\FrbaCrucero.exe.config
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\bin\Debug\FrbaCrucero.exe.config
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.Properties.Resources.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.csproj.GenerateResource.Cache
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\bin\Debug\FrbaCrucero.exe
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\bin\Debug\FrbaCrucero.pdb
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.exe
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.pdb
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaPrincipal.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaMenu.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.csprojResolveAssemblyReference.cache
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaGestionCrucero.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaGestionRecorrido.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaGestionRol.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaDeAltaRecorrido.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaListadoRecorrido.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaSeleccionRecorrido.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaDeAltaRol.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaListadoRol.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaSeleccionRol.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaDeAltaCrucero.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaListadoCrucero.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaSeleccionCrucero.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmPuerto.VentanaDeAltaPuerto.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmPuerto.VentanaGestionarPuerto.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmPuerto.VentanaListadoPuerto.resources
-C:\Users\ANDYPC\Downloads\Aplicacion Desktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmPuerto.VentanaSeleccionPuerto.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\bin\Debug\FrbaCrucero.exe.config
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.exe
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.pdb
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\bin\Debug\FrbaCrucero.exe
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\bin\Debug\FrbaCrucero.pdb
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.csprojResolveAssemblyReference.cache
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaGestionRecorrido.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaGestionRol.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaMenu.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaPrincipal.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.Properties.Resources.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.csproj.GenerateResource.Cache
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.VentanaSeleccionarviaje.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.GeneracionViaje.VentanaOperacion.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaDeAltaRol.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaModificarRol.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaRolSeleccionado.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaAltaRecorrido.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaTramo.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaAltaCrucero.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaGestionCrucero.resources
-<<<<<<< HEAD
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\bin\Debug\FrbaCrucero.exe.config
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\bin\Debug\FrbaCrucero.exe
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\bin\Debug\FrbaCrucero.pdb
@@ -63,6 +14,7 @@ C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\Aplicacio
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaRolSeleccionado.resources
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.VentanaSeleccionarviaje.resources
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.GeneracionViaje.VentanaOperacion.resources
+C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.ListadoEstadistico.ListadoEstadistico.resources
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaMenu.resources
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaPrincipal.resources
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.Properties.Resources.resources
@@ -70,29 +22,3 @@ C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\Aplicacio
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.csproj.CoreCompileInputs.cache
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.exe
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.pdb
-=======
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\bin\Debug\FrbaCrucero.exe.config
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\bin\Debug\FrbaCrucero.exe
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\bin\Debug\FrbaCrucero.pdb
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.csprojResolveAssemblyReference.cache
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaAltaCrucero.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaGestionCrucero.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaAltaRecorrido.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaGestionRecorrido.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaModificarRecorrido.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaTramo.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaDeAltaRol.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaGestionRol.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaModificarRol.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaRolSeleccionado.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.VentanaSeleccionarviaje.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.GeneracionViaje.VentanaOperacion.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.ListadoEstadistico.ListadoEstadistico.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaMenu.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.VentanaPrincipal.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.Properties.Resources.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.csproj.GenerateResource.Cache
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.csproj.CoreCompileInputs.cache
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.exe
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.pdb
->>>>>>> 4af2fc0753bf372aefff6f25e2f22f19251cb5b5
