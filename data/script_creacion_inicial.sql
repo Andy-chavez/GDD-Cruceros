@@ -413,8 +413,10 @@ insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) val
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(3,8)
 go
 ----Contraseñas
+declare @algo nvarchar(32)
+set @algo = 'w23e'
 declare @hash varbinary(32)
-select @hash = hashbytes('SHA2_256', 'w23e')
+set @hash = hashbytes('SHA2_256', @algo)
 --ADMINISTRADOR GENERAL
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin',1,@hash)	
 --ADMINISTRADORES
@@ -635,7 +637,7 @@ from [LEISTE_EL_CODIGO?].Reserva r
 where exists(select id_pasaje
 				from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].PagoDeViaje pv ON p.id_pago = pv.id_pago
 				where r.id_cabina = p.id_cabina and r.id_cliente = p.id_cliente and r.id_crucero = p.id_crucero
-				and r.id_viaje = p.id_viaje and (pv.fecha_pago between fecha_actual and DATEADD(day,fecha_actual,3)))
+				and r.id_viaje = p.id_viaje and (pv.fecha_pago between r.fecha_actual and DATEADD(day,3,r.fecha_actual)))
 delete from [LEISTE_EL_CODIGO?].Reserva
 where id_reserva in (select id_reserva
 						from [LEISTE_EL_CODIGO?].ReservasPagadas)
@@ -797,7 +799,6 @@ as
 		commit transaction
 	end
 go
-
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].sp_login(@id_ingresado nvarchar(50), @contra_ingresada nvarchar(32)) -- aca tengo dudas de si es la contra al todavia no estar hasheada, si es de 32 o no
@@ -838,6 +839,7 @@ as
 				where id_usuario = @id_ingresado
 			set @valor_retorno = -1						--El usuario excedio esas tres oportunidades y fue dado de baja (por ahora borrado)
 			end
+		print @valor_retorno
 		return @valor_retorno
 	end
 go
