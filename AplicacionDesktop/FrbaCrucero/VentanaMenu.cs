@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using FrbaCrucero.AbmRol;
 using FrbaCrucero.AbmRecorrido;
 using FrbaCrucero.AbmCrucero;
-
+using FrbaCrucero.ListadoEstadistico;
 
 
 
@@ -72,7 +72,7 @@ namespace FrbaCrucero
 
         public void botonEstadisticas_Click(object sender, EventArgs e)
         {
-
+            new ListadoEstadistico.ListadoEstadistico().ShowDialog();
         }
         public void ocultarBotones( )
         {
