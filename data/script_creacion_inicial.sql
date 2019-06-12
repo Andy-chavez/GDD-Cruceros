@@ -509,9 +509,9 @@ into @id_crucero
 	close cursor_cant
 	deallocate cursor_cant
 go
------------------------------Puerto------------------------------- lo va nombre de puerto en la tabla, no va el campo ciudad, es irrelevante)
+-----------------------------Puerto------------------------------- no va nombre de puerto en la tabla, no va el campo ciudad, es irrelevante)
 insert into [LEISTE_EL_CODIGO?].Puerto
-select distinct PUERTO_DESDE from gd_esquema.Maestra where PUERTO_DESDE<> PUERTO_HASTA
+select distinct PUERTO_DESDE from gd_esquema.Maestra where PUERTO_DESDE<> PUERTO_HASTA --corroborado
 go
 ------------------------------------------ Recorrido ----------------------------------------------------
 insert into [LEISTE_EL_CODIGO?].Recorrido (id_recorrido)
@@ -570,6 +570,7 @@ update [LEISTE_EL_CODIGO?].Recorrido
 set id_destino= t1.id_destino
 from [LEISTE_EL_CODIGO?].Tramo t1
 where (Recorrido.id_recorrido = t1.id_recorrido and t1.orden = 2)
+go
 ----------------------------------Medio de Pago--(esta la llenamos nosotros)
 ----------------------------------------Pago de viaje--
 --select PASAJE_CODIGO, count(*) from gd_esquema.Maestra where PASAJE_CODIGO is not null group by PASAJE_CODIGO having count(*)>1
@@ -635,6 +636,9 @@ where exists(select id_pasaje
 				from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].PagoDeViaje pv ON p.id_pago = pv.id_pago
 				where r.id_cabina = p.id_cabina and r.id_cliente = p.id_cliente and r.id_crucero = p.id_crucero
 				and r.id_viaje = p.id_viaje and (pv.fecha_pago between fecha_actual and DATEADD(day,fecha_actual,3))
+delete from [LEISTE_EL_CODIGO?].Reserva
+where id_reserva in (select id_reserva
+						from [LEISTE_EL_CODIGO?].ReservasPagadas)
 --........................................ PROCEDURES ......................................................
 --........................................<ABM 1> ROL				......................................................
 ------Agregar nueva funcionalidad a un rol-------REQUERIMIENTO: 
@@ -1421,7 +1425,7 @@ go
 --........................................<ABM 10> LISTADOS ESTADISTICOS	......................................................							  					  
 --TOP RECORRIDOS CON MAS PASAJES VENDIDOS--
 USE GD1C2019
-go
+go --consideramos que si no fueron compradas siguen libres (no tenemos en cuenta las reservas)
 create procedure [LEISTE_EL_CODIGO?].topRecorridosConMasPasajesComprados (@anio int, @semestre int)
 as
 	declare @mesInicial smallint,@mesFinal smallint
@@ -1436,7 +1440,7 @@ as
 			set @mesFinal = 12
 		end
 	begin
-		select top 5 r.id_recorrido, count(p.id_pasaje) cantidadDePasajesVendidos, r.id_origen origen, r.id_destino destino
+		select top 5 r.id_recorrido, count(distinct p.id_pasaje) cantidadDePasajesVendidos, r.id_origen origen, r.id_destino destino
 		from [LEISTE_EL_CODIGO?].Recorrido r 
 		join [LEISTE_EL_CODIGO?].Viaje v on r.id_recorrido = v.id_recorrido
 		join [LEISTE_EL_CODIGO?].Pasaje p on v.id_viaje = p.id_viaje
@@ -1447,7 +1451,7 @@ as
 	end
 go		
 --TOP 5 RECORRIDOS CON MAS CABINAS LIBRES EN VIAJES REALIZADOS--
-USE GD1C2019
+USE GD1C2019 -- consideramos que si no fueron compradas siguen libres (no tenemos en cuenta las reservas)
 go
 create procedure [LEISTE_EL_CODIGO?].topMasCabinasLibres (@anio int, @semestre int)
 as	
@@ -1464,7 +1468,7 @@ as
 		end
 	begin
 		select top 5 r.id_recorrido, r.id_origen origen, r.id_destino destino,
-		sum(cr.cantidadDeCabinas) - (select count(*)
+		sum(cr.cantidadDeCabinas) - (select count(distinct p.id_pasaje)
 									from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].Viaje v
 									on p.id_viaje = v.id_viaje
 									where v.id_recorrido = r.id_recorrido and
@@ -1559,4 +1563,3 @@ as
 		select *
 		from [LEISTE_EL_CODIGO?].Puerto
 go
-
