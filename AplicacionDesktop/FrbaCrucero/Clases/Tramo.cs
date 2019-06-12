@@ -10,30 +10,32 @@ namespace FrbaCrucero.Clases
     {
        #region Atributos
 
-        public string id { get; set; }
-        public string idRecorrido { get; set; }
-        public Puerto origen { get; set; }
-        public Puerto destino { get; set; }
-        public int precio { get; set; }
+        public int id { get; set; }
+        public decimal idRecorrido { get; set; }
+        public string id_origen { get; set; }
+        public string destino { get; set; }
+        public int orden { get; set; }
+        public decimal precio { get; set; }
         
 
         #endregion
 
         #region Constructores
 
-        public Tramo(string id,string idRecorrido, Puerto origen, Puerto destino, int precio)
+        public Tramo(int id, decimal idRecorrido, string id_origen, string destino, int orden, decimal precio)
         {
             this.id = id;
             this.idRecorrido = idRecorrido;
-            this.origen = origen;
+            this.id_origen = id_origen;
             this.destino = destino;
+            this.orden = orden;
             this.precio = precio;
          
         }
 
-        public Tramo(Puerto origen, Puerto destino, int precio)
+        public Tramo(string origen, string destino, int precio)
         {
-            this.origen = origen;
+            this.id_origen = origen;
             this.destino = destino;
             this.precio = precio;
         }
@@ -44,17 +46,17 @@ namespace FrbaCrucero.Clases
 
         #region Metodos
 
-        public void crearTramo(Puerto origen, Puerto destino, int precio) {
+        public void crearTramo(string id_origen, string destino, int precio)
+        {
 
-            BaseDeDato.ejecutarSP("LEISTE_EL_CODIGO?.crearTramo", "@idRecorrido", "@origen", origen, "@destino", destino,"@orden","@precio",precio);
-            this.origen = origen;
+            this.id_origen = id_origen;
             this.destino = destino;
             this.precio = precio;
         }
 
-        public void eliminarTramo(Puerto origen, Puerto destino, int precio)
+        public void eliminarTramo(string origen, string destino, decimal precio)
         {
-            BaseDeDato.ejecutarSP("LEISTE_EL_CODIGO?.eliminarTramo", "@origen", origen, "@destino", destino, "@orden", "@precio", precio);
+           
      
         }
 

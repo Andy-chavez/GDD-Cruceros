@@ -29,10 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.dataSet3 = new FrbaCrucero.DataSet3();
+
             this.rolesHabilitadosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.rolesHabilitadosTableAdapter = new FrbaCrucero.DataSet3TableAdapters.RolesHabilitadosTableAdapter();
-            this.tableAdapterManager1 = new FrbaCrucero.DataSet1TableAdapters.TableAdapterManager();
+            
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,36 +39,33 @@
             this.botonVolver = new System.Windows.Forms.Button();
             this.botonSiguiente = new System.Windows.Forms.Button();
             this.botonLimpiar = new System.Windows.Forms.Button();
-            this.dataSet4 = new FrbaCrucero.DataSet4();
+            
             this.rolesHabilitadosBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.rolesHabilitadosTableAdapter1 = new FrbaCrucero.DataSet4TableAdapters.RolesHabilitadosTableAdapter();
+            
             this.botonEliminar = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet3)).BeginInit();
+            
             ((System.ComponentModel.ISupportInitialize)(this.rolesHabilitadosBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet4)).BeginInit();
+           
             ((System.ComponentModel.ISupportInitialize)(this.rolesHabilitadosBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataSet3
             // 
-            this.dataSet3.DataSetName = "DataSet3";
-            this.dataSet3.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+           
             // 
             // rolesHabilitadosBindingSource
             // 
             this.rolesHabilitadosBindingSource.DataMember = "RolesHabilitados";
-            this.rolesHabilitadosBindingSource.DataSource = this.dataSet3;
+            
             // 
             // rolesHabilitadosTableAdapter
             // 
-            this.rolesHabilitadosTableAdapter.ClearBeforeFill = true;
+          
             // 
             // tableAdapterManager1
             // 
-            this.tableAdapterManager1.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager1.Connection = null;
-            this.tableAdapterManager1.UpdateOrder = FrbaCrucero.DataSet1TableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
+           
             // 
             // groupBox1
             // 
@@ -143,18 +139,16 @@
             // 
             // dataSet4
             // 
-            this.dataSet4.DataSetName = "DataSet4";
-            this.dataSet4.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+           
             // 
             // rolesHabilitadosBindingSource1
             // 
             this.rolesHabilitadosBindingSource1.DataMember = "RolesHabilitados";
-            this.rolesHabilitadosBindingSource1.DataSource = this.dataSet4;
+            
             // 
             // rolesHabilitadosTableAdapter1
             // 
-            this.rolesHabilitadosTableAdapter1.ClearBeforeFill = true;
-            // 
+           
             // botonEliminar
             // 
             this.botonEliminar.Location = new System.Drawing.Point(345, 221);
@@ -178,11 +172,11 @@
             this.Name = "VentanaModificarRol";
             this.Text = "VentanaModificarRol";
             this.Load += new System.EventHandler(this.VentanaModificarRol_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet3)).EndInit();
+            
             ((System.ComponentModel.ISupportInitialize)(this.rolesHabilitadosBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet4)).EndInit();
+            
             ((System.ComponentModel.ISupportInitialize)(this.rolesHabilitadosBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
@@ -190,10 +184,7 @@
 
         #endregion
 
-        private DataSet3 dataSet3;
         private System.Windows.Forms.BindingSource rolesHabilitadosBindingSource;
-        private DataSet3TableAdapters.RolesHabilitadosTableAdapter rolesHabilitadosTableAdapter;
-        private DataSet1TableAdapters.TableAdapterManager tableAdapterManager1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox seleccion;
         private System.Windows.Forms.Label label1;
@@ -201,9 +192,7 @@
         private System.Windows.Forms.Button botonVolver;
         private System.Windows.Forms.Button botonSiguiente;
         private System.Windows.Forms.Button botonLimpiar;
-        private DataSet4 dataSet4;
         private System.Windows.Forms.BindingSource rolesHabilitadosBindingSource1;
-        private DataSet4TableAdapters.RolesHabilitadosTableAdapter rolesHabilitadosTableAdapter1;
         private System.Windows.Forms.Button botonEliminar;
 
     }

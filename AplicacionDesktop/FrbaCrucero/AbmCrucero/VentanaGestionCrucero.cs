@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FrbaCrucero.AbmCrucero
 {
-    public partial class VentanaGestion : Form
+    public partial class VentanaGestionCrucero : Form
     {
-        public VentanaGestion()
+        public VentanaGestionCrucero()
         {
             InitializeComponent();
         }
@@ -30,6 +30,11 @@ namespace FrbaCrucero.AbmCrucero
         private void botonBaja_Click(object sender, EventArgs e)
         {
             new VentanaModificarCrucero().Show();
+        }
+
+        private void VentanaGestionCrucero_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

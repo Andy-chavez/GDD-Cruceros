@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaCrucero.AbmRol;
 using FrbaCrucero.AbmRecorrido;
+using FrbaCrucero.AbmCrucero;
 
 
 
@@ -38,7 +39,7 @@ namespace FrbaCrucero
 
         public void botonAdmCrucero_Click(object sender, EventArgs e)
         {
-            
+            new VentanaGestionCrucero().Show();
             
         }
 

@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace FrbaCrucero.Clases
 {
+    
     class Crucero
     {
+        BaseDeDato bd = new BaseDeDato();
+
         #region Atributos
 
         public string id { get; set; }
@@ -46,7 +49,37 @@ namespace FrbaCrucero.Clases
             this.idFabricante = idFabricante;
             this.modelo = modelo;
         }
+        public Crucero()
+        {          
+        }
 
         #endregion
-    }
+
+
+        public void crearCrucero(string id, string idFabricante, string modelo, int cantCabinas)
+        {
+
+            this.id = id;
+            this.idFabricante = idFabricante;
+            this.modelo = modelo;
+            this.cantCabinas = cantCabinas;
+            try
+            {
+                bd.conectar();
+                bd.crearSP("[LEISTE_EL_CODIGO?].cargarCrucero");
+                bd.setearParametroPorValor("id_crucero", id);
+                bd.setearParametroPorValor("id_fabricante", idFabricante);
+                bd.setearParametroPorValor("modelo", modelo);
+                bd.setearParametroPorValor("cantidadDeCabinas", cantCabinas);
+                bd.ejecutarSP();
+            }
+            catch (Exception excepcion)
+            {
+
+                bd.ventanaErrorBD(excepcion);
+            }
+            bd.desconectar();
+        }
+
+}
 }

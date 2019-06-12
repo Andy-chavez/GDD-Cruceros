@@ -59,11 +59,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbmCrucero\VentanaGestion.cs">
+    <Compile Include="AbmCrucero\VentanaGestionCrucero.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmCrucero\VentanaGestion.Designer.cs">
-      <DependentUpon>VentanaGestion.cs</DependentUpon>
+    <Compile Include="AbmCrucero\VentanaGestionCrucero.Designer.cs">
+      <DependentUpon>VentanaGestionCrucero.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmCrucero\VentanaAltaCrucero.cs">
       <SubType>Form</SubType>
@@ -145,46 +145,6 @@
     <Compile Include="CompraReservaPasaje\VentanaSeleccionarviaje.Designer.cs">
       <DependentUpon>VentanaSeleccionarviaje.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet1.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DataSet2.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet2.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DataSet3.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet3.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DataSet4.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet4.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DataSet5.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet5.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DataSetFunc.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSetFunc.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DataSetFuncMod.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSetFuncMod.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DataSetTramo.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSetTramo.xsd</DependentUpon>
-    </Compile>
     <Compile Include="GeneracionViaje\VentanaOperacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,11 +152,6 @@
       <DependentUpon>VentanaOperacion.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="TablaCrucero.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TablaCrucero.xsd</DependentUpon>
-    </Compile>
     <Compile Include="VentanaMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -228,14 +183,20 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AbmCrucero\VentanaGestion.resx">
-      <DependentUpon>VentanaGestion.cs</DependentUpon>
+    <EmbeddedResource Include="AbmCrucero\VentanaAltaCrucero.resx">
+      <DependentUpon>VentanaAltaCrucero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\VentanaGestionCrucero.resx">
+      <DependentUpon>VentanaGestionCrucero.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRecorrido\VentanaAltaRecorrido.resx">
       <DependentUpon>VentanaAltaRecorrido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRecorrido\VentanaGestionRecorrido.resx">
       <DependentUpon>VentanaGestionRecorrido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRecorrido\VentanaModificarRecorrido.resx">
+      <DependentUpon>VentanaModificarRecorrido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRecorrido\VentanaTramo.resx">
       <DependentUpon>VentanaTramo.cs</DependentUpon>
@@ -273,94 +234,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="DataSet1.xsc">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="DataSet1.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DataSet1.xss">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="DataSet2.xsc">
-      <DependentUpon>DataSet2.xsd</DependentUpon>
-    </None>
-    <None Include="DataSet2.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet2.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DataSet2.xss">
-      <DependentUpon>DataSet2.xsd</DependentUpon>
-    </None>
-    <None Include="DataSet3.xsc">
-      <DependentUpon>DataSet3.xsd</DependentUpon>
-    </None>
-    <None Include="DataSet3.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet3.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DataSet3.xss">
-      <DependentUpon>DataSet3.xsd</DependentUpon>
-    </None>
-    <None Include="DataSet4.xsc">
-      <DependentUpon>DataSet4.xsd</DependentUpon>
-    </None>
-    <None Include="DataSet4.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet4.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DataSet4.xss">
-      <DependentUpon>DataSet4.xsd</DependentUpon>
-    </None>
-    <None Include="DataSet5.xsc">
-      <DependentUpon>DataSet5.xsd</DependentUpon>
-    </None>
-    <None Include="DataSet5.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet5.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DataSet5.xss">
-      <DependentUpon>DataSet5.xsd</DependentUpon>
-    </None>
-    <None Include="DataSetFunc.xsc">
-      <DependentUpon>DataSetFunc.xsd</DependentUpon>
-    </None>
-    <None Include="DataSetFunc.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSetFunc.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DataSetFunc.xss">
-      <DependentUpon>DataSetFunc.xsd</DependentUpon>
-    </None>
-    <None Include="DataSetFuncMod.xsc">
-      <DependentUpon>DataSetFuncMod.xsd</DependentUpon>
-    </None>
-    <None Include="DataSetFuncMod.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSetFuncMod.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DataSetFuncMod.xss">
-      <DependentUpon>DataSetFuncMod.xsd</DependentUpon>
-    </None>
-    <None Include="DataSetTramo.xsc">
-      <DependentUpon>DataSetTramo.xsd</DependentUpon>
-    </None>
-    <None Include="DataSetTramo.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSetTramo.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DataSetTramo.xss">
-      <DependentUpon>DataSetTramo.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -370,17 +243,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="TablaCrucero.xsc">
-      <DependentUpon>TablaCrucero.xsd</DependentUpon>
-    </None>
-    <None Include="TablaCrucero.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>TablaCrucero.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="TablaCrucero.xss">
-      <DependentUpon>TablaCrucero.xsd</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

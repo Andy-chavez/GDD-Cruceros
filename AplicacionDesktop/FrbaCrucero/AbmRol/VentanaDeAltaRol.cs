@@ -35,7 +35,14 @@ namespace FrbaCrucero.AbmRol
 
         private void botonCrear_Click(object sender, EventArgs e)
         {
-            this.agregarRol();
+
+            if (this.todosLosCamposEstancompletos())
+            {
+                this.agregarRol();
+            }
+            else {
+                MessageBox.Show("Complete todos los campos para crear rol", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         
@@ -52,7 +59,7 @@ namespace FrbaCrucero.AbmRol
             if (textoNombre.Text != "")
             {
 
-                rol.crearRol(textoNombre.Text, listaFunc.SelectedValue.ToString());
+                rol.crearRol(textoNombre.Text, Convert.ToInt32(listaFunc.SelectedValue));
              DialogResult result = MessageBox.Show("Rol creado exitosamente", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
@@ -84,6 +91,17 @@ namespace FrbaCrucero.AbmRol
         }
 
         private void listaFunc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        public bool todosLosCamposEstancompletos()
+        {
+
+            return textoNombre.Text != "" && listaFunc.Text != "" ;
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }

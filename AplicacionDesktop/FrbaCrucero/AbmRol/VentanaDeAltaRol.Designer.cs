@@ -33,22 +33,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textoNombre = new System.Windows.Forms.TextBox();
             this.funcionalidadBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dataSetFunc = new FrbaCrucero.DataSetFunc();
-            this.funcionalidadTableAdapter = new FrbaCrucero.DataSetFuncTableAdapters.FuncionalidadTableAdapter();
             this.botonVolver = new System.Windows.Forms.Button();
             this.botonCrear = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.listaFunc = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.botonLimpiar = new System.Windows.Forms.Button();
-            this.dataSet2 = new FrbaCrucero.DataSet2();
             this.funcionalidadBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.funcionalidadTableAdapter1 = new FrbaCrucero.DataSet2TableAdapters.FuncionalidadTableAdapter();
-            this.listaFunc = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSetFunc)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,6 +56,7 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Identificadores";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // label2
             // 
@@ -83,16 +78,6 @@
             // funcionalidadBindingSource
             // 
             this.funcionalidadBindingSource.DataMember = "Funcionalidad";
-            this.funcionalidadBindingSource.DataSource = this.dataSetFunc;
-            // 
-            // dataSetFunc
-            // 
-            this.dataSetFunc.DataSetName = "DataSetFunc";
-            this.dataSetFunc.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // funcionalidadTableAdapter
-            // 
-            this.funcionalidadTableAdapter.ClearBeforeFill = true;
             // 
             // botonVolver
             // 
@@ -125,6 +110,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Funcionalidades";
             // 
+            // listaFunc
+            // 
+            this.listaFunc.FormattingEnabled = true;
+            this.listaFunc.Location = new System.Drawing.Point(111, 26);
+            this.listaFunc.Name = "listaFunc";
+            this.listaFunc.Size = new System.Drawing.Size(225, 21);
+            this.listaFunc.TabIndex = 1;
+            this.listaFunc.SelectedIndexChanged += new System.EventHandler(this.listaFunc_SelectedIndexChanged);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -144,29 +138,6 @@
             this.botonLimpiar.UseVisualStyleBackColor = true;
             this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
             // 
-            // dataSet2
-            // 
-            this.dataSet2.DataSetName = "DataSet2";
-            this.dataSet2.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // funcionalidadBindingSource1
-            // 
-            this.funcionalidadBindingSource1.DataMember = "Funcionalidad";
-            this.funcionalidadBindingSource1.DataSource = this.dataSet2;
-            // 
-            // funcionalidadTableAdapter1
-            // 
-            this.funcionalidadTableAdapter1.ClearBeforeFill = true;
-            // 
-            // listaFunc
-            // 
-            this.listaFunc.FormattingEnabled = true;
-            this.listaFunc.Location = new System.Drawing.Point(111, 26);
-            this.listaFunc.Name = "listaFunc";
-            this.listaFunc.Size = new System.Drawing.Size(225, 21);
-            this.listaFunc.TabIndex = 1;
-            this.listaFunc.SelectedIndexChanged += new System.EventHandler(this.listaFunc_SelectedIndexChanged);
-            // 
             // VentanaDeAltaRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -183,10 +154,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSetFunc)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
@@ -197,17 +166,17 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textoNombre;
-        private DataSetFunc dataSetFunc;
+       
         private System.Windows.Forms.BindingSource funcionalidadBindingSource;
-        private DataSetFuncTableAdapters.FuncionalidadTableAdapter funcionalidadTableAdapter;
+       
         private System.Windows.Forms.Button botonVolver;
         private System.Windows.Forms.Button botonCrear;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button botonLimpiar;
-        private DataSet2 dataSet2;
+      
         private System.Windows.Forms.BindingSource funcionalidadBindingSource1;
-        private DataSet2TableAdapters.FuncionalidadTableAdapter funcionalidadTableAdapter1;
+
         private System.Windows.Forms.ComboBox listaFunc;
     }
 }

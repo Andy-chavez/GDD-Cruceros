@@ -1,6 +1,6 @@
 ﻿namespace FrbaCrucero.AbmCrucero
 {
-    partial class VentanaGestion
+    partial class VentanaGestionCrucero
     {
         /// <summary>
         /// Required designer variable.
@@ -63,7 +63,7 @@
             this.botonBaja.UseVisualStyleBackColor = true;
             this.botonBaja.Click += new System.EventHandler(this.botonBaja_Click);
             // 
-            // VentanaGestion
+            // VentanaGestionCrucero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -71,8 +71,9 @@
             this.Controls.Add(this.botonBaja);
             this.Controls.Add(this.botonModificar);
             this.Controls.Add(this.botonAlta);
-            this.Name = "VentanaGestion";
+            this.Name = "VentanaGestionCrucero";
             this.Text = "VentanaAltaCrucero";
+            this.Load += new System.EventHandler(this.VentanaGestionCrucero_Load);
             this.ResumeLayout(false);
 
         }

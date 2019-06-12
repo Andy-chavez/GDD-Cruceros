@@ -18,6 +18,8 @@ namespace FrbaCrucero.Clases
     {
         #region Atributos
 
+        SqlCommand sp;
+
         private static string configuracionConexionSql = @"Data Source= localhost\SQLSERVER2012; Persist Security Info=True;User ID=gdCruceros2019;Password=gd2019";
 
         public static SqlConnection conexion = new SqlConnection(configuracionConexionSql); 
@@ -50,7 +52,7 @@ namespace FrbaCrucero.Clases
 
       
 
-        public static void ventanaErrorBD(Exception excepcion)
+        public  void ventanaErrorBD(Exception excepcion)
         {
 
             MessageBox.Show("ERROR EN LA BASE DE DATOS:\n" + excepcion.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -58,6 +60,11 @@ namespace FrbaCrucero.Clases
         #endregion
 
         #region Consultas
+
+        public void crearConsulta(string nombreConsulta)
+        {
+            SqlCommand consulta = new SqlCommand(nombreConsulta, conexion);        
+        }
 
         public void ejecutarConsulta(string nombreConsulta)
         {
@@ -115,45 +122,39 @@ namespace FrbaCrucero.Clases
 
         #region Store Procider
 
-        public static void ejecutarSP(params object[] args)
-        {
-            SqlConnection nuevaConexion = conexion;
-            SqlCommand cmd = new SqlCommand(args[0].ToString(), nuevaConexion);
-            cmd.CommandType = CommandType.StoredProcedure;
-            for (int i = 0; i < args.Length - 2; i++)
-            {
-                cmd.Parameters.AddWithValue(args[i + 1] as string, args[i + 2]);
-                i++;
-            }
-            nuevaConexion.Open();
-            cmd.ExecuteReader();
+        public void crearSP(string nombreConsulta) {
+
+            SqlCommand sp = new SqlCommand(nombreConsulta, conexion);
+            sp.CommandType = CommandType.StoredProcedure;
         }
 
-        public  int obtenerIntDelSP(params object[] args)
+
+        public void setearParametroPorValor(string nombre, object valor)
         {
-            int respuesta = 0;
+            sp.Parameters.AddWithValue(nombre, valor);
+        }
+
+        public void setearParametroPorReferencia(string nombre, SqlDbType tipoDato)
+        {
+            sp.Parameters.Add(new SqlParameter(nombre, tipoDato));
+            sp.Parameters[nombre].Direction = ParameterDirection.Output;
+        }
+
+        public int ejecutarSP()
+        {
             try
             {
-                SqlConnection coneccion = conexion;
-                SqlCommand command = new SqlCommand(args[0].ToString(), coneccion);
-                command.CommandType = CommandType.StoredProcedure;
-                for (int i = 1; i < args.Length - 2; i++)
-                {
-                    command.Parameters.AddWithValue(args[i + 1] as string, args[i + 2]);
-                    i++;
-                }
-                SqlParameter resultado = new SqlParameter(args[1].ToString(), SqlDbType.Int);
-                resultado.Direction = ParameterDirection.Output;
-                command.Parameters.Add(resultado);
-                coneccion.Open();
-                command.ExecuteReader();
-                respuesta = Convert.ToInt32(resultado.Value);
+                sp.Parameters.Add("@ReturnVal", SqlDbType.Int);
+                sp.Parameters["@ReturnVal"].Direction = ParameterDirection.ReturnValue;
+                sp.ExecuteNonQuery();
+                return Convert.ToInt32(sp.Parameters["@ReturnVal"].Value);
+
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                MessageBox.Show(e.ToString(), "FrbaCruceros");
+                ventanaErrorBD(exception);
+                return -1;
             }
-            return respuesta;
         }
 
         

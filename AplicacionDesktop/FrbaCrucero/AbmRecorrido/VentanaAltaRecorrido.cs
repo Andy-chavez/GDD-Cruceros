@@ -7,11 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FrbaCrucero.Clases;
+using System.Data.SqlClient;
+using System.Security.Cryptography;
+using System.Data.SqlTypes;
 
 namespace FrbaCrucero.AbmRecorrido
 {
     public partial class VentanaAltaRecorrido : Form
     {
+
+        private BaseDeDato bd = new BaseDeDato();
+        private DataTable dt = new DataTable();
+        private List<Tramo> listaTramos = new List<Tramo>();
+
         public VentanaAltaRecorrido()
         {
             InitializeComponent();
@@ -19,17 +28,27 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void VentanaAltaRecorrido_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dataSet5.Tramo' Puede moverla o quitarla según sea necesario.
-            this.tramoTableAdapter.Fill(this.dataSet5.Tramo);
-            // TODO: esta línea de código carga datos en la tabla 'dataSetTramo.TramosDisponibles' Puede moverla o quitarla según sea necesario.
-            this.tramosDisponiblesTableAdapter.Fill(this.dataSetTramo.TramosDisponibles);
+            llenardataGridView(dataGridView1);
 
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            
         }
+ 
+            public void llenardataGridView(DataGridView dgv)
+        
+        {         
+            bd.conectar();
+            SqlConnection conexion = bd.obtenerConexion();
+            SqlCommand command = new SqlCommand("SELECT * FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles",conexion);
+            SqlDataAdapter adapter = new SqlDataAdapter(command);         
+            adapter.Fill(dt);
+            dgv.DataSource = dt;
+           bd.desconectar();
+        }
+
 
         private void botonEliminar_Click(object sender, EventArgs e)
         {
@@ -44,6 +63,19 @@ namespace FrbaCrucero.AbmRecorrido
            ventana.Show();
            ventana.esconderBotonEliminar();
            
+        }
+
+        private void filtroOrigen_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void botonBuscar_Click(object sender, EventArgs e)
+        {
+            bd.conectar();
+            SqlConnection conexion = bd.obtenerConexion();
+            SqlDataAdapter consulta = new SqlDataAdapter("", conexion);
+
         }
     }
 }

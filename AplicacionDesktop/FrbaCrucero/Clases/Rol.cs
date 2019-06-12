@@ -41,14 +41,43 @@ namespace FrbaCrucero.Clases
 
         #endregion
 
-        public void crearRol(String nombreRol, String idFuncionalidad)
+        public void crearRol(String nombreRol, int idFuncionalidad)
         {
-            BaseDeDato.ejecutarSP("LEISTE_EL_CODIGO?.CrearNuevoRol", "@nombreRol", nombreRol, "@idFuncionalidad", idFuncionalidad);
+           this.nombre = nombreRol;
+
+            try
+            {
+                bd.conectar();
+                bd.crearSP("[LEISTE_EL_CODIGO?].crearNuevoRol");
+                bd.setearParametroPorValor("id_crucero", nombreRol);
+                bd.setearParametroPorValor("id_crucero", idFuncionalidad);
+                bd.ejecutarSP();
+            }
+            catch (Exception excepcion)
+            {
+
+                bd.ventanaErrorBD(excepcion);
+            }
+            bd.desconectar();
         }
         public void eliminarRol(String idRol)
         {
+            this.id = idRol;
+            try
+            {
+                bd.conectar();
+                bd.crearSP("[LEISTE_EL_CODIGO?].darBajaRol");
+                bd.setearParametroPorValor("idRol", idRol);
+                bd.ejecutarSP();
+            }
+            catch (Exception excepcion)
+            {
 
-            BaseDeDato.ejecutarSP("LEISTE_EL_CODIGO?.darBajaRol", "@idRol", idRol);
+                bd.ventanaErrorBD(excepcion);
+            }
+            bd.desconectar();
         }
+
+        }    
     }
-}
+

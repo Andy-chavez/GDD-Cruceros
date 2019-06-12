@@ -42,6 +42,7 @@ C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\F
 C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaDeAltaRol.resources
 C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaModificarRol.resources
 C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaRolSeleccionado.resources
-C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaGestion.resources
 C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaAltaRecorrido.resources
 C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaTramo.resources
+C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaAltaCrucero.resources
+C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaGestionCrucero.resources

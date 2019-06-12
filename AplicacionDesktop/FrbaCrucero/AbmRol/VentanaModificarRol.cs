@@ -29,10 +29,7 @@ namespace FrbaCrucero.AbmRol
 
         private void VentanaModificarRol_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dataSet4.RolesHabilitados' Puede moverla o quitarla según sea necesario.
-            this.rolesHabilitadosTableAdapter1.Fill(this.dataSet4.RolesHabilitados);
-            // TODO: esta línea de código carga datos en la tabla 'dataSet3.RolesHabilitados' Puede moverla o quitarla según sea necesario.
-            this.rolesHabilitadosTableAdapter.Fill(this.dataSet3.RolesHabilitados);
+            
 
         }
 

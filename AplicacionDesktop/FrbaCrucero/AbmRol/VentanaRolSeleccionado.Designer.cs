@@ -33,9 +33,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dataSetFuncMod = new FrbaCrucero.DataSetFuncMod();
+           
             this.funcionalidadPorRolBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.funcionalidadPorRolTableAdapter = new FrbaCrucero.DataSetFuncModTableAdapters.FuncionalidadPorRolTableAdapter();
+           
             this.idfuncionalidadDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idrolDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.botonVolver = new System.Windows.Forms.Button();
@@ -45,7 +45,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSetFuncMod)).BeginInit();
+            
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadPorRolBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,20 +89,9 @@
             this.dataGridView1.Size = new System.Drawing.Size(323, 168);
             this.dataGridView1.TabIndex = 0;
             // 
-            // dataSetFuncMod
-            // 
-            this.dataSetFuncMod.DataSetName = "DataSetFuncMod";
-            this.dataSetFuncMod.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // funcionalidadPorRolBindingSource
-            // 
-            this.funcionalidadPorRolBindingSource.DataMember = "FuncionalidadPorRol";
-            this.funcionalidadPorRolBindingSource.DataSource = this.dataSetFuncMod;
-            // 
-            // funcionalidadPorRolTableAdapter
-            // 
-            this.funcionalidadPorRolTableAdapter.ClearBeforeFill = true;
-            // 
+           
+           
+           
             // idfuncionalidadDataGridViewTextBoxColumn
             // 
             this.idfuncionalidadDataGridViewTextBoxColumn.DataPropertyName = "id_funcionalidad";
@@ -177,7 +166,7 @@
             this.Load += new System.EventHandler(this.VentanaRolSeleccionado_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSetFuncMod)).EndInit();
+           
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadPorRolBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -190,9 +179,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private DataSetFuncMod dataSetFuncMod;
+      
         private System.Windows.Forms.BindingSource funcionalidadPorRolBindingSource;
-        private DataSetFuncModTableAdapters.FuncionalidadPorRolTableAdapter funcionalidadPorRolTableAdapter;
+       
         private System.Windows.Forms.DataGridViewTextBoxColumn idfuncionalidadDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn idrolDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button botonVolver;

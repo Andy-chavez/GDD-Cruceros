@@ -22,7 +22,8 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void VentanaTramo_Load(object sender, EventArgs e)
         {
-            this.llenarCombo(listaOrigen, "SELECT * FROM [LEISTE_EL_CODIGO?].Tramo");
+            this.llenarCombo(listaOrigen, "SELECT id_origen FROM [LEISTE_EL_CODIGO?].Tramo");
+            this.llenarCombo(listaDestino, "SELECT id_destino FROM [LEISTE_EL_CODIGO?].Tramo");
         }
         public void esconderBotonEliminar()
         {
@@ -33,8 +34,8 @@ namespace FrbaCrucero.AbmRecorrido
         {
             if (this.todosLosCamposEstancompletos())
             {
-                Puerto origen = (Puerto)listaOrigen.SelectedItem;
-                Puerto destino = (Puerto)listaDestino.SelectedItem;
+                string origen = (string)listaOrigen.SelectedItem;
+                string destino = (string)listaDestino.SelectedItem;
                 int precio = Convert.ToInt16(textoPrecio.Text);
                 Tramo tramo = new Tramo();
                 tramo.crearTramo(origen, destino, precio);
