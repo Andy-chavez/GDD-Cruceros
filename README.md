@@ -150,6 +150,7 @@ Nota: se debe hacer en orden del orden mas chico q quieras cambiar al ultimo
 ####comprarPasajeReservado(@idReserva decimal(18,0),@idPago int)
 
   Valores de retorno:
+      -2 : no existe una reserva o la reserva se vencio
       -1: el cliente ya tiene viajes en esa fecha
       1: todo bien, se compró el pasaje reservado
 
