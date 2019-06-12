@@ -7,6 +7,8 @@ GO
 --........................................ DROPS POR SI EXISTEN PREVIAMENTE ......................................................
 if exists (select * from sys.schemas where name =  'LEISTE_EL_CODIGO?')
 begin
+	if exists(select * from sys.tables where object_name(object_id)='ReservasPagadas'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+		drop table  [LEISTE_EL_CODIGO?].ReservasPagadas
 	if exists(select * from sys.tables where object_name(object_id)='AuditoriaReservasVencidas'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 		drop table  [LEISTE_EL_CODIGO?].AuditoriaReservasVencidas
 	if exists(select * from sys.tables where object_name(object_id)='Pasaje'and schema_name(schema_id)='LEISTE_EL_CODIGO?')
@@ -134,6 +136,8 @@ if exists (select * from sys.procedures where name = 'calcularPrecioPasaje')
 	drop procedure [LEISTE_EL_CODIGO?].calcularPrecioPasaje
 if exists (select * from sys.procedures where name = 'mostrarReserva')
 	drop procedure [LEISTE_EL_CODIGO?].mostrarReserva
+if exists (select * from sys.procedures where name = 'comprarPasajeReservado')
+	drop procedure [LEISTE_EL_CODIGO?].comprarPasajeReservado
 go
  if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
@@ -313,7 +317,12 @@ create table [LEISTE_EL_CODIGO?].AuditoriaReservasVencidas(
 	id_cabina int,
 	fecha_actual datetime2(3) not null,
 	vencimiento datetime2(3) null,
-) 
+)
+go
+create table [LEISTE_EL_CODIGO?].ReservasPagadas(
+	id_reserva decimal(18,0) primary key,
+	id_cliente int,
+)
 go
 --........................................ TRIGGERS ......................................................
 USE GD1C2019
@@ -344,15 +353,17 @@ go
 
 --------------------------------trigger para auditar las reservas vencidas-----------------------(porque sino a la primera que se ejecuta el
 																							-----aplicativo se borran todas las reservas porque estan vencidas
-create trigger auditarReservas on [LEISTE_EL_CODIGO?].Reserva
-after delete
-as
-	begin
-		insert into [LEISTE_EL_CODIGO?].AuditoriaReservasVencidas(id_reservaVencida,id_cabina,id_cliente,id_crucero,id_viaje,fecha_actual,vencimiento)
-		select id_reserva,id_cabina,id_cliente,id_crucero,id_viaje,fecha_actual,vencimiento
-		from deleted
-	end
-go
+--create trigger auditarReservas on [LEISTE_EL_CODIGO?].Reserva
+--after delete
+--as
+--	begin
+--		insert into [LEISTE_EL_CODIGO?].AuditoriaReservasVencidas(id_reservaVencida,id_cabina,id_cliente,id_crucero,id_viaje,fecha_actual,vencimiento)
+--		select id_reserva,id_cabina,id_cliente,id_crucero,id_viaje,fecha_actual,vencimiento
+--		from deleted
+--		where id_reserva not in (select id_reserva
+--									from [LEISTE_EL_CODIGO?].ReservasPagadas)
+--	end
+--go
 
 --........................................ INSERCIONES ......................................................
 -- Funcionalidad
@@ -498,9 +509,9 @@ into @id_crucero
 	close cursor_cant
 	deallocate cursor_cant
 go
------------------------------Puerto------------------------------- lo va nombre de puerto en la tabla, no va el campo ciudad, es irrelevante)
+-----------------------------Puerto------------------------------- no va nombre de puerto en la tabla, no va el campo ciudad, es irrelevante)
 insert into [LEISTE_EL_CODIGO?].Puerto
-select distinct PUERTO_DESDE from gd_esquema.Maestra where PUERTO_DESDE<> PUERTO_HASTA
+select distinct PUERTO_DESDE from gd_esquema.Maestra where PUERTO_DESDE<> PUERTO_HASTA --corroborado
 go
 ------------------------------------------ Recorrido ----------------------------------------------------
 insert into [LEISTE_EL_CODIGO?].Recorrido (id_recorrido)
@@ -559,6 +570,7 @@ update [LEISTE_EL_CODIGO?].Recorrido
 set id_destino= t1.id_destino
 from [LEISTE_EL_CODIGO?].Tramo t1
 where (Recorrido.id_recorrido = t1.id_recorrido and t1.orden = 2)
+go
 ----------------------------------Medio de Pago--(esta la llenamos nosotros)
 ----------------------------------------Pago de viaje--
 --select PASAJE_CODIGO, count(*) from gd_esquema.Maestra where PASAJE_CODIGO is not null group by PASAJE_CODIGO having count(*)>1
@@ -569,7 +581,12 @@ select PASAJE_FECHA_COMPRA,PASAJE_PRECIO,(select id_cliente
 from gd_esquema.Maestra m
 where PASAJE_FECHA_COMPRA is not null and PASAJE_PRECIO is not null
 go
--------------------------------------------------Reserva--
+-------------------------------------------------Viaje---------------------------------------
+insert into [LEISTE_EL_CODIGO?].Viaje (fecha_inicio,fecha_finalizacion,fecha_finalizacion_estimada,id_crucero,id_recorrido)
+select distinct FECHA_SALIDA,FECHA_LLEGADA,FECHA_LLEGADA_ESTIMADA,CRUCERO_IDENTIFICADOR,RECORRIDO_CODIGO 
+from gd_esquema.Maestra
+go
+-------------------------------------------------Reserva-----------------------
 SET IDENTITY_INSERT [LEISTE_EL_CODIGO?].Reserva  ON
 insert into [LEISTE_EL_CODIGO?].Reserva (id_reserva,fecha_actual,id_cliente,id_crucero,id_viaje,id_cabina)
 select RESERVA_CODIGO,RESERVA_FECHA,
@@ -585,15 +602,10 @@ select RESERVA_CODIGO,RESERVA_FECHA,
 		from [LEISTE_EL_CODIGO?].Cabina
 		where numero= m.CABINA_NRO and id_crucero= m.CRUCERO_IDENTIFICADOR and piso = m.CABINA_PISO and id_tipo = m.CABINA_TIPO)
 from gd_esquema.Maestra m
-where RESERVA_CODIGO is not null and RESERVA_FECHA is not null 
+where RESERVA_CODIGO is not null and RESERVA_FECHA is not null
 SET IDENTITY_INSERT [LEISTE_EL_CODIGO?].Reserva  OFF
 go
 
--------------------------------------------------Viaje--
-insert into [LEISTE_EL_CODIGO?].Viaje (fecha_inicio,fecha_finalizacion,fecha_finalizacion_estimada,id_crucero,id_recorrido)
-select distinct FECHA_SALIDA,FECHA_LLEGADA,FECHA_LLEGADA_ESTIMADA,CRUCERO_IDENTIFICADOR,RECORRIDO_CODIGO 
-from gd_esquema.Maestra
-go
 ---------------------------------------------Pasaje--
 SET IDENTITY_INSERT [LEISTE_EL_CODIGO?].Pasaje  ON
 insert into [LEISTE_EL_CODIGO?].Pasaje (id_cabina,id_cliente,id_viaje,id_crucero,precio,id_pasaje)
@@ -616,6 +628,17 @@ set id_pago = p.id_pago
 from [LEISTE_EL_CODIGO?].PagoDeViaje p
 where Pasaje.id_cliente = p.id_cliente
 go
+-----------------------------------------RESERVAS PAGADAS-------------------------------------
+insert into [LEISTE_EL_CODIGO?].ReservasPagadas(id_reserva,id_cliente)
+select r.id_reserva,r.id_cliente
+from [LEISTE_EL_CODIGO?].Reserva r 
+where exists(select id_pasaje
+				from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].PagoDeViaje pv ON p.id_pago = pv.id_pago
+				where r.id_cabina = p.id_cabina and r.id_cliente = p.id_cliente and r.id_crucero = p.id_crucero
+				and r.id_viaje = p.id_viaje and (pv.fecha_pago between fecha_actual and DATEADD(day,fecha_actual,3))
+delete from [LEISTE_EL_CODIGO?].Reserva
+where id_reserva in (select id_reserva
+						from [LEISTE_EL_CODIGO?].ReservasPagadas)
 --........................................ PROCEDURES ......................................................
 --........................................<ABM 1> ROL				......................................................
 ------Agregar nueva funcionalidad a un rol-------REQUERIMIENTO: 
@@ -764,8 +787,14 @@ go
 create procedure [LEISTE_EL_CODIGO?].eliminarReservasVencidas
 as
 	begin
-	delete from [LEISTE_EL_CODIGO?].Reserva
-	where SYSDATETIME() > vencimiento	
+		begin transaction
+		insert into [LEISTE_EL_CODIGO?].AuditoriaReservasVencidas(id_reservaVencida,id_crucero,id_cliente,id_viaje,id_cabina,fecha_actual,vencimiento)
+		select id_reserva,id_crucero,id_cliente,id_viaje,id_cabina,fecha_actual,vencimiento
+		from [LEISTE_EL_CODIGO?].Reserva
+		where SYSDATETIME() > vencimiento
+		delete from [LEISTE_EL_CODIGO?].Reserva
+		where SYSDATETIME() > vencimiento
+		commit transaction
 	end
 go
 
@@ -793,7 +822,6 @@ as
 					update [LEISTE_EL_CODIGO?].Usuario 
 						set intentos_posibles = 3 
 					where id_usuario=@id_ingresado
-					exec [LEISTE_EL_CODIGO?].eliminarReservasVencidas
 				end
 				else
 				begin
@@ -1371,13 +1399,25 @@ as
 begin
 	declare @idCliente int,@idViaje int,@idCabina int,@idCrucero int
 	declare @retorno int
+	if(not exists (select *
+					from [LEISTE_EL_CODIGO?].Reserva
+					where id_reserva = @idReserva))
+		begin
+			set @retorno = -2
+			return @retorno
+		end
 	select @idCliente=id_cliente,@idViaje=id_viaje,@idCabina=id_cabina,@idCrucero=id_crucero
 	from [LEISTE_EL_CODIGO?].Reserva where id_reserva = @idReserva
 	
 	exec @retorno= [LEISTE_EL_CODIGO?].comprarPasaje @idCliente,@idViaje,@idCabina,@idCrucero,@idPago
 
-	if(@retorno=1)delete from [LEISTE_EL_CODIGO?].Reserva where id_reserva=@idReserva
-
+	if(@retorno=1)
+	begin
+		insert into [LEISTE_EL_CODIGO?].ReservasPagadas(id_reserva,id_cliente)
+		select id_reserva, id_cliente
+		from [LEISTE_EL_CODIGO?].Reserva
+		delete from [LEISTE_EL_CODIGO?].Reserva where id_reserva=@idReserva
+	end
 	return @retorno -- -1:ya tiene viajes en esa fecha, 1 se compró el pasaje reservado
 end
 go
@@ -1385,7 +1425,7 @@ go
 --........................................<ABM 10> LISTADOS ESTADISTICOS	......................................................							  					  
 --TOP RECORRIDOS CON MAS PASAJES VENDIDOS--
 USE GD1C2019
-go
+go --consideramos que si no fueron compradas siguen libres (no tenemos en cuenta las reservas)
 create procedure [LEISTE_EL_CODIGO?].topRecorridosConMasPasajesComprados (@anio int, @semestre int)
 as
 	declare @mesInicial smallint,@mesFinal smallint
@@ -1400,7 +1440,7 @@ as
 			set @mesFinal = 12
 		end
 	begin
-		select top 5 r.id_recorrido, count(p.id_pasaje) cantidadDePasajesVendidos, r.id_origen origen, r.id_destino destino
+		select top 5 r.id_recorrido, count(distinct p.id_pasaje) cantidadDePasajesVendidos, r.id_origen origen, r.id_destino destino
 		from [LEISTE_EL_CODIGO?].Recorrido r 
 		join [LEISTE_EL_CODIGO?].Viaje v on r.id_recorrido = v.id_recorrido
 		join [LEISTE_EL_CODIGO?].Pasaje p on v.id_viaje = p.id_viaje
@@ -1411,7 +1451,7 @@ as
 	end
 go		
 --TOP 5 RECORRIDOS CON MAS CABINAS LIBRES EN VIAJES REALIZADOS--
-USE GD1C2019
+USE GD1C2019 -- consideramos que si no fueron compradas siguen libres (no tenemos en cuenta las reservas)
 go
 create procedure [LEISTE_EL_CODIGO?].topMasCabinasLibres (@anio int, @semestre int)
 as	
@@ -1428,7 +1468,7 @@ as
 		end
 	begin
 		select top 5 r.id_recorrido, r.id_origen origen, r.id_destino destino,
-		sum(cr.cantidadDeCabinas) - (select count(*)
+		sum(cr.cantidadDeCabinas) - (select count(distinct p.id_pasaje)
 									from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].Viaje v
 									on p.id_viaje = v.id_viaje
 									where v.id_recorrido = r.id_recorrido and
@@ -1523,4 +1563,3 @@ as
 		select *
 		from [LEISTE_EL_CODIGO?].Puerto
 go
-

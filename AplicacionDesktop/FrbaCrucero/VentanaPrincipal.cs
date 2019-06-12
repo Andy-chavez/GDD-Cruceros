@@ -51,10 +51,10 @@ namespace FrbaCrucero
             this.Hide();
             try
             {
-                // var consulta = new Clases.BaseDeDato();
                 BaseDeDato bd = new BaseDeDato();
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].sp_login");
-                procedure.Parameters.Add("@id_ingresado", SqlDbType.NVarChar).Value = casillaUsuario.Text;
+                procedure.CommandType = CommandType.StoredProcedure;
+                procedure.Parameters.AddWithValue("@id_ingresado", SqlDbType.NVarChar).Value = casillaUsuario.Text;
                 procedure.Parameters.Add("@contra_ingresada", SqlDbType.NVarChar).Value = casillaContraseña.Text;
                 int retorno = bd.ejecutarConsultaDevuelveInt(procedure);
                 if(retorno == 1)

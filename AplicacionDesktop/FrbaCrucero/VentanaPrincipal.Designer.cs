@@ -28,25 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.casillaContraseña = new System.Windows.Forms.MaskedTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.casillaUsuario = new System.Windows.Forms.MaskedTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.botonSesionUsuario = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.botonSesionCliente = new System.Windows.Forms.Button();
+            this.casillaContraseña = new System.Windows.Forms.TextBox();
+            this.casillaUsuario = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // casillaContraseña
-            // 
-            this.casillaContraseña.Location = new System.Drawing.Point(197, 117);
-            this.casillaContraseña.Name = "casillaContraseña";
-            this.casillaContraseña.PasswordChar = '*';
-            this.casillaContraseña.Size = new System.Drawing.Size(146, 20);
-            this.casillaContraseña.TabIndex = 4;
-            this.casillaContraseña.UseSystemPasswordChar = true;
-            this.casillaContraseña.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.casillaContraseña_MaskInputRejected);
             // 
             // label2
             // 
@@ -67,14 +57,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Usuario:";
             this.label1.Click += new System.EventHandler(this.Label1_Click);
-            // 
-            // casillaUsuario
-            // 
-            this.casillaUsuario.Location = new System.Drawing.Point(197, 85);
-            this.casillaUsuario.Name = "casillaUsuario";
-            this.casillaUsuario.Size = new System.Drawing.Size(145, 20);
-            this.casillaUsuario.TabIndex = 5;
-            this.casillaUsuario.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.casillaUsuario_MaskInputRejected);
             // 
             // label3
             // 
@@ -116,17 +98,32 @@
             this.botonSesionCliente.UseVisualStyleBackColor = true;
             this.botonSesionCliente.Click += new System.EventHandler(this.botonSesionCliente_Click);
             // 
+            // casillaContraseña
+            // 
+            this.casillaContraseña.Location = new System.Drawing.Point(197, 114);
+            this.casillaContraseña.Name = "casillaContraseña";
+            this.casillaContraseña.Size = new System.Drawing.Size(145, 20);
+            this.casillaContraseña.TabIndex = 10;
+            this.casillaContraseña.UseSystemPasswordChar = true;
+            // 
+            // casillaUsuario
+            // 
+            this.casillaUsuario.Location = new System.Drawing.Point(197, 78);
+            this.casillaUsuario.Name = "casillaUsuario";
+            this.casillaUsuario.Size = new System.Drawing.Size(145, 20);
+            this.casillaUsuario.TabIndex = 11;
+            // 
             // VentanaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(454, 323);
+            this.Controls.Add(this.casillaUsuario);
+            this.Controls.Add(this.casillaContraseña);
             this.Controls.Add(this.botonSesionCliente);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.botonSesionUsuario);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.casillaUsuario);
-            this.Controls.Add(this.casillaContraseña);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "VentanaPrincipal";
@@ -139,16 +136,14 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.MaskedTextBox casillaContraseña;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.MaskedTextBox casillaUsuario;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button botonSesionUsuario;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button botonSesionCliente;
-
+        private System.Windows.Forms.TextBox casillaContraseña;
+        private System.Windows.Forms.TextBox casillaUsuario;
     }
 }
 
