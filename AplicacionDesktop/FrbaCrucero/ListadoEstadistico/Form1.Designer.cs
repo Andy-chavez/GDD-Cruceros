@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.top5_rec_pasajes = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.top5_rec_cabinas = new System.Windows.Forms.Button();
+            this.top5cruc_fuera_serv = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBoxAnio = new System.Windows.Forms.ComboBox();
             this.comboBoxSemestre = new System.Windows.Forms.ComboBox();
@@ -48,23 +48,25 @@
             this.top5_rec_pasajes.UseVisualStyleBackColor = true;
             this.top5_rec_pasajes.Click += new System.EventHandler(this.top5_rec_pasajes_Click);
             // 
-            // button1
+            // top5_rec_cabinas
             // 
-            this.button1.Location = new System.Drawing.Point(185, 110);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(257, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Top 5 Recorridos con más Cabinas Libres por Viaje";
-            this.button1.UseVisualStyleBackColor = true;
+            this.top5_rec_cabinas.Location = new System.Drawing.Point(185, 110);
+            this.top5_rec_cabinas.Name = "top5_rec_cabinas";
+            this.top5_rec_cabinas.Size = new System.Drawing.Size(257, 23);
+            this.top5_rec_cabinas.TabIndex = 1;
+            this.top5_rec_cabinas.Text = "Top 5 Recorridos con más Cabinas Libres por Viaje";
+            this.top5_rec_cabinas.UseVisualStyleBackColor = true;
+            this.top5_rec_cabinas.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // top5cruc_fuera_serv
             // 
-            this.button2.Location = new System.Drawing.Point(185, 150);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(257, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Top 5 Cruceros con más Días fuera de Servicio";
-            this.button2.UseVisualStyleBackColor = true;
+            this.top5cruc_fuera_serv.Location = new System.Drawing.Point(185, 150);
+            this.top5cruc_fuera_serv.Name = "top5cruc_fuera_serv";
+            this.top5cruc_fuera_serv.Size = new System.Drawing.Size(257, 23);
+            this.top5cruc_fuera_serv.TabIndex = 2;
+            this.top5cruc_fuera_serv.Text = "Top 5 Cruceros con más Días fuera de Servicio";
+            this.top5cruc_fuera_serv.UseVisualStyleBackColor = true;
+            this.top5cruc_fuera_serv.Click += new System.EventHandler(this.top5cruc_fuera_serv_Click);
             // 
             // textBox1
             // 
@@ -106,8 +108,8 @@
             "2"});
             this.comboBoxSemestre.Location = new System.Drawing.Point(313, 248);
             this.comboBoxSemestre.Name = "comboBoxSemestre";
-            this.comboBoxSemestre.SelectedIndex = 0;
             this.comboBoxSemestre.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxSemestre.SelectedIndex = 0;
             this.comboBoxSemestre.TabIndex = 5;
             // 
             // dataGridViewTop5s
@@ -127,8 +129,8 @@
             this.Controls.Add(this.comboBoxSemestre);
             this.Controls.Add(this.comboBoxAnio);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.top5cruc_fuera_serv);
+            this.Controls.Add(this.top5_rec_cabinas);
             this.Controls.Add(this.top5_rec_pasajes);
             this.Name = "ListadoEstadistico";
             this.Text = "Listado Estadístico";
@@ -143,8 +145,8 @@
         #endregion
 
         private System.Windows.Forms.Button top5_rec_pasajes;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button top5_rec_cabinas;
+        private System.Windows.Forms.Button top5cruc_fuera_serv;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ComboBox comboBoxAnio;
         private System.Windows.Forms.ComboBox comboBoxSemestre;

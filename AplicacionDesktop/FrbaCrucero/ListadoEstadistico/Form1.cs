@@ -49,5 +49,47 @@ namespace FrbaCrucero.ListadoEstadistico
                 MessageBox.Show(exception.Message);
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                BaseDeDato bd = new BaseDeDato();
+                DataTable dt;
+                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].topMasCabinasLibres");
+                procedure.CommandType = CommandType.StoredProcedure;
+                procedure.Parameters.Add("@anio", SqlDbType.NVarChar).Value = this.comboBoxAnio.SelectedItem.ToString();
+                procedure.Parameters.Add("@semestre", SqlDbType.NVarChar).Value = this.comboBoxSemestre.SelectedItem.ToString();
+                dt = bd.obtenerDataTable(procedure);
+                this.dataGridViewTop5s.DataSource = dt;
+                this.dataGridViewTop5s.Refresh();
+            }
+            catch (Exception exception)
+            {
+
+                MessageBox.Show(exception.Message);
+            }
+        }
+
+        private void top5cruc_fuera_serv_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                BaseDeDato bd = new BaseDeDato();
+                DataTable dt;
+                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].topCrucerosFueraDeServicio");
+                procedure.CommandType = CommandType.StoredProcedure;
+                procedure.Parameters.Add("@anio", SqlDbType.NVarChar).Value = this.comboBoxAnio.SelectedItem.ToString();
+                procedure.Parameters.Add("@semestre", SqlDbType.NVarChar).Value = this.comboBoxSemestre.SelectedItem.ToString();
+                dt = bd.obtenerDataTable(procedure);
+                this.dataGridViewTop5s.DataSource = dt;
+                this.dataGridViewTop5s.Refresh();
+            }
+            catch (Exception exception)
+            {
+
+                MessageBox.Show(exception.Message);
+            }
+        }
     }
 }
