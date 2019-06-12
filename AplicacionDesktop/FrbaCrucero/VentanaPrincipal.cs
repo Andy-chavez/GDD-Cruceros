@@ -56,11 +56,13 @@ namespace FrbaCrucero
                 procedure.CommandType = CommandType.StoredProcedure;
                 procedure.Parameters.AddWithValue("@id_ingresado", SqlDbType.NVarChar).Value = casillaUsuario.Text;
                 procedure.Parameters.Add("@contra_ingresada", SqlDbType.NVarChar).Value = casillaContraseña.Text;
-                int retorno = bd.ejecutarConsultaDevuelveInt(procedure);
+                procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
+                bd.ejecutarConsultaDevuelveInt(procedure);
+                int retorno = (int)procedure.Parameters["@retorno"].Value;
                 if(retorno == 1)
                 {
-                    this.Hide();
                     VentanaMenu menu = new VentanaMenu();
+                    this.Hide();
                     menu.Show();
                 }
                 else if (retorno == 0){ //hay intentos todavia
@@ -74,7 +76,7 @@ namespace FrbaCrucero
                 { //no existe usuario
                     MessageBox.Show("No Existe Usuario");
                 }
-                this.Close();
+                //this.Hide();
 
             }
             catch (Exception exception)
@@ -91,7 +93,6 @@ namespace FrbaCrucero
             menu.Show();
             menu.ocultarBotones();
             
-
         }
 
         private void casillaUsuario_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
