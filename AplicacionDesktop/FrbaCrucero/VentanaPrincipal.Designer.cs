@@ -103,7 +103,7 @@
             this.casillaContraseña.Location = new System.Drawing.Point(197, 114);
             this.casillaContraseña.Name = "casillaContraseña";
             this.casillaContraseña.Size = new System.Drawing.Size(145, 20);
-            this.casillaContraseña.TabIndex = 10;
+            this.casillaContraseña.TabIndex = 2;
             this.casillaContraseña.UseSystemPasswordChar = true;
             // 
             // casillaUsuario
@@ -111,7 +111,7 @@
             this.casillaUsuario.Location = new System.Drawing.Point(197, 78);
             this.casillaUsuario.Name = "casillaUsuario";
             this.casillaUsuario.Size = new System.Drawing.Size(145, 20);
-            this.casillaUsuario.TabIndex = 11;
+            this.casillaUsuario.TabIndex = 1;
             // 
             // VentanaPrincipal
             // 
