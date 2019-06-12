@@ -94,6 +94,7 @@
             this.comboBoxAnio.Name = "comboBoxAnio";
             this.comboBoxAnio.Size = new System.Drawing.Size(121, 21);
             this.comboBoxAnio.TabIndex = 4;
+            this.comboBoxAnio.SelectedIndex = 0;
             this.comboBoxAnio.SelectedIndexChanged += new System.EventHandler(this.comboBoxAnio_SelectedIndexChanged);
             // 
             // comboBoxSemestre
@@ -105,6 +106,7 @@
             "2"});
             this.comboBoxSemestre.Location = new System.Drawing.Point(313, 248);
             this.comboBoxSemestre.Name = "comboBoxSemestre";
+            this.comboBoxSemestre.SelectedIndex = 0;
             this.comboBoxSemestre.Size = new System.Drawing.Size(121, 21);
             this.comboBoxSemestre.TabIndex = 5;
             // 

@@ -7,6 +7,9 @@
 *.cache
 *.suo
 *.sou
+*.pdb
+*.exe
+*.ide-shm
 */.vs/
 */obj/
 */bin/
