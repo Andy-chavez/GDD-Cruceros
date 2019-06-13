@@ -73,3 +73,7 @@ C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\Apl
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.VentanaCliente.resources
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.GeneracionViaje.GenerarViaje.resources
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaDarBajaRol.resources
+C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaModificarCrucero.resources
+C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaDarBajaRol.resources
+C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.VentanaCliente.resources
+C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.GeneracionViaje.GenerarViaje.resources

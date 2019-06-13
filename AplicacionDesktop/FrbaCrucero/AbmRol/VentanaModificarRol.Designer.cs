@@ -70,9 +70,9 @@ namespace FrbaCrucero.AbmRol
             // listaFunc
             // 
             this.listaFunc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.listaFunc.Location = new System.Drawing.Point(18, 29);
+            this.listaFunc.Location = new System.Drawing.Point(31, 29);
             this.listaFunc.Name = "listaFunc";
-            this.listaFunc.Size = new System.Drawing.Size(323, 168);
+            this.listaFunc.Size = new System.Drawing.Size(282, 168);
             this.listaFunc.TabIndex = 0;
             this.listaFunc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listaFunc_CellClick);
             this.listaFunc.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listaFunc_CellContentClick);
