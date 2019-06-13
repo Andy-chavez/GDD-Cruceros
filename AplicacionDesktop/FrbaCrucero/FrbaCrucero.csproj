@@ -113,17 +113,17 @@
     <Compile Include="AbmRol\VentanaGestionRol.Designer.cs">
       <DependentUpon>VentanaGestionRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmRol\VentanaDarBajaRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\VentanaDarBajaRol.Designer.cs">
+      <DependentUpon>VentanaDarBajaRol.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmRol\VentanaModificarRol.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AbmRol\VentanaModificarRol.Designer.cs">
       <DependentUpon>VentanaModificarRol.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmRol\VentanaRolSeleccionado.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmRol\VentanaRolSeleccionado.Designer.cs">
-      <DependentUpon>VentanaRolSeleccionado.cs</DependentUpon>
     </Compile>
     <Compile Include="Clases\Cabina.cs" />
     <Compile Include="Clases\BaseDeDato.cs" />
@@ -150,6 +150,12 @@
     </Compile>
     <Compile Include="CompraReservaPasaje\VentanaSeleccionarviaje.Designer.cs">
       <DependentUpon>VentanaSeleccionarviaje.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GeneracionViaje\GenerarViaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneracionViaje\GenerarViaje.Designer.cs">
+      <DependentUpon>GenerarViaje.cs</DependentUpon>
     </Compile>
     <Compile Include="GeneracionViaje\VentanaOperacion.cs">
       <SubType>Form</SubType>
@@ -217,17 +223,20 @@
     <EmbeddedResource Include="AbmRol\VentanaGestionRol.resx">
       <DependentUpon>VentanaGestionRol.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\VentanaDarBajaRol.resx">
+      <DependentUpon>VentanaDarBajaRol.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\VentanaModificarRol.resx">
       <DependentUpon>VentanaModificarRol.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmRol\VentanaRolSeleccionado.resx">
-      <DependentUpon>VentanaRolSeleccionado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\VentanaCliente.resx">
       <DependentUpon>VentanaCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\VentanaSeleccionarviaje.resx">
       <DependentUpon>VentanaSeleccionarviaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeneracionViaje\GenerarViaje.resx">
+      <DependentUpon>GenerarViaje.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GeneracionViaje\VentanaOperacion.resx">
       <DependentUpon>VentanaOperacion.cs</DependentUpon>
@@ -250,6 +259,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Properties\DataSources\FrbaCrucero.GeneracionViaje.GenerarViaje.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
