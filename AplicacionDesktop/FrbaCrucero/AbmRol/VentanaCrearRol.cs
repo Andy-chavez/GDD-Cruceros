@@ -81,7 +81,16 @@ namespace FrbaCrucero.AbmRol
                 MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-/*        private void agregarRol()
+        private void textoNombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void botonAgregar_Click(object sender, EventArgs e)
+        {
+
+
+        }
+        private void agregarRol()
         {
             if (textoNombre.Text != "")
             {
@@ -96,7 +105,12 @@ namespace FrbaCrucero.AbmRol
             {
                 MessageBox.Show("Nombre de rol vacío. Inserte el nombre del rol", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }*/
+        }
+
+        private void listaFuncionalidades_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
 
         private void botonLimpiar_Click(object sender, EventArgs e)
         {
@@ -108,6 +122,12 @@ namespace FrbaCrucero.AbmRol
         {
             this.Close();
         }
+
+        public void llenarItems(ComboBox cb)
+        {
+
+        }
+
         private void listaFunc_SelectedIndexChanged(object sender, EventArgs e)
         {
 
