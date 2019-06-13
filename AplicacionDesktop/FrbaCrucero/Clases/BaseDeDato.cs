@@ -61,9 +61,9 @@ namespace FrbaCrucero.Clases
 
         #region Consultas
 
-        public void crearConsulta(string nombreConsulta)
+        public static SqlCommand crearConsulta(string nombreConsulta)
         {
-            SqlCommand consulta = new SqlCommand(nombreConsulta, conexion);        
+            return new SqlCommand(nombreConsulta, conexion);        
         }
 
         public void ejecutarConsulta(string nombreConsulta)
@@ -80,8 +80,14 @@ namespace FrbaCrucero.Clases
             }
             desconectar();
         }
-
-        public  int obtenerIntDeConsulta(string nombreConsulta)
+        public int ejecutarConsultaDevuelveInt(SqlCommand consulta)
+        {
+            conectar();
+            int resultado= consulta.ExecuteNonQuery();
+            desconectar();
+            return resultado;
+        }
+        public int obtenerIntDeConsulta(string nombreConsulta)
         {
             SqlCommand consulta = new SqlCommand(nombreConsulta, conexion);
             int entero = 0;
