@@ -31,16 +31,16 @@
             this.top5_rec_pasajes = new System.Windows.Forms.Button();
             this.top5_rec_cabinas = new System.Windows.Forms.Button();
             this.top5cruc_fuera_serv = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBoxAnio = new System.Windows.Forms.ComboBox();
             this.comboBoxSemestre = new System.Windows.Forms.ComboBox();
             this.dataGridViewTop5s = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTop5s)).BeginInit();
             this.SuspendLayout();
             // 
             // top5_rec_pasajes
             // 
-            this.top5_rec_pasajes.Location = new System.Drawing.Point(185, 70);
+            this.top5_rec_pasajes.Location = new System.Drawing.Point(124, 48);
             this.top5_rec_pasajes.Name = "top5_rec_pasajes";
             this.top5_rec_pasajes.Size = new System.Drawing.Size(257, 23);
             this.top5_rec_pasajes.TabIndex = 0;
@@ -50,7 +50,7 @@
             // 
             // top5_rec_cabinas
             // 
-            this.top5_rec_cabinas.Location = new System.Drawing.Point(185, 110);
+            this.top5_rec_cabinas.Location = new System.Drawing.Point(124, 102);
             this.top5_rec_cabinas.Name = "top5_rec_cabinas";
             this.top5_rec_cabinas.Size = new System.Drawing.Size(257, 23);
             this.top5_rec_cabinas.TabIndex = 1;
@@ -60,22 +60,13 @@
             // 
             // top5cruc_fuera_serv
             // 
-            this.top5cruc_fuera_serv.Location = new System.Drawing.Point(185, 150);
+            this.top5cruc_fuera_serv.Location = new System.Drawing.Point(124, 154);
             this.top5cruc_fuera_serv.Name = "top5cruc_fuera_serv";
             this.top5cruc_fuera_serv.Size = new System.Drawing.Size(257, 23);
             this.top5cruc_fuera_serv.TabIndex = 2;
             this.top5cruc_fuera_serv.Text = "Top 5 Cruceros con más Días fuera de Servicio";
             this.top5cruc_fuera_serv.UseVisualStyleBackColor = true;
             this.top5cruc_fuera_serv.Click += new System.EventHandler(this.top5cruc_fuera_serv_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(185, 201);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(120, 20);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.Text = "Ingrese Año y Semestre";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // comboBoxAnio
             // 
@@ -92,11 +83,10 @@
             "2012",
             "2011",
             "2010"});
-            this.comboBoxAnio.Location = new System.Drawing.Point(185, 249);
+            this.comboBoxAnio.Location = new System.Drawing.Point(183, 213);
             this.comboBoxAnio.Name = "comboBoxAnio";
-            this.comboBoxAnio.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxAnio.Size = new System.Drawing.Size(87, 21);
             this.comboBoxAnio.TabIndex = 4;
-            this.comboBoxAnio.SelectedIndex = 0;
             this.comboBoxAnio.SelectedIndexChanged += new System.EventHandler(this.comboBoxAnio_SelectedIndexChanged);
             // 
             // comboBoxSemestre
@@ -106,10 +96,9 @@
             this.comboBoxSemestre.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.comboBoxSemestre.Location = new System.Drawing.Point(313, 248);
+            this.comboBoxSemestre.Location = new System.Drawing.Point(302, 213);
             this.comboBoxSemestre.Name = "comboBoxSemestre";
-            this.comboBoxSemestre.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxSemestre.SelectedIndex = 0;
+            this.comboBoxSemestre.Size = new System.Drawing.Size(79, 21);
             this.comboBoxSemestre.TabIndex = 5;
             // 
             // dataGridViewTop5s
@@ -117,18 +106,28 @@
             this.dataGridViewTop5s.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTop5s.Location = new System.Drawing.Point(12, 304);
             this.dataGridViewTop5s.Name = "dataGridViewTop5s";
-            this.dataGridViewTop5s.Size = new System.Drawing.Size(603, 317);
+            this.dataGridViewTop5s.Size = new System.Drawing.Size(511, 230);
             this.dataGridViewTop5s.TabIndex = 6;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(32, 216);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(125, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Ingrese Año y Semesttre:";
+            this.label2.Click += new System.EventHandler(this.Label2_Click);
             // 
             // ListadoEstadistico
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(627, 633);
+            this.ClientSize = new System.Drawing.Size(540, 554);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridViewTop5s);
             this.Controls.Add(this.comboBoxSemestre);
             this.Controls.Add(this.comboBoxAnio);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.top5cruc_fuera_serv);
             this.Controls.Add(this.top5_rec_cabinas);
             this.Controls.Add(this.top5_rec_pasajes);
@@ -147,9 +146,9 @@
         private System.Windows.Forms.Button top5_rec_pasajes;
         private System.Windows.Forms.Button top5_rec_cabinas;
         private System.Windows.Forms.Button top5cruc_fuera_serv;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ComboBox comboBoxAnio;
         private System.Windows.Forms.ComboBox comboBoxSemestre;
         private System.Windows.Forms.DataGridView dataGridViewTop5s;
+        private System.Windows.Forms.Label label2;
     }
 }
