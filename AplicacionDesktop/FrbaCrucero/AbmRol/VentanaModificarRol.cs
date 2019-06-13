@@ -17,7 +17,7 @@ namespace FrbaCrucero.AbmRol
         private BaseDeDato bd = new BaseDeDato();
         private DataTable dt = new DataTable();
         private List<object> listaFuncion = new List<object>();
-        private Rol rol = new Rol();
+       // private Rol rol = new Rol();
         SqlDataAdapter adapt;
         public VentanaModificarRol()
         {

@@ -22,7 +22,7 @@ namespace FrbaCrucero.AbmRol
         private BaseDeDato bd = new BaseDeDato();
         private DataTable dt = new DataTable();
         private List<object> listaFuncion = new List<object>();
-        private Rol rol = new Rol();
+       // private Rol rol = new Rol();
         SqlDataAdapter adapt;
         private void VentanaDeAltaRol_Load(object sender, EventArgs e)
         {
@@ -90,7 +90,7 @@ namespace FrbaCrucero.AbmRol
 
 
         }
-        private void agregarRol()
+       /* private void agregarRol()
         {
             if (textoNombre.Text != "")
             {
@@ -106,7 +106,7 @@ namespace FrbaCrucero.AbmRol
                 MessageBox.Show("Nombre de rol vacío. Inserte el nombre del rol", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        */
         private void listaFuncionalidades_SelectedIndexChanged(object sender, EventArgs e)
         {
 
