@@ -55,7 +55,7 @@
             this.groupBox1.Size = new System.Drawing.Size(408, 80);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Identificadores";
+            this.groupBox1.Text = "Ingrese nombre del Rol a crear";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // label2
@@ -69,7 +69,7 @@
             // 
             // textoNombre
             // 
-            this.textoNombre.Location = new System.Drawing.Point(111, 34);
+            this.textoNombre.Location = new System.Drawing.Point(121, 38);
             this.textoNombre.Name = "textoNombre";
             this.textoNombre.Size = new System.Drawing.Size(225, 20);
             this.textoNombre.TabIndex = 1;
