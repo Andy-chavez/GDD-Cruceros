@@ -151,6 +151,11 @@ if exists(select * from sys.views where object_name(object_id)='RolesHabilitados
 		drop view [LEISTE_EL_CODIGO?].RolesHabilitados
 	end
 go
+if exists(select * from sys.views where object_name(object_id)='ViajesConRecorridos' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	begin
+		drop view [LEISTE_EL_CODIGO?].ViajesConRecorridos
+	end
+go
 if exists (select * from sys.triggers where object_name(object_id)='fechaVencimiento') --and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	drop trigger [LEISTE_EL_CODIGO?].fechaVencimiento
 go
@@ -1576,4 +1581,12 @@ create view [LEISTE_EL_CODIGO?].PuertosDisponibles --che esto me parece innecesa
 as
 		select *
 		from [LEISTE_EL_CODIGO?].Puerto
+go
+
+create view [LEISTE_EL_CODIGO?].ViajesConRecorridosHabilitados
+as
+		select v.id_viaje,v.fecha_inicio,v.fecha_finalizacion_estimada,r.id_origen, r.id_destino destinoFinal
+		from [LEISTE_EL_CODIGO?].Viaje v join [LEISTE_EL_CODIGO?].Recorrido r
+		ON v.id_recorrido = r.id_recorrido
+		and r.estado = 'A'
 go
