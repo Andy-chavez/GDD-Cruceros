@@ -801,7 +801,6 @@ as
 		commit transaction
 	end
 go
-exec [LEISTE_EL_CODIGO?].sp_login 'sdaf','w23e'
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].sp_login(@id_ingresado nvarchar(50), @contra_ingresada nvarchar(32)) -- aca tengo dudas de si es la contra al todavia no estar hasheada, si es de 32 o no
