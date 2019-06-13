@@ -153,9 +153,9 @@ if exists(select * from sys.views where object_name(object_id)='RolesHabilitados
 		drop view [LEISTE_EL_CODIGO?].RolesHabilitados
 	end
 go
-if exists(select * from sys.views where object_name(object_id)='ViajesConRecorridos' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+if exists(select * from sys.views where object_name(object_id)='ViajesConRecorridosHabilitados' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
-		drop view [LEISTE_EL_CODIGO?].ViajesConRecorridos
+		drop view [LEISTE_EL_CODIGO?].ViajesConRecorridosHabilitados
 	end
 go
 if exists (select * from sys.triggers where object_name(object_id)='fechaVencimiento') --and schema_name(schema_id)='LEISTE_EL_CODIGO?')
@@ -930,7 +930,6 @@ as
 	return 1
 	end
 go
-select * from [LEISTE_EL_CODIGO?].TipoCabina
 --modificarTramo--
 --se debe hacer tmb en orden del 1ero q quieras cambiar al ultimo
 USE GD1C2019
@@ -1189,11 +1188,6 @@ as
 	end
 go
 --........................................<ABM 7> GENERAR VIAJE			......................................................
-declare @id_crucero nvarchar(50)
-select top 1 @id_crucero=id_crucero from [LEISTE_EL_CODIGO?].Crucero
-select id_viaje from [LEISTE_EL_CODIGO?].Viaje join [LEISTE_EL_CODIGO?].Crucero cru
-				on (cru.id_crucero = @id_crucero)
-
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2)
