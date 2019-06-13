@@ -164,14 +164,13 @@ go
 USE GD1C2019
 go
 create table [LEISTE_EL_CODIGO?].Rol(
-	nombre nvarchar(255) not null,
-	id_rol smallint identity primary key,
+	id_rol nvarchar(255) primary key,
 	baja_logica char(1) not null default 'N' check(baja_logica in ('S','N')) 
 )
 go
 create table [LEISTE_EL_CODIGO?].Usuario(
 	id_usuario nvarchar(50) primary key,
-	id_rol smallint references [LEISTE_EL_CODIGO?].Rol, 
+	id_rol nvarchar(255) references [LEISTE_EL_CODIGO?].Rol, 
 	contra varbinary(32),
 	intentos_posibles smallint default 3,
 	habilitado nchar(1) not null default 'A' check(habilitado in ('A','I'))
@@ -184,13 +183,13 @@ create table [LEISTE_EL_CODIGO?].Funcionalidad(
 go
 create table [LEISTE_EL_CODIGO?].FuncionalidadPorRol(
 	id_funcionalidad smallint references [LEISTE_EL_CODIGO?].Funcionalidad,
-	id_rol smallint references [LEISTE_EL_CODIGO?].Rol,
+	id_rol nvarchar(255) references [LEISTE_EL_CODIGO?].Rol,
 	primary key (id_rol, id_funcionalidad)
 )
 go
 create table [LEISTE_EL_CODIGO?].Cliente(
 	id_cliente int identity primary key,
-	id_rol smallint default '3' references [LEISTE_EL_CODIGO?].Rol,
+	id_rol nvarchar(255) default 'cliente' references [LEISTE_EL_CODIGO?].Rol,
 	nombre varchar(255) not null,
 	apellido varchar(255) not null,
 	dni decimal(18, 0) not null,
@@ -381,38 +380,38 @@ insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('listado estad
 insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('login y seguridad')				-- Funcionalidad = 10
 go
 -- Rol
-insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('administrador general')			--Rol 1 = administrador general
-insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('administrador')					--Rol 2 = administrador
-insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('cliente')						--Rol 3 = cliente
+insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('administrador general')			--Rol 1 = administrador general
+insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('administrador')					--Rol 2 = administrador
+insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('cliente')						--Rol 3 = cliente
 go
 -- Funcionalidad por Rol
 --ADMINISTRADOR GENERAL
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,1)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,2)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,3)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,4)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,5)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,6)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,7)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,8)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,9)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',1)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',2)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',3)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',4)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',5)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',6)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',7)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',8)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',9)
 go
 --ADMIN
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,1)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,2)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,3)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,4)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,5)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,6)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,7)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,8)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,9)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',1)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',2)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',3)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',4)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',5)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',6)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',7)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',8)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',9)
 go
 
 --******************************************creo que estos inserts feos pueden hacerse de otra forma 
 --Cliente
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(3,7)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(3,8)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('cliente',7)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('cliente',8)
 go
 ----Contraseñas
 declare @algo nvarchar(32)
@@ -420,13 +419,13 @@ set @algo = 'w23e'
 declare @hash varbinary(32)
 set @hash = hashbytes('SHA2_256', @algo)
 --ADMINISTRADOR GENERAL
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin',1,@hash)	
+insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin','administrador general',@hash)	
 --ADMINISTRADORES
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('adminNuestro',2,@hash)
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin2',2,@hash)
+insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('adminNuestro','administrador',@hash)
+insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin2','administrador',@hash)
 --Cliente
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepe',3)
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepita',3)
+insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepe','cliente')
+insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepita','cliente')
 go
 --........................................ MIGRACION ......................................................
 --CLIENTE--
@@ -650,30 +649,30 @@ where id_reserva in (select id_reserva
 		--listado de funcionalidades.
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol (@idRol smallint,@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol (@idRolAImitar nvarchar(255),@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
 as
 	begin
 		declare @valor_retorno smallint
-		if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 --no existe rol
+		if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRolAImitar )) set @valor_retorno = -1 --no existe rol
 		else if
 		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idNuevaFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
 		else if
 		(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
-						where id_funcionalidad= @idNuevaFuncionalidad and id_rol = @idRol)) set @valor_retorno = -3 -- el rol ya tiene esa funcionalidad
+						where id_funcionalidad= @idNuevaFuncionalidad and id_rol = @idRolAImitar )) set @valor_retorno = -3 -- el rol ya tiene esa funcionalidad
 		else
 			begin
-				insert into [LEISTE_EL_CODIGO?].Rol(nombre)
+				insert into [LEISTE_EL_CODIGO?].Rol(id_rol)
 				values(@nuevoNombreRol) --agrego rol en la tabla
 		
-				declare @idNuevoRol smallint
-				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
+				--declare @idNuevoRol smallint
+				--select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
 				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) -- aca le pongo al nuevo rol las funcionalidades del otro rol
-				select @idNuevoRol,id_funcionalidad
+				select @nuevoNombreRol,id_funcionalidad
 				from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
-				where id_rol= @idRol
+				where id_rol= @idRolAImitar 
 
 				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) --aca agrego la nueva funcionalidad
-				values(@idNuevoRol, @idNuevaFuncionalidad)
+				values(@nuevoNombreRol, @idNuevaFuncionalidad)
 				set @valor_retorno = 1 -- se cargo correctamente el nuevo rol
 			end
 		return @valor_retorno
