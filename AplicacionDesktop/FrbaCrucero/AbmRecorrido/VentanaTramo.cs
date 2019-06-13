@@ -43,7 +43,7 @@ namespace FrbaCrucero.AbmRecorrido
             }
             else
             {
-                MessageBox.Show("Complete todos los campos para agregar el tramo", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }
@@ -80,7 +80,8 @@ namespace FrbaCrucero.AbmRecorrido
             listaOrigen.SelectedIndex = -1;
             textoPrecio.Clear();
         }
-        public void llenarCombo(ComboBox cb, string consultaDeObtencion){
+        public void llenarCombo(ComboBox cb, string consultaDeObtencion)
+        {
 
             BaseDeDato db = new BaseDeDato();
             db.conectar();
@@ -94,6 +95,6 @@ namespace FrbaCrucero.AbmRecorrido
         }
 
     }
-      
+
 
 }

@@ -24,7 +24,7 @@ namespace FrbaCrucero.AbmRol
 
         private void VentanaDeAltaRol_Load(object sender, EventArgs e)
         {
-          
+
 
         }
 
@@ -40,19 +40,21 @@ namespace FrbaCrucero.AbmRol
             {
                 this.agregarRol();
             }
-            else {
-                MessageBox.Show("Complete todos los campos para crear rol", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+            {
+                MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        
+
         private void textoNombre_TextChanged(object sender, EventArgs e)
         {
 
         }
-        private void botonAgregar_Click(object sender, EventArgs e) { 
-        
-        
+        private void botonAgregar_Click(object sender, EventArgs e)
+        {
+
+
         }
         private void agregarRol()
         {
@@ -60,10 +62,10 @@ namespace FrbaCrucero.AbmRol
             {
 
                 rol.crearRol(textoNombre.Text, Convert.ToInt32(listaFunc.SelectedValue));
-             DialogResult result = MessageBox.Show("Rol creado exitosamente", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult result = MessageBox.Show("Rol creado exitosamente", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                }
-            
+            }
+
             else
             {
                 MessageBox.Show("Nombre de rol vacío. Inserte el nombre del rol", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -97,7 +99,7 @@ namespace FrbaCrucero.AbmRol
         public bool todosLosCamposEstancompletos()
         {
 
-            return textoNombre.Text != "" && listaFunc.Text != "" ;
+            return textoNombre.Text != "" && listaFunc.Text != "";
 
         }
 
@@ -105,6 +107,6 @@ namespace FrbaCrucero.AbmRol
         {
 
         }
-       
+
     }
 }

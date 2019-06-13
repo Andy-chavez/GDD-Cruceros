@@ -25,11 +25,16 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonCrear_Click(object sender, EventArgs e)
         {
-         
-            Crucero crucero = new Crucero();
-            crucero.crearCrucero(textoIdCrucero.Text, texoIdFabricante.Text , textoModelo.Text , Convert.ToInt32(textoCabina.Text));
+            if (this.todosLosCamposEstancompletos())
+            {
+                Crucero crucero = new Crucero();
+                crucero.crearCrucero(textoIdCrucero.Text, texoIdFabricante.Text, textoModelo.Text, Convert.ToInt32(textoCabina.Text));
+            }
+            else
+            {
+                MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
-
         private void textoIdCrucero_TextChanged(object sender, EventArgs e)
         {
 
@@ -55,6 +60,24 @@ namespace FrbaCrucero.AbmCrucero
 
             return textoIdCrucero.Text != "" && texoIdFabricante.Text != "" && textoModelo.Text != "" && textoCabina.Text != "";
 
+        }
+
+        private void botonEliminar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void botonLimpiar_Click(object sender, EventArgs e)
+        {
+            textoCabina.Clear();
+            textoIdCrucero.Clear();
+            texoIdFabricante.Clear();
+            textoModelo.Clear();
+        }
+
+        private void botonVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

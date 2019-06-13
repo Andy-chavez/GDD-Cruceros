@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.listaDeTramos = new System.Windows.Forms.DataGridView();
             this.tramoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.botonBuscar = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -45,8 +46,7 @@
             this.botonEliminar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.botonVolver = new System.Windows.Forms.Button();
-            this.botonBuscar = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listaDeTramos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tramoBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -54,16 +54,15 @@
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // listaDeTramos
             // 
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.DataSource = this.tramoBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(447, 247);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.listaDeTramos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.listaDeTramos.Location = new System.Drawing.Point(0, 19);
+            this.listaDeTramos.Name = "listaDeTramos";
+            this.listaDeTramos.Size = new System.Drawing.Size(447, 247);
+            this.listaDeTramos.TabIndex = 0;
+            this.listaDeTramos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listaDeTramos_CellClick);
+            this.listaDeTramos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listaDeTramos_CellContentClick);
             // 
             // tramoBindingSource
             // 
@@ -71,7 +70,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Controls.Add(this.listaDeTramos);
             this.groupBox1.Location = new System.Drawing.Point(12, 194);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(453, 266);
@@ -92,6 +91,16 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filtrar Tramo";
+            // 
+            // botonBuscar
+            // 
+            this.botonBuscar.Location = new System.Drawing.Point(363, 49);
+            this.botonBuscar.Name = "botonBuscar";
+            this.botonBuscar.Size = new System.Drawing.Size(75, 23);
+            this.botonBuscar.TabIndex = 4;
+            this.botonBuscar.Text = "Buscar";
+            this.botonBuscar.UseVisualStyleBackColor = true;
+            this.botonBuscar.Click += new System.EventHandler(this.botonBuscar_Click);
             // 
             // label2
             // 
@@ -152,6 +161,7 @@
             this.Recorrido.Name = "Recorrido";
             this.Recorrido.Size = new System.Drawing.Size(334, 238);
             this.Recorrido.TabIndex = 5;
+            this.Recorrido.SelectedIndexChanged += new System.EventHandler(this.Recorrido_SelectedIndexChanged);
             // 
             // groupBox3
             // 
@@ -191,16 +201,6 @@
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
             // 
-            // botonBuscar
-            // 
-            this.botonBuscar.Location = new System.Drawing.Point(363, 49);
-            this.botonBuscar.Name = "botonBuscar";
-            this.botonBuscar.Size = new System.Drawing.Size(75, 23);
-            this.botonBuscar.TabIndex = 4;
-            this.botonBuscar.Text = "Buscar";
-            this.botonBuscar.UseVisualStyleBackColor = true;
-            this.botonBuscar.Click += new System.EventHandler(this.botonBuscar_Click);
-            // 
             // VentanaAltaRecorrido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -217,7 +217,7 @@
             this.Name = "VentanaAltaRecorrido";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.VentanaAltaRecorrido_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listaDeTramos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tramoBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
@@ -231,7 +231,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView listaDeTramos;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label2;
@@ -240,9 +240,9 @@
         private System.Windows.Forms.TextBox filtroOrigen;
         private System.Windows.Forms.Button botonTramo;
         private System.Windows.Forms.Button botonCrear;
-       
+
         private System.Windows.Forms.BindingSource tramosDisponiblesBindingSource;
-        
+
         private System.Windows.Forms.DataGridViewTextBoxColumn idtramoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn idrecorridoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn idorigenDataGridViewTextBoxColumn;
@@ -252,9 +252,9 @@
         private System.Windows.Forms.ListBox Recorrido;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button botonEliminar;
-       
+
         private System.Windows.Forms.BindingSource tramoBindingSource;
-        
+
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button botonVolver;
         private System.Windows.Forms.Button botonBuscar;
