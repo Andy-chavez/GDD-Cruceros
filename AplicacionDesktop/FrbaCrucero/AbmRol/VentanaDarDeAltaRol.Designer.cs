@@ -44,7 +44,7 @@
             this.botonAlta.TabIndex = 2;
             this.botonAlta.Text = "Habilitar";
             this.botonAlta.UseVisualStyleBackColor = true;
-            this.botonAlta.Click += new System.EventHandler(this.BotonAlta_Click);
+            this.botonAlta.Click += new System.EventHandler(this.BotonAlta_Click_1);
             // 
             // groupBox1
             // 
@@ -82,6 +82,7 @@
             this.botonVolver.TabIndex = 4;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.BotonVolver_Click_1);
             // 
             // VentanaDarDeAltaRol
             // 

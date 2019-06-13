@@ -21,9 +21,24 @@ namespace FrbaCrucero.AbmRol
         {
             InitializeComponent();
         }
-        private void BotonAlta_Click(object sender, EventArgs e)
+        private void VentanaDarDeAltaRol_Load(object sender, EventArgs e)
         {
-            this.Hide();
+            bd.conectar();
+            adapt = new SqlDataAdapter("select id_rol from [LEISTE_EL_CODIGO?].Rol", bd.obtenerConexion());
+            dt = new DataTable();
+            adapt.Fill(dt);
+            comboBoxRoles.DataSource = dt;
+            comboBoxRoles.ValueMember = "id_rol";
+            bd.desconectar();
+        }
+
+        private void BotonVolver_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BotonAlta_Click_1(object sender, EventArgs e)
+        {
             try
             {
                 BaseDeDato bd = new BaseDeDato();
@@ -35,9 +50,8 @@ namespace FrbaCrucero.AbmRol
                 int retorno = (int)procedure.Parameters["@retorno"].Value;
                 if (retorno == 1) //joya
                 {
-                    VentanaMenu menu = new VentanaMenu();
                     MessageBox.Show("Rol habilitado correctamente");
-                    //this.Hide();
+                    this.Hide();
                 }
                 else if (retorno == -1) // no existe el rol
                 { //no existe usuario
@@ -49,20 +63,6 @@ namespace FrbaCrucero.AbmRol
             {
                 MessageBox.Show(exception.Message);
             }
-        }
-        private void botonVolver_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-        private void VentanaDarDeAltaRol_Load(object sender, EventArgs e)
-        {
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_rol from [LEISTE_EL_CODIGO?].Rol", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            comboBoxRoles.DataSource = dt;
-            comboBoxRoles.ValueMember = "id_rol";
-            bd.desconectar();
         }
     }
 }

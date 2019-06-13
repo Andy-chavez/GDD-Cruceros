@@ -52,7 +52,7 @@ namespace FrbaCrucero.AbmRol
                 int retorno = (int)procedure.Parameters["@retorno"].Value;
                 if (retorno == 1) //joya
                 {
-                    VentanaMenu menu = new VentanaMenu();
+                    MessageBox.Show("Rol deshabilitado exitosamente");
                     this.Hide();
                 }
                 else if (retorno == -1) // no existe el rol
