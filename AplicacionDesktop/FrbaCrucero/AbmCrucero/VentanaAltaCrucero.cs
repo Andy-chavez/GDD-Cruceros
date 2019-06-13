@@ -69,7 +69,7 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonLimpiar_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void botonVolver_Click(object sender, EventArgs e)
@@ -91,3 +91,4 @@ namespace FrbaCrucero.AbmCrucero
         }
     }
 }
+

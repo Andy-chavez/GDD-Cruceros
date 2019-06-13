@@ -45,6 +45,6 @@ namespace FrbaCrucero.AbmRecorrido
             new VentanaModificarRecorrido().Show();
         }
 
-        
+
     }
 }

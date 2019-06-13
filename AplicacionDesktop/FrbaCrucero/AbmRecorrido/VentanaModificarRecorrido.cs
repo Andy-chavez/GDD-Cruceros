@@ -26,7 +26,7 @@ namespace FrbaCrucero.AbmRecorrido
         {
 
         }
-        public void llenardataGridView(DataGridView dgv,string nombreConsulta)
+        public void llenardataGridView(DataGridView dgv, string nombreConsulta)
         {
             bd.conectar();
             SqlConnection conexion = bd.obtenerConexion();
@@ -39,13 +39,13 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void VentanaModificarRecorrido_Load(object sender, EventArgs e)
         {
-            llenardataGridView(recorridosActuales,"SELECT * FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
-            llenardataGridView(tramosDisponibles,"SELECT * FROM [LEISTE_EL_CODIGO?].TramosDisponibles");
+            llenardataGridView(recorridosActuales, "SELECT * FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
+            llenardataGridView(tramosDisponibles, "SELECT * FROM [LEISTE_EL_CODIGO?].TramosDisponibles");
         }
 
         private void tramosDisponibles_CellContentClick()
         {
-        
+
         }
     }
 }
