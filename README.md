@@ -46,8 +46,8 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
 
 ### Rol:
 
-#### agregarFuncionalidadPorRol (@idRolAImitar nvarchar(255),@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
-#### eliminarFuncionalidadRol (@idRol nvarchar(255),@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
+#### agregarFuncionalidadPorRol (@idRolAImitar nvarchar(255),@idNuevaFuncionalidad nvarchar(100),@nuevoNombreRol nvarchar(255))
+#### eliminarFuncionalidadRol (@idRol nvarchar(255),@idFuncionalidadAEliminar nvarchar(100),@nuevoNombreRol nvarchar(255))
 
   Valores de retorno:
 
@@ -56,7 +56,7 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
     -2: No existe funcionalidad
     -3: el rol ya tiene esa funcionalidad(agregar) o no tiene esa funcionalidad(eliminar)
 
-#### crearNuevoRol (@idFuncionalidad smallint,@NombreRol nvarchar(255))
+#### crearNuevoRol (@idFuncionalidad nvarchar(100),@NombreRol nvarchar(255))
 
   Valores de retorno:
 
