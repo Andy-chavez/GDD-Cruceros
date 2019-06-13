@@ -35,6 +35,7 @@
             this.comboBoxSemestre = new System.Windows.Forms.ComboBox();
             this.dataGridViewTop5s = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
+            this.botonVolver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTop5s)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,7 +105,7 @@
             // dataGridViewTop5s
             // 
             this.dataGridViewTop5s.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewTop5s.Location = new System.Drawing.Point(12, 304);
+            this.dataGridViewTop5s.Location = new System.Drawing.Point(12, 260);
             this.dataGridViewTop5s.Name = "dataGridViewTop5s";
             this.dataGridViewTop5s.Size = new System.Drawing.Size(511, 230);
             this.dataGridViewTop5s.TabIndex = 6;
@@ -119,11 +120,22 @@
             this.label2.Text = "Ingrese Año y Semesttre:";
             this.label2.Click += new System.EventHandler(this.Label2_Click);
             // 
+            // botonVolver
+            // 
+            this.botonVolver.Location = new System.Drawing.Point(35, 519);
+            this.botonVolver.Name = "botonVolver";
+            this.botonVolver.Size = new System.Drawing.Size(93, 23);
+            this.botonVolver.TabIndex = 8;
+            this.botonVolver.Text = "Volver";
+            this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.BotonVolver_Click);
+            // 
             // ListadoEstadistico
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(540, 554);
+            this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridViewTop5s);
             this.Controls.Add(this.comboBoxSemestre);
@@ -150,5 +162,6 @@
         private System.Windows.Forms.ComboBox comboBoxSemestre;
         private System.Windows.Forms.DataGridView dataGridViewTop5s;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button botonVolver;
     }
 }

@@ -101,5 +101,10 @@ namespace FrbaCrucero.ListadoEstadistico
         {
 
         }
+
+        private void BotonVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
