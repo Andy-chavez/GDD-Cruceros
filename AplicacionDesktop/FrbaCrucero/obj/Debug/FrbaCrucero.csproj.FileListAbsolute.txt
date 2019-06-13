@@ -73,4 +73,3 @@ C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\F
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmCrucero.VentanaModificarCrucero.resources
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.VentanaCliente.resources
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.GeneracionViaje.GenerarViaje.resources
->>>>>>> Stashed changes
