@@ -69,15 +69,25 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonLimpiar_Click(object sender, EventArgs e)
         {
+           
+        }
+
+        private void botonVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void botonLimpiar_Click_1(object sender, EventArgs e)
+        {
             textoCabina.Clear();
             textoIdCrucero.Clear();
             texoIdFabricante.Clear();
             textoModelo.Clear();
         }
 
-        private void botonVolver_Click(object sender, EventArgs e)
+        private void botonVolver_Click_1(object sender, EventArgs e)
         {
-            this.Close();
+
         }
     }
 }

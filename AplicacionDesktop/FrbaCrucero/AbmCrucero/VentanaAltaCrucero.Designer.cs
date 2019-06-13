@@ -59,6 +59,7 @@
             this.botonVolver.TabIndex = 1;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click_1);
             // 
             // textoIdCrucero
             // 
@@ -136,6 +137,7 @@
             this.botonLimpiar.TabIndex = 10;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
+            this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click_1);
             // 
             // VentanaAltaCrucero
             // 
