@@ -32,20 +32,15 @@
             this.textoRol = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-           
+            this.listaFunc = new System.Windows.Forms.DataGridView();
             this.funcionalidadPorRolBindingSource = new System.Windows.Forms.BindingSource(this.components);
-           
-            this.idfuncionalidadDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idrolDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.botonVolver = new System.Windows.Forms.Button();
             this.botonEliminar = new System.Windows.Forms.Button();
             this.botonAgregar = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            
+            ((System.ComponentModel.ISupportInitialize)(this.listaFunc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadPorRolBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,7 +63,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Controls.Add(this.listaFunc);
             this.groupBox1.Location = new System.Drawing.Point(39, 165);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(347, 216);
@@ -76,33 +71,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Agregar o eliminar funcionalidades";
             // 
-            // dataGridView1
+            // listaFunc
             // 
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idfuncionalidadDataGridViewTextBoxColumn,
-            this.idrolDataGridViewTextBoxColumn});
-            this.dataGridView1.DataSource = this.funcionalidadPorRolBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(18, 29);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(323, 168);
-            this.dataGridView1.TabIndex = 0;
-            // 
-           
-           
-           
-            // idfuncionalidadDataGridViewTextBoxColumn
-            // 
-            this.idfuncionalidadDataGridViewTextBoxColumn.DataPropertyName = "id_funcionalidad";
-            this.idfuncionalidadDataGridViewTextBoxColumn.HeaderText = "id_funcionalidad";
-            this.idfuncionalidadDataGridViewTextBoxColumn.Name = "idfuncionalidadDataGridViewTextBoxColumn";
-            // 
-            // idrolDataGridViewTextBoxColumn
-            // 
-            this.idrolDataGridViewTextBoxColumn.DataPropertyName = "id_rol";
-            this.idrolDataGridViewTextBoxColumn.HeaderText = "id_rol";
-            this.idrolDataGridViewTextBoxColumn.Name = "idrolDataGridViewTextBoxColumn";
+            this.listaFunc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.listaFunc.Location = new System.Drawing.Point(18, 29);
+            this.listaFunc.Name = "listaFunc";
+            this.listaFunc.Size = new System.Drawing.Size(323, 168);
+            this.listaFunc.TabIndex = 0;
+            this.listaFunc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listaFunc_CellClick);
+            this.listaFunc.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listaFunc_CellContentClick);
             // 
             // botonVolver
             // 
@@ -121,6 +98,7 @@
             this.botonEliminar.TabIndex = 4;
             this.botonEliminar.Text = "Eliminar";
             this.botonEliminar.UseVisualStyleBackColor = true;
+            this.botonEliminar.Click += new System.EventHandler(this.botonEliminar_Click);
             // 
             // botonAgregar
             // 
@@ -165,8 +143,7 @@
             this.Text = "Rol seleccionado";
             this.Load += new System.EventHandler(this.VentanaRolSeleccionado_Load);
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-           
+            ((System.ComponentModel.ISupportInitialize)(this.listaFunc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadPorRolBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -178,10 +155,10 @@
         private System.Windows.Forms.TextBox textoRol;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-      
+        private System.Windows.Forms.DataGridView listaFunc;
+
         private System.Windows.Forms.BindingSource funcionalidadPorRolBindingSource;
-       
+
         private System.Windows.Forms.DataGridViewTextBoxColumn idfuncionalidadDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn idrolDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button botonVolver;

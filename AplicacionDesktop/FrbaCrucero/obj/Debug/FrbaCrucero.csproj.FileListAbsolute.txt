@@ -46,3 +46,4 @@ C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\Apl
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.csproj.CoreCompileInputs.cache
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.exe
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.pdb
+C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\bin\Debug\FrbaCrucero.exe.config

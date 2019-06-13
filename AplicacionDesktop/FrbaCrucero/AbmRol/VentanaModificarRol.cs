@@ -29,7 +29,7 @@ namespace FrbaCrucero.AbmRol
 
         private void VentanaModificarRol_Load(object sender, EventArgs e)
         {
-            
+
 
         }
 
@@ -51,7 +51,7 @@ namespace FrbaCrucero.AbmRol
         private void botonVolver_Click(object sender, EventArgs e)
         {
             this.Close();
-            
+
         }
 
         private void seleccion_TextChanged(object sender, EventArgs e)

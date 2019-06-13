@@ -189,6 +189,9 @@
     <EmbeddedResource Include="AbmCrucero\VentanaGestionCrucero.resx">
       <DependentUpon>VentanaGestionCrucero.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AbmCrucero\VentanaModificarCrucero.resx">
+      <DependentUpon>VentanaModificarCrucero.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmRecorrido\VentanaAltaRecorrido.resx">
       <DependentUpon>VentanaAltaRecorrido.cs</DependentUpon>
     </EmbeddedResource>
