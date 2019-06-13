@@ -24,15 +24,15 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonModificar_Click(object sender, EventArgs e)
         {
-           VentanaModificarCrucero ventanaModificar = new VentanaModificarCrucero();
-           ventanaModificar.Show();
-           ventanaModificar.esconderCosasDeBaja();
+            VentanaModificarCrucero ventanaModificar = new VentanaModificarCrucero();
+            ventanaModificar.Show();
+            ventanaModificar.esconderCosasDeBaja();
         }
 
         private void botonBaja_Click(object sender, EventArgs e)
         {
 
-         VentanaModificarCrucero ventanaMod = new VentanaModificarCrucero();
+            VentanaModificarCrucero ventanaMod = new VentanaModificarCrucero();
             ventanaMod.Show();
             ventanaMod.esconderCosasDeModificar();
         }

@@ -15,13 +15,12 @@ namespace FrbaCrucero.AbmCrucero
     public partial class VentanaModificarCrucero : Form
     {
         public VentanaModificarCrucero()
-     
         {
             InitializeComponent();
 
-            
+
         }
-        
+
         BaseDeDato bd = new BaseDeDato();
         DataTable dt = new DataTable();
         Crucero crucero = new Crucero();
@@ -30,7 +29,7 @@ namespace FrbaCrucero.AbmCrucero
         {
         }
 
-        
+
         public void llenardataGridView(DataGridView dgv)
         {
             bd.conectar();
@@ -51,11 +50,12 @@ namespace FrbaCrucero.AbmCrucero
 
         private void textoModelo_TextChanged(object sender, EventArgs e)
         {
-             this.filtrarDataGrdView(  dataGridView1 ,  "SELECT * FROM [LEISTE_EL_CODIGO?].CrucerosDisponibles WHERE modelo LIKE ('"+ textoModelo.Text + "%')");
-            
-            
+            this.filtrarDataGrdView(dataGridView1, "SELECT * FROM [LEISTE_EL_CODIGO?].CrucerosDisponibles WHERE modelo LIKE ('" + textoModelo.Text + "%')");
+
+
         }
-        public void filtrarDataGrdView( DataGridView dgv, string nombreConsulta){
+        public void filtrarDataGrdView(DataGridView dgv, string nombreConsulta)
+        {
             bd.conectar();
             SqlCommand consulta = new SqlCommand(nombreConsulta, bd.obtenerConexion());
             DataTable tabla = bd.obtenerDataTable(consulta);
@@ -104,8 +104,9 @@ namespace FrbaCrucero.AbmCrucero
 
                 crucero.bajaTemporal(Convert.ToDateTime(textoFechaReinicio.Text), TextoCruceroSeleccionado.Text.ToString());
             }
-            else {
-              
+            else
+            {
+
                 MessageBox.Show("Seleccione un crucero y una fecha para continuar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -117,7 +118,8 @@ namespace FrbaCrucero.AbmCrucero
 
                 crucero.bajaDefinitiva(Convert.ToDateTime(textoFecha.Text), TextoCruceroSeleccionado.Text.ToString());
             }
-            else {
+            else
+            {
                 MessageBox.Show("Seleccione un crucero para continuar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
@@ -133,7 +135,8 @@ namespace FrbaCrucero.AbmCrucero
 
         }
 
-        public void esconderCosasDeBaja(){
+        public void esconderCosasDeBaja()
+        {
             labelFecha.Hide();
             textoFecha.Hide();
             botonBajaFinal.Hide();
@@ -147,7 +150,7 @@ namespace FrbaCrucero.AbmCrucero
             label3.Hide();
             botonModificar.Hide();
             textoFabricanteNuevo.Hide();
-         
+
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -157,12 +160,12 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonLimpiar_Click_1(object sender, EventArgs e)
         {
-            
+
             textoFabricanteNuevo.Clear();
             TextoCruceroSeleccionado.Clear();
             textoModelo.Clear();
             textoFechaReinicio.Clear();
-        
+
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

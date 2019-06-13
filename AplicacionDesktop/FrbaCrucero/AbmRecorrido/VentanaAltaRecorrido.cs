@@ -81,32 +81,37 @@ namespace FrbaCrucero.AbmRecorrido
             {
                 listaDeTramos.CurrentRow.Selected = true;
 
-                string idTramo = listaDeTramos.Rows[e.RowIndex].Cells["id_tramo"].Value.ToString();
-           /*      int  id    =  Convert.ToInt32(listaDeTramos.Rows[e.RowIndex].Cells["id_tramo"].Value.ToString());
-                              Convert.ToDecimal(listaDeTramos.Rows[e.RowIndex].Cells["id_recorrido"].Value.ToString()),;
-                              listaDeTramos.Rows[e.RowIndex].Cells["id_origen"].Value.ToString();
-                              listaDeTramos.Rows[e.RowIndex].Cells["id_destino"].Value.ToString();
-                              Convert.ToInt32(listaDeTramos.Rows[e.RowIndex].Cells["orden"].Value.ToString());
-                              Convert.ToDecimal(listaDeTramos.Rows[e.RowIndex].Cells["precio_base"].Value.ToString()));
-    */
-                 Recorrido.Items.Add(idTramo);
-                /*
-                                foreach (DataGridViewRow fila in listaDeTramos.Rows)
-                                {
-                                    listaTramos.Add(new Tramo();
-                                }
+                int id = Convert.ToInt32(listaDeTramos.Rows[e.RowIndex].Cells["id_tramo"].Value.ToString());
+                decimal id_reco = Convert.ToDecimal(listaDeTramos.Rows[e.RowIndex].Cells["id_recorrido"].Value.ToString());
+                string origen = listaDeTramos.Rows[e.RowIndex].Cells["id_origen"].Value.ToString();
+                string destino = listaDeTramos.Rows[e.RowIndex].Cells["id_destino"].Value.ToString();
+                int orden = Convert.ToInt32(listaDeTramos.Rows[e.RowIndex].Cells["orden"].Value.ToString());
+                decimal precio_base = Convert.ToDecimal(listaDeTramos.Rows[e.RowIndex].Cells["precio_base"].Value.ToString());
+                Tramo tramoElegido = new Tramo(id, id_reco, origen, destino, orden, precio_base);
 
-                                foreach (Tramo tramo in listaTramos)
-                                {
-                                    Recorrido.Items.Add(tramo.origen + " - " + tramo.destino);
-                                }
- 
-                            }  
-                            else
-                            {
 
-                                MessageBox.Show("No hay tramos para agregar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                           */
+                if (Recorrido.Items.Count == 0)
+                {
+
+                    listaTramos.Add(tramoElegido);
+                    Recorrido.Items.Add(("Origen: " + tramoElegido.id_origen + "  Destino" + tramoElegido.destino));
+                }
+                else
+                {
+
+                    if (listaTramos.Last().destino == tramoElegido.id_origen)
+                    {
+                        listaTramos.Add(tramoElegido);
+                        Recorrido.Items.Add(("Origen: " + tramoElegido.id_origen + "  Destino" + tramoElegido.destino));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Tramos inconexos, eliga un tramo que se conecte con el anterior:\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    }
+
+                }
+
             }
         }
 
