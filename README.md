@@ -28,6 +28,8 @@
 
 #### reemplazarViajesCruceroPorOtro(@id_crucero nvarchar(50))
 
+#### modificarCrucero (@idCrucero,@id_nuevo_fabricante)
+
 ### Viaje:
 
 #### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255)) 

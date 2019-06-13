@@ -122,6 +122,8 @@ if exists (select * from sys.procedures where name = 'comprarPasaje')
 	drop procedure [LEISTE_EL_CODIGO?].comprarPasaje
 if exists (select * from sys.procedures where name = 'verVoucher')
 	drop procedure [LEISTE_EL_CODIGO?].verVoucher
+if exists (select * from sys.procedures where name = 'modificarCrucero')
+	drop procedure [LEISTE_EL_CODIGO?].modificarCrucero
 if exists (select * from sys.procedures where name = 'topRecorridosConMasPasajesComprados')
 	drop procedure [LEISTE_EL_CODIGO?].topRecorridosConMasPasajesComprados
 if exists (select * from sys.procedures where name = 'topMasCabinasLibres')
@@ -799,6 +801,7 @@ as
 		commit transaction
 	end
 go
+exec [LEISTE_EL_CODIGO?].sp_login 'sdaf','w23e'
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].sp_login(@id_ingresado nvarchar(50), @contra_ingresada nvarchar(32)) -- aca tengo dudas de si es la contra al todavia no estar hasheada, si es de 32 o no
@@ -839,7 +842,6 @@ as
 				where id_usuario = @id_ingresado
 			set @valor_retorno = -1						--El usuario excedio esas tres oportunidades y fue dado de baja (por ahora borrado)
 			end
-		print @valor_retorno
 		return @valor_retorno
 	end
 go
@@ -881,6 +883,7 @@ as
 		return -2 --el origen de este tramo no es el destino del tramo anterior  
 		update [LEISTE_EL_CODIGO?].Tramo
 		set id_origen=@origen,id_destino=@destino,precio_base=@precio
+		where id_tramo = @idTramo
 		return 1
 	end
 go
@@ -940,6 +943,16 @@ as
 	--@no se q onda con el tema de si ya tiene pasajes vendidos
 go
 --........................................<ABM 6> CRUCEROS			......................................................
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].modificarCrucero(@id_crucero nvarchar(50),@id_fabricante nvarchar(255))
+as
+	begin
+		update [LEISTE_EL_CODIGO?].Crucero
+		set id_fabricante = @id_fabricante
+		where id_crucero = @id_crucero
+	end
+go
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].cargarCrucero(@id_crucero nvarchar(50),@id_fabricante nvarchar(255),@modelo nvarchar(50),@cantidadDeCabinas int)
@@ -1451,7 +1464,7 @@ as
 		group by r.id_recorrido, r.id_origen, r.id_destino
 		order by count(r.id_recorrido) desc
 	end
-go		
+go
 --TOP 5 RECORRIDOS CON MAS CABINAS LIBRES EN VIAJES REALIZADOS--
 USE GD1C2019 -- consideramos que si no fueron compradas siguen libres (no tenemos en cuenta las reservas)
 go
