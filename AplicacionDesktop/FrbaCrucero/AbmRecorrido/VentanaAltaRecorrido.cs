@@ -81,16 +81,15 @@ namespace FrbaCrucero.AbmRecorrido
             {
                 listaDeTramos.CurrentRow.Selected = true;
 
-                string pepe = listaDeTramos.Rows[e.RowIndex].Cells["id_tramo"].Value.ToString();
-
-                /*                   Convert.ToInt32(fila.Cells["id_tramo"].Value.ToString());
-                                   Convert.ToDecimal(fila.Cells["id_recorrido"].Value.ToString()),;
-                                   fila.Cells["id_origen"].Value.ToString();
-                                   fila.Cells["id_destino"].Value.ToString();
-                                   Convert.ToInt32(fila.Cells["orden"].Value.ToString());
-                                   Convert.ToDecimal(fila.Cells["precio_base"].Value.ToString()));
-     */
-                Recorrido.Items.Add(pepe);
+                string idTramo = listaDeTramos.Rows[e.RowIndex].Cells["id_tramo"].Value.ToString();
+           /*      int  id    =  Convert.ToInt32(listaDeTramos.Rows[e.RowIndex].Cells["id_tramo"].Value.ToString());
+                              Convert.ToDecimal(listaDeTramos.Rows[e.RowIndex].Cells["id_recorrido"].Value.ToString()),;
+                              listaDeTramos.Rows[e.RowIndex].Cells["id_origen"].Value.ToString();
+                              listaDeTramos.Rows[e.RowIndex].Cells["id_destino"].Value.ToString();
+                              Convert.ToInt32(listaDeTramos.Rows[e.RowIndex].Cells["orden"].Value.ToString());
+                              Convert.ToDecimal(listaDeTramos.Rows[e.RowIndex].Cells["precio_base"].Value.ToString()));
+    */
+                 Recorrido.Items.Add(idTramo);
                 /*
                                 foreach (DataGridViewRow fila in listaDeTramos.Rows)
                                 {
