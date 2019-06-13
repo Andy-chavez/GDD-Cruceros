@@ -42,6 +42,7 @@ namespace FrbaCrucero.AbmRol
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxRoles = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.casillaUsuario = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listaFunc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadPorRolBindingSource)).BeginInit();
@@ -104,6 +105,7 @@ namespace FrbaCrucero.AbmRol
             this.botonAgregar.TabIndex = 5;
             this.botonAgregar.Text = "Agregar";
             this.botonAgregar.UseVisualStyleBackColor = true;
+            this.botonAgregar.Click += new System.EventHandler(this.BotonAgregar_Click);
             // 
             // comboBoxFuncionalidades
             // 
@@ -141,11 +143,20 @@ namespace FrbaCrucero.AbmRol
             this.label3.Text = "Ingrese nuevo nombre de Rol";
             this.label3.Click += new System.EventHandler(this.Label3_Click);
             // 
+            // casillaUsuario
+            // 
+            this.casillaUsuario.Location = new System.Drawing.Point(199, 120);
+            this.casillaUsuario.Name = "casillaUsuario";
+            this.casillaUsuario.Size = new System.Drawing.Size(214, 20);
+            this.casillaUsuario.TabIndex = 10;
+            this.casillaUsuario.TextChanged += new System.EventHandler(this.CasillaUsuario_TextChanged);
+            // 
             // VentanaModificarRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(425, 509);
+            this.Controls.Add(this.casillaUsuario);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBoxRoles);
             this.Controls.Add(this.label2);
@@ -182,5 +193,6 @@ namespace FrbaCrucero.AbmRol
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxRoles;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox casillaUsuario;
     }
 }
