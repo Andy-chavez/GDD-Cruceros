@@ -56,12 +56,12 @@ namespace FrbaCrucero
 
         public void botonAdmRecorrido_Click(object sender, EventArgs e)
         {
-            new VentanaGestionRecorrido(this).ShowDialog();
+            new VentanaGestionRecorrido(this).Show();
         }
 
         public void botonAbmRol_Click(object sender, EventArgs e)
         {
-            new VentanaGestionRol(this).ShowDialog();
+            new VentanaGestionRol(this).Show();
         }
 
         public void botonViaje_Click(object sender, EventArgs e)
@@ -71,7 +71,7 @@ namespace FrbaCrucero
 
         public void botonEstadisticas_Click(object sender, EventArgs e)
         {
-            new ListadoEstadistico.ListadoEstadistico().ShowDialog();
+            new ListadoEstadistico.ListadoEstadistico().Show();
         }
         public void ocultarBotones( )
         {
