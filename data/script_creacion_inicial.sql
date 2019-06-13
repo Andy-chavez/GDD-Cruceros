@@ -140,6 +140,8 @@ if exists (select * from sys.procedures where name = 'mostrarReserva')
 	drop procedure [LEISTE_EL_CODIGO?].mostrarReserva
 if exists (select * from sys.procedures where name = 'comprarPasajeReservado')
 	drop procedure [LEISTE_EL_CODIGO?].comprarPasajeReservado
+if exists (select * from sys.procedures where name = 'crucerosDisponiblesParaViaje')
+	drop procedure [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje
 go
  if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
@@ -647,6 +649,70 @@ where exists(select id_pasaje
 delete from [LEISTE_EL_CODIGO?].Reserva
 where id_reserva in (select id_reserva
 						from [LEISTE_EL_CODIGO?].ReservasPagadas)
+--........................................VISTAS PARA APLICATIVO......................................................
+--Vista de CRUCEROS DISPONIBLES--
+USE GD1C2019
+go
+create view [LEISTE_EL_CODIGO?].CrucerosDisponibles
+as
+		select id_crucero,id_fabricante,modelo
+		from [LEISTE_EL_CODIGO?].Crucero
+		where baja_fuera_vida_util = 'N' and baja_fuera_de_servicio = 'N'
+go
+--Vista de ROLES HABILITADOS--
+USE GD1C2019
+go
+create view [LEISTE_EL_CODIGO?].RolesHabilitados
+as
+		select id_rol
+		from [LEISTE_EL_CODIGO?].Rol
+		where baja_logica = 'N' -- ver despues si es necesario tambien hacer una vista con todos los roles, habilitados o no.
+go
+if exists(select * from sys.views where object_name(object_id)='RecorridosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	begin
+		drop view [LEISTE_EL_CODIGO?].RecorridosDisponibles
+	end
+go
+USE GD1C2019
+go
+create view [LEISTE_EL_CODIGO?].RecorridosDisponibles --che esto me parece innecesario
+as
+		select *
+		from [LEISTE_EL_CODIGO?].Recorrido
+		where estado = 'A'
+go
+if exists(select * from sys.views where object_name(object_id)='TramosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	begin
+		drop view [LEISTE_EL_CODIGO?].TramosDisponibles
+	end
+go
+USE GD1C2019
+go
+create view [LEISTE_EL_CODIGO?].TramosDisponibles --che esto me parece innecesario
+as
+		select *
+		from [LEISTE_EL_CODIGO?].Tramo
+go
+if exists(select * from sys.views where object_name(object_id)='PuertosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	begin
+		drop view [LEISTE_EL_CODIGO?].PuertosDisponibles
+	end
+go
+USE GD1C2019
+go
+create view [LEISTE_EL_CODIGO?].PuertosDisponibles --che esto me parece innecesario
+as
+		select *
+		from [LEISTE_EL_CODIGO?].Puerto
+go
+
+create view [LEISTE_EL_CODIGO?].ViajesConRecorridosHabilitados
+as
+		select v.id_viaje,v.fecha_inicio,v.fecha_finalizacion_estimada,r.id_origen, r.id_destino destinoFinal
+		from [LEISTE_EL_CODIGO?].Viaje v join [LEISTE_EL_CODIGO?].Recorrido r
+		ON v.id_recorrido = r.id_recorrido
+		and r.estado = 'A'
+go
 --........................................ PROCEDURES ......................................................
 --........................................<ABM 1> ROL				......................................................
 ------Agregar nueva funcionalidad a un rol-------REQUERIMIENTO: 
@@ -882,7 +948,7 @@ as
 		set id_origen=@origen,id_destino=@destino,precio_base=@precio
 		where id_tramo = @idTramo
 		if (select count(*)
-			from [LEISTE_EL_CODIGO?].Tramo
+			from [LEISTE_EL_CODIGO?].Tramo)
 
 		
 		return 1
@@ -946,7 +1012,8 @@ as
 	where id_recorrido = @idRecorrido
 	--@no se q onda con el tema de si ya tiene pasajes vendidos
 go
---........................................<ABM 6> CRUCEROS			......................................................
+
+--........................................<ABM 6> CRUCEROS......................................................
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].modificarCrucero(@id_crucero nvarchar(50),@id_fabricante nvarchar(255))
@@ -1158,7 +1225,20 @@ as
 		return @valor_retorno
 	end
 go
---........................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE	......................................................
+-----------------------------------Cruceros disponibles, habilitados para esa fecha--------------------------------
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje(@fecha_inicio datetime2,@fecha_finalizacion_estimada datetime2)
+as
+	begin
+		select c.id_crucero,id_fabricante,modelo,id_viaje,fecha_inicio,fecha_finalizacion
+			from [LEISTE_EL_CODIGO?].CrucerosDisponibles c join [LEISTE_EL_CODIGO?].Viaje v
+			On c.id_crucero = v.id_crucero
+			where v.fecha_inicio <> '2018-07-22 07:00:00.000' and v.fecha_finalizacion <>'2018-07-22 19:06:00.000' and c.id_crucero='ETKLGK-24399'
+	end
+go
+--.......................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE	......................................................
+select * from [LEISTE_EL_CODIGO?].Recorrido
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha
@@ -1525,68 +1605,3 @@ as
 		order by 2 desc
 	end
 go	
-
---........................................VISTAS PARA APLICATIVO......................................................
---Vista de CRUCEROS DISPONIBLES--
-USE GD1C2019
-go
-create view [LEISTE_EL_CODIGO?].CrucerosDisponibles
-as
-		select id_crucero,id_fabricante,modelo
-		from [LEISTE_EL_CODIGO?].Crucero
-		where baja_fuera_vida_util = 'N' and baja_fuera_de_servicio = 'N'
-go
---Vista de ROLES HABILITADOS--
-USE GD1C2019
-go
-create view [LEISTE_EL_CODIGO?].RolesHabilitados
-as
-		select id_rol
-		from [LEISTE_EL_CODIGO?].Rol
-		where baja_logica = 'N' -- ver despues si es necesario tambien hacer una vista con todos los roles, habilitados o no.
-go
-if exists(select * from sys.views where object_name(object_id)='RecorridosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-	begin
-		drop view [LEISTE_EL_CODIGO?].RecorridosDisponibles
-	end
-go
-USE GD1C2019
-go
-create view [LEISTE_EL_CODIGO?].RecorridosDisponibles --che esto me parece innecesario
-as
-		select *
-		from [LEISTE_EL_CODIGO?].Recorrido
-		where estado = 'A'
-go
-if exists(select * from sys.views where object_name(object_id)='TramosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-	begin
-		drop view [LEISTE_EL_CODIGO?].TramosDisponibles
-	end
-go
-USE GD1C2019
-go
-create view [LEISTE_EL_CODIGO?].TramosDisponibles --che esto me parece innecesario
-as
-		select *
-		from [LEISTE_EL_CODIGO?].Tramo
-go
-if exists(select * from sys.views where object_name(object_id)='PuertosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-	begin
-		drop view [LEISTE_EL_CODIGO?].PuertosDisponibles
-	end
-go
-USE GD1C2019
-go
-create view [LEISTE_EL_CODIGO?].PuertosDisponibles --che esto me parece innecesario
-as
-		select *
-		from [LEISTE_EL_CODIGO?].Puerto
-go
-
-create view [LEISTE_EL_CODIGO?].ViajesConRecorridosHabilitados
-as
-		select v.id_viaje,v.fecha_inicio,v.fecha_finalizacion_estimada,r.id_origen, r.id_destino destinoFinal
-		from [LEISTE_EL_CODIGO?].Viaje v join [LEISTE_EL_CODIGO?].Recorrido r
-		ON v.id_recorrido = r.id_recorrido
-		and r.estado = 'A'
-go

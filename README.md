@@ -32,7 +32,7 @@
 
 ### Viaje:
 
-#### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255)) 
+#### crucerosDisponiblesParaViaje(@fecha_inicio datetime2,@fecha_finalizacion_estimada datetime2)
 cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de recorrido y el id de cabina para poder generar el pasaje
 #### cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2, @fecha_actual datetime2)
 
@@ -72,6 +72,7 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
     -1: no existe el rol
 
 ### Pasaje:
+#### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
 
 #### cargarMedioDePago (@cuotas smallint,@tipoTarjeta varchar(256),@nombreTarjeta varchar(256))
 
