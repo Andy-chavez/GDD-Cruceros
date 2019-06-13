@@ -930,6 +930,7 @@ as
 	return 1
 	end
 go
+select * from [LEISTE_EL_CODIGO?].TipoCabina
 --modificarTramo--
 --se debe hacer tmb en orden del 1ero q quieras cambiar al ultimo
 USE GD1C2019
@@ -947,8 +948,6 @@ as
 		update [LEISTE_EL_CODIGO?].Tramo
 		set id_origen=@origen,id_destino=@destino,precio_base=@precio
 		where id_tramo = @idTramo
-		if (select count(*)
-			from [LEISTE_EL_CODIGO?].Tramo)
 
 		
 		return 1
@@ -1238,7 +1237,6 @@ as
 	end
 go
 --.......................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE	......................................................
-select * from [LEISTE_EL_CODIGO?].Recorrido
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha
