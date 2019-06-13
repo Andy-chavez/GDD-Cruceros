@@ -115,9 +115,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(32, 216);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(125, 13);
+            this.label2.Size = new System.Drawing.Size(122, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Ingrese Año y Semesttre:";
+            this.label2.Text = "Ingrese Año y Semestre:";
             this.label2.Click += new System.EventHandler(this.Label2_Click);
             // 
             // botonVolver

@@ -160,6 +160,7 @@ namespace FrbaCrucero.GeneracionViaje
             this.Controls.Add(this.dateTimePickerInicio);
             this.Name = "GenerarViaje";
             this.Text = "Generar Viaje";
+            this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRec)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCruc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.generarViajeBindingSource)).EndInit();
