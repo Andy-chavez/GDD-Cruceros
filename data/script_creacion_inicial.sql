@@ -784,7 +784,11 @@ as
 begin
 		declare @valor_retorno smallint
 		if
-		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
+		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidad)) 
+			begin
+			set @valor_retorno = -2 -- no existe funcionalidad
+			return @valor_retorno
+			end
 		else
 			begin
 				if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @NombreRol)) -- si es la primer vez que lo carga
@@ -795,8 +799,11 @@ begin
 
 				if
 					(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
-								where id_funcionalidad= @idFuncionalidad and id_rol = @NombreRol)) set @valor_retorno = -3 -- ya tiene esa funcionalidad
-
+								where id_funcionalidad= @idFuncionalidad and id_rol = @NombreRol)) 
+							begin
+								set @valor_retorno = -3 -- ya tiene esa funcionalidad
+								return @valor_retorno
+							end
 				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
 				values(@NombreRol,@idFuncionalidad)
 				set @valor_retorno = 1
@@ -825,6 +832,8 @@ as
 				update [LEISTE_EL_CODIGO?].Cliente
 				set id_rol = NULL
 				where id_rol = @idRol
+
+				set @valor_retorno = 1
 			end
 		return @valor_retorno
 	end
@@ -843,7 +852,8 @@ as
 			begin
 				update [LEISTE_EL_CODIGO?].Rol
 				set baja_logica = 'N'
-				where id_rol = @idRol	
+				where id_rol = @idRol
+				set @valor_retorno = 1
 			end
 		return @valor_retorno
 	end
@@ -1231,7 +1241,8 @@ as
 		select c.id_crucero,id_fabricante,modelo
 			from [LEISTE_EL_CODIGO?].CrucerosDisponibles c join [LEISTE_EL_CODIGO?].Viaje v
 			On c.id_crucero = v.id_crucero
-			where v.fecha_inicio <> '2018-07-22 07:00:00.000' and v.fecha_finalizacion <>'2018-07-22 19:06:00.000' and c.id_crucero='ETKLGK-24399'
+			where v.fecha_inicio <> @fecha_inicio and v.fecha_finalizacion_estimada <>@fecha_inicio 
+				and v.fecha_inicio <> @fecha_finalizacion_estimada and v.fecha_finalizacion_estimada <> @fecha_finalizacion_estimada
 	end
 go
 --.......................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE	......................................................
