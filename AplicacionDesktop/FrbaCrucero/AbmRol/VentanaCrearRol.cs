@@ -19,12 +19,20 @@ namespace FrbaCrucero.AbmRol
         {
             InitializeComponent();
         }
-
-        Rol rol = new Rol();
-
+        private BaseDeDato bd = new BaseDeDato();
+        private DataTable dt = new DataTable();
+        private List<object> listaFuncion = new List<object>();
+        private Rol rol = new Rol();
+        SqlDataAdapter adapt;
         private void VentanaDeAltaRol_Load(object sender, EventArgs e)
         {
-
+            bd.conectar();
+            adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
+            dt = new DataTable();
+            adapt.Fill(dt);
+            listaFunc.DataSource = dt;
+            listaFunc.ValueMember = "id_funcionalidad";
+            bd.desconectar();
 
         }
 
@@ -35,10 +43,38 @@ namespace FrbaCrucero.AbmRol
 
         private void botonCrear_Click(object sender, EventArgs e)
         {
-
             if (this.todosLosCamposEstancompletos())
             {
-                this.agregarRol();
+                textoNombre.Enabled = false;
+                //this.agregarRol();
+                try
+                {
+                    BaseDeDato bd = new BaseDeDato();
+                    SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].crearNuevoRol");
+                    procedure.CommandType = CommandType.StoredProcedure;
+                    procedure.Parameters.AddWithValue("@NombreRol", SqlDbType.NVarChar).Value = textoNombre.Text;
+                    procedure.Parameters.Add("@idFuncionalidad", SqlDbType.NVarChar).Value = listaFunc.Text;
+                    procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
+                    bd.ejecutarConsultaDevuelveInt(procedure);
+                    int retorno = (int)procedure.Parameters["@retorno"].Value;
+                    if (retorno == 1) //joya
+                    {
+                        MessageBox.Show("Rol creado exitosamente, agregue nuevas funciones a dicho rol seleccionándolas de las posibles y presionando el boton crear. Presione limpiar si neceista crear un nuevo rol.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    }
+                    else if (retorno == -2) // no existe funcionalidad
+                    { //no existe usuario
+                        MessageBox.Show("No Existe dicha Funcionalidad.");
+                    }
+                    else if (retorno == -3) // el rol ya tiene esa funcionalidad
+                    { //no existe usuario
+                        MessageBox.Show("El nombre de rol ingresado ya posee la funcionalidad seleccionada.");
+                    }
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
             }
             else
             {
@@ -61,8 +97,9 @@ namespace FrbaCrucero.AbmRol
             if (textoNombre.Text != "")
             {
 
-                rol.crearRol(textoNombre.Text, Convert.ToInt32(listaFunc.SelectedValue));
-                DialogResult result = MessageBox.Show("Rol creado exitosamente", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                rol.crearRol(textoNombre.Text, listaFunc.SelectedValue.ToString());
+
+                DialogResult result = MessageBox.Show("Rol creado exitosamente, agregue nuevas funciones a dicho rol seleccionándolas de las posibles y presionando el boton crear. Presione limpiar si neceista crear un nuevo rol.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
 
@@ -80,6 +117,7 @@ namespace FrbaCrucero.AbmRol
         private void botonLimpiar_Click(object sender, EventArgs e)
         {
             textoNombre.Clear();
+            textoNombre.Enabled = true;
         }
 
         private void botonVolver_Click(object sender, EventArgs e)

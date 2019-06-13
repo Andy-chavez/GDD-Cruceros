@@ -47,7 +47,7 @@ namespace FrbaCrucero
 
         public void botonPago_Click(object sender, EventArgs e)
         {
-            new VentanaPagoReserva().Show();
+            //new VentanaPagoReserva().Show();
         }
 
         public void botonReserva_Click(object sender, EventArgs e)

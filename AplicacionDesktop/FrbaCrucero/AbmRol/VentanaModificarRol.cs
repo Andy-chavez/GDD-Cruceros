@@ -60,7 +60,7 @@ namespace FrbaCrucero.AbmRol
                 int retorno = (int)procedure.Parameters["@retorno"].Value;
                 if (retorno == 1) //joya
                 {
-                    VentanaMenu menu = new VentanaMenu();
+                    MessageBox.Show("Operacion completada correctamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.None);
                     this.Hide();
                 }
                 else if(retorno == -1) // no existe el rol

@@ -81,7 +81,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(24, 198);
+            this.botonVolver.Location = new System.Drawing.Point(24, 210);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(93, 23);
             this.botonVolver.TabIndex = 2;
@@ -91,7 +91,7 @@
             // 
             // botonCrear
             // 
-            this.botonCrear.Location = new System.Drawing.Point(339, 198);
+            this.botonCrear.Location = new System.Drawing.Point(339, 181);
             this.botonCrear.Name = "botonCrear";
             this.botonCrear.Size = new System.Drawing.Size(93, 23);
             this.botonCrear.TabIndex = 3;
@@ -113,7 +113,7 @@
             // listaFunc
             // 
             this.listaFunc.FormattingEnabled = true;
-            this.listaFunc.Location = new System.Drawing.Point(111, 26);
+            this.listaFunc.Location = new System.Drawing.Point(121, 26);
             this.listaFunc.Name = "listaFunc";
             this.listaFunc.Size = new System.Drawing.Size(225, 21);
             this.listaFunc.TabIndex = 1;
@@ -130,9 +130,9 @@
             // 
             // botonLimpiar
             // 
-            this.botonLimpiar.Location = new System.Drawing.Point(463, 24);
+            this.botonLimpiar.Location = new System.Drawing.Point(24, 181);
             this.botonLimpiar.Name = "botonLimpiar";
-            this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.botonLimpiar.Size = new System.Drawing.Size(93, 23);
             this.botonLimpiar.TabIndex = 5;
             this.botonLimpiar.Text = "Limpiar";
             this.botonLimpiar.UseVisualStyleBackColor = true;
@@ -142,7 +142,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 246);
+            this.ClientSize = new System.Drawing.Size(453, 246);
             this.Controls.Add(this.botonLimpiar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.botonCrear);
@@ -150,6 +150,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "VentanaCrearRol";
             this.Text = "Crear Rol";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaDeAltaRol_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

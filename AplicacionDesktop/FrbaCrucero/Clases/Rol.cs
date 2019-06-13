@@ -44,7 +44,7 @@ namespace FrbaCrucero.Clases
 
         #endregion
 
-        public void crearRol(String nombreRol, int idFuncionalidad)
+        public void crearRol(String nombreRol, String idFuncionalidad)
         {
            this.nombre = nombreRol;
 

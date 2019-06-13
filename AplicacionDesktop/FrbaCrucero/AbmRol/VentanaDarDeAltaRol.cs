@@ -50,7 +50,7 @@ namespace FrbaCrucero.AbmRol
                 int retorno = (int)procedure.Parameters["@retorno"].Value;
                 if (retorno == 1) //joya
                 {
-                    MessageBox.Show("Rol habilitado correctamente");
+                    MessageBox.Show("Operacion completada correctamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.None);
                     this.Hide();
                 }
                 else if (retorno == -1) // no existe el rol
@@ -63,6 +63,11 @@ namespace FrbaCrucero.AbmRol
             {
                 MessageBox.Show(exception.Message);
             }
+        }
+
+        private void GroupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
