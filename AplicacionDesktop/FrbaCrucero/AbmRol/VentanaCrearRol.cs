@@ -59,16 +59,16 @@ namespace FrbaCrucero.AbmRol
                     int retorno = (int)procedure.Parameters["@retorno"].Value;
                     if (retorno == 1) //joya
                     {
-                        MessageBox.Show("Rol creado exitosamente, agregue nuevas funciones a dicho rol seleccionándolas de las posibles y presionando el boton crear. Presione limpiar si neceista crear un nuevo rol.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Rol creado exitosamente. \nAgregue nuevas funciones a dicho rol seleccionándolas de las posibles y presionando el boton crear.\nPresione limpiar si necesita crear un nuevo rol.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     }
                     else if (retorno == -2) // no existe funcionalidad
-                    { //no existe usuario
-                        MessageBox.Show("No Existe dicha Funcionalidad.");
+                    {
+                        MessageBox.Show("No Existe dicha Funcionalidad.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error); 
                     }
                     else if (retorno == -3) // el rol ya tiene esa funcionalidad
-                    { //no existe usuario
-                        MessageBox.Show("El nombre de rol ingresado ya posee la funcionalidad seleccionada.");
+                    {
+                        MessageBox.Show("El nombre de rol ingresado ya posee la funcionalidad seleccionada.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception exception)
@@ -78,21 +78,10 @@ namespace FrbaCrucero.AbmRol
             }
             else
             {
-                MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-        private void textoNombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void botonAgregar_Click(object sender, EventArgs e)
-        {
-
-
-        }
-        private void agregarRol()
+/*        private void agregarRol()
         {
             if (textoNombre.Text != "")
             {
@@ -107,12 +96,7 @@ namespace FrbaCrucero.AbmRol
             {
                 MessageBox.Show("Nombre de rol vacío. Inserte el nombre del rol", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void listaFuncionalidades_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+        }*/
 
         private void botonLimpiar_Click(object sender, EventArgs e)
         {
@@ -124,12 +108,6 @@ namespace FrbaCrucero.AbmRol
         {
             this.Close();
         }
-
-        public void llenarItems(ComboBox cb)
-        {
-
-        }
-
         private void listaFunc_SelectedIndexChanged(object sender, EventArgs e)
         {
 
