@@ -42,10 +42,10 @@ namespace FrbaCrucero.GeneracionViaje
             {
                 BaseDeDato bd = new BaseDeDato();
                 DataTable dt;
-                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("SELECT * FROM [LEISTE_EL_CODIGO?].CrucerosDisponibles");
-                //procedure.CommandType = CommandType.TableDirect;
-                //procedure.Parameters.Add("@anio", SqlDbType.NVarChar).Value = this.comboBoxAnio.SelectedItem.ToString();
-                //procedure.Parameters.Add("@semestre", SqlDbType.NVarChar).Value = this.comboBoxSemestre.SelectedItem.ToString();
+                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje");
+                procedure.CommandType = CommandType.StoredProcedure;
+                procedure.Parameters.Add("@fecha_inicio", SqlDbType.DateTime2).Value = this.dateTimePickerInicio.Value;
+                procedure.Parameters.Add("@fecha_finalizacion_estimada", SqlDbType.DateTime2).Value = this.dateTimePickerFin.Value;
                 dt = bd.obtenerDataTable(procedure);
                 this.dataGridViewCruc.DataSource = dt;
             }
