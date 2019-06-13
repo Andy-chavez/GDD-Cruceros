@@ -168,6 +168,7 @@ namespace FrbaCrucero.AbmRol
             this.Controls.Add(this.label1);
             this.Name = "VentanaModificarRol";
             this.Text = "Modificar Rol";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaRolSeleccionado_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.listaFunc)).EndInit();

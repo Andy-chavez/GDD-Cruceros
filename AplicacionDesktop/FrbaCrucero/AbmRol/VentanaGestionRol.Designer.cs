@@ -73,6 +73,7 @@
             this.Controls.Add(this.botonAlta);
             this.Name = "VentanaGestionRol";
             this.Text = "Gestionar Rol";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaGestionRol_Load);
             this.ResumeLayout(false);
 
