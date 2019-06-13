@@ -35,7 +35,7 @@
             // 
             // botonAlta
             // 
-            this.botonAlta.Location = new System.Drawing.Point(62, 44);
+            this.botonAlta.Location = new System.Drawing.Point(31, 28);
             this.botonAlta.Name = "botonAlta";
             this.botonAlta.Size = new System.Drawing.Size(143, 23);
             this.botonAlta.TabIndex = 0;
@@ -45,7 +45,7 @@
             // 
             // botonBaja
             // 
-            this.botonBaja.Location = new System.Drawing.Point(62, 95);
+            this.botonBaja.Location = new System.Drawing.Point(31, 78);
             this.botonBaja.Name = "botonBaja";
             this.botonBaja.Size = new System.Drawing.Size(143, 23);
             this.botonBaja.TabIndex = 1;
@@ -55,7 +55,7 @@
             // 
             // botonModificar
             // 
-            this.botonModificar.Location = new System.Drawing.Point(62, 150);
+            this.botonModificar.Location = new System.Drawing.Point(31, 128);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.Size = new System.Drawing.Size(143, 23);
             this.botonModificar.TabIndex = 2;
@@ -67,7 +67,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 231);
+            this.ClientSize = new System.Drawing.Size(234, 169);
             this.Controls.Add(this.botonModificar);
             this.Controls.Add(this.botonBaja);
             this.Controls.Add(this.botonAlta);

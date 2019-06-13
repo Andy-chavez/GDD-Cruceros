@@ -28,8 +28,8 @@ namespace FrbaCrucero.AbmRol
         private void botonModificar_Click(object sender, EventArgs e)
         {
             VentanaModificarRol ventanaDeBaja = new VentanaModificarRol();
-            ventanaDeBaja.Show();
             ventanaDeBaja.esconderBotonEliminar();
+            ventanaDeBaja.Show();
         }
 
         private void botonListado_Click(object sender, EventArgs e)

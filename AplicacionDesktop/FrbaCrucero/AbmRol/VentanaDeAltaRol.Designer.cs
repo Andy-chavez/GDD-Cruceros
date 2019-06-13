@@ -103,13 +103,12 @@
             // 
             this.groupBox2.Controls.Add(this.listaFunc);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(24, 111);
+            this.groupBox2.Location = new System.Drawing.Point(24, 110);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(408, 65);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Funcionalidades";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // listaFunc
             // 

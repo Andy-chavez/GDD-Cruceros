@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 using FrbaCrucero.Clases;
 
 namespace FrbaCrucero.AbmRol
@@ -19,8 +20,10 @@ namespace FrbaCrucero.AbmRol
         }
 
         Rol rol = new Rol();
+        BaseDeDato bd = new BaseDeDato();
 
-
+        SqlDataAdapter adapt;
+        DataTable dt;// = new DataTable();
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -29,7 +32,13 @@ namespace FrbaCrucero.AbmRol
 
         private void VentanaModificarRol_Load(object sender, EventArgs e)
         {
-
+            bd.conectar();
+            adapt = new SqlDataAdapter("select nombre from [LEISTE_EL_CODIGO?].Rol", bd.obtenerConexion());
+            dt = new DataTable();
+            adapt.Fill(dt);
+            comboBoxRoles.DataSource = dt;
+            comboBoxRoles.ValueMember = "nombre";
+            bd.desconectar();
 
         }
 
@@ -66,6 +75,16 @@ namespace FrbaCrucero.AbmRol
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
