@@ -28,7 +28,7 @@ namespace FrbaCrucero.AbmRol
         {
             this.llenardataGridView(listaFunc);
             bd.conectar();
-            adapt = new SqlDataAdapter("select id_rol from [LEISTE_EL_CODIGO?].Rol", bd.obtenerConexion());
+            adapt = new SqlDataAdapter("select id_rol from [LEISTE_EL_CODIGO?].RolesHabilitados", bd.obtenerConexion());
             dt = new DataTable();
             adapt.Fill(dt);
             comboBoxRoles.DataSource = dt;

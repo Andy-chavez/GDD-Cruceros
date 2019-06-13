@@ -1,6 +1,6 @@
 ﻿namespace FrbaCrucero.AbmRol
 {
-    partial class VentanaDarBajaRol
+    partial class VentanaDarDeAltaRol
     {
         /// <summary>
         /// Required designer variable.
@@ -28,34 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.rolesHabilitadosBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.botonAlta = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxRoles = new System.Windows.Forms.ComboBox();
-            this.rolesHabilitadosBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.botonVolver = new System.Windows.Forms.Button();
-            this.botonEliminar = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.rolesHabilitadosBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.rolesHabilitadosBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
-            // rolesHabilitadosBindingSource
+            // botonAlta
             // 
-            this.rolesHabilitadosBindingSource.DataMember = "RolesHabilitados";
+            this.botonAlta.Location = new System.Drawing.Point(278, 155);
+            this.botonAlta.Name = "botonAlta";
+            this.botonAlta.Size = new System.Drawing.Size(111, 23);
+            this.botonAlta.TabIndex = 2;
+            this.botonAlta.Text = "Habilitar";
+            this.botonAlta.UseVisualStyleBackColor = true;
+            this.botonAlta.Click += new System.EventHandler(this.BotonAlta_Click);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.comboBoxRoles);
-            this.groupBox1.Location = new System.Drawing.Point(27, 22);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(377, 116);
-            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Seleccionar Rol";
-            this.groupBox1.Enter += new System.EventHandler(this.GroupBox1_Enter);
             // 
             // label1
             // 
@@ -65,70 +65,48 @@
             this.label1.Size = new System.Drawing.Size(37, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Rol ID";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // comboBoxRoles
             // 
-            this.comboBoxRoles.DataSource = this.rolesHabilitadosBindingSource1;
             this.comboBoxRoles.FormattingEnabled = true;
             this.comboBoxRoles.Location = new System.Drawing.Point(83, 42);
             this.comboBoxRoles.Name = "comboBoxRoles";
             this.comboBoxRoles.Size = new System.Drawing.Size(267, 21);
             this.comboBoxRoles.TabIndex = 0;
-            this.comboBoxRoles.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
-            // 
-            // rolesHabilitadosBindingSource1
-            // 
-            this.rolesHabilitadosBindingSource1.DataMember = "RolesHabilitados";
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(27, 156);
+            this.botonVolver.Location = new System.Drawing.Point(12, 155);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
-            this.botonVolver.TabIndex = 1;
+            this.botonVolver.TabIndex = 4;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
-            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
             // 
-            // botonEliminar
-            // 
-            this.botonEliminar.Location = new System.Drawing.Point(329, 156);
-            this.botonEliminar.Name = "botonEliminar";
-            this.botonEliminar.Size = new System.Drawing.Size(75, 23);
-            this.botonEliminar.TabIndex = 4;
-            this.botonEliminar.Text = "Eliminar";
-            this.botonEliminar.UseVisualStyleBackColor = true;
-            this.botonEliminar.Click += new System.EventHandler(this.botonEliminar_Click);
-            // 
-            // VentanaDarBajaRol
+            // VentanaDarDeAltaRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(426, 196);
-            this.Controls.Add(this.botonEliminar);
+            this.ClientSize = new System.Drawing.Size(416, 199);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.groupBox1);
-            this.Name = "VentanaDarBajaRol";
-            this.Text = "Eliminar Rol";
+            this.Controls.Add(this.botonAlta);
+            this.Name = "VentanaDarDeAltaRol";
+            this.Text = "VentanaDarDeAltaRol";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.VentanaModificarRol_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.rolesHabilitadosBindingSource)).EndInit();
+            this.Load += new System.EventHandler(this.VentanaDarDeAltaRol_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.rolesHabilitadosBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.BindingSource rolesHabilitadosBindingSource;
+        private System.Windows.Forms.Button botonAlta;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxRoles;
         private System.Windows.Forms.Button botonVolver;
-        private System.Windows.Forms.BindingSource rolesHabilitadosBindingSource1;
-        private System.Windows.Forms.Button botonEliminar;
     }
 }

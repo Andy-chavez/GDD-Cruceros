@@ -31,21 +31,22 @@
             this.botonAlta = new System.Windows.Forms.Button();
             this.botonBaja = new System.Windows.Forms.Button();
             this.botonModificar = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // botonAlta
             // 
-            this.botonAlta.Location = new System.Drawing.Point(31, 28);
+            this.botonAlta.Location = new System.Drawing.Point(40, 28);
             this.botonAlta.Name = "botonAlta";
             this.botonAlta.Size = new System.Drawing.Size(143, 23);
             this.botonAlta.TabIndex = 0;
-            this.botonAlta.Text = "Dar de Alta";
+            this.botonAlta.Text = "Crear Rol";
             this.botonAlta.UseVisualStyleBackColor = true;
             this.botonAlta.Click += new System.EventHandler(this.botonAlta_Click);
             // 
             // botonBaja
             // 
-            this.botonBaja.Location = new System.Drawing.Point(31, 78);
+            this.botonBaja.Location = new System.Drawing.Point(40, 86);
             this.botonBaja.Name = "botonBaja";
             this.botonBaja.Size = new System.Drawing.Size(143, 23);
             this.botonBaja.TabIndex = 1;
@@ -55,7 +56,7 @@
             // 
             // botonModificar
             // 
-            this.botonModificar.Location = new System.Drawing.Point(31, 128);
+            this.botonModificar.Location = new System.Drawing.Point(40, 115);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.Size = new System.Drawing.Size(143, 23);
             this.botonModificar.TabIndex = 2;
@@ -63,11 +64,22 @@
             this.botonModificar.UseVisualStyleBackColor = true;
             this.botonModificar.Click += new System.EventHandler(this.botonModificar_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(40, 57);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(143, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Alta de rol";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
             // VentanaGestionRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(234, 169);
+            this.ClientSize = new System.Drawing.Size(219, 169);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.botonModificar);
             this.Controls.Add(this.botonBaja);
             this.Controls.Add(this.botonAlta);
@@ -84,5 +96,6 @@
         private System.Windows.Forms.Button botonAlta;
         private System.Windows.Forms.Button botonBaja;
         private System.Windows.Forms.Button botonModificar;
+        private System.Windows.Forms.Button button1;
     }
 }

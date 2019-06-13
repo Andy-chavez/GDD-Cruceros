@@ -101,11 +101,17 @@
     <Compile Include="AbmRecorrido\VentanaTramo.Designer.cs">
       <DependentUpon>VentanaTramo.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\VentanaDeAltaRol.cs">
+    <Compile Include="AbmRol\VentanaDarDeAltaRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\VentanaDeAltaRol.Designer.cs">
-      <DependentUpon>VentanaDeAltaRol.cs</DependentUpon>
+    <Compile Include="AbmRol\VentanaDarDeAltaRol.Designer.cs">
+      <DependentUpon>VentanaDarDeAltaRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\VentanaCrearRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\VentanaCrearRol.Designer.cs">
+      <DependentUpon>VentanaCrearRol.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRol\VentanaGestionRol.cs">
       <SubType>Form</SubType>
@@ -217,8 +223,11 @@
     <EmbeddedResource Include="AbmRecorrido\VentanaTramo.resx">
       <DependentUpon>VentanaTramo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmRol\VentanaDeAltaRol.resx">
-      <DependentUpon>VentanaDeAltaRol.cs</DependentUpon>
+    <EmbeddedResource Include="AbmRol\VentanaDarDeAltaRol.resx">
+      <DependentUpon>VentanaDarDeAltaRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\VentanaCrearRol.resx">
+      <DependentUpon>VentanaCrearRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\VentanaGestionRol.resx">
       <DependentUpon>VentanaGestionRol.cs</DependentUpon>
@@ -242,6 +251,9 @@
       <DependentUpon>VentanaOperacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PagoReserva\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VentanaMenu.resx">
