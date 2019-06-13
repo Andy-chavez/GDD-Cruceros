@@ -719,7 +719,7 @@ go
 		--listado de funcionalidades.
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol (@idRolAImitar nvarchar(255),@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol (@idRolAImitar nvarchar(255),@idNuevaFuncionalidad nvarchar(100),@nuevoNombreRol nvarchar(255))
 as
 	begin
 		declare @valor_retorno smallint
@@ -749,7 +749,7 @@ go
 --eliminar funcionalidad de un rol--
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol (@idRol nvarchar(255),@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol (@idRol nvarchar(255),@idFuncionalidadAEliminar nvarchar(100),@nuevoNombreRol nvarchar(255))
 as
 	begin
 		declare @valor_retorno smallint
@@ -779,7 +779,7 @@ go
 --Crear Nuevo Rol -- deberia usarse dentro de un while, lo hago para uno a la vez por ahora
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].crearNuevoRol (@idFuncionalidad smallint,@NombreRol nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].crearNuevoRol (@idFuncionalidad nvarchar(100),@NombreRol nvarchar(255))
 as
 begin
 		declare @valor_retorno smallint
@@ -1228,7 +1228,7 @@ go
 create procedure [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje(@fecha_inicio datetime2,@fecha_finalizacion_estimada datetime2)
 as
 	begin
-		select c.id_crucero,id_fabricante,modelo,id_viaje,fecha_inicio,fecha_finalizacion
+		select c.id_crucero,id_fabricante,modelo
 			from [LEISTE_EL_CODIGO?].CrucerosDisponibles c join [LEISTE_EL_CODIGO?].Viaje v
 			On c.id_crucero = v.id_crucero
 			where v.fecha_inicio <> '2018-07-22 07:00:00.000' and v.fecha_finalizacion <>'2018-07-22 19:06:00.000' and c.id_crucero='ETKLGK-24399'
