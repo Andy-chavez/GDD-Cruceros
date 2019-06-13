@@ -184,12 +184,11 @@ create table [LEISTE_EL_CODIGO?].Usuario(
 )
 go
 create table [LEISTE_EL_CODIGO?].Funcionalidad(
-	id_funcionalidad smallint identity primary key,
-	descripcion nvarchar(100) not null
+	id_funcionalidad nvarchar(100) primary key,
 )
 go
 create table [LEISTE_EL_CODIGO?].FuncionalidadPorRol(
-	id_funcionalidad smallint references [LEISTE_EL_CODIGO?].Funcionalidad,
+	id_funcionalidad nvarchar(100) references [LEISTE_EL_CODIGO?].Funcionalidad,
 	id_rol nvarchar(255) references [LEISTE_EL_CODIGO?].Rol,
 	primary key (id_rol, id_funcionalidad)
 )
@@ -375,16 +374,16 @@ go
 
 --........................................ INSERCIONES ......................................................
 -- Funcionalidad
-insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('abm de rol')						-- Funcionalidad = 1
-insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('abm de cruceros')				-- Funcionalidad = 2
-insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('registro de usuarios')			-- Funcionalidad = 3
-insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('abm de puertos')					-- Funcionalidad = 4
-insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('abm de recorrido')				-- Funcionalidad = 5
-insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('generar viaje')					-- Funcionalidad = 6
-insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('compra y/o reserva de viaje')	-- Funcionalidad = 7
-insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('pago de reserva')				-- Funcionalidad = 8
-insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('listado estadistico')			-- Funcionalidad = 9
-insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('login y seguridad')				-- Funcionalidad = 10
+insert into [LEISTE_EL_CODIGO?].Funcionalidad(id_funcionalidad) values('abm de rol')						-- Funcionalidad = 1
+insert into [LEISTE_EL_CODIGO?].Funcionalidad(id_funcionalidad) values('abm de cruceros')				-- Funcionalidad = 2
+insert into [LEISTE_EL_CODIGO?].Funcionalidad(id_funcionalidad) values('registro de usuarios')			-- Funcionalidad = 3
+insert into [LEISTE_EL_CODIGO?].Funcionalidad(id_funcionalidad) values('abm de puertos')					-- Funcionalidad = 4
+insert into [LEISTE_EL_CODIGO?].Funcionalidad(id_funcionalidad) values('abm de recorrido')				-- Funcionalidad = 5
+insert into [LEISTE_EL_CODIGO?].Funcionalidad(id_funcionalidad) values('generar viaje')					-- Funcionalidad = 6
+insert into [LEISTE_EL_CODIGO?].Funcionalidad(id_funcionalidad) values('compra y/o reserva de viaje')	-- Funcionalidad = 7
+insert into [LEISTE_EL_CODIGO?].Funcionalidad(id_funcionalidad) values('pago de reserva')				-- Funcionalidad = 8
+insert into [LEISTE_EL_CODIGO?].Funcionalidad(id_funcionalidad) values('listado estadistico')			-- Funcionalidad = 9
+insert into [LEISTE_EL_CODIGO?].Funcionalidad(id_funcionalidad) values('login y seguridad')				-- Funcionalidad = 10
 go
 -- Rol
 insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('administrador general')			--Rol 1 = administrador general
@@ -393,32 +392,32 @@ insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('cliente')						--Rol 3 = cli
 go
 -- Funcionalidad por Rol
 --ADMINISTRADOR GENERAL
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',1)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',2)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',3)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',4)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',5)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',6)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',7)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',8)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',9)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general','abm de rol')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general','abm de cruceros')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general','registro de usuarios')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general','abm de puertos')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general','abm de recorrido')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general','generar viaje')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general','compra y/o reserva de viaje')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general','pago de reserva')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general','listado estadistico')
 go
 --ADMIN
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',1)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',2)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',3)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',4)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',5)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',6)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',7)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',8)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',9)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador','abm de rol')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador','abm de cruceros')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador','registro de usuarios')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador','abm de puertos')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador','abm de recorrido')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador','generar viaje')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador','compra y/o reserva de viaje')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador','pago de reserva')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador','listado estadistico')
 go
 
 --******************************************creo que estos inserts feos pueden hacerse de otra forma 
 --Cliente
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('cliente',7)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('cliente',8)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('cliente','compra y/o reserva de viaje')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('cliente','pago de reserva')
 go
 ----Contraseñas
 declare @algo nvarchar(32)
@@ -720,7 +719,7 @@ go
 		--listado de funcionalidades.
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol (@idRolAImitar nvarchar(255),@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol (@idRolAImitar nvarchar(255),@idNuevaFuncionalidad nvarchar(100),@nuevoNombreRol nvarchar(255))
 as
 	begin
 		declare @valor_retorno smallint
@@ -750,7 +749,7 @@ go
 --eliminar funcionalidad de un rol--
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol (@idRol nvarchar(255),@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol (@idRol nvarchar(255),@idFuncionalidadAEliminar nvarchar(100),@nuevoNombreRol nvarchar(255))
 as
 	begin
 		declare @valor_retorno smallint
@@ -780,7 +779,7 @@ go
 --Crear Nuevo Rol -- deberia usarse dentro de un while, lo hago para uno a la vez por ahora
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].crearNuevoRol (@idFuncionalidad smallint,@NombreRol nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].crearNuevoRol (@idFuncionalidad nvarchar(100),@NombreRol nvarchar(255))
 as
 begin
 		declare @valor_retorno smallint
@@ -1187,7 +1186,7 @@ as
 		exec [LEISTE_EL_CODIGO?].auditarCancelacion @id_crucero, @motivo
 	end
 go
---........................................<ABM 7> GENERAR VIAJE			......................................................
+--........................................<ABM 7> GENERAR VIAJE	......................................................
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2)
@@ -1229,7 +1228,7 @@ go
 create procedure [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje(@fecha_inicio datetime2,@fecha_finalizacion_estimada datetime2)
 as
 	begin
-		select c.id_crucero,id_fabricante,modelo,id_viaje,fecha_inicio,fecha_finalizacion
+		select c.id_crucero,id_fabricante,modelo
 			from [LEISTE_EL_CODIGO?].CrucerosDisponibles c join [LEISTE_EL_CODIGO?].Viaje v
 			On c.id_crucero = v.id_crucero
 			where v.fecha_inicio <> '2018-07-22 07:00:00.000' and v.fecha_finalizacion <>'2018-07-22 19:06:00.000' and c.id_crucero='ETKLGK-24399'
