@@ -875,7 +875,7 @@ create procedure [LEISTE_EL_CODIGO?].modificarTramo
 as
 	begin
 		if @origen = @destino return -1 --origen y destino son el mismo
-		else if (select orden from [LEISTE_EL_CODIGO?].Tramo where id_tramo=@idTramo) <> 1 and 
+		if (select orden from [LEISTE_EL_CODIGO?].Tramo where id_tramo=@idTramo) <> 1 and 
 				 @origen <> (select id_destino from [LEISTE_EL_CODIGO?].Tramo 
 								where id_recorrido = (select id_recorrido from [LEISTE_EL_CODIGO?].Tramo t where @idTramo = t.id_tramo)
 									and orden = (select t2.orden from [LEISTE_EL_CODIGO?].Tramo t2 where @idTramo = t2.id_tramo) -1)
@@ -883,6 +883,10 @@ as
 		update [LEISTE_EL_CODIGO?].Tramo
 		set id_origen=@origen,id_destino=@destino,precio_base=@precio
 		where id_tramo = @idTramo
+		if (select count(*)
+			from [LEISTE_EL_CODIGO?].Tramo
+
+		
 		return 1
 	end
 go
@@ -897,12 +901,15 @@ go
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].crearRecorrido
-(@idRecorrido decimal(18,0),@origen nvarchar(255),@destino nvarchar(255))
+(@origen nvarchar(255),@destino nvarchar(255))
 as
 	--begin try
+	declare @idRecorrido decimal(18,0)
 	--if exists(select id_recorrido from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido=@idRecorrido) return -1 --el id ya existe
-	insert into [LEISTE_EL_CODIGO?].Recorrido(id_recorrido,estado,id_origen,id_destino)
-	values(@idRecorrido,'A',@origen,@destino)
+	insert into [LEISTE_EL_CODIGO?].Recorrido(estado,id_origen,id_destino)
+	values('A',@origen,@destino)
+	set @idRecorrido = SCOPE_IDENTITY()
+	return @idRecorrido
 	--return 1 --se creo el recorrido
 	--end try
 	--begin catch

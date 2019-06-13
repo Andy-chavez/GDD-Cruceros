@@ -102,7 +102,9 @@ Valores de retorno:
         
 ### Recorrido:
 
-#### crearRecorrido(@idRecorrido decimal(18,0),@origen nvarchar(255),@destino nvarchar(255))
+#### crearRecorrido(@origen nvarchar(255),@destino nvarchar(255))
+    Valores de retorno:
+    el idRecorrido
 
 Nota: primero creás el recorrido, después los tramos que lo componen
 
@@ -132,7 +134,7 @@ Nota: se debe hacer en orden del orden mas chico q quieras cambiar al ultimo
 
   Valores de retorno:
   
-    -1: error,origen y destino son iguales
+    -1: error,origen y destino son iguales 
     -2: el origen de este tramo no es el destino del tramo anterior
      1: todo bien, ya podés modificar el próximo tramo
 
