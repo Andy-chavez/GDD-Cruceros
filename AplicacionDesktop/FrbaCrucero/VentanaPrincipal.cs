@@ -91,7 +91,7 @@ namespace FrbaCrucero
             this.Hide();
             VentanaMenu menu = new VentanaMenu();
             menu.Show();
-            menu.ocultarBotones();
+          /*  menu.ocultarBotones(); */
             
         }
 

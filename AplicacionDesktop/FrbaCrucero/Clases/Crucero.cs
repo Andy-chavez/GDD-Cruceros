@@ -81,5 +81,52 @@ namespace FrbaCrucero.Clases
             bd.desconectar();
         }
 
+        public void modificarCrucero(string id, string idFabricante ){
+
+            this.id = id;
+            this.idFabricante = idFabricante;
+           
+            try
+            {
+                bd.conectar();
+                bd.crearSP("[LEISTE_EL_CODIGO?].modificarCrucero");
+                bd.setearParametroPorValor("id_crucero", id);
+                bd.setearParametroPorValor("id_fabricante", idFabricante);
+                
+                bd.ejecutarSP();
+            }
+            catch (Exception excepcion)
+            {
+
+                bd.ventanaErrorBD(excepcion);
+            }
+            bd.desconectar();
+        }
+
+        public void bajaDefinitiva(DateTime fechaActual, string id){
+            this.id = id;
+            this.idFabricante = idFabricante;
+
+            try
+            {
+                bd.conectar();
+                bd.crearSP("[LEISTE_EL_CODIGO?].modificarCrucero");
+                bd.setearParametroPorValor("id_crucero", id);
+                bd.setearParametroPorValor("fecha_actual", fechaActual);
+
+                bd.ejecutarSP();
+            }
+            catch (Exception excepcion)
+            {
+
+                bd.ventanaErrorBD(excepcion);
+            }
+            bd.desconectar();
+    
+    }
+
+
+    }
+
 }
-}
+
