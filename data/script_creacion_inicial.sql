@@ -140,6 +140,8 @@ if exists (select * from sys.procedures where name = 'mostrarReserva')
 	drop procedure [LEISTE_EL_CODIGO?].mostrarReserva
 if exists (select * from sys.procedures where name = 'comprarPasajeReservado')
 	drop procedure [LEISTE_EL_CODIGO?].comprarPasajeReservado
+if exists (select * from sys.procedures where name = 'crucerosDisponiblesParaViaje')
+	drop procedure [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje
 go
  if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
@@ -149,6 +151,11 @@ go
 if exists(select * from sys.views where object_name(object_id)='RolesHabilitados' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
 		drop view [LEISTE_EL_CODIGO?].RolesHabilitados
+	end
+go
+if exists(select * from sys.views where object_name(object_id)='ViajesConRecorridos' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	begin
+		drop view [LEISTE_EL_CODIGO?].ViajesConRecorridos
 	end
 go
 if exists (select * from sys.triggers where object_name(object_id)='fechaVencimiento') --and schema_name(schema_id)='LEISTE_EL_CODIGO?')
@@ -164,14 +171,13 @@ go
 USE GD1C2019
 go
 create table [LEISTE_EL_CODIGO?].Rol(
-	nombre nvarchar(255) not null,
-	id_rol smallint identity primary key,
+	id_rol nvarchar(255) primary key,
 	baja_logica char(1) not null default 'N' check(baja_logica in ('S','N')) 
 )
 go
 create table [LEISTE_EL_CODIGO?].Usuario(
 	id_usuario nvarchar(50) primary key,
-	id_rol smallint references [LEISTE_EL_CODIGO?].Rol, 
+	id_rol nvarchar(255) references [LEISTE_EL_CODIGO?].Rol, 
 	contra varbinary(32),
 	intentos_posibles smallint default 3,
 	habilitado nchar(1) not null default 'A' check(habilitado in ('A','I'))
@@ -184,13 +190,13 @@ create table [LEISTE_EL_CODIGO?].Funcionalidad(
 go
 create table [LEISTE_EL_CODIGO?].FuncionalidadPorRol(
 	id_funcionalidad smallint references [LEISTE_EL_CODIGO?].Funcionalidad,
-	id_rol smallint references [LEISTE_EL_CODIGO?].Rol,
+	id_rol nvarchar(255) references [LEISTE_EL_CODIGO?].Rol,
 	primary key (id_rol, id_funcionalidad)
 )
 go
 create table [LEISTE_EL_CODIGO?].Cliente(
 	id_cliente int identity primary key,
-	id_rol smallint default '3' references [LEISTE_EL_CODIGO?].Rol,
+	id_rol nvarchar(255) default 'cliente' references [LEISTE_EL_CODIGO?].Rol,
 	nombre varchar(255) not null,
 	apellido varchar(255) not null,
 	dni decimal(18, 0) not null,
@@ -381,38 +387,38 @@ insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('listado estad
 insert into [LEISTE_EL_CODIGO?].Funcionalidad(descripcion) values('login y seguridad')				-- Funcionalidad = 10
 go
 -- Rol
-insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('administrador general')			--Rol 1 = administrador general
-insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('administrador')					--Rol 2 = administrador
-insert into [LEISTE_EL_CODIGO?].Rol(nombre) values('cliente')						--Rol 3 = cliente
+insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('administrador general')			--Rol 1 = administrador general
+insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('administrador')					--Rol 2 = administrador
+insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('cliente')						--Rol 3 = cliente
 go
 -- Funcionalidad por Rol
 --ADMINISTRADOR GENERAL
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,1)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,2)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,3)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,4)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,5)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,6)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,7)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,8)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(1,9)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',1)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',2)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',3)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',4)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',5)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',6)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',7)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',8)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador general',9)
 go
 --ADMIN
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,1)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,2)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,3)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,4)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,5)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,6)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,7)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,8)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(2,9)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',1)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',2)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',3)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',4)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',5)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',6)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',7)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',8)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador',9)
 go
 
 --******************************************creo que estos inserts feos pueden hacerse de otra forma 
 --Cliente
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(3,7)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values(3,8)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('cliente',7)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('cliente',8)
 go
 ----Contraseñas
 declare @algo nvarchar(32)
@@ -420,13 +426,13 @@ set @algo = 'w23e'
 declare @hash varbinary(32)
 set @hash = hashbytes('SHA2_256', @algo)
 --ADMINISTRADOR GENERAL
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin',1,@hash)	
+insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin','administrador general',@hash)	
 --ADMINISTRADORES
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('adminNuestro',2,@hash)
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin2',2,@hash)
+insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('adminNuestro','administrador',@hash)
+insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin2','administrador',@hash)
 --Cliente
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepe',3)
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepita',3)
+insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepe','cliente')
+insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepita','cliente')
 go
 --........................................ MIGRACION ......................................................
 --CLIENTE--
@@ -643,6 +649,70 @@ where exists(select id_pasaje
 delete from [LEISTE_EL_CODIGO?].Reserva
 where id_reserva in (select id_reserva
 						from [LEISTE_EL_CODIGO?].ReservasPagadas)
+--........................................VISTAS PARA APLICATIVO......................................................
+--Vista de CRUCEROS DISPONIBLES--
+USE GD1C2019
+go
+create view [LEISTE_EL_CODIGO?].CrucerosDisponibles
+as
+		select id_crucero,id_fabricante,modelo
+		from [LEISTE_EL_CODIGO?].Crucero
+		where baja_fuera_vida_util = 'N' and baja_fuera_de_servicio = 'N'
+go
+--Vista de ROLES HABILITADOS--
+USE GD1C2019
+go
+create view [LEISTE_EL_CODIGO?].RolesHabilitados
+as
+		select id_rol
+		from [LEISTE_EL_CODIGO?].Rol
+		where baja_logica = 'N' -- ver despues si es necesario tambien hacer una vista con todos los roles, habilitados o no.
+go
+if exists(select * from sys.views where object_name(object_id)='RecorridosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	begin
+		drop view [LEISTE_EL_CODIGO?].RecorridosDisponibles
+	end
+go
+USE GD1C2019
+go
+create view [LEISTE_EL_CODIGO?].RecorridosDisponibles --che esto me parece innecesario
+as
+		select *
+		from [LEISTE_EL_CODIGO?].Recorrido
+		where estado = 'A'
+go
+if exists(select * from sys.views where object_name(object_id)='TramosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	begin
+		drop view [LEISTE_EL_CODIGO?].TramosDisponibles
+	end
+go
+USE GD1C2019
+go
+create view [LEISTE_EL_CODIGO?].TramosDisponibles --che esto me parece innecesario
+as
+		select *
+		from [LEISTE_EL_CODIGO?].Tramo
+go
+if exists(select * from sys.views where object_name(object_id)='PuertosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	begin
+		drop view [LEISTE_EL_CODIGO?].PuertosDisponibles
+	end
+go
+USE GD1C2019
+go
+create view [LEISTE_EL_CODIGO?].PuertosDisponibles --che esto me parece innecesario
+as
+		select *
+		from [LEISTE_EL_CODIGO?].Puerto
+go
+
+create view [LEISTE_EL_CODIGO?].ViajesConRecorridosHabilitados
+as
+		select v.id_viaje,v.fecha_inicio,v.fecha_finalizacion_estimada,r.id_origen, r.id_destino destinoFinal
+		from [LEISTE_EL_CODIGO?].Viaje v join [LEISTE_EL_CODIGO?].Recorrido r
+		ON v.id_recorrido = r.id_recorrido
+		and r.estado = 'A'
+go
 --........................................ PROCEDURES ......................................................
 --........................................<ABM 1> ROL				......................................................
 ------Agregar nueva funcionalidad a un rol-------REQUERIMIENTO: 
@@ -650,30 +720,28 @@ where id_reserva in (select id_reserva
 		--listado de funcionalidades.
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol (@idRol smallint,@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol (@idRolAImitar nvarchar(255),@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
 as
 	begin
 		declare @valor_retorno smallint
-		if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 --no existe rol
+		if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRolAImitar )) set @valor_retorno = -1 --no existe rol
 		else if
 		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idNuevaFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
 		else if
 		(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
-						where id_funcionalidad= @idNuevaFuncionalidad and id_rol = @idRol)) set @valor_retorno = -3 -- el rol ya tiene esa funcionalidad
+						where id_funcionalidad= @idNuevaFuncionalidad and id_rol = @idRolAImitar )) set @valor_retorno = -3 -- el rol ya tiene esa funcionalidad
 		else
 			begin
-				insert into [LEISTE_EL_CODIGO?].Rol(nombre)
+				insert into [LEISTE_EL_CODIGO?].Rol(id_rol)
 				values(@nuevoNombreRol) --agrego rol en la tabla
 		
-				declare @idNuevoRol smallint
-				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
 				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) -- aca le pongo al nuevo rol las funcionalidades del otro rol
-				select @idNuevoRol,id_funcionalidad
+				select @nuevoNombreRol,id_funcionalidad
 				from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
-				where id_rol= @idRol
+				where id_rol= @idRolAImitar 
 
 				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) --aca agrego la nueva funcionalidad
-				values(@idNuevoRol, @idNuevaFuncionalidad)
+				values(@nuevoNombreRol, @idNuevaFuncionalidad)
 				set @valor_retorno = 1 -- se cargo correctamente el nuevo rol
 			end
 		return @valor_retorno
@@ -682,7 +750,7 @@ go
 --eliminar funcionalidad de un rol--
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol (@idRol smallint,@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol (@idRol nvarchar(255),@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
 as
 	begin
 		declare @valor_retorno smallint
@@ -695,13 +763,12 @@ as
 		
 		else
 			begin
-				insert into [LEISTE_EL_CODIGO?].Rol(nombre)
+				insert into [LEISTE_EL_CODIGO?].Rol(id_rol)
 				values(@nuevoNombreRol) --agrego rol en la tabla
 		
-				declare @idNuevoRol smallint
-				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
+
 				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) -- todas menos la funcionalidad a eliminar 
-				select @idNuevoRol,id_funcionalidad
+				select @nuevoNombreRol,id_funcionalidad
 				from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
 				where id_rol= @idRol and id_funcionalidad <> @idFuncionalidadAEliminar
 
@@ -721,21 +788,18 @@ begin
 		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
 		else
 			begin
-				if(not exists (select nombre from [LEISTE_EL_CODIGO?].Rol where nombre= @NombreRol)) -- si es la primer vez que lo carga
+				if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @NombreRol)) -- si es la primer vez que lo carga
 					begin
-						insert into [LEISTE_EL_CODIGO?].Rol(nombre)
+						insert into [LEISTE_EL_CODIGO?].Rol(id_rol)
 						values(@NombreRol) --agrego rol en la tabla
 					end
-		
-				declare @idNuevoRol smallint
-				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @NombreRol
 
 				if
 					(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
-								where id_funcionalidad= @idFuncionalidad and id_rol = @idNuevoRol)) set @valor_retorno = -3 -- ya tiene esa funcionalidad
+								where id_funcionalidad= @idFuncionalidad and id_rol = @NombreRol)) set @valor_retorno = -3 -- ya tiene esa funcionalidad
 
 				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-				values(@idNuevoRol,@idFuncionalidad)
+				values(@NombreRol,@idFuncionalidad)
 				set @valor_retorno = 1
 			end
 		return @valor_retorno
@@ -744,7 +808,7 @@ go
 --Dar de baja un rol--
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].darBajaRol (@idRol smallint)
+create procedure [LEISTE_EL_CODIGO?].darBajaRol (@idRol nvarchar(255))
 as
 	begin
 		declare @valor_retorno smallint
@@ -770,7 +834,7 @@ go
 --Habilitar un rol inhabilitado --
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].darAltaRol (@idRol smallint)
+create procedure [LEISTE_EL_CODIGO?].darAltaRol (@idRol nvarchar(255))
 as
 	begin
 		declare @valor_retorno smallint
@@ -884,7 +948,7 @@ as
 		set id_origen=@origen,id_destino=@destino,precio_base=@precio
 		where id_tramo = @idTramo
 		if (select count(*)
-			from [LEISTE_EL_CODIGO?].Tramo
+			from [LEISTE_EL_CODIGO?].Tramo)
 
 		
 		return 1
@@ -948,7 +1012,8 @@ as
 	where id_recorrido = @idRecorrido
 	--@no se q onda con el tema de si ya tiene pasajes vendidos
 go
---........................................<ABM 6> CRUCEROS			......................................................
+
+--........................................<ABM 6> CRUCEROS......................................................
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].modificarCrucero(@id_crucero nvarchar(50),@id_fabricante nvarchar(255))
@@ -1160,7 +1225,20 @@ as
 		return @valor_retorno
 	end
 go
---........................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE	......................................................
+-----------------------------------Cruceros disponibles, habilitados para esa fecha--------------------------------
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje(@fecha_inicio datetime2,@fecha_finalizacion_estimada datetime2)
+as
+	begin
+		select c.id_crucero,id_fabricante,modelo,id_viaje,fecha_inicio,fecha_finalizacion
+			from [LEISTE_EL_CODIGO?].CrucerosDisponibles c join [LEISTE_EL_CODIGO?].Viaje v
+			On c.id_crucero = v.id_crucero
+			where v.fecha_inicio <> '2018-07-22 07:00:00.000' and v.fecha_finalizacion <>'2018-07-22 19:06:00.000' and c.id_crucero='ETKLGK-24399'
+	end
+go
+--.......................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE	......................................................
+select * from [LEISTE_EL_CODIGO?].Recorrido
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha
@@ -1527,60 +1605,3 @@ as
 		order by 2 desc
 	end
 go	
-
---........................................VISTAS PARA APLICATIVO......................................................
---Vista de CRUCEROS DISPONIBLES--
-USE GD1C2019
-go
-create view [LEISTE_EL_CODIGO?].CrucerosDisponibles
-as
-		select id_crucero,id_fabricante,modelo
-		from [LEISTE_EL_CODIGO?].Crucero
-		where baja_fuera_vida_util = 'N' and baja_fuera_de_servicio = 'N'
-go
---Vista de ROLES HABILITADOS--
-USE GD1C2019
-go
-create view [LEISTE_EL_CODIGO?].RolesHabilitados
-as
-		select id_rol,nombre
-		from [LEISTE_EL_CODIGO?].Rol
-		where baja_logica = 'N' -- ver despues si es necesario tambien hacer una vista con todos los roles, habilitados o no.
-go
-if exists(select * from sys.views where object_name(object_id)='RecorridosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-	begin
-		drop view [LEISTE_EL_CODIGO?].RecorridosDisponibles
-	end
-go
-USE GD1C2019
-go
-create view [LEISTE_EL_CODIGO?].RecorridosDisponibles --che esto me parece innecesario
-as
-		select *
-		from [LEISTE_EL_CODIGO?].Recorrido
-		where estado = 'A'
-go
-if exists(select * from sys.views where object_name(object_id)='TramosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-	begin
-		drop view [LEISTE_EL_CODIGO?].TramosDisponibles
-	end
-go
-USE GD1C2019
-go
-create view [LEISTE_EL_CODIGO?].TramosDisponibles --che esto me parece innecesario
-as
-		select *
-		from [LEISTE_EL_CODIGO?].Tramo
-go
-if exists(select * from sys.views where object_name(object_id)='PuertosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
-	begin
-		drop view [LEISTE_EL_CODIGO?].PuertosDisponibles
-	end
-go
-USE GD1C2019
-go
-create view [LEISTE_EL_CODIGO?].PuertosDisponibles --che esto me parece innecesario
-as
-		select *
-		from [LEISTE_EL_CODIGO?].Puerto
-go

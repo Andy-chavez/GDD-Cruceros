@@ -32,7 +32,7 @@
 
 ### Viaje:
 
-#### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255)) 
+#### crucerosDisponiblesParaViaje(@fecha_inicio datetime2,@fecha_finalizacion_estimada datetime2)
 cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de recorrido y el id de cabina para poder generar el pasaje
 #### cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2, @fecha_actual datetime2)
 
@@ -46,8 +46,8 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
 
 ### Rol:
 
-#### agregarFuncionalidadPorRol (@idRol smallint,@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
-#### eliminarFuncionalidadRol (@idRol smallint,@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
+#### agregarFuncionalidadPorRol (@idRolAImitar nvarchar(255),@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
+#### eliminarFuncionalidadRol (@idRol nvarchar(255),@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
 
   Valores de retorno:
 
@@ -63,8 +63,8 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
     1: se cargo todo joya
     -2: No existe funcionalidad
     -3: el rol ya tiene esa funcionalidad
-#### darAltaRol (@idRol smallint)
-#### darBajaRol (@idRol smallint)
+#### darAltaRol (@idRol nvarchar(255))
+#### darBajaRol (@idRol nvarchar(255))
 
    Valores de retorno:
 
@@ -72,6 +72,7 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
     -1: no existe el rol
 
 ### Pasaje:
+#### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
 
 #### cargarMedioDePago (@cuotas smallint,@tipoTarjeta varchar(256),@nombreTarjeta varchar(256))
 
@@ -172,3 +173,4 @@ Nota: se debe hacer en orden del orden mas chico q quieras cambiar al ultimo
 #### ~ PuertosDisponibles
 #### ~ RecorridosDisponibles
 #### ~ TramosDisponibles
+#### ~ ViajesConRecorridosHabilitados
