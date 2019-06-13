@@ -35,7 +35,10 @@ namespace FrbaCrucero.Clases
             this.nombre = nombre;
             this.funcionalidades = funcionalidades;   
         }
-
+        public void agregarNombre(string nombre)
+        {
+            this.nombre = nombre;
+        }
         public Rol() { 
         }
 
