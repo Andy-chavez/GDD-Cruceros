@@ -99,12 +99,28 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonBajaTemp_Click(object sender, EventArgs e)
         {
+            if (textoFechaReinicio.Text != "" && TextoCruceroSeleccionado.Text != "")
+            {
 
+                crucero.bajaTemporal(Convert.ToDateTime(textoFechaReinicio.Text), TextoCruceroSeleccionado.Text.ToString());
+            }
+            else {
+              
+                MessageBox.Show("Seleccione un crucero y una fecha para continuar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void botonBajaFinal_Click(object sender, EventArgs e)
         {
-            crucero.bajaDefinitiva(Convert.ToDateTime(textoFecha.Text), TextoCruceroSeleccionado.Text.ToString());
+            if (TextoCruceroSeleccionado.Text != "")
+            {
+
+                crucero.bajaDefinitiva(Convert.ToDateTime(textoFecha.Text), TextoCruceroSeleccionado.Text.ToString());
+            }
+            else {
+                MessageBox.Show("Seleccione un crucero para continuar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
         }
 
         private void textoFecha_TextChanged(object sender, EventArgs e)
@@ -121,7 +137,10 @@ namespace FrbaCrucero.AbmCrucero
             labelFecha.Hide();
             textoFecha.Hide();
             botonBajaFinal.Hide();
-            botonBajaTemp.Hide(); 
+            botonBajaTemp.Hide();
+            buttonFechaReinicio.Hide();
+            label4.Hide();
+            textoFechaReinicio.Hide();
         }
         public void esconderCosasDeModificar()
         {
@@ -138,16 +157,48 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonLimpiar_Click_1(object sender, EventArgs e)
         {
-            textoFecha.Clear();
+            
             textoFabricanteNuevo.Clear();
             TextoCruceroSeleccionado.Clear();
             textoModelo.Clear();
+            textoFechaReinicio.Clear();
         
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void textoFechaReinicio_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+
+        }
+
+        private void buttonFechaReinicio_Click(object sender, EventArgs e)
+        {
+            monthCalendar1.Visible = true;
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            textoFechaReinicio.Text = Convert.ToDateTime(monthCalendar1.SelectionStart).ToString("dd/MM/yyyy");
+            monthCalendar1.Visible = false;
+        }
+
+        private void botonVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

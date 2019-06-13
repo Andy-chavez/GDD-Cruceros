@@ -86,7 +86,7 @@ namespace FrbaCrucero.AbmRecorrido
             BaseDeDato db = new BaseDeDato();
             db.conectar();
             SqlConnection conexion = db.obtenerConexion();
-            SqlCommand consulta = new SqlCommand("SELECT * FROM [LEISTE_EL_CODIGO?].Tramo", conexion);
+            SqlCommand consulta = new SqlCommand(consultaDeObtencion, conexion);
             List<String> listaDeTramos = db.obtenerListaDeDatos(consulta);
             cb.DataSource = listaDeTramos;
             cb.SelectedIndex = 0;

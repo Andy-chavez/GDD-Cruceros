@@ -105,7 +105,7 @@ namespace FrbaCrucero.Clases
 
         public void bajaDefinitiva(DateTime fechaActual, string id){
             this.id = id;
-            this.idFabricante = idFabricante;
+            this.fechaBajaDefinitiva = fechaBajaDefinitiva;
 
             try
             {
@@ -125,7 +125,27 @@ namespace FrbaCrucero.Clases
     
     }
 
+        public void bajaTemporal(DateTime fechaReinicio, string id) {
+            this.id = id;
+            this.fechaReinicioDeServicio = fechaReinicio;
 
+            try
+            {
+                bd.conectar();
+                bd.crearSP("[LEISTE_EL_CODIGO?].modificarCrucero");
+                bd.setearParametroPorValor("id_crucero", id);
+                bd.setearParametroPorValor("fecha_actual", fechaReinicio);
+
+                bd.ejecutarSP();
+            }
+            catch (Exception excepcion)
+            {
+
+                bd.ventanaErrorBD(excepcion);
+            }
+            bd.desconectar();
+        
+        }
     }
 
 }

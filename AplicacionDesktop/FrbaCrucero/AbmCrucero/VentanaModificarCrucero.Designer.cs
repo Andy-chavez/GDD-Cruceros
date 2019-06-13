@@ -43,6 +43,10 @@
             this.labelFecha = new System.Windows.Forms.Label();
             this.textoFecha = new System.Windows.Forms.TextBox();
             this.botonLimpiar = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.buttonFechaReinicio = new System.Windows.Forms.Button();
+            this.textoFechaReinicio = new System.Windows.Forms.TextBox();
+            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -52,14 +56,14 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(23, 98);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(489, 226);
+            this.dataGridView1.Size = new System.Drawing.Size(600, 226);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // botonModificar
             // 
-            this.botonModificar.Location = new System.Drawing.Point(437, 453);
+            this.botonModificar.Location = new System.Drawing.Point(548, 477);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.Size = new System.Drawing.Size(75, 23);
             this.botonModificar.TabIndex = 1;
@@ -104,6 +108,7 @@
             this.botonVolver.TabIndex = 3;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
             // 
             // TextoCruceroSeleccionado
             // 
@@ -143,7 +148,7 @@
             // 
             // botonBajaTemp
             // 
-            this.botonBajaTemp.Location = new System.Drawing.Point(305, 384);
+            this.botonBajaTemp.Location = new System.Drawing.Point(416, 385);
             this.botonBajaTemp.Name = "botonBajaTemp";
             this.botonBajaTemp.Size = new System.Drawing.Size(207, 29);
             this.botonBajaTemp.TabIndex = 8;
@@ -153,7 +158,7 @@
             // 
             // botonBajaFinal
             // 
-            this.botonBajaFinal.Location = new System.Drawing.Point(305, 434);
+            this.botonBajaFinal.Location = new System.Drawing.Point(416, 431);
             this.botonBajaFinal.Name = "botonBajaFinal";
             this.botonBajaFinal.Size = new System.Drawing.Size(207, 29);
             this.botonBajaFinal.TabIndex = 9;
@@ -182,7 +187,7 @@
             // 
             // botonLimpiar
             // 
-            this.botonLimpiar.Location = new System.Drawing.Point(421, 52);
+            this.botonLimpiar.Location = new System.Drawing.Point(426, 49);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
             this.botonLimpiar.TabIndex = 13;
@@ -190,11 +195,53 @@
             this.botonLimpiar.UseVisualStyleBackColor = true;
             this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click_1);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(20, 439);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(78, 13);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Fecha Reinicio";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // buttonFechaReinicio
+            // 
+            this.buttonFechaReinicio.Location = new System.Drawing.Point(145, 434);
+            this.buttonFechaReinicio.Name = "buttonFechaReinicio";
+            this.buttonFechaReinicio.Size = new System.Drawing.Size(114, 23);
+            this.buttonFechaReinicio.TabIndex = 15;
+            this.buttonFechaReinicio.Text = "Seleccionar fecha";
+            this.buttonFechaReinicio.UseVisualStyleBackColor = true;
+            this.buttonFechaReinicio.Click += new System.EventHandler(this.buttonFechaReinicio_Click);
+            // 
+            // textoFechaReinicio
+            // 
+            this.textoFechaReinicio.Location = new System.Drawing.Point(266, 437);
+            this.textoFechaReinicio.Name = "textoFechaReinicio";
+            this.textoFechaReinicio.ReadOnly = true;
+            this.textoFechaReinicio.Size = new System.Drawing.Size(127, 20);
+            this.textoFechaReinicio.TabIndex = 16;
+            this.textoFechaReinicio.TextChanged += new System.EventHandler(this.textoFechaReinicio_TextChanged);
+            // 
+            // monthCalendar1
+            // 
+            this.monthCalendar1.Location = new System.Drawing.Point(212, 263);
+            this.monthCalendar1.Name = "monthCalendar1";
+            this.monthCalendar1.TabIndex = 17;
+            this.monthCalendar1.Visible = false;
+            this.monthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged);
+            this.monthCalendar1.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateSelected);
+            // 
             // VentanaModificarCrucero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(551, 512);
+            this.ClientSize = new System.Drawing.Size(647, 512);
+            this.Controls.Add(this.monthCalendar1);
+            this.Controls.Add(this.textoFechaReinicio);
+            this.Controls.Add(this.buttonFechaReinicio);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.botonLimpiar);
             this.Controls.Add(this.textoFecha);
             this.Controls.Add(this.labelFecha);
@@ -236,5 +283,9 @@
         private System.Windows.Forms.Label labelFecha;
         private System.Windows.Forms.TextBox textoFecha;
         private System.Windows.Forms.Button botonLimpiar;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button buttonFechaReinicio;
+        private System.Windows.Forms.TextBox textoFechaReinicio;
+        private System.Windows.Forms.MonthCalendar monthCalendar1;
     }
 }

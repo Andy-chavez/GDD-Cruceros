@@ -21,6 +21,7 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         public BaseDeDato bd = new BaseDeDato();
         public DataTable dt = new DataTable();
+        
 
         #region DataGridView
 
@@ -55,14 +56,14 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         }
 
-        private void viajesDisponibles_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
+      
 
         private void VentanaSeleccionarviaje_Load(object sender, EventArgs e)
         {
+            monthCalendar1.BringToFront();
             this.llenardataGridView(viajesDisponibles);
+            this.llenarCombo(listaOrigen, "SELECT id_origen FROM [LEISTE_EL_CODIGO?].Tramo");
+            this.llenarCombo(listaDestino, "SELECT id_destino FROM [LEISTE_EL_CODIGO?].Tramo");
         }
         public void llenardataGridView(DataGridView dgv)
         {
@@ -88,7 +89,7 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         private void textoFechaInicio_TextChanged(object sender, EventArgs e)
         {
-            this.filtrarDataGrdView(viajesDisponibles, "SELECT * FROM [LEISTE_EL_CODIGO?].Viaje WHERE fecha_inicio L ('" + textoFechaInicio.Text + "%')");
+            this.filtrarDataGrdView(viajesDisponibles, "SELECT * FROM [LEISTE_EL_CODIGO?].Viaje WHERE fecha_inicio LIKE ('" + textoFechaInicio.Text + "%')");
         }
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
@@ -104,6 +105,57 @@ namespace FrbaCrucero.CompraReservaPasaje
             adapter.Fill(tabla);
             dgv.DataSource = tabla;
             bd.desconectar();
+        }
+
+        private void viajesDisponibles_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (viajesDisponibles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            {
+                viajesDisponibles.CurrentRow.Selected = true;
+
+                int idTramo = Convert.ToInt32(viajesDisponibles.Rows[e.RowIndex].Cells["id_Viaje"].Value.ToString());
+                decimal id_recorrido = Convert.ToDecimal( viajesDisponibles.Rows[e.RowIndex].Cells["id_Viaje"].Value.ToString());
+                string id_crucero = viajesDisponibles.Rows[e.RowIndex].Cells["id_Viaje"].Value.ToString();
+                DateTime fecha_inicio = Convert.ToDateTime( viajesDisponibles.Rows[e.RowIndex].Cells["id_Viaje"].Value.ToString());
+                DateTime fecha_finalizacion_estimada = Convert.ToDateTime(viajesDisponibles.Rows[e.RowIndex].Cells["id_Viaje"].Value.ToString());
+                DateTime fecha_finalizacion = Convert.ToDateTime(viajesDisponibles.Rows[e.RowIndex].Cells["id_Viaje"].Value.ToString());
+                Viaje viajeSeleccionado = new Viaje(idTramo,id_recorrido,id_crucero,fecha_inicio,fecha_finalizacion_estimada,fecha_finalizacion);
+
+            }
+            else
+            {
+
+                MessageBox.Show("No hay tramos para agregar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+        }
+
+        private void viajesDisponibles_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void botonReserva_Click(object sender, EventArgs e)
+        {
+           
+        }
+        public void llenarCombo(ComboBox cb, string consultaDeObtencion)
+        {
+
+            BaseDeDato db = new BaseDeDato();
+            db.conectar();
+            SqlConnection conexion = db.obtenerConexion();
+            SqlCommand consulta = new SqlCommand("SELECT * FROM [LEISTE_EL_CODIGO?].Tramo", conexion);
+            List<String> listaDeTramos = db.obtenerListaDeDatos(consulta);
+            cb.DataSource = listaDeTramos;
+            cb.SelectedIndex = 0;
+            cb.DropDownStyle = ComboBoxStyle.DropDownList;
+            db.desconectar();
+        }
+
+        private void listaOrigen_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
        
     }
