@@ -664,8 +664,6 @@ as
 				insert into [LEISTE_EL_CODIGO?].Rol(id_rol)
 				values(@nuevoNombreRol) --agrego rol en la tabla
 		
-				--declare @idNuevoRol smallint
-				--select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
 				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) -- aca le pongo al nuevo rol las funcionalidades del otro rol
 				select @nuevoNombreRol,id_funcionalidad
 				from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
@@ -681,7 +679,7 @@ go
 --eliminar funcionalidad de un rol--
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol (@idRol smallint,@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol (@idRol nvarchar(255),@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
 as
 	begin
 		declare @valor_retorno smallint
@@ -694,13 +692,12 @@ as
 		
 		else
 			begin
-				insert into [LEISTE_EL_CODIGO?].Rol(nombre)
+				insert into [LEISTE_EL_CODIGO?].Rol(id_rol)
 				values(@nuevoNombreRol) --agrego rol en la tabla
 		
-				declare @idNuevoRol smallint
-				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @nuevoNombreRol
+
 				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) -- todas menos la funcionalidad a eliminar 
-				select @idNuevoRol,id_funcionalidad
+				select @nuevoNombreRol,id_funcionalidad
 				from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
 				where id_rol= @idRol and id_funcionalidad <> @idFuncionalidadAEliminar
 
@@ -720,21 +717,18 @@ begin
 		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidad)) set @valor_retorno = -2 -- no existe funcionalidad
 		else
 			begin
-				if(not exists (select nombre from [LEISTE_EL_CODIGO?].Rol where nombre= @NombreRol)) -- si es la primer vez que lo carga
+				if(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @NombreRol)) -- si es la primer vez que lo carga
 					begin
-						insert into [LEISTE_EL_CODIGO?].Rol(nombre)
+						insert into [LEISTE_EL_CODIGO?].Rol(id_rol)
 						values(@NombreRol) --agrego rol en la tabla
 					end
-		
-				declare @idNuevoRol smallint
-				select @idNuevoRol= id_rol from [LEISTE_EL_CODIGO?].Rol where nombre = @NombreRol
 
 				if
 					(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
-								where id_funcionalidad= @idFuncionalidad and id_rol = @idNuevoRol)) set @valor_retorno = -3 -- ya tiene esa funcionalidad
+								where id_funcionalidad= @idFuncionalidad and id_rol = @NombreRol)) set @valor_retorno = -3 -- ya tiene esa funcionalidad
 
 				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-				values(@idNuevoRol,@idFuncionalidad)
+				values(@NombreRol,@idFuncionalidad)
 				set @valor_retorno = 1
 			end
 		return @valor_retorno
@@ -743,7 +737,7 @@ go
 --Dar de baja un rol--
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].darBajaRol (@idRol smallint)
+create procedure [LEISTE_EL_CODIGO?].darBajaRol (@idRol nvarchar(255))
 as
 	begin
 		declare @valor_retorno smallint
@@ -769,7 +763,7 @@ go
 --Habilitar un rol inhabilitado --
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].darAltaRol (@idRol smallint)
+create procedure [LEISTE_EL_CODIGO?].darAltaRol (@idRol nvarchar(255))
 as
 	begin
 		declare @valor_retorno smallint
@@ -1542,7 +1536,7 @@ USE GD1C2019
 go
 create view [LEISTE_EL_CODIGO?].RolesHabilitados
 as
-		select id_rol,nombre
+		select id_rol
 		from [LEISTE_EL_CODIGO?].Rol
 		where baja_logica = 'N' -- ver despues si es necesario tambien hacer una vista con todos los roles, habilitados o no.
 go

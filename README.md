@@ -47,7 +47,7 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
 ### Rol:
 
 #### agregarFuncionalidadPorRol (@idRolAImitar nvarchar(255),@idNuevaFuncionalidad smallint,@nuevoNombreRol nvarchar(255))
-#### eliminarFuncionalidadRol (@idRol smallint,@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
+#### eliminarFuncionalidadRol (@idRol nvarchar(255),@idFuncionalidadAEliminar smallint,@nuevoNombreRol nvarchar(255))
 
   Valores de retorno:
 
@@ -63,8 +63,8 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
     1: se cargo todo joya
     -2: No existe funcionalidad
     -3: el rol ya tiene esa funcionalidad
-#### darAltaRol (@idRol smallint)
-#### darBajaRol (@idRol smallint)
+#### darAltaRol (@idRol nvarchar(255))
+#### darBajaRol (@idRol nvarchar(255))
 
    Valores de retorno:
 
