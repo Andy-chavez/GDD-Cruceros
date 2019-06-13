@@ -153,9 +153,9 @@ if exists(select * from sys.views where object_name(object_id)='RolesHabilitados
 		drop view [LEISTE_EL_CODIGO?].RolesHabilitados
 	end
 go
-if exists(select * from sys.views where object_name(object_id)='ViajesConRecorridos' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+if exists(select * from sys.views where object_name(object_id)='ViajesConRecorridosHabilitados' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
-		drop view [LEISTE_EL_CODIGO?].ViajesConRecorridos
+		drop view [LEISTE_EL_CODIGO?].ViajesConRecorridosHabilitados
 	end
 go
 if exists (select * from sys.triggers where object_name(object_id)='fechaVencimiento') --and schema_name(schema_id)='LEISTE_EL_CODIGO?')
@@ -268,7 +268,7 @@ create table [LEISTE_EL_CODIGO?].Viaje(
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	fecha_inicio datetime2(3) not null,
 	fecha_finalizacion_estimada datetime2(3) not null,
-	fecha_finalizacion datetime2(3) not null,
+	fecha_finalizacion datetime2(3) null,
 )
 go
 create table [LEISTE_EL_CODIGO?].Reserva(
@@ -947,8 +947,6 @@ as
 		update [LEISTE_EL_CODIGO?].Tramo
 		set id_origen=@origen,id_destino=@destino,precio_base=@precio
 		where id_tramo = @idTramo
-		if (select count(*)
-			from [LEISTE_EL_CODIGO?].Tramo)
 
 		
 		return 1
@@ -1192,19 +1190,19 @@ go
 --........................................<ABM 7> GENERAR VIAJE			......................................................
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2, @fecha_actual datetime2)
+create procedure [LEISTE_EL_CODIGO?].cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2)
 as
 	begin
-		declare @valor_retorno tinyint
-		if(@fecha_actual>@fecha_inicio)
+		declare @valor_retorno int
+		if(SYSDATETIME()>@fecha_inicio)
 			begin
 				set @valor_retorno = -1 --fecha mal ingresada, se quiere generar viaje de fecha anterior a la actual
 			end
 		else if exists( select id_viaje
-						from [LEISTE_EL_CODIGO?].Viaje join [LEISTE_EL_CODIGO?].Crucero cru
-						on (cru.id_crucero = @id_crucero)
-						where fecha_inicio not between @fecha_inicio and @fecha_finalizacion_estimada --fijarse cambiar los between
-							and fecha_finalizacion_estimada not between @fecha_inicio and @fecha_finalizacion_estimada)
+						from [LEISTE_EL_CODIGO?].Viaje v join [LEISTE_EL_CODIGO?].Crucero cru
+						on (v.id_crucero = @id_crucero and v.id_crucero = cru.id_crucero)
+						where fecha_inicio between @fecha_inicio and @fecha_finalizacion_estimada --fijarse cambiar los between
+							and fecha_finalizacion_estimada between @fecha_inicio and @fecha_finalizacion_estimada)
 			begin
 				set @valor_retorno = -2 -- crucero ocupado
 			end
@@ -1238,7 +1236,6 @@ as
 	end
 go
 --.......................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE	......................................................
-select * from [LEISTE_EL_CODIGO?].Recorrido
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha

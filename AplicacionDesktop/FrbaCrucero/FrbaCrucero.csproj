@@ -151,6 +151,12 @@
     <Compile Include="CompraReservaPasaje\VentanaSeleccionarviaje.Designer.cs">
       <DependentUpon>VentanaSeleccionarviaje.cs</DependentUpon>
     </Compile>
+    <Compile Include="GeneracionViaje\GenerarViaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneracionViaje\GenerarViaje.Designer.cs">
+      <DependentUpon>GenerarViaje.cs</DependentUpon>
+    </Compile>
     <Compile Include="GeneracionViaje\VentanaOperacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -229,6 +235,9 @@
     <EmbeddedResource Include="CompraReservaPasaje\VentanaSeleccionarviaje.resx">
       <DependentUpon>VentanaSeleccionarviaje.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GeneracionViaje\GenerarViaje.resx">
+      <DependentUpon>GenerarViaje.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GeneracionViaje\VentanaOperacion.resx">
       <DependentUpon>VentanaOperacion.cs</DependentUpon>
     </EmbeddedResource>
@@ -250,6 +259,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Properties\DataSources\FrbaCrucero.GeneracionViaje.GenerarViaje.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

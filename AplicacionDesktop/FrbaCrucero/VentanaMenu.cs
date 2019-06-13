@@ -12,7 +12,7 @@ using FrbaCrucero.AbmRecorrido;
 using FrbaCrucero.AbmCrucero;
 using FrbaCrucero.ListadoEstadistico;
 using FrbaCrucero.CompraReservaPasaje;
-
+using FrbaCrucero.GeneracionViaje;
 
 
 
@@ -66,7 +66,7 @@ namespace FrbaCrucero
 
         public void botonViaje_Click(object sender, EventArgs e)
         {
-
+            new GenerarViaje().Show();
         }
 
         public void botonEstadisticas_Click(object sender, EventArgs e)
