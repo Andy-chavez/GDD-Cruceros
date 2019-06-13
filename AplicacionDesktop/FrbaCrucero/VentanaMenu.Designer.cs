@@ -40,7 +40,7 @@
             // 
             // botonAdmCrucero
             // 
-            this.botonAdmCrucero.Location = new System.Drawing.Point(77, 127);
+            this.botonAdmCrucero.Location = new System.Drawing.Point(38, 95);
             this.botonAdmCrucero.Name = "botonAdmCrucero";
             this.botonAdmCrucero.Size = new System.Drawing.Size(229, 23);
             this.botonAdmCrucero.TabIndex = 0;
@@ -50,7 +50,7 @@
             // 
             // botonAdmRecorrido
             // 
-            this.botonAdmRecorrido.Location = new System.Drawing.Point(77, 169);
+            this.botonAdmRecorrido.Location = new System.Drawing.Point(38, 124);
             this.botonAdmRecorrido.Name = "botonAdmRecorrido";
             this.botonAdmRecorrido.Size = new System.Drawing.Size(229, 23);
             this.botonAdmRecorrido.TabIndex = 2;
@@ -60,7 +60,7 @@
             // 
             // botonAbmRol
             // 
-            this.botonAbmRol.Location = new System.Drawing.Point(77, 213);
+            this.botonAbmRol.Location = new System.Drawing.Point(38, 153);
             this.botonAbmRol.Name = "botonAbmRol";
             this.botonAbmRol.Size = new System.Drawing.Size(229, 23);
             this.botonAbmRol.TabIndex = 3;
@@ -70,7 +70,7 @@
             // 
             // botonReserva
             // 
-            this.botonReserva.Location = new System.Drawing.Point(77, 38);
+            this.botonReserva.Location = new System.Drawing.Point(38, 37);
             this.botonReserva.Name = "botonReserva";
             this.botonReserva.Size = new System.Drawing.Size(229, 23);
             this.botonReserva.TabIndex = 4;
@@ -80,7 +80,7 @@
             // 
             // botonViaje
             // 
-            this.botonViaje.Location = new System.Drawing.Point(77, 259);
+            this.botonViaje.Location = new System.Drawing.Point(38, 182);
             this.botonViaje.Name = "botonViaje";
             this.botonViaje.Size = new System.Drawing.Size(229, 23);
             this.botonViaje.TabIndex = 5;
@@ -90,7 +90,7 @@
             // 
             // botonPago
             // 
-            this.botonPago.Location = new System.Drawing.Point(77, 84);
+            this.botonPago.Location = new System.Drawing.Point(38, 66);
             this.botonPago.Name = "botonPago";
             this.botonPago.Size = new System.Drawing.Size(229, 23);
             this.botonPago.TabIndex = 6;
@@ -100,7 +100,7 @@
             // 
             // botonEstadisticas
             // 
-            this.botonEstadisticas.Location = new System.Drawing.Point(77, 299);
+            this.botonEstadisticas.Location = new System.Drawing.Point(38, 211);
             this.botonEstadisticas.Name = "botonEstadisticas";
             this.botonEstadisticas.Size = new System.Drawing.Size(229, 23);
             this.botonEstadisticas.TabIndex = 7;
@@ -110,7 +110,7 @@
             // 
             // botonSalir
             // 
-            this.botonSalir.Location = new System.Drawing.Point(77, 345);
+            this.botonSalir.Location = new System.Drawing.Point(38, 240);
             this.botonSalir.Name = "botonSalir";
             this.botonSalir.Size = new System.Drawing.Size(229, 23);
             this.botonSalir.TabIndex = 8;
@@ -122,7 +122,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(380, 416);
+            this.ClientSize = new System.Drawing.Size(304, 286);
             this.Controls.Add(this.botonSalir);
             this.Controls.Add(this.botonEstadisticas);
             this.Controls.Add(this.botonPago);
