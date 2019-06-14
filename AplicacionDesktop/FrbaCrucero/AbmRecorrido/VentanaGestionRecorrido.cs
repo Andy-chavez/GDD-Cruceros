@@ -44,9 +44,11 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void botonModificar_Click(object sender, EventArgs e)
         {
-            new VentanaModificarRecorrido().Show();
+           VentanaModificarRecorrido ventana = new VentanaModificarRecorrido();
+           ventana.esconderBaja();
+            ventana.Show();
         }
-
+        
 
     }
 }

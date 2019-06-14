@@ -37,7 +37,7 @@
             this.botonBuscar = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.filtroDestino = new System.Windows.Forms.TextBox();
             this.filtroOrigen = new System.Windows.Forms.TextBox();
             this.botonTramo = new System.Windows.Forms.Button();
             this.botonCrear = new System.Windows.Forms.Button();
@@ -87,7 +87,7 @@
             this.groupBox2.Controls.Add(this.botonBuscar);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.textBox2);
+            this.groupBox2.Controls.Add(this.filtroDestino);
             this.groupBox2.Controls.Add(this.filtroOrigen);
             this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
@@ -134,13 +134,13 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Origen";
             // 
-            // textBox2
+            // filtroDestino
             // 
-            this.textBox2.Location = new System.Drawing.Point(106, 67);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(222, 20);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.filtroDestino.Location = new System.Drawing.Point(106, 67);
+            this.filtroDestino.Name = "filtroDestino";
+            this.filtroDestino.Size = new System.Drawing.Size(222, 20);
+            this.filtroDestino.TabIndex = 1;
+            this.filtroDestino.TextChanged += new System.EventHandler(this.filtroDestino_TextChanged);
             // 
             // filtroOrigen
             // 
@@ -218,6 +218,7 @@
             this.botonVolver.TabIndex = 9;
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
             // 
             // botonSacarTramo
             // 
@@ -265,7 +266,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox filtroDestino;
         private System.Windows.Forms.TextBox filtroOrigen;
         private System.Windows.Forms.Button botonTramo;
         private System.Windows.Forms.Button botonCrear;

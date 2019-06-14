@@ -97,7 +97,7 @@ namespace FrbaCrucero
             bd.ejecutarConsulta("[LEISTE_EL_CODIGO?].eliminarReservasVencidas");
             VentanaMenu menu = new VentanaMenu();
             menu.Show();
-            menu.ocultarBotones();
+        /*    menu.ocultarBotones(); */
             
         }
 

@@ -53,9 +53,14 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void botonModificarRecorrido_Click(object sender, EventArgs e)
         {
-            recorrido.modificarRecorrido(Convert.ToDecimal(textoRecorridoSeleccionado.Text), nuevoOrigen.Text.ToString(), nuevoDestino.Text.ToString());
+            if (nuevoOrigen.Text != nuevoDestino.Text)
+            {
+                recorrido.modificarRecorrido(Convert.ToDecimal(textoRecorridoSeleccionado.Text), nuevoOrigen.Text.ToString(), nuevoDestino.Text.ToString());
+            }
+            else {
+                      MessageBox.Show("el origen y el destino deben ser distintos ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
-
         private void botonDardeBaja_Click(object sender, EventArgs e)
         {
             recorrido.darDeBaja(Convert.ToDecimal(textoRecorridoSeleccionado.Text));
@@ -100,6 +105,33 @@ namespace FrbaCrucero.AbmRecorrido
             botonModificarRecorrido.Hide();
         }
         public void esconderCosasBaja()
+        {
+            botonDardeBaja.Hide();
+        }
+
+        private void recorridosActuales_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (recorridosActuales.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            {
+                recorridosActuales.CurrentRow.Selected = true;
+
+                textoRecorridoSeleccionado.Text = recorridosActuales.Rows[e.RowIndex].Cells["id_recorrido"].Value.ToString();
+            }
+            else
+            {
+                MessageBox.Show("no hay nada para mostrar ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+        }
+
+        private void botonLimpiar_Click(object sender, EventArgs e)
+        {
+            nuevoOrigen.SelectedIndex = -1;
+            nuevoDestino.SelectedIndex = -1;
+            textoRecorridoSeleccionado.Clear();
+        }
+
+        public void esconderBaja()
         {
             botonDardeBaja.Hide();
         }

@@ -31,15 +31,15 @@
             this.recorridosActuales = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.botonLimpiar = new System.Windows.Forms.Button();
+            this.nuevoDestino = new System.Windows.Forms.ComboBox();
+            this.nuevoOrigen = new System.Windows.Forms.ComboBox();
             this.textoRecorridoSeleccionado = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.botonModificarRecorrido = new System.Windows.Forms.Button();
-            this.botonLimpiar = new System.Windows.Forms.Button();
-            this.nuevoOrigen = new System.Windows.Forms.ComboBox();
-            this.nuevoDestino = new System.Windows.Forms.ComboBox();
             this.botonDardeBaja = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.recorridosActuales)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -53,6 +53,7 @@
             this.recorridosActuales.ReadOnly = true;
             this.recorridosActuales.Size = new System.Drawing.Size(589, 142);
             this.recorridosActuales.TabIndex = 0;
+            this.recorridosActuales.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.recorridosActuales_CellClick);
             this.recorridosActuales.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.recorridosActuales_CellContentClick);
             // 
             // groupBox1
@@ -79,6 +80,52 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Campos a actualizar";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(44, 76);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(76, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Nuevo destino";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(44, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(71, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Nuevo origen";
+            // 
+            // botonLimpiar
+            // 
+            this.botonLimpiar.Location = new System.Drawing.Point(483, 51);
+            this.botonLimpiar.Name = "botonLimpiar";
+            this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.botonLimpiar.TabIndex = 6;
+            this.botonLimpiar.Text = "Limpiar";
+            this.botonLimpiar.UseVisualStyleBackColor = true;
+            this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
+            // 
+            // nuevoDestino
+            // 
+            this.nuevoDestino.FormattingEnabled = true;
+            this.nuevoDestino.Location = new System.Drawing.Point(165, 73);
+            this.nuevoDestino.Name = "nuevoDestino";
+            this.nuevoDestino.Size = new System.Drawing.Size(174, 21);
+            this.nuevoDestino.TabIndex = 1;
+            this.nuevoDestino.SelectedIndexChanged += new System.EventHandler(this.nuevoDestino_SelectedIndexChanged);
+            // 
+            // nuevoOrigen
+            // 
+            this.nuevoOrigen.FormattingEnabled = true;
+            this.nuevoOrigen.Location = new System.Drawing.Point(165, 32);
+            this.nuevoOrigen.Name = "nuevoOrigen";
+            this.nuevoOrigen.Size = new System.Drawing.Size(174, 21);
+            this.nuevoOrigen.TabIndex = 0;
+            this.nuevoOrigen.SelectedIndexChanged += new System.EventHandler(this.nuevoOrigen_SelectedIndexChanged);
             // 
             // textoRecorridoSeleccionado
             // 
@@ -108,33 +155,6 @@
             this.botonModificarRecorrido.UseVisualStyleBackColor = true;
             this.botonModificarRecorrido.Click += new System.EventHandler(this.botonModificarRecorrido_Click);
             // 
-            // botonLimpiar
-            // 
-            this.botonLimpiar.Location = new System.Drawing.Point(483, 51);
-            this.botonLimpiar.Name = "botonLimpiar";
-            this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.botonLimpiar.TabIndex = 6;
-            this.botonLimpiar.Text = "Limpiar";
-            this.botonLimpiar.UseVisualStyleBackColor = true;
-            // 
-            // nuevoOrigen
-            // 
-            this.nuevoOrigen.FormattingEnabled = true;
-            this.nuevoOrigen.Location = new System.Drawing.Point(165, 32);
-            this.nuevoOrigen.Name = "nuevoOrigen";
-            this.nuevoOrigen.Size = new System.Drawing.Size(174, 21);
-            this.nuevoOrigen.TabIndex = 0;
-            this.nuevoOrigen.SelectedIndexChanged += new System.EventHandler(this.nuevoOrigen_SelectedIndexChanged);
-            // 
-            // nuevoDestino
-            // 
-            this.nuevoDestino.FormattingEnabled = true;
-            this.nuevoDestino.Location = new System.Drawing.Point(165, 73);
-            this.nuevoDestino.Name = "nuevoDestino";
-            this.nuevoDestino.Size = new System.Drawing.Size(174, 21);
-            this.nuevoDestino.TabIndex = 1;
-            this.nuevoDestino.SelectedIndexChanged += new System.EventHandler(this.nuevoDestino_SelectedIndexChanged);
-            // 
             // botonDardeBaja
             // 
             this.botonDardeBaja.Location = new System.Drawing.Point(485, 229);
@@ -144,24 +164,6 @@
             this.botonDardeBaja.Text = "Dar de baja";
             this.botonDardeBaja.UseVisualStyleBackColor = true;
             this.botonDardeBaja.Click += new System.EventHandler(this.botonDardeBaja_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(44, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Nuevo origen";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(44, 76);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Nuevo destino";
             // 
             // VentanaModificarRecorrido
             // 

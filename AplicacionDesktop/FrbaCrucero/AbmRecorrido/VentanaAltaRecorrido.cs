@@ -70,9 +70,7 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void botonBuscar_Click(object sender, EventArgs e)
         {
-            bd.conectar();
-            SqlConnection conexion = bd.obtenerConexion();
-            SqlDataAdapter consulta = new SqlDataAdapter("", conexion);
+            this.filtrarDataGrdView(listaDeTramos, "SELECT * FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles WHERE id_origen LIKE ('" + filtroOrigen.Text + "%') AND id_destino LIKE ('" + filtroDestino.Text + "%')");
 
         }
 
@@ -148,10 +146,7 @@ namespace FrbaCrucero.AbmRecorrido
 
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void label3_Click(object sender, EventArgs e)
         {
@@ -160,8 +155,30 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void botonLimpiar_Click(object sender, EventArgs e)
         {
-            textBox2.Clear();
+            filtroDestino.Clear();
             filtroOrigen.Clear();
+            listaDeTramos.Refresh();
         }
+        public void filtrarDataGrdView(DataGridView dgv, string nombreConsulta)
+        {
+            bd.conectar();
+            SqlCommand consulta = new SqlCommand(nombreConsulta, bd.obtenerConexion());
+            DataTable tabla = bd.obtenerDataTable(consulta);
+            SqlDataAdapter adapter = new SqlDataAdapter(consulta);
+            adapter.Fill(tabla);
+            dgv.DataSource = tabla;
+            bd.desconectar();
+        }
+
+        private void filtroDestino_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void botonVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

@@ -73,7 +73,10 @@ namespace FrbaCrucero.AbmCrucero
 
                 TextoCruceroSeleccionado.Text = dataGridView1.Rows[e.RowIndex].Cells["id_crucero"].Value.ToString();
             }
-
+            else {
+                MessageBox.Show("no hay nada para mostrar ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
+            }
 
         }
 
@@ -94,7 +97,21 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonModificar_Click(object sender, EventArgs e)
         {
-            crucero.modificarCrucero((TextoCruceroSeleccionado.Text), (textoFabricanteNuevo.Text));
+            if (textoFabricanteNuevo.Text != "" && TextoCruceroSeleccionado.Text != "")
+            {
+
+                crucero.modificarCrucero((TextoCruceroSeleccionado.Text), (textoFabricanteNuevo.Text));
+            }
+            else{
+                if (textoFabricanteNuevo.Text != "")
+                {
+                    MessageBox.Show("Seleccione un crucero", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else {
+                    MessageBox.Show("Seleccione un fabricante nuevo", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } 
+            }
+
         }
 
         private void botonBajaTemp_Click(object sender, EventArgs e)
