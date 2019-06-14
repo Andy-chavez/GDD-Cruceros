@@ -281,12 +281,10 @@ create table [LEISTE_EL_CODIGO?].Reserva(
 )
 go
 create table [LEISTE_EL_CODIGO?].MedioDePago(
-	id_medio_de_pago int primary key identity,
+	id_medio_de_pago varchar(256) primary key,
 	cuotas_sin_interes smallint not null,
-	descuento smallint not null,
-	intereses smallint not null,
-	tipo_de_tarjeta varchar(256),
-	nombre_tarjeta varchar(256),
+	--descuento smallint not null,
+	--interes smallint not null,
 )
 go
 create table [LEISTE_EL_CODIGO?].PagoDeViaje(
@@ -295,7 +293,7 @@ create table [LEISTE_EL_CODIGO?].PagoDeViaje(
 	fecha_pago datetime2(3) null,
 	monto_total decimal(18,2) not null,
 	cantidad_de_pasajes smallint default 1 check(cantidad_de_pasajes > 0),
-	id_medio_de_pago int references [LEISTE_EL_CODIGO?].MedioDePago,
+	id_medio_de_pago varchar(256) references [LEISTE_EL_CODIGO?].MedioDePago,
 )
 go
 create table [LEISTE_EL_CODIGO?].Pasaje(
@@ -445,6 +443,16 @@ insert into [LEISTE_EL_CODIGO?].Fabricante
 select distinct CRU_FABRICANTE
 from gd_esquema.Maestra
 go
+
+--------------------------------------Medio de pago--------------------------------------
+insert into [LEISTE_EL_CODIGO?].MedioDePago(id_medio_de_pago,cuotas_sin_interes)
+values('Efectivo',0)
+
+insert into [LEISTE_EL_CODIGO?].MedioDePago(id_medio_de_pago,cuotas_sin_interes)
+values('Debito',6)
+
+insert into [LEISTE_EL_CODIGO?].MedioDePago(id_medio_de_pago,cuotas_sin_interes)
+values('Credito',3)
 --Servicio--
 -- hay 5 tipos de cabinas asique hay 5 servicios asociados a ellas
 --cabina exterior, ejecutivo,cabina estandar,suite,cabina balcon
@@ -711,6 +719,12 @@ as
 		from [LEISTE_EL_CODIGO?].Viaje v join [LEISTE_EL_CODIGO?].Recorrido r
 		ON v.id_recorrido = r.id_recorrido
 		and r.estado = 'A'
+go
+
+create view [LEISTE_EL_CODIGO?].MediosDePagosDisponibles
+as
+		select id_medio_de_pago
+		from [LEISTE_EL_CODIGO?].MedioDePago
 go
 --........................................ PROCEDURES ......................................................
 --........................................<ABM 1> ROL				......................................................
@@ -1354,20 +1368,17 @@ go
 --cargarMedioDePago--
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].cargarMedioDePago (@cuotas smallint,@tipoTarjeta varchar(256),@nombreTarjeta varchar(256))
+create procedure [LEISTE_EL_CODIGO?].cargarMedioDePago (@cuotas smallint,@idMedio varchar(256))
 as
 	begin
-		declare @idMedioDePago int
-		insert into [LEISTE_EL_CODIGO?].MedioDePago(cuotas_sin_interes, tipo_de_tarjeta,nombre_tarjeta)
-		values (@cuotas,@tipoTarjeta,@nombreTarjeta)
-		SELECT @idMedioDePago= SCOPE_IDENTITY()
-		return @idMedioDePago
+		insert into [LEISTE_EL_CODIGO?].MedioDePago(cuotas_sin_interes,id_medio_de_pago)
+		values (@cuotas,@idMedio)
 	end
 go --hacerlo la cantidad de veces que quiera el usuario pero despues elegir con cual pagar
 --devolverIdPago--
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].devolverIdPago (@idMedioPago int)
+create procedure [LEISTE_EL_CODIGO?].devolverIdPago (@idMedioPago varchar(256))
 as	
 	begin
 		declare @idPago int

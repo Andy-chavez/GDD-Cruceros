@@ -174,3 +174,4 @@ Nota: se debe hacer en orden del orden mas chico q quieras cambiar al ultimo
 #### ~ RecorridosDisponibles
 #### ~ TramosDisponibles
 #### ~ ViajesConRecorridosHabilitados
+#### ~ MediosDePagosDisponibles
