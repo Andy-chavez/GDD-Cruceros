@@ -66,7 +66,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                     switch (retorno)
                     {
                         case 1:
-                            MessageBox.Show("Pasajes comprados");
+                            new MostrarVoucher(id_pago).Show();
                             break;
                         case -1:
                             MessageBox.Show("Error: ya tiene viajes en esa fecha");
