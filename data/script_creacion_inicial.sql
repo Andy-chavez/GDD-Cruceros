@@ -142,6 +142,8 @@ if exists (select * from sys.procedures where name = 'comprarPasajeReservado')
 	drop procedure [LEISTE_EL_CODIGO?].comprarPasajeReservado
 if exists (select * from sys.procedures where name = 'crucerosDisponiblesParaViaje')
 	drop procedure [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje
+if exists (select * from sys.procedures where name = 'obtenerIdCliente')
+	drop procedure [LEISTE_EL_CODIGO?].obtenerIdCliente
 go
  if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
@@ -1304,7 +1306,10 @@ as
 	return SCOPE_IDENTITY()--todo bien
 	end
 go
-
+select * from [LEISTE_EL_CODIGO?].Viaje
+begin transaction 
+exec [LEISTE_EL_CODIGO?].crearReserva 'ETKLGK-24399',1,1,1,'2018-05-22 07:00:00'
+rollback transaction
 --viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --
 USE GD1C2019
 go
@@ -1508,6 +1513,16 @@ as
 go
 
 --........................................<ABM 9> PAGO DE RESERVA		......................................................
+use GD1C2019
+go
+create proc [LEISTE_EL_CODIGO?].obtenerIdCLiente(@idReserva decimal(18,0))
+as
+	begin
+		declare @idCliente int
+		select @idCliente=id_cliente from [LEISTE_EL_CODIGO?].Reserva where id_reserva=@idReserva
+		return @idCliente
+	end
+go
 
 use GD1C2019
 go
