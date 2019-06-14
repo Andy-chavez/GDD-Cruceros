@@ -48,7 +48,7 @@ namespace FrbaCrucero
 
         private void botonSesionUsuario_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            //this.Hide();
             try
             {
                 BaseDeDato bd = new BaseDeDato();
@@ -69,16 +69,18 @@ namespace FrbaCrucero
                 }
                 else if (retorno == 0){ //hay intentos todavia
                     MessageBox.Show("Contraseña incorrecta, pruebe nuevamente");
-
+                    casillaContraseña.Clear();
                 }
                 else if (retorno == -1){ //baja logica
                     MessageBox.Show("Se excedió la cantidad de intentos posibles");
+                    this.Hide();
                 }
                 else
                 { //no existe usuario
                     MessageBox.Show("No Existe Usuario");
+                    casillaUsuario.Clear();
+                    casillaContraseña.Clear();
                 }
-                //this.Hide();
 
             }
             catch (Exception exception)
