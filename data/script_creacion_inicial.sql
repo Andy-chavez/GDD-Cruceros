@@ -1326,7 +1326,7 @@ as
 		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
 		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
 		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
-		and CAST(v.fecha_inicio as datetime) > @fecha_inicio
+		and CAST(v.fecha_inicio as datetime) > @fechaConfig
 	end
 go --fijarse si hay que hacer un return id_viaje
 --todo despues de seleccionar un viaje--ingresar cliente
@@ -1371,7 +1371,7 @@ as
 		where id_cliente = @idCliente
 	end
 go
---cargarMedioDePago--
+------------------------------------------cargarMedioDePago--------------------------------
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].cargarMedioDePago (@cuotas smallint,@idMedio varchar(256))
@@ -1381,7 +1381,7 @@ as
 		values (@cuotas,@idMedio)
 	end
 go --hacerlo la cantidad de veces que quiera el usuario pero despues elegir con cual pagar
---devolverIdPago--
+-------------------------------------------devolverIdPago----------------------------------------------
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].devolverIdPago (@idMedioPago varchar(256),@id_cliente int,@fechaConfig datetime)
