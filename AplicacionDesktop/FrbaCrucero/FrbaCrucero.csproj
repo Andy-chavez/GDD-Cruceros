@@ -157,6 +157,12 @@
     <Compile Include="CompraReservaPasaje\DNIDuplicado.Designer.cs">
       <DependentUpon>DNIDuplicado.cs</DependentUpon>
     </Compile>
+    <Compile Include="CompraReservaPasaje\MostrarVoucher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompraReservaPasaje\MostrarVoucher.Designer.cs">
+      <DependentUpon>MostrarVoucher.cs</DependentUpon>
+    </Compile>
     <Compile Include="CompraReservaPasaje\VentanaCargarCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -261,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\DNIDuplicado.resx">
       <DependentUpon>DNIDuplicado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CompraReservaPasaje\MostrarVoucher.resx">
+      <DependentUpon>MostrarVoucher.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\VentanaCargarCliente.resx">
       <DependentUpon>VentanaCargarCliente.cs</DependentUpon>

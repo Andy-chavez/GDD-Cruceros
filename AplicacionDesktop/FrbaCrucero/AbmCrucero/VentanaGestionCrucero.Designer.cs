@@ -35,7 +35,7 @@
             // 
             // botonAlta
             // 
-            this.botonAlta.Location = new System.Drawing.Point(57, 51);
+            this.botonAlta.Location = new System.Drawing.Point(46, 36);
             this.botonAlta.Name = "botonAlta";
             this.botonAlta.Size = new System.Drawing.Size(160, 23);
             this.botonAlta.TabIndex = 0;
@@ -45,7 +45,7 @@
             // 
             // botonModificar
             // 
-            this.botonModificar.Location = new System.Drawing.Point(57, 109);
+            this.botonModificar.Location = new System.Drawing.Point(46, 85);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.Size = new System.Drawing.Size(160, 23);
             this.botonModificar.TabIndex = 1;
@@ -55,7 +55,7 @@
             // 
             // botonBaja
             // 
-            this.botonBaja.Location = new System.Drawing.Point(57, 165);
+            this.botonBaja.Location = new System.Drawing.Point(46, 135);
             this.botonBaja.Name = "botonBaja";
             this.botonBaja.Size = new System.Drawing.Size(160, 23);
             this.botonBaja.TabIndex = 2;
@@ -67,12 +67,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(255, 184);
             this.Controls.Add(this.botonBaja);
             this.Controls.Add(this.botonModificar);
             this.Controls.Add(this.botonAlta);
             this.Name = "VentanaGestionCrucero";
             this.Text = "VentanaAltaCrucero";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaGestionCrucero_Load);
             this.ResumeLayout(false);
 
