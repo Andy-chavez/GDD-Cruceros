@@ -33,6 +33,7 @@
             this.tramoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.botonLimpiar = new System.Windows.Forms.Button();
             this.botonBuscar = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,6 +47,7 @@
             this.botonEliminar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.botonVolver = new System.Windows.Forms.Button();
+            this.botonSacarTramo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.listaDeTramos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tramoBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -59,6 +61,7 @@
             this.listaDeTramos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.listaDeTramos.Location = new System.Drawing.Point(0, 19);
             this.listaDeTramos.Name = "listaDeTramos";
+            this.listaDeTramos.ReadOnly = true;
             this.listaDeTramos.Size = new System.Drawing.Size(447, 247);
             this.listaDeTramos.TabIndex = 0;
             this.listaDeTramos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listaDeTramos_CellClick);
@@ -80,6 +83,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.botonLimpiar);
             this.groupBox2.Controls.Add(this.botonBuscar);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
@@ -92,9 +96,19 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filtrar Tramo";
             // 
+            // botonLimpiar
+            // 
+            this.botonLimpiar.Location = new System.Drawing.Point(357, 67);
+            this.botonLimpiar.Name = "botonLimpiar";
+            this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.botonLimpiar.TabIndex = 5;
+            this.botonLimpiar.Text = "Limpiar";
+            this.botonLimpiar.UseVisualStyleBackColor = true;
+            this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
+            // 
             // botonBuscar
             // 
-            this.botonBuscar.Location = new System.Drawing.Point(363, 49);
+            this.botonBuscar.Location = new System.Drawing.Point(357, 27);
             this.botonBuscar.Name = "botonBuscar";
             this.botonBuscar.Size = new System.Drawing.Size(75, 23);
             this.botonBuscar.TabIndex = 4;
@@ -126,6 +140,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(222, 20);
             this.textBox2.TabIndex = 1;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // filtroOrigen
             // 
@@ -137,7 +152,7 @@
             // 
             // botonTramo
             // 
-            this.botonTramo.Location = new System.Drawing.Point(12, 137);
+            this.botonTramo.Location = new System.Drawing.Point(13, 125);
             this.botonTramo.Name = "botonTramo";
             this.botonTramo.Size = new System.Drawing.Size(196, 35);
             this.botonTramo.TabIndex = 3;
@@ -153,6 +168,7 @@
             this.botonCrear.TabIndex = 4;
             this.botonCrear.Text = "Crear";
             this.botonCrear.UseVisualStyleBackColor = true;
+            this.botonCrear.Click += new System.EventHandler(this.botonCrear_Click);
             // 
             // Recorrido
             // 
@@ -162,6 +178,7 @@
             this.Recorrido.Size = new System.Drawing.Size(334, 238);
             this.Recorrido.TabIndex = 5;
             this.Recorrido.SelectedIndexChanged += new System.EventHandler(this.Recorrido_SelectedIndexChanged);
+            this.Recorrido.DoubleClick += new System.EventHandler(this.Recorrido_DoubleClick);
             // 
             // groupBox3
             // 
@@ -175,7 +192,7 @@
             // 
             // botonEliminar
             // 
-            this.botonEliminar.Location = new System.Drawing.Point(274, 137);
+            this.botonEliminar.Location = new System.Drawing.Point(274, 125);
             this.botonEliminar.Name = "botonEliminar";
             this.botonEliminar.Size = new System.Drawing.Size(191, 35);
             this.botonEliminar.TabIndex = 7;
@@ -186,11 +203,12 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(552, 159);
+            this.label3.Location = new System.Drawing.Point(22, 178);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(184, 13);
+            this.label3.Size = new System.Drawing.Size(155, 13);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Click para sacar el tramo del recorrido";
+            this.label3.Text = "Seleccionar tramo para agregar";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // botonVolver
             // 
@@ -201,11 +219,22 @@
             this.botonVolver.Text = "Volver";
             this.botonVolver.UseVisualStyleBackColor = true;
             // 
+            // botonSacarTramo
+            // 
+            this.botonSacarTramo.Location = new System.Drawing.Point(572, 165);
+            this.botonSacarTramo.Name = "botonSacarTramo";
+            this.botonSacarTramo.Size = new System.Drawing.Size(156, 23);
+            this.botonSacarTramo.TabIndex = 10;
+            this.botonSacarTramo.Text = "Sacar ultimo Tramo";
+            this.botonSacarTramo.UseVisualStyleBackColor = true;
+            this.botonSacarTramo.Click += new System.EventHandler(this.botonSacarTramo_Click);
+            // 
             // VentanaAltaRecorrido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(843, 523);
+            this.Controls.Add(this.botonSacarTramo);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.botonEliminar);
@@ -258,5 +287,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button botonVolver;
         private System.Windows.Forms.Button botonBuscar;
+        private System.Windows.Forms.Button botonSacarTramo;
+        private System.Windows.Forms.Button botonLimpiar;
     }
 }

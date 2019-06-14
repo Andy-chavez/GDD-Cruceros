@@ -37,7 +37,6 @@
             this.botonLimpiar = new System.Windows.Forms.Button();
             this.botonVolver = new System.Windows.Forms.Button();
             this.botonCrear = new System.Windows.Forms.Button();
-            this.botonEliminar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listaOrigen
@@ -122,22 +121,11 @@
             this.botonCrear.UseVisualStyleBackColor = true;
             this.botonCrear.Click += new System.EventHandler(this.botonCrear_Click);
             // 
-            // botonEliminar
-            // 
-            this.botonEliminar.Location = new System.Drawing.Point(210, 255);
-            this.botonEliminar.Name = "botonEliminar";
-            this.botonEliminar.Size = new System.Drawing.Size(75, 23);
-            this.botonEliminar.TabIndex = 9;
-            this.botonEliminar.Text = "Eliminar";
-            this.botonEliminar.UseVisualStyleBackColor = true;
-            this.botonEliminar.Click += new System.EventHandler(this.botonEliminar_Click);
-            // 
             // VentanaTramo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(331, 309);
-            this.Controls.Add(this.botonEliminar);
             this.Controls.Add(this.botonCrear);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.botonLimpiar);
@@ -166,6 +154,5 @@
         private System.Windows.Forms.Button botonLimpiar;
         private System.Windows.Forms.Button botonVolver;
         private System.Windows.Forms.Button botonCrear;
-        private System.Windows.Forms.Button botonEliminar;
     }
 }

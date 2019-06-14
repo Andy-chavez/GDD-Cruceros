@@ -73,7 +73,6 @@
             this.Controls.Add(this.botonAlta);
             this.Name = "VentanaGestionRecorrido";
             this.Text = "Gestionar Recorridos";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaGestionRecorrido_Load);
             this.ResumeLayout(false);
 

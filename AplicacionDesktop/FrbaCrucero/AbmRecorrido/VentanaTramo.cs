@@ -24,11 +24,9 @@ namespace FrbaCrucero.AbmRecorrido
         {
             this.llenarCombo(listaOrigen, "SELECT id_origen FROM [LEISTE_EL_CODIGO?].Tramo");
             this.llenarCombo(listaDestino, "SELECT id_destino FROM [LEISTE_EL_CODIGO?].Tramo");
+
         }
-        public void esconderBotonEliminar()
-        {
-            this.botonEliminar.Hide();
-        }
+
 
         private void botonCrear_Click(object sender, EventArgs e)
         {
@@ -69,10 +67,7 @@ namespace FrbaCrucero.AbmRecorrido
 
         }
 
-        private void botonEliminar_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void botonLimpiar_Click(object sender, EventArgs e)
         {

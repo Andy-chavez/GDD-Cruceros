@@ -19,6 +19,7 @@ namespace FrbaCrucero.AbmRecorrido
             InitializeComponent();
         }
 
+        private Recorrido recorrido = new Recorrido();
         private BaseDeDato bd = new BaseDeDato();
         private DataTable dt = new DataTable();
 
@@ -40,12 +41,67 @@ namespace FrbaCrucero.AbmRecorrido
         private void VentanaModificarRecorrido_Load(object sender, EventArgs e)
         {
             llenardataGridView(recorridosActuales, "SELECT * FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
-            llenardataGridView(tramosDisponibles, "SELECT * FROM [LEISTE_EL_CODIGO?].TramosDisponibles");
+            llenarCombo(nuevoOrigen, "SELECT id_origen FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
+            llenarCombo(nuevoDestino, "SELECT id_origen FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
+
         }
 
         private void tramosDisponibles_CellContentClick()
         {
 
+        }
+
+        private void botonModificarRecorrido_Click(object sender, EventArgs e)
+        {
+            recorrido.modificarRecorrido(Convert.ToDecimal(textoRecorridoSeleccionado.Text), nuevoOrigen.Text.ToString(), nuevoDestino.Text.ToString());
+        }
+
+        private void botonDardeBaja_Click(object sender, EventArgs e)
+        {
+            recorrido.darDeBaja(Convert.ToDecimal(textoRecorridoSeleccionado.Text));
+        }
+
+        private void textoRecorridoSeleccionado_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nuevoOrigen_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        public void llenarCombo(ComboBox cb, string consultaDeObtencion)
+        {
+
+            BaseDeDato db = new BaseDeDato();
+            db.conectar();
+            SqlConnection conexion = db.obtenerConexion();
+            SqlCommand consulta = new SqlCommand(consultaDeObtencion, conexion);
+            List<String> listaDeTramos = db.obtenerListaDeDatos(consulta);
+            cb.DataSource = listaDeTramos;
+            cb.SelectedIndex = 0;
+            cb.DropDownStyle = ComboBoxStyle.DropDownList;
+            db.desconectar();
+        }
+
+        private void nuevoDestino_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+        public void esconderCosasModificar()
+        {
+            groupBox2.Hide();
+            botonModificarRecorrido.Hide();
+        }
+        public void esconderCosasBaja()
+        {
+            botonDardeBaja.Hide();
         }
     }
 }

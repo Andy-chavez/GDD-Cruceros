@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FrbaCrucero.Clases
 {
-    
+
     class Crucero
     {
         BaseDeDato bd = new BaseDeDato();
@@ -16,7 +16,7 @@ namespace FrbaCrucero.Clases
         public string id { get; set; }
         public string idFabricante { get; set; }
         public string modelo { get; set; }
-        public bool bajaPorFueraDeServicio  { get; set; }
+        public bool bajaPorFueraDeServicio { get; set; }
         public bool bajaPorVidaUtil { get; set; }
         public int cantCabinas { get; set; }
         public DateTime fechaFechaBajaPorFueraDesServicio { get; set; }
@@ -28,7 +28,7 @@ namespace FrbaCrucero.Clases
 
         #region Constructores
 
-        public Crucero(string id, string idFabricante, string modelo, bool bajaPorFueraDeServicio, bool bajaPorVidaUtil, int cantCabinas , DateTime fechaFechaBajaPorFueraDesServicio, DateTime fechaBajaPorVidaUtil, DateTime fechaReinicioDeServicio, DateTime fechaBajaDefinitiva)
+        public Crucero(string id, string idFabricante, string modelo, bool bajaPorFueraDeServicio, bool bajaPorVidaUtil, int cantCabinas, DateTime fechaFechaBajaPorFueraDesServicio, DateTime fechaBajaPorVidaUtil, DateTime fechaReinicioDeServicio, DateTime fechaBajaDefinitiva)
         {
             this.id = id;
             this.idFabricante = idFabricante;
@@ -40,7 +40,7 @@ namespace FrbaCrucero.Clases
             this.fechaBajaPorVidaUtil = fechaBajaPorVidaUtil;
             this.fechaReinicioDeServicio = fechaReinicioDeServicio;
             this.fechaBajaDefinitiva = fechaBajaDefinitiva;
-           
+
         }
 
         public Crucero(string id, string idFabricante, string modelo)
@@ -50,7 +50,7 @@ namespace FrbaCrucero.Clases
             this.modelo = modelo;
         }
         public Crucero()
-        {          
+        {
         }
 
         #endregion
@@ -81,18 +81,19 @@ namespace FrbaCrucero.Clases
             bd.desconectar();
         }
 
-        public void modificarCrucero(string id, string idFabricante ){
+        public void modificarCrucero(string id, string idFabricante)
+        {
 
             this.id = id;
             this.idFabricante = idFabricante;
-           
+
             try
             {
                 bd.conectar();
                 bd.crearSP("[LEISTE_EL_CODIGO?].modificarCrucero");
                 bd.setearParametroPorValor("id_crucero", id);
                 bd.setearParametroPorValor("id_fabricante", idFabricante);
-                
+
                 bd.ejecutarSP();
             }
             catch (Exception excepcion)
@@ -103,7 +104,8 @@ namespace FrbaCrucero.Clases
             bd.desconectar();
         }
 
-        public void bajaDefinitiva(DateTime fechaActual, string id){
+        public void bajaDefinitiva(DateTime fechaActual, string id)
+        {
             this.id = id;
             this.fechaBajaDefinitiva = fechaBajaDefinitiva;
 
@@ -122,10 +124,11 @@ namespace FrbaCrucero.Clases
                 bd.ventanaErrorBD(excepcion);
             }
             bd.desconectar();
-    
-    }
 
-        public void bajaTemporal(DateTime fechaReinicio, string id) {
+        }
+
+        public void bajaTemporal(DateTime fechaReinicio, string id)
+        {
             this.id = id;
             this.fechaReinicioDeServicio = fechaReinicio;
 
@@ -144,7 +147,7 @@ namespace FrbaCrucero.Clases
                 bd.ventanaErrorBD(excepcion);
             }
             bd.desconectar();
-        
+
         }
     }
 

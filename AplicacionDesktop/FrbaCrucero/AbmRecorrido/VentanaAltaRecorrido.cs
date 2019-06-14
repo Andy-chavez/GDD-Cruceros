@@ -24,6 +24,7 @@ namespace FrbaCrucero.AbmRecorrido
         private BaseDeDato bd = new BaseDeDato();
         private DataTable dt = new DataTable();
         private List<Tramo> listaTramos = new List<Tramo>();
+        private Recorrido recorrido = new Recorrido();
 
         private void VentanaAltaRecorrido_Load(object sender, EventArgs e)
         {
@@ -58,7 +59,7 @@ namespace FrbaCrucero.AbmRecorrido
         {
             VentanaTramo ventana = new VentanaTramo();
             ventana.Show();
-            ventana.esconderBotonEliminar();
+
 
         }
 
@@ -118,6 +119,49 @@ namespace FrbaCrucero.AbmRecorrido
         private void Recorrido_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Recorrido_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void botonSacarTramo_Click(object sender, EventArgs e)
+        {
+            if (Recorrido.Items.Count > 0)
+            {
+
+                Recorrido.Items.RemoveAt(Recorrido.Items.Count - 1);
+                listaTramos.Remove(listaTramos.Last());
+            }
+            else
+            {
+                MessageBox.Show("No hay tramos para sacar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void botonCrear_Click(object sender, EventArgs e)
+        {
+            string primerOrigen = listaTramos.First().id_origen;
+            string primerDestino = listaTramos.Last().destino;
+            recorrido.crearRecorrido(primerOrigen, primerDestino);
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void botonLimpiar_Click(object sender, EventArgs e)
+        {
+            textBox2.Clear();
+            filtroOrigen.Clear();
         }
     }
 }

@@ -43,7 +43,7 @@
             // 
             // botonCrear
             // 
-            this.botonCrear.Location = new System.Drawing.Point(285, 249);
+            this.botonCrear.Location = new System.Drawing.Point(322, 249);
             this.botonCrear.Name = "botonCrear";
             this.botonCrear.Size = new System.Drawing.Size(75, 23);
             this.botonCrear.TabIndex = 0;
@@ -63,7 +63,7 @@
             // 
             // textoIdCrucero
             // 
-            this.textoIdCrucero.Location = new System.Drawing.Point(171, 46);
+            this.textoIdCrucero.Location = new System.Drawing.Point(137, 43);
             this.textoIdCrucero.Name = "textoIdCrucero";
             this.textoIdCrucero.Size = new System.Drawing.Size(176, 20);
             this.textoIdCrucero.TabIndex = 2;
@@ -71,7 +71,7 @@
             // 
             // texoIdFabricante
             // 
-            this.texoIdFabricante.Location = new System.Drawing.Point(171, 88);
+            this.texoIdFabricante.Location = new System.Drawing.Point(137, 84);
             this.texoIdFabricante.Name = "texoIdFabricante";
             this.texoIdFabricante.Size = new System.Drawing.Size(176, 20);
             this.texoIdFabricante.TabIndex = 3;
@@ -79,7 +79,7 @@
             // 
             // textoModelo
             // 
-            this.textoModelo.Location = new System.Drawing.Point(171, 134);
+            this.textoModelo.Location = new System.Drawing.Point(137, 134);
             this.textoModelo.Name = "textoModelo";
             this.textoModelo.Size = new System.Drawing.Size(176, 20);
             this.textoModelo.TabIndex = 4;
@@ -88,7 +88,7 @@
             // Crucero_id
             // 
             this.Crucero_id.AutoSize = true;
-            this.Crucero_id.Location = new System.Drawing.Point(29, 49);
+            this.Crucero_id.Location = new System.Drawing.Point(49, 46);
             this.Crucero_id.Name = "Crucero_id";
             this.Crucero_id.Size = new System.Drawing.Size(58, 13);
             this.Crucero_id.TabIndex = 5;
@@ -97,7 +97,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 91);
+            this.label1.Location = new System.Drawing.Point(49, 91);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(71, 13);
             this.label1.TabIndex = 6;
@@ -106,7 +106,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(29, 137);
+            this.label2.Location = new System.Drawing.Point(49, 137);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(42, 13);
             this.label2.TabIndex = 7;
@@ -115,7 +115,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(29, 172);
+            this.label3.Location = new System.Drawing.Point(39, 172);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(113, 13);
             this.label3.TabIndex = 8;
@@ -125,13 +125,13 @@
             // 
             this.textoCabina.Location = new System.Drawing.Point(171, 169);
             this.textoCabina.Name = "textoCabina";
-            this.textoCabina.Size = new System.Drawing.Size(176, 20);
+            this.textoCabina.Size = new System.Drawing.Size(142, 20);
             this.textoCabina.TabIndex = 9;
             this.textoCabina.TextChanged += new System.EventHandler(this.textoCabina_TextChanged);
             // 
             // botonLimpiar
             // 
-            this.botonLimpiar.Location = new System.Drawing.Point(285, 210);
+            this.botonLimpiar.Location = new System.Drawing.Point(322, 210);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
             this.botonLimpiar.TabIndex = 10;
@@ -143,7 +143,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(386, 304);
+            this.ClientSize = new System.Drawing.Size(439, 304);
             this.Controls.Add(this.botonLimpiar);
             this.Controls.Add(this.textoCabina);
             this.Controls.Add(this.label3);
