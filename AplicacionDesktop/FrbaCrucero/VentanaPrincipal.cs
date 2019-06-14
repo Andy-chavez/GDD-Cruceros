@@ -91,6 +91,8 @@ namespace FrbaCrucero
         private void botonSesionCliente_Click(object sender, EventArgs e)
         {
             this.Hide();
+            BaseDeDato bd = new BaseDeDato();
+            bd.ejecutarConsulta("[LEISTE_EL_CODIGO?].eliminarReservasVencidas");
             VentanaMenu menu = new VentanaMenu();
             menu.Show();
             menu.ocultarBotones();
