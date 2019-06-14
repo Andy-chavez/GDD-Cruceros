@@ -1264,16 +1264,21 @@ go
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha
-(@fecha datetime2(3),@idPasajero int)
+(@fecha datetime2(3),@idPasajero int,@idCrucero int,@idViaje int,@idCabina int)
 as
 	begin
-	if (exists(select id_cliente from [LEISTE_EL_CODIGO?].Pasaje p 
+	if(exists(select id_cliente
+				from [LEISTE_EL_CODIGO?].Pasaje p
+				join [LEISTE_EL_CODIGO?].Viaje v ON p.id_viaje = v.id_viaje
+				where id_cliente= @idPasajero and v.fecha_inicio=@fecha and p.id_crucero = @idCrucero
+				and p.id_viaje = @idViaje and p.id_cabina = @idCabina))  --tenemos que poner este caso por si el cliente compra mas de un pasaje
+	return 0
+	else if (exists(select id_cliente from [LEISTE_EL_CODIGO?].Pasaje p 
 					join [LEISTE_EL_CODIGO?].Viaje v on p.id_viaje=v.id_viaje
 					where id_cliente=@idPasajero and v.fecha_inicio=@fecha
 		) )
 		return 1
 	return 0
-
 	end
 go
 
@@ -1291,7 +1296,7 @@ as
 	from [LEISTE_EL_CODIGO?].Viaje
 	where id_viaje=@idViaje
 
-	exec @retorno = [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha @fecha,@idCliente
+	exec @retorno = [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha @fecha,@idCliente,@idCrucero,@idViaje,@idCabina
 	
 	if( @retorno = 1) return -1 --el cliente ya tiene un viaje en esa fecha
 	insert into [LEISTE_EL_CODIGO?].Reserva(id_crucero,id_cliente,id_viaje,id_cabina,fecha_actual)
@@ -1486,7 +1491,7 @@ as
 		declare @precioPasaje decimal (18,2)
 		select @fecha = fecha_inicio
 		from [LEISTE_EL_CODIGO?].Viaje
-		exec @retorno = [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha @fecha,@idCliente
+		exec @retorno = [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha @fecha,@idCliente,@idCrucero,@idViaje,@idCabina
 		if(@retorno =1)
 			return -1 -- ya tiene viajes en esa fecha, ERROR
 
