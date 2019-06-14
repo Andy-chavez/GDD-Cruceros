@@ -74,7 +74,7 @@
             this.botonReserva.Name = "botonReserva";
             this.botonReserva.Size = new System.Drawing.Size(229, 23);
             this.botonReserva.TabIndex = 4;
-            this.botonReserva.Text = "Comprar Reserva de Pasaje";
+            this.botonReserva.Text = "Comprar o Reservar Pasaje";
             this.botonReserva.UseVisualStyleBackColor = true;
             this.botonReserva.Click += new System.EventHandler(this.botonReserva_Click);
             // 
@@ -94,7 +94,7 @@
             this.botonPago.Name = "botonPago";
             this.botonPago.Size = new System.Drawing.Size(229, 23);
             this.botonPago.TabIndex = 6;
-            this.botonPago.Text = "Registro de Pago de Reserva";
+            this.botonPago.Text = "Registrar Pago de Reserva";
             this.botonPago.UseVisualStyleBackColor = true;
             this.botonPago.Click += new System.EventHandler(this.botonPago_Click);
             // 

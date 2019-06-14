@@ -1318,12 +1318,13 @@ as
 		join [LEISTE_EL_CODIGO?].Cabina ca on v.id_crucero = ca.id_crucero
 		join [LEISTE_EL_CODIGO?].Recorrido rec on v.id_recorrido = rec.id_recorrido
 		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
-		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
+		DAY(v.fecha_inicio)>=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
 		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
 		and v.fecha_inicio > SYSDATETIME()
 	end
 go --fijarse si hay que hacer un return id_viaje
 --todo despues de seleccionar un viaje--ingresar cliente
+
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
