@@ -61,14 +61,14 @@
             this.dataGridView1.Location = new System.Drawing.Point(61, 98);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(489, 226);
+            this.dataGridView1.Size = new System.Drawing.Size(371, 226);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // botonModificar
             // 
-            this.botonModificar.Location = new System.Drawing.Point(548, 477);
+            this.botonModificar.Location = new System.Drawing.Point(426, 477);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.Size = new System.Drawing.Size(75, 23);
             this.botonModificar.TabIndex = 1;
@@ -120,7 +120,7 @@
             this.TextoCruceroSeleccionado.Location = new System.Drawing.Point(145, 345);
             this.TextoCruceroSeleccionado.Name = "TextoCruceroSeleccionado";
             this.TextoCruceroSeleccionado.ReadOnly = true;
-            this.TextoCruceroSeleccionado.Size = new System.Drawing.Size(367, 20);
+            this.TextoCruceroSeleccionado.Size = new System.Drawing.Size(315, 20);
             this.TextoCruceroSeleccionado.TabIndex = 4;
             this.TextoCruceroSeleccionado.TextChanged += new System.EventHandler(this.TextoCruceroSeleccionado_TextChanged);
             // 
@@ -153,7 +153,7 @@
             // 
             // botonBajaTemp
             // 
-            this.botonBajaTemp.Location = new System.Drawing.Point(416, 385);
+            this.botonBajaTemp.Location = new System.Drawing.Point(212, 522);
             this.botonBajaTemp.Name = "botonBajaTemp";
             this.botonBajaTemp.Size = new System.Drawing.Size(207, 29);
             this.botonBajaTemp.TabIndex = 8;
@@ -163,7 +163,7 @@
             // 
             // botonBajaFinal
             // 
-            this.botonBajaFinal.Location = new System.Drawing.Point(416, 431);
+            this.botonBajaFinal.Location = new System.Drawing.Point(212, 477);
             this.botonBajaFinal.Name = "botonBajaFinal";
             this.botonBajaFinal.Size = new System.Drawing.Size(207, 29);
             this.botonBajaFinal.TabIndex = 9;
@@ -192,7 +192,7 @@
             // 
             // botonLimpiar
             // 
-            this.botonLimpiar.Location = new System.Drawing.Point(426, 49);
+            this.botonLimpiar.Location = new System.Drawing.Point(385, 47);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
             this.botonLimpiar.TabIndex = 13;
@@ -242,7 +242,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(647, 512);
+            this.ClientSize = new System.Drawing.Size(539, 572);
             this.Controls.Add(this.monthCalendar1);
             this.Controls.Add(this.textoFechaReinicio);
             this.Controls.Add(this.buttonFechaReinicio);
