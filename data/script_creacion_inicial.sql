@@ -1306,7 +1306,7 @@ go
 create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
 as
 	begin
-		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo tipoDeCabina,rec.id_recorrido,rec.id_origen origen,rec.id_destino destino,
+		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo,rec.id_recorrido,rec.id_origen origen,rec.id_destino destino, ca.id_cabina,
 		cr.cantidadDeCabinas -
 		(select count(*) 
 		from [LEISTE_EL_CODIGO?].Reserva r
