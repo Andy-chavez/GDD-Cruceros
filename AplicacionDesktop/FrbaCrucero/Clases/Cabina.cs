@@ -10,7 +10,7 @@ namespace FrbaCrucero.Clases
     {
         #region Atributos
 
-        public string id { get; set; }
+        public int id { get; set; }
         public string idTipo { get; set; }
         public string idCrucero { get; set; }
         public int numero { get; set; }
@@ -21,7 +21,7 @@ namespace FrbaCrucero.Clases
 
         #region Constructores
 
-        public Cabina(string id, string idTipo,string idCrucero ,int numero, int piso)
+        public Cabina(int id, string idTipo,string idCrucero ,int numero, int piso)
         {
             this.id = id;
             this.idTipo = idTipo;

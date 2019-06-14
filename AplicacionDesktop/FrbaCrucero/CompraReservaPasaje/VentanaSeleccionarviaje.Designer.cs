@@ -41,6 +41,8 @@
             this.botonReserva = new System.Windows.Forms.Button();
             this.botonCompra = new System.Windows.Forms.Button();
             this.buttonCargarCli = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBoxCantPasajes = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.viajesDisponibles)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -59,7 +61,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.viajesDisponibles);
-            this.groupBox1.Location = new System.Drawing.Point(30, 118);
+            this.groupBox1.Location = new System.Drawing.Point(30, 157);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(483, 299);
             this.groupBox1.TabIndex = 1;
@@ -69,6 +71,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.comboBoxCantPasajes);
+            this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.buttonBuscar);
             this.groupBox2.Controls.Add(this.dateTimePicker1);
             this.groupBox2.Controls.Add(this.label3);
@@ -78,7 +82,7 @@
             this.groupBox2.Controls.Add(this.listaOrigen);
             this.groupBox2.Location = new System.Drawing.Point(30, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(483, 100);
+            this.groupBox2.Size = new System.Drawing.Size(483, 139);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filtros";
@@ -112,7 +116,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(44, 66);
+            this.label2.Location = new System.Drawing.Point(44, 62);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 6;
@@ -130,7 +134,7 @@
             // listaDestino
             // 
             this.listaDestino.FormattingEnabled = true;
-            this.listaDestino.Location = new System.Drawing.Point(106, 63);
+            this.listaDestino.Location = new System.Drawing.Point(106, 59);
             this.listaDestino.Name = "listaDestino";
             this.listaDestino.Size = new System.Drawing.Size(135, 21);
             this.listaDestino.TabIndex = 3;
@@ -146,7 +150,7 @@
             // 
             // botonReserva
             // 
-            this.botonReserva.Location = new System.Drawing.Point(278, 439);
+            this.botonReserva.Location = new System.Drawing.Point(278, 461);
             this.botonReserva.Name = "botonReserva";
             this.botonReserva.Size = new System.Drawing.Size(235, 23);
             this.botonReserva.TabIndex = 3;
@@ -156,22 +160,51 @@
             // 
             // botonCompra
             // 
-            this.botonCompra.Location = new System.Drawing.Point(278, 494);
+            this.botonCompra.Location = new System.Drawing.Point(278, 516);
             this.botonCompra.Name = "botonCompra";
             this.botonCompra.Size = new System.Drawing.Size(235, 23);
             this.botonCompra.TabIndex = 4;
             this.botonCompra.Text = "Comprar viaje";
             this.botonCompra.UseVisualStyleBackColor = true;
+            this.botonCompra.Click += new System.EventHandler(this.botonCompra_Click);
             // 
             // buttonCargarCli
             // 
-            this.buttonCargarCli.Location = new System.Drawing.Point(77, 467);
+            this.buttonCargarCli.Location = new System.Drawing.Point(77, 516);
             this.buttonCargarCli.Name = "buttonCargarCli";
             this.buttonCargarCli.Size = new System.Drawing.Size(110, 23);
             this.buttonCargarCli.TabIndex = 5;
             this.buttonCargarCli.Text = "Carga tus Datos";
             this.buttonCargarCli.UseVisualStyleBackColor = true;
             this.buttonCargarCli.Click += new System.EventHandler(this.buttonCargarCli_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(44, 101);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(104, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Cantidad de Pasajes";
+            // 
+            // comboBoxCantPasajes
+            // 
+            this.comboBoxCantPasajes.FormattingEnabled = true;
+            this.comboBoxCantPasajes.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"});
+            this.comboBoxCantPasajes.Location = new System.Drawing.Point(154, 98);
+            this.comboBoxCantPasajes.Name = "comboBoxCantPasajes";
+            this.comboBoxCantPasajes.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxCantPasajes.TabIndex = 11;
+            this.comboBoxCantPasajes.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // VentanaSeleccionarviaje
             // 
@@ -210,5 +243,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonBuscar;
         private System.Windows.Forms.Button buttonCargarCli;
+        private System.Windows.Forms.ComboBox comboBoxCantPasajes;
+        private System.Windows.Forms.Label label4;
     }
 }

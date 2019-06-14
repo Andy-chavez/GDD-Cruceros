@@ -17,8 +17,12 @@ namespace FrbaCrucero.CompraReservaPasaje
     {
         public DateTime fechaConfig = DateTime.Parse(System.Configuration.ConfigurationSettings.AppSettings["fechaConfig"]);
         public int idPago;
-        public VentanaMedioDePago()
+        private int cliente;
+        Compra ventanaOriginal;
+        public VentanaMedioDePago(Compra ventanaOriginal,int cliente)
         {
+            this.ventanaOriginal = ventanaOriginal;
+            this.cliente = cliente;
             InitializeComponent();
         }
         BaseDeDato bd = new BaseDeDato();
@@ -50,7 +54,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].devolverIdPago");
                 procedure.CommandType = CommandType.StoredProcedure;
                 procedure.Parameters.AddWithValue("@idMedioPago", SqlDbType.NVarChar).Value = comboBoxMedios.Text;
-                //procedure.Parameters.AddWithValue("@idCliente", SqlDbType.DateTime).Value = this.cliente; //hay que determinar como llega
+                procedure.Parameters.AddWithValue("@idCliente", SqlDbType.Int).Value = this.cliente; //hay que determinar como llega
                 procedure.Parameters.AddWithValue("@fechaConfig", SqlDbType.DateTime).Value = fechaConfig;
                 procedure.Parameters.Add("@idPago", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                 bd.ejecutarConsultaDevuelveInt(procedure);
@@ -58,6 +62,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 if (idPago> 0) //joya
                 {
                     MessageBox.Show("Se ha cargado su medio de pago, puede proceder con la compra de pasajes");
+
                     this.Hide();
                 }
 

@@ -145,6 +145,12 @@
     <Compile Include="Clases\Rol.cs" />
     <Compile Include="Clases\Crucero.cs" />
     <Compile Include="Clases\Usuario.cs" />
+    <Compile Include="CompraReservaPasaje\Compra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompraReservaPasaje\Compra.Designer.cs">
+      <DependentUpon>Compra.cs</DependentUpon>
+    </Compile>
     <Compile Include="CompraReservaPasaje\DNIDuplicado.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,6 +168,12 @@
     </Compile>
     <Compile Include="CompraReservaPasaje\VentanaCliente.Designer.cs">
       <DependentUpon>VentanaCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CompraReservaPasaje\VentanaMedioDePago.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompraReservaPasaje\VentanaMedioDePago.designer.cs">
+      <DependentUpon>VentanaMedioDePago.cs</DependentUpon>
     </Compile>
     <Compile Include="CompraReservaPasaje\VentanaSeleccionarviaje.cs">
       <SubType>Form</SubType>
@@ -244,6 +256,9 @@
     <EmbeddedResource Include="AbmRol\VentanaModificarRol.resx">
       <DependentUpon>VentanaModificarRol.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CompraReservaPasaje\Compra.resx">
+      <DependentUpon>Compra.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\DNIDuplicado.resx">
       <DependentUpon>DNIDuplicado.cs</DependentUpon>
     </EmbeddedResource>
@@ -252,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\VentanaCliente.resx">
       <DependentUpon>VentanaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CompraReservaPasaje\VentanaMedioDePago.resx">
+      <DependentUpon>VentanaMedioDePago.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\VentanaSeleccionarviaje.resx">
       <DependentUpon>VentanaSeleccionarviaje.cs</DependentUpon>

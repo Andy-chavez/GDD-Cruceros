@@ -30,35 +30,6 @@ namespace FrbaCrucero.CompraReservaPasaje
             this.cliente = cliente;
         }
 
-        #region DataGridView
-
-
-        /*
-        public void dataGridViewCargar(DataGridView dataGridView, DataSet vista)
-        {
-            dataGridView.DataSource = vista;
-        }*/
-      /*  public void llenardataGridView(DataGridView dgv)
-        {
-            bd.conectar();
-            SqlCommand command = bd.ejecutarConsulta("SELECT * FROM [LEISTE_EL_CODIGO?].CrucerosDisponibles");
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            adapter.Fill(dt);
-            dgv.DataSource = dt;
-        }
-        */
-        /*
-        public void dataGridViewAgregarBotonSeleccionar(DataGridView dataGridView)
-        {
-            DataGridViewButtonColumn botonSeleccion = new DataGridViewButtonColumn();
-            botonSeleccion.HeaderText = "Seleccionar";
-            botonSeleccion.Text = "Seleccionar";
-            botonSeleccion.UseColumnTextForButtonValue = true;
-            dataGridView.Columns.Add(botonSeleccion);
-        }*/
-
-        #endregion
-
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
@@ -67,6 +38,7 @@ namespace FrbaCrucero.CompraReservaPasaje
         private void SetDefaults()
         {
             this.dateTimePicker1.MinDate = DateTime.Now;
+            this.comboBoxCantPasajes.SelectedIndex = 0;
         }
 
         private void VentanaSeleccionarviaje_Load(object sender, EventArgs e)
@@ -74,18 +46,6 @@ namespace FrbaCrucero.CompraReservaPasaje
             this.llenarComboOrigen(listaOrigen);
             this.llenarComboDestino(listaDestino);
         }
-        /*
-        public void llenardataGridView(DataGridView dgv)
-        {
-            bd.conectar();
-            SqlConnection conexion = bd.obtenerConexion();
-            SqlCommand command = new SqlCommand("SELECT * FROM [LEISTE_EL_CODIGO?].Viaje", conexion);
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            adapter.Fill(dt);
-            dgv.DataSource = dt;
-            bd.desconectar();
-        }*/
-
 
 
         private void textoFechaInicio_TextChanged(object sender, EventArgs e)
@@ -97,40 +57,8 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
 
         }
-        public void filtrarDataGrdView(DataGridView dgv, string nombreConsulta)
-        {
-            bd.conectar();
-            SqlCommand consulta = new SqlCommand(nombreConsulta, bd.obtenerConexion());
-            DataTable tabla = bd.obtenerDataTable(consulta);
-            SqlDataAdapter adapter = new SqlDataAdapter(consulta);
-            adapter.Fill(tabla);
-            dgv.DataSource = tabla;
-            bd.desconectar();
-        }
+
         private void viajesDisponibles_CellClick(object sender, DataGridViewCellEventArgs e) { }
-        /*
-        private void viajesDisponibles_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (viajesDisponibles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
-            {
-                viajesDisponibles.CurrentRow.Selected = true;
-
-                int idTramo = Convert.ToInt32(viajesDisponibles.Rows[e.RowIndex].Cells["id_Viaje"].Value.ToString());
-                decimal id_recorrido = Convert.ToDecimal( viajesDisponibles.Rows[e.RowIndex].Cells["id_Viaje"].Value.ToString());
-                string id_crucero = viajesDisponibles.Rows[e.RowIndex].Cells["id_Viaje"].Value.ToString();
-                DateTime fecha_inicio = Convert.ToDateTime( viajesDisponibles.Rows[e.RowIndex].Cells["id_Viaje"].Value.ToString());
-                DateTime fecha_finalizacion_estimada = Convert.ToDateTime(viajesDisponibles.Rows[e.RowIndex].Cells["id_Viaje"].Value.ToString());
-                DateTime fecha_finalizacion = Convert.ToDateTime(viajesDisponibles.Rows[e.RowIndex].Cells["id_Viaje"].Value.ToString());
-                Viaje viajeSeleccionado = new Viaje(idTramo,id_recorrido,id_crucero,fecha_inicio,fecha_finalizacion_estimada,fecha_finalizacion);
-
-            }
-            else
-            {
-
-                MessageBox.Show("No hay tramos para agregar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            }
-        }*/
 
         private void viajesDisponibles_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -208,6 +136,21 @@ namespace FrbaCrucero.CompraReservaPasaje
         private void buttonCargarCli_Click(object sender, EventArgs e)
         {
             new VentanaCargarCliente(this, cliente).Show();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void botonCompra_Click(object sender, EventArgs e)
+        {
+            int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
+            int id_cabina = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
+            int id_crucero = (int)this.viajesDisponibles.CurrentRow.Cells["crucero"].Value;
+            int cantidad_pasajes = (int)this.comboBoxCantPasajes.SelectedItem;
+            new Compra(cliente,viaje,id_cabina,id_crucero,cantidad_pasajes).Show();//necesita origen,destino,viaje,inicio,cantidad
+            //compra va a crear la ventana medio de pago new ventanamediodepago(this,cliente.id).Show()
         }
     }
 }

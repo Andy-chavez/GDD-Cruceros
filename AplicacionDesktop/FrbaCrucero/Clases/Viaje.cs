@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace FrbaCrucero.Clases
 {
-    class Viaje
+    public class Viaje
     {
          #region Atributos
 
         public int id { get; set; }
-        public decimal idRecorrido { get; set; }
+        public int idRecorrido { get; set; }
         public string idCrucero { get; set; }
         public DateTime FinalizacionEstimada { get; set; }
         public DateTime FechaInicion { get; set; }
@@ -22,7 +22,7 @@ namespace FrbaCrucero.Clases
 
         #region Constructores
 
-        public Viaje(int id, decimal idRecorrido, string idCrucero, DateTime FinalizacionEstimada, DateTime FechaInicion, DateTime FechaFinalizacion)
+        public Viaje(int id, int idRecorrido, string idCrucero, DateTime FinalizacionEstimada, DateTime FechaInicion, DateTime FechaFinalizacion)
         {
             this.id = id;
             this.idRecorrido = idRecorrido;
