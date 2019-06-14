@@ -1306,10 +1306,6 @@ as
 	return SCOPE_IDENTITY()--todo bien
 	end
 go
-select * from [LEISTE_EL_CODIGO?].Viaje
-begin transaction 
-exec [LEISTE_EL_CODIGO?].crearReserva 'ETKLGK-24399',1,1,1,'2018-05-22 07:00:00'
-rollback transaction
 --viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --
 USE GD1C2019
 go
