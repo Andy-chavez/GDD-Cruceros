@@ -61,6 +61,8 @@ namespace FrbaCrucero
                 int retorno = (int)procedure.Parameters["@retorno"].Value;
                 if(retorno == 1)
                 {
+                    //SqlCommand reservasVencidas = Clases.BaseDeDato.crearConsulta();
+                    bd.ejecutarConsulta("[LEISTE_EL_CODIGO?].eliminarReservasVencidas");
                     VentanaMenu menu = new VentanaMenu();
                     this.Hide();
                     menu.Show();

@@ -194,11 +194,11 @@
     <Compile Include="ListadoEstadistico\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="PagoReserva\Form1.cs">
+    <Compile Include="PagoReserva\VentanaPagoDeReserva.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PagoReserva\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="PagoReserva\VentanaPagoDeReserva.Designer.cs">
+      <DependentUpon>VentanaPagoDeReserva.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AbmCrucero\VentanaAltaCrucero.resx">
@@ -253,8 +253,8 @@
     <EmbeddedResource Include="ListadoEstadistico\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PagoReserva\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="PagoReserva\VentanaPagoDeReserva.resx">
+      <DependentUpon>VentanaPagoDeReserva.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VentanaMenu.resx">
       <DependentUpon>VentanaMenu.cs</DependentUpon>

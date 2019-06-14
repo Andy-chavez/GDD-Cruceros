@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textoNombre = new System.Windows.Forms.TextBox();
+            this.reserva = new System.Windows.Forms.TextBox();
             this.botonVolver = new System.Windows.Forms.Button();
             this.botonCrear = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.pago = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textoNombre);
+            this.groupBox1.Controls.Add(this.reserva);
             this.groupBox1.Location = new System.Drawing.Point(38, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(408, 80);
@@ -48,12 +48,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ingrese Id de reserva";
             // 
-            // textoNombre
+            // reserva
             // 
-            this.textoNombre.Location = new System.Drawing.Point(52, 38);
-            this.textoNombre.Name = "textoNombre";
-            this.textoNombre.Size = new System.Drawing.Size(294, 20);
-            this.textoNombre.TabIndex = 1;
+            this.reserva.Location = new System.Drawing.Point(52, 38);
+            this.reserva.Name = "reserva";
+            this.reserva.Size = new System.Drawing.Size(294, 20);
+            this.reserva.TabIndex = 1;
             // 
             // botonVolver
             // 
@@ -73,10 +73,11 @@
             this.botonCrear.TabIndex = 4;
             this.botonCrear.Text = "Asociar Pago";
             this.botonCrear.UseVisualStyleBackColor = true;
+            this.botonCrear.Click += new System.EventHandler(this.BotonCrear_Click);
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.pago);
             this.groupBox2.Location = new System.Drawing.Point(38, 107);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(408, 80);
@@ -85,12 +86,13 @@
             this.groupBox2.Text = "Ingrese id de pago de reserva";
             this.groupBox2.Enter += new System.EventHandler(this.GroupBox2_Enter);
             // 
-            // textBox1
+            // pago
             // 
-            this.textBox1.Location = new System.Drawing.Point(52, 38);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(294, 20);
-            this.textBox1.TabIndex = 1;
+            this.pago.Location = new System.Drawing.Point(52, 38);
+            this.pago.Name = "pago";
+            this.pago.Size = new System.Drawing.Size(294, 20);
+            this.pago.TabIndex = 1;
+            this.pago.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
             // VentanaPagoDeReserva
             // 
@@ -115,10 +117,10 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textoNombre;
+        private System.Windows.Forms.TextBox reserva;
         private System.Windows.Forms.Button botonVolver;
         private System.Windows.Forms.Button botonCrear;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox pago;
     }
 }

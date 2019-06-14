@@ -94,7 +94,7 @@
             this.botonPago.Name = "botonPago";
             this.botonPago.Size = new System.Drawing.Size(229, 23);
             this.botonPago.TabIndex = 6;
-            this.botonPago.Text = "Pagar Reserva";
+            this.botonPago.Text = "Registro de Pago de Reserva";
             this.botonPago.UseVisualStyleBackColor = true;
             this.botonPago.Click += new System.EventHandler(this.botonPago_Click);
             // 

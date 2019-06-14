@@ -317,7 +317,7 @@ create table [LEISTE_EL_CODIGO?].AuditoriaDeCruceros(
 )
 go
 create table [LEISTE_EL_CODIGO?].AuditoriaReservasVencidas(
-	id_reservaVencida decimal(18,0) identity primary key,
+	id_reservaVencida decimal(18,0) primary key,
 	id_crucero nvarchar(50),
 	id_cliente int,
 	id_viaje int,
