@@ -429,9 +429,6 @@ insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin'
 --ADMINISTRADORES
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('adminNuestro','administrador',@hash)
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin2','administrador',@hash)
---Cliente
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepe','cliente')
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol) values('pepita','cliente')
 go
 --........................................ MIGRACION ......................................................
 --CLIENTE--
@@ -877,16 +874,16 @@ go
 --........................................<ABM 2> LOGIN Y SEGURIDAD		......................................................
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].eliminarReservasVencidas(@fecha datetime)
+create procedure [LEISTE_EL_CODIGO?].eliminarReservasVencidas(@fechaConfig datetime)
 as
 	begin
 		begin transaction
 		insert into [LEISTE_EL_CODIGO?].AuditoriaReservasVencidas(id_reservaVencida,id_crucero,id_cliente,id_viaje,id_cabina,fecha_actual,vencimiento)
 		select id_reserva,id_crucero,id_cliente,id_viaje,id_cabina,fecha_actual,vencimiento
 		from [LEISTE_EL_CODIGO?].Reserva
-		where @fecha > CAST(vencimiento as datetime)
+		where @fechaConfig > CAST(vencimiento as datetime)
 		delete from [LEISTE_EL_CODIGO?].Reserva
-		where @fecha >  CAST(vencimiento as datetime)
+		where @fechaConfig >  CAST(vencimiento as datetime)
 		commit transaction
 	end
 go
@@ -1303,8 +1300,6 @@ as
 	end
 go
 
---select * from [LEISTE_EL_CODIGO?].Cliente
-
 --viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --
 USE GD1C2019
 go
@@ -1435,9 +1430,11 @@ as
 
 	begin
 		exec [LEISTE_EL_CODIGO?].actualizarMontoTotal @idPago --porque cuando se ejecuta voucher es que se termino la compra
-		select @idPago voucher,c.nombre +',' + c.apellido nombrePasajero,v.fecha_inicio,v.id_crucero Crucero,r.id_origen Origen,r.id_destino Destino,p.precio precioPasaje
+		select @idPago voucher,c.nombre +',' + c.apellido nombrePasajero,v.fecha_inicio,v.id_crucero Crucero,r.id_origen Origen,r.id_destino Destino,p.precio precioPasaje,pv.monto_total
 		from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].Cliente c
 		ON p.id_cliente = c.id_cliente
+		join [LEISTE_EL_CODIGO?].PagoDeViaje pv
+		ON p.id_pago = pv.id_pago
 		join [LEISTE_EL_CODIGO?].Viaje v 
 		on p.id_viaje = v.id_viaje
 		join [LEISTE_EL_CODIGO?].Recorrido r on v.id_recorrido = r.id_recorrido
