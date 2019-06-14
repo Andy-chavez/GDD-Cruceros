@@ -17,6 +17,7 @@ namespace FrbaCrucero.ListadoEstadistico
         public ListadoEstadistico()
         {
             InitializeComponent();
+            SetDefaults();
         }
 
         private void comboBoxAnio_SelectedIndexChanged(object sender, EventArgs e)
@@ -27,6 +28,12 @@ namespace FrbaCrucero.ListadoEstadistico
         private void ListadoEstadistico_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void SetDefaults()
+        {
+            this.comboBoxAnio.SelectedIndex = 0;
+            this.comboBoxSemestre.SelectedIndex = 0;
         }
 
         private void top5_rec_pasajes_Click(object sender, EventArgs e)
