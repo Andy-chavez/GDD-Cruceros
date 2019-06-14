@@ -1264,7 +1264,7 @@ go
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha
-(@fecha datetime2(3),@idPasajero int,@idCrucero int,@idViaje int,@idCabina int)
+(@fecha datetime2(3),@idPasajero int,@idCrucero nvarchar(50),@idViaje int,@idCabina int)
 as
 	begin
 	if(exists(select id_cliente
@@ -1484,7 +1484,7 @@ go
 ---------------------COMPRAR PASAJE-#----------------------- ver tema de seleccionar viaje y devolver voucher
 USE GD1C2019
 go 
-create procedure [LEISTE_EL_CODIGO?].comprarPasaje (@idCliente int,@idViaje int,@idCabina int,@idCrucero int,@idPago int)
+create procedure [LEISTE_EL_CODIGO?].comprarPasaje (@idCliente int,@idViaje int,@idCabina int,@idCrucero nvarchar(50),@idPago int)
 as
 	begin
 		declare @fecha datetime2(3),@retorno int,@idPasaje int
@@ -1522,7 +1522,7 @@ create proc [LEISTE_EL_CODIGO?].comprarPasajeReservado
 (@idReserva decimal(18,0),@idPago int)
 as
 begin
-	declare @idCliente int,@idViaje int,@idCabina int,@idCrucero int
+	declare @idCliente int,@idViaje int,@idCabina int,@idCrucero nvarchar(50)
 	declare @retorno int
 	if(not exists (select *
 					from [LEISTE_EL_CODIGO?].Reserva
