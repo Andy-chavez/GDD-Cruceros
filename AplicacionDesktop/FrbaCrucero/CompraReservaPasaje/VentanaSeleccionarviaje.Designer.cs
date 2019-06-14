@@ -31,6 +31,8 @@
             this.viajesDisponibles = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.comboBoxCantPasajes = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.buttonBuscar = new System.Windows.Forms.Button();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,8 +43,6 @@
             this.botonReserva = new System.Windows.Forms.Button();
             this.botonCompra = new System.Windows.Forms.Button();
             this.buttonCargarCli = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboBoxCantPasajes = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.viajesDisponibles)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -87,6 +87,34 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filtros";
             // 
+            // comboBoxCantPasajes
+            // 
+            this.comboBoxCantPasajes.FormattingEnabled = true;
+            this.comboBoxCantPasajes.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"});
+            this.comboBoxCantPasajes.Location = new System.Drawing.Point(154, 98);
+            this.comboBoxCantPasajes.Name = "comboBoxCantPasajes";
+            this.comboBoxCantPasajes.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxCantPasajes.TabIndex = 11;
+            this.comboBoxCantPasajes.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(44, 101);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(104, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Cantidad de Pasajes";
+            // 
             // buttonBuscar
             // 
             this.buttonBuscar.Location = new System.Drawing.Point(396, 66);
@@ -103,6 +131,7 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker1.TabIndex = 8;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.DateTimePicker1_ValueChanged);
             // 
             // label3
             // 
@@ -177,34 +206,6 @@
             this.buttonCargarCli.Text = "Carga tus Datos";
             this.buttonCargarCli.UseVisualStyleBackColor = true;
             this.buttonCargarCli.Click += new System.EventHandler(this.buttonCargarCli_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(44, 101);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(104, 13);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Cantidad de Pasajes";
-            // 
-            // comboBoxCantPasajes
-            // 
-            this.comboBoxCantPasajes.FormattingEnabled = true;
-            this.comboBoxCantPasajes.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"});
-            this.comboBoxCantPasajes.Location = new System.Drawing.Point(154, 98);
-            this.comboBoxCantPasajes.Name = "comboBoxCantPasajes";
-            this.comboBoxCantPasajes.Size = new System.Drawing.Size(87, 21);
-            this.comboBoxCantPasajes.TabIndex = 11;
-            this.comboBoxCantPasajes.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // VentanaSeleccionarviaje
             // 

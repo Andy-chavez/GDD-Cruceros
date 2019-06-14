@@ -212,5 +212,10 @@ namespace FrbaCrucero.CompraReservaPasaje
 
             }
         }
+
+        private void DateTimePickerNacimiento_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

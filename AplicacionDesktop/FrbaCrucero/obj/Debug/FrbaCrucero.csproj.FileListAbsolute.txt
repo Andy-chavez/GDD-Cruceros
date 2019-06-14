@@ -93,3 +93,4 @@ C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\Aplicacio
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.VentanaCargarCliente.resources
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.VentanaMedioDePago.resources
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.MostrarVoucher.resources
+C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.Reserva.resources

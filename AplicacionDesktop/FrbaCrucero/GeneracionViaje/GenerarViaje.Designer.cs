@@ -161,6 +161,7 @@ namespace FrbaCrucero.GeneracionViaje
             this.Name = "GenerarViaje";
             this.Text = "Generar Viaje";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.GenerarViaje_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRec)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCruc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.generarViajeBindingSource)).EndInit();

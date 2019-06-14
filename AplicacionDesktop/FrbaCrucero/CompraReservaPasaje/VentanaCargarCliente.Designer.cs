@@ -173,6 +173,7 @@
             this.dateTimePickerNacimiento.Name = "dateTimePickerNacimiento";
             this.dateTimePickerNacimiento.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerNacimiento.TabIndex = 13;
+            this.dateTimePickerNacimiento.ValueChanged += new System.EventHandler(this.DateTimePickerNacimiento_ValueChanged);
             // 
             // buttonConfirm
             // 

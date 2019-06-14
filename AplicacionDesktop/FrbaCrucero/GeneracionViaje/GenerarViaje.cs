@@ -15,6 +15,7 @@ namespace FrbaCrucero.GeneracionViaje
 {
     public partial class GenerarViaje : Form
     {
+        public DateTime fechaConfig = DateTime.Parse(System.Configuration.ConfigurationSettings.AppSettings["fechaConfig"]);
         public GenerarViaje()
         {
             InitializeComponent();
@@ -29,8 +30,8 @@ namespace FrbaCrucero.GeneracionViaje
 
         private void SetDefaults()
         {
-            this.dateTimePickerInicio.MinDate = DateTime.Now;
-            this.dateTimePickerFin.MinDate = DateTime.Now;
+            this.dateTimePickerInicio.MinDate = fechaConfig;
+            this.dateTimePickerFin.MinDate = fechaConfig;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -94,6 +95,7 @@ namespace FrbaCrucero.GeneracionViaje
                 procedure.Parameters.Add("@id_crucero", SqlDbType.NVarChar).Value = rowCruc.Cells["id_crucero"].Value;
                 procedure.Parameters.Add("@fecha_inicio", SqlDbType.DateTime2).Value = this.dateTimePickerInicio.Value;
                 procedure.Parameters.Add("@fecha_finalizacion_estimada", SqlDbType.DateTime2).Value = this.dateTimePickerFin.Value;
+                procedure.Parameters.Add("@fechaConfig", SqlDbType.DateTime).Value = this.fechaConfig;
                 procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                 bd.ejecutarConsultaDevuelveInt(procedure);
                 int retorno = (int)procedure.Parameters["@retorno"].Value;
@@ -119,6 +121,11 @@ namespace FrbaCrucero.GeneracionViaje
             {
                 MessageBox.Show(exception.Message);
             }
+        }
+
+        private void GenerarViaje_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

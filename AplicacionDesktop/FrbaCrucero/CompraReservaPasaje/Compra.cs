@@ -36,6 +36,11 @@ namespace FrbaCrucero.CompraReservaPasaje
             id_pago = id;
         }
 
+        private void Compra_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void buttonMedio_Click(object sender, EventArgs e)
         {
             new VentanaMedioDePago(this, cliente.id).Show();

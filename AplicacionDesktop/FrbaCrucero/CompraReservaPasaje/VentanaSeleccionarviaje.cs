@@ -14,6 +14,7 @@ namespace FrbaCrucero.CompraReservaPasaje
 {
     public partial class VentanaSeleccionarviaje : Form
     {
+        public DateTime fechaConfig = DateTime.Parse(System.Configuration.ConfigurationSettings.AppSettings["fechaConfig"]);
         public VentanaSeleccionarviaje()
         {
             InitializeComponent();
@@ -37,7 +38,7 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         private void SetDefaults()
         {
-            this.dateTimePicker1.MinDate = DateTime.Now;
+            this.dateTimePicker1.MinDate = fechaConfig;
             this.comboBoxCantPasajes.SelectedIndex = 0;
         }
 
@@ -67,7 +68,34 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         private void botonReserva_Click(object sender, EventArgs e)
         {
-           
+            try
+            {
+                BaseDeDato bd = new BaseDeDato();
+                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].crearReserva");
+                procedure.CommandType = CommandType.StoredProcedure;
+                procedure.Parameters.Add("@idCrucero", SqlDbType.NVarChar).Value = (int)this.viajesDisponibles.CurrentRow.Cells["crucero"].Value;
+                procedure.Parameters.Add("@idCliente", SqlDbType.DateTime).Value = this.cliente.id;
+                procedure.Parameters.Add("@idViaje", SqlDbType.DateTime2).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
+                procedure.Parameters.Add("@idCabina", SqlDbType.NVarChar).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
+                procedure.Parameters.Add("@fechaConfig", SqlDbType.DateTime).Value = this.fechaConfig;
+                procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
+                bd.ejecutarConsultaDevuelveInt(procedure); 
+                int retorno = (int)procedure.Parameters["@retorno"].Value;
+                if (retorno != -1) //joya
+                {
+                    MessageBox.Show("Su numero de reserva es:"+retorno+"\nSi desea abonarlo, ingrese el codigo en la opcion Pagar del menú principal.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+                else if (retorno == -1) // no existe funcionalidad
+                {
+                    MessageBox.Show("El cliente ya posee una reserva en dicha fecha. \nVerifique los campos.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+
         }
         public void llenarComboOrigen(ComboBox cb)
         {
@@ -124,6 +152,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 procedure.Parameters.Add("@fecha_inicio", SqlDbType.DateTime2).Value = this.dateTimePicker1.Value;
                 procedure.Parameters.Add("@origen", SqlDbType.NVarChar).Value = this.listaOrigen.SelectedItem.ToString();
                 procedure.Parameters.Add("@destino", SqlDbType.NVarChar).Value = this.listaDestino.SelectedItem.ToString();
+                procedure.Parameters.Add("@fechaConfig", SqlDbType.DateTime).Value = this.fechaConfig;
                 dt = bd.obtenerDataTable(procedure);
                 this.viajesDisponibles.DataSource = dt;
             }
@@ -151,6 +180,11 @@ namespace FrbaCrucero.CompraReservaPasaje
             int cantidad_pasajes = (int)this.comboBoxCantPasajes.SelectedItem;
             new Compra(cliente,viaje,id_cabina,id_crucero,cantidad_pasajes).Show();//necesita origen,destino,viaje,inicio,cantidad
             //compra va a crear la ventana medio de pago new ventanamediodepago(this,cliente.id).Show()
+        }
+
+        private void DateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
