@@ -18,13 +18,14 @@ namespace FrbaCrucero.CompraReservaPasaje
     {
         private Cliente cliente;
         private int idViaje;
-        int idCabina,idCrucero,cant_pasajes;
+        int idCabina, cant_pasajes;
+        string idCrucero;
 
 
         private int id_pago;
-        public Compra(Cliente cliente,int idViaje, int idCabina,int idCrucero, int cant_pasajes)
+        public Compra(Cliente cliente,int idViaje, int idCabina,string idCrucero)
         {
-            this.cant_pasajes = cant_pasajes;
+            //this.cant_pasajes = cant_pasajes;
             this.idCabina=idCabina;
             this.idCrucero = idCrucero;
             this.idViaje = idViaje;

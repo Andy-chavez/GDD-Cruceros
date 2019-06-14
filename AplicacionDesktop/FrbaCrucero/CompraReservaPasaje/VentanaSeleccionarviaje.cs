@@ -70,10 +70,10 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
             try
             {
-                BaseDeDato bd = new BaseDeDato();
+                //BaseDeDato bd = new BaseDeDato();
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].crearReserva");
                 procedure.CommandType = CommandType.StoredProcedure;
-                procedure.Parameters.Add("@idCrucero", SqlDbType.NVarChar).Value = (int)this.viajesDisponibles.CurrentRow.Cells["crucero"].Value;
+                procedure.Parameters.Add("@idCrucero", SqlDbType.NVarChar).Value = this.viajesDisponibles.CurrentRow.Cells["crucero"].ToString();
                 procedure.Parameters.Add("@idCliente", SqlDbType.DateTime).Value = this.cliente.id;
                 procedure.Parameters.Add("@idViaje", SqlDbType.DateTime2).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
                 procedure.Parameters.Add("@idCabina", SqlDbType.NVarChar).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
@@ -176,9 +176,9 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
             int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
             int id_cabina = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
-            int id_crucero = (int)this.viajesDisponibles.CurrentRow.Cells["crucero"].Value;
-            int cantidad_pasajes = (int)this.comboBoxCantPasajes.SelectedItem;
-            new Compra(cliente,viaje,id_cabina,id_crucero,cantidad_pasajes).Show();//necesita origen,destino,viaje,inicio,cantidad
+            string id_crucero = this.viajesDisponibles.CurrentRow.Cells["crucero"].ToString();
+            //int cantidad_pasajes = (int)this.comboBoxCantPasajes.SelectedValue;
+            new Compra(cliente,viaje,id_cabina,id_crucero).Show();//necesita origen,destino,viaje,inicio,cantidad
             //compra va a crear la ventana medio de pago new ventanamediodepago(this,cliente.id).Show()
         }
 
