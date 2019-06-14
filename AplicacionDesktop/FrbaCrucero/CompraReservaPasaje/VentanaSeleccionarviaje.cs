@@ -17,6 +17,7 @@ namespace FrbaCrucero.CompraReservaPasaje
         public VentanaSeleccionarviaje()
         {
             InitializeComponent();
+            SetDefaults();
         }
 
         public BaseDeDato bd = new BaseDeDato();
@@ -26,11 +27,11 @@ namespace FrbaCrucero.CompraReservaPasaje
         #region DataGridView
 
 
-
+        /*
         public void dataGridViewCargar(DataGridView dataGridView, DataSet vista)
         {
             dataGridView.DataSource = vista;
-        }
+        }*/
       /*  public void llenardataGridView(DataGridView dgv)
         {
             bd.conectar();
@@ -40,6 +41,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             dgv.DataSource = dt;
         }
         */
+        /*
         public void dataGridViewAgregarBotonSeleccionar(DataGridView dataGridView)
         {
             DataGridViewButtonColumn botonSeleccion = new DataGridViewButtonColumn();
@@ -47,7 +49,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             botonSeleccion.Text = "Seleccionar";
             botonSeleccion.UseColumnTextForButtonValue = true;
             dataGridView.Columns.Add(botonSeleccion);
-        }
+        }*/
 
         #endregion
 
@@ -56,15 +58,17 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         }
 
-      
+        private void SetDefaults()
+        {
+            this.dateTimePicker1.MinDate = DateTime.Now;
+        }
 
         private void VentanaSeleccionarviaje_Load(object sender, EventArgs e)
         {
-            monthCalendar1.BringToFront();
-            this.llenardataGridView(viajesDisponibles);
-            this.llenarCombo(listaOrigen, "SELECT id_origen FROM [LEISTE_EL_CODIGO?].Tramo");
-            this.llenarCombo(listaDestino, "SELECT id_destino FROM [LEISTE_EL_CODIGO?].Tramo");
+            this.llenarComboOrigen(listaOrigen);
+            this.llenarComboDestino(listaDestino);
         }
+        /*
         public void llenardataGridView(DataGridView dgv)
         {
             bd.conectar();
@@ -74,22 +78,13 @@ namespace FrbaCrucero.CompraReservaPasaje
             adapter.Fill(dt);
             dgv.DataSource = dt;
             bd.desconectar();
-        }
+        }*/
 
-        private void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
-        {
-            textoFechaInicio.Text = Convert.ToDateTime(monthCalendar1.SelectionStart).ToString("dd/MM/yyyy");
-            monthCalendar1.Visible = false;
-        }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            monthCalendar1.Show();
-        }
 
         private void textoFechaInicio_TextChanged(object sender, EventArgs e)
         {
-            this.filtrarDataGrdView(viajesDisponibles, "SELECT * FROM [LEISTE_EL_CODIGO?].Viaje WHERE fecha_inicio LIKE ('" + textoFechaInicio.Text + "%')");
+            //this.filtrarDataGrdView(viajesDisponibles, "SELECT * FROM [LEISTE_EL_CODIGO?].Viaje WHERE fecha_inicio LIKE ('" + this.dateTimePicker1.Value + "%')");
         }
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
@@ -106,7 +101,8 @@ namespace FrbaCrucero.CompraReservaPasaje
             dgv.DataSource = tabla;
             bd.desconectar();
         }
-
+        private void viajesDisponibles_CellClick(object sender, DataGridViewCellEventArgs e) { }
+        /*
         private void viajesDisponibles_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (viajesDisponibles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
@@ -128,7 +124,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 MessageBox.Show("No hay tramos para agregar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
-        }
+        }*/
 
         private void viajesDisponibles_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -139,13 +135,26 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
            
         }
-        public void llenarCombo(ComboBox cb, string consultaDeObtencion)
+        public void llenarComboOrigen(ComboBox cb)
         {
 
             BaseDeDato db = new BaseDeDato();
             db.conectar();
             SqlConnection conexion = db.obtenerConexion();
-            SqlCommand consulta = new SqlCommand("SELECT * FROM [LEISTE_EL_CODIGO?].Tramo", conexion);
+            SqlCommand consulta = new SqlCommand("SELECT distinct id_origen FROM [LEISTE_EL_CODIGO?].Tramo", conexion);
+            List<String> listaDeTramos = db.obtenerListaDeDatos(consulta);
+            cb.DataSource = listaDeTramos;
+            cb.SelectedIndex = 0;
+            cb.DropDownStyle = ComboBoxStyle.DropDownList;
+            db.desconectar();
+        }
+        public void llenarComboDestino(ComboBox cb)
+        {
+
+            BaseDeDato db = new BaseDeDato();
+            db.conectar();
+            SqlConnection conexion = db.obtenerConexion();
+            SqlCommand consulta = new SqlCommand("SELECT distinct id_destino FROM [LEISTE_EL_CODIGO?].Tramo", conexion);
             List<String> listaDeTramos = db.obtenerListaDeDatos(consulta);
             cb.DataSource = listaDeTramos;
             cb.SelectedIndex = 0;
@@ -157,6 +166,30 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
 
         }
-       
+
+        private void botonLimpiar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                BaseDeDato bd = new BaseDeDato();
+                DataTable dt;
+                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].mostrarViajesDisponibles");
+                procedure.CommandType = CommandType.StoredProcedure;
+                procedure.Parameters.Add("@fecha_inicio", SqlDbType.DateTime2).Value = this.dateTimePicker1.Value;
+                procedure.Parameters.Add("@origen", SqlDbType.NVarChar).Value = this.listaOrigen.SelectedItem.ToString();
+                procedure.Parameters.Add("@destino", SqlDbType.NVarChar).Value = this.listaDestino.SelectedItem.ToString();
+                dt = bd.obtenerDataTable(procedure);
+                this.viajesDisponibles.DataSource = dt;
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
     }
 }

@@ -19,11 +19,18 @@ namespace FrbaCrucero.GeneracionViaje
         {
             InitializeComponent();
             RecorridosDisp();
+            SetDefaults();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void SetDefaults()
+        {
+            this.dateTimePickerInicio.MinDate = DateTime.Now;
+            this.dateTimePickerFin.MinDate = DateTime.Now;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

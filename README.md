@@ -34,7 +34,7 @@
 
 #### crucerosDisponiblesParaViaje(@fecha_inicio datetime2,@fecha_finalizacion_estimada datetime2)
 cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de recorrido y el id de cabina para poder generar el pasaje
-#### cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2)
+#### cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2,@fechaConfig datetime)
 
   Valores de retorno:
   
@@ -72,11 +72,11 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
     -1: no existe el rol
 
 ### Pasaje:
-#### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
+#### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
 
 #### cargarMedioDePago (@cuotas smallint,@tipoTarjeta varchar(256),@nombreTarjeta varchar(256))
 
-#### devolverIdPago (@idMedioPago int) -- mas facil asi, cargo desde la base de datos el total y la cantidad, cuando compras el pasaje.
+#### devolverIdPago (@idMedioPago varchar(256),@id_cliente int,@fechaConfig datetime) -- mas facil asi, cargo desde la base de datos el total y la cantidad, cuando compras el pasaje.
 
 #### comprarPasaje (@idCliente int,@idViaje int,@idCabina int,@idCrucero int,@idPago,)
 Valores de retorno:
@@ -109,7 +109,7 @@ Valores de retorno:
 
 Nota: primero creás el recorrido, después los tramos que lo componen
 
-#### modificarRecorrido(@idRecorrido decimal(13,0),@origen nvarchar(255),@destino nvarchar(255))
+#### modificarRecorrido(@idRecorrido decimal(13,0),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
 Nota: tenés que usarlo antes de modificar sus tramos
 
   Valores de retorno:
@@ -143,7 +143,7 @@ Nota: se debe hacer en orden del orden mas chico q quieras cambiar al ultimo
 
 ### Reserva:
 
-#### crearReserva(@idReserva decimal(18,0),@idCrucero nvarchar(50),@idCliente int,@idViaje int,@idCabina smallint)
+#### crearReserva(@idCrucero nvarchar(50),@idCliente int,@idViaje int,@idCabina int,@fechaConfig datetime)
 
   Valores de retorno:
   
@@ -159,6 +159,7 @@ Nota: se debe hacer en orden del orden mas chico q quieras cambiar al ultimo
       -1: el cliente ya tiene viajes en esa fecha
       1: todo bien, se compró el pasaje reservado
 
+#### eliminarReservasVencidas(@fecha datetime)
 # LISTADO ESTADISTICOS:
 
 #### topRecorridosConMasPasajesComprados (@anio int, @semestre int)

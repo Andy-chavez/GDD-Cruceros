@@ -148,6 +148,11 @@ go
 		drop view [LEISTE_EL_CODIGO?].CrucerosDisponibles
 	end
 go
+ if exists(select * from sys.views where object_name(object_id)='MediosDePagosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
+	begin
+		drop view [LEISTE_EL_CODIGO?].MediosDePagosDisponibles
+	end
+go
 if exists(select * from sys.views where object_name(object_id)='RolesHabilitados' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
 		drop view [LEISTE_EL_CODIGO?].RolesHabilitados
@@ -248,7 +253,6 @@ create table [LEISTE_EL_CODIGO?].Servicio(
 go
 create table [LEISTE_EL_CODIGO?].TipoCabina(
 	id_tipo nvarchar(255) primary key,
-	--tipo_cabina varchar(255),
 	id_servicio smallint references [LEISTE_EL_CODIGO?].Servicio,
 	porcentaje_recargo decimal(18, 2) not null
 )
@@ -283,8 +287,6 @@ go
 create table [LEISTE_EL_CODIGO?].MedioDePago(
 	id_medio_de_pago varchar(256) primary key,
 	cuotas_sin_interes smallint not null,
-	--descuento smallint not null,
-	--interes smallint not null,
 )
 go
 create table [LEISTE_EL_CODIGO?].PagoDeViaje(
@@ -875,16 +877,16 @@ go
 --........................................<ABM 2> LOGIN Y SEGURIDAD		......................................................
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].eliminarReservasVencidas
+create procedure [LEISTE_EL_CODIGO?].eliminarReservasVencidas(@fecha datetime)
 as
 	begin
 		begin transaction
 		insert into [LEISTE_EL_CODIGO?].AuditoriaReservasVencidas(id_reservaVencida,id_crucero,id_cliente,id_viaje,id_cabina,fecha_actual,vencimiento)
 		select id_reserva,id_crucero,id_cliente,id_viaje,id_cabina,fecha_actual,vencimiento
 		from [LEISTE_EL_CODIGO?].Reserva
-		where SYSDATETIME() > vencimiento
+		where @fecha > CAST(vencimiento as datetime)
 		delete from [LEISTE_EL_CODIGO?].Reserva
-		where SYSDATETIME() > vencimiento
+		where @fecha >  CAST(vencimiento as datetime)
 		commit transaction
 	end
 go
@@ -1005,15 +1007,17 @@ go
 
 --modificarRecorrido--
 --si el retorno es correcto entonces podes avanzar a modificar los tramos
+
+
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].modificarRecorrido
-(@idRecorrido decimal(13,0),@origen nvarchar(255),@destino nvarchar(255))
+(@idRecorrido decimal(13,0),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
 as
 	begin
 	if exists(select p.id_viaje from [LEISTE_EL_CODIGO?].Pasaje p 
 				join [LEISTE_EL_CODIGO?].Viaje v 
-				on p.id_viaje = v.id_viaje and v.fecha_inicio > SYSDATETIME()
+				on p.id_viaje = v.id_viaje and CAST(v.fecha_inicio as datetime) > @fechaConfig
 				where p.cancelacion = 'N'
 	) return -1 --no se puede modificar xq todavia hay pasajes vendidos q no hicieron el viaje
 	update [LEISTE_EL_CODIGO?].Recorrido
@@ -1213,11 +1217,11 @@ go
 --........................................<ABM 7> GENERAR VIAJE	......................................................
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2)
+create procedure [LEISTE_EL_CODIGO?].cargarViaje(@id_recorrido decimal(18,0),@id_crucero nvarchar(50),@fecha_inicio datetime2, @fecha_finalizacion_estimada datetime2,@fechaConfig datetime)
 as
 	begin
 		declare @valor_retorno int
-		if(SYSDATETIME()>@fecha_inicio)
+		if(@fechaConfig>CAST(@fecha_inicio as datetime))
 			begin
 				set @valor_retorno = -1 --fecha mal ingresada, se quiere generar viaje de fecha anterior a la actual
 			end
@@ -1280,7 +1284,7 @@ go
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].crearReserva
-(@idCrucero nvarchar(50),@idCliente int,@idViaje int,@idCabina int)
+(@idCrucero nvarchar(50),@idCliente int,@idViaje int,@idCabina int,@fechaConfig datetime)
 as
 	begin
 	declare @fecha datetime2(3)
@@ -1294,7 +1298,7 @@ as
 	
 	if( @retorno = 1) return -1 --el cliente ya tiene un viaje en esa fecha
 	insert into [LEISTE_EL_CODIGO?].Reserva(id_crucero,id_cliente,id_viaje,id_cabina,fecha_actual)
-	values(@idCrucero,@idCliente,@idViaje,@idCabina,CAST(SYSDATETIME() as datetime2(3)))
+	values(@idCrucero,@idCliente,@idViaje,@idCabina,convert(datetime2(3),@fechaConfig))
 	return SCOPE_IDENTITY()--todo bien
 	end
 go
@@ -1302,7 +1306,7 @@ go
 --viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255))
+create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
 as
 	begin
 		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo tipoDeCabina,rec.id_recorrido,rec.id_origen origen,rec.id_destino destino,
@@ -1320,7 +1324,7 @@ as
 		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
 		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
 		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
-		and v.fecha_inicio > SYSDATETIME()
+		and CAST(v.fecha_inicio as datetime) > @fecha_inicio
 	end
 go --fijarse si hay que hacer un return id_viaje
 --todo despues de seleccionar un viaje--ingresar cliente
@@ -1378,12 +1382,12 @@ go --hacerlo la cantidad de veces que quiera el usuario pero despues elegir con 
 --devolverIdPago--
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].devolverIdPago (@idMedioPago varchar(256))
+create procedure [LEISTE_EL_CODIGO?].devolverIdPago (@idMedioPago varchar(256),@id_cliente int,@fechaConfig datetime)
 as	
 	begin
 		declare @idPago int
-		insert into [LEISTE_EL_CODIGO?].PagoDeViaje(fecha_pago,id_medio_de_pago)
-		values(CAST(SYSDATETIME() as datetime2(3)),@idMedioPago)
+		insert into [LEISTE_EL_CODIGO?].PagoDeViaje(fecha_pago,id_medio_de_pago,id_cliente)
+		values(CONVERT(DATETIME2(3), @fechaConfig),@idMedioPago,@id_cliente)
 		SELECT @idPago= SCOPE_IDENTITY()
 		return @idPago
 	end
@@ -1421,7 +1425,7 @@ as
 		where id_pago=@idPago
 	end
 go
--------------------------------VER VOUCHER FINALIZADA LA COMPRA-------------------------------
+-------------------------------VER VOUCHER FINALIZADA LA COMPRA(ultimo que se hace)-------------------------------
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].verVoucher (@idPago int) 
@@ -1473,7 +1477,7 @@ as
 		set @precio = @precio*@recargoCabina
 	end
 go
----------------------COMPRAR PASAJE-#-----------------------(lo ultimo que se hace) ver tema de seleccionar viaje y devolver voucher
+---------------------COMPRAR PASAJE-#----------------------- ver tema de seleccionar viaje y devolver voucher
 USE GD1C2019
 go 
 create procedure [LEISTE_EL_CODIGO?].comprarPasaje (@idCliente int,@idViaje int,@idCabina int,@idCrucero int,@idPago int)
