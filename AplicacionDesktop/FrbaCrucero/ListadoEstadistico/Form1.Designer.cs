@@ -105,9 +105,9 @@
             // dataGridViewTop5s
             // 
             this.dataGridViewTop5s.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewTop5s.Location = new System.Drawing.Point(12, 260);
+            this.dataGridViewTop5s.Location = new System.Drawing.Point(29, 257);
             this.dataGridViewTop5s.Name = "dataGridViewTop5s";
-            this.dataGridViewTop5s.Size = new System.Drawing.Size(511, 230);
+            this.dataGridViewTop5s.Size = new System.Drawing.Size(446, 192);
             this.dataGridViewTop5s.TabIndex = 6;
             // 
             // label2
@@ -122,7 +122,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(35, 519);
+            this.botonVolver.Location = new System.Drawing.Point(29, 470);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(93, 23);
             this.botonVolver.TabIndex = 8;
@@ -134,7 +134,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(540, 554);
+            this.ClientSize = new System.Drawing.Size(500, 507);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridViewTop5s);
