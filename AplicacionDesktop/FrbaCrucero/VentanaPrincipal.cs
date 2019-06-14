@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using FrbaCrucero.Clases;
-
+using System.Configuration;
 
 namespace FrbaCrucero
 {
@@ -18,8 +18,8 @@ namespace FrbaCrucero
 
     public partial class VentanaPrincipal : Form
     {
-      
 
+        public string fechaConfig = System.Configuration.ConfigurationSettings.AppSettings["fechaConfig"];
         public VentanaPrincipal()
         {
             InitializeComponent();
@@ -62,7 +62,11 @@ namespace FrbaCrucero
                 if(retorno == 1)
                 {
                     //SqlCommand reservasVencidas = Clases.BaseDeDato.crearConsulta();
-                    bd.ejecutarConsulta("[LEISTE_EL_CODIGO?].eliminarReservasVencidas");
+                    SqlCommand reservasVencidas = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].eliminarReservasVencidas");
+                    reservasVencidas.CommandType = CommandType.StoredProcedure;
+                    DateTime enteredDate = DateTime.Parse(fechaConfig);
+                    reservasVencidas.Parameters.AddWithValue("@fechaConfig", SqlDbType.DateTime).Value = enteredDate;
+                    bd.ejecutarConsultaSinResultado(reservasVencidas);
                     VentanaMenu menu = new VentanaMenu();
                     this.Hide();
                     menu.Show();
@@ -94,10 +98,14 @@ namespace FrbaCrucero
         {
             this.Hide();
             BaseDeDato bd = new BaseDeDato();
-            bd.ejecutarConsulta("[LEISTE_EL_CODIGO?].eliminarReservasVencidas");
+            SqlCommand reservasVencidas = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].eliminarReservasVencidas");
+            reservasVencidas.CommandType = CommandType.StoredProcedure;
+            DateTime enteredDate = DateTime.Parse(fechaConfig);
+            reservasVencidas.Parameters.AddWithValue("@fechaConfig", SqlDbType.DateTime).Value = enteredDate;
+            bd.ejecutarConsultaSinResultado(reservasVencidas);
             VentanaMenu menu = new VentanaMenu();
             menu.Show();
-        /*    menu.ocultarBotones(); */
+            menu.ocultarBotones();
             
         }
 
