@@ -295,7 +295,7 @@ create table [LEISTE_EL_CODIGO?].PagoDeViaje(
 	id_pago int primary key identity,
 	id_cliente int references [LEISTE_EL_CODIGO?].Cliente,
 	fecha_pago datetime2(3) null,
-	monto_total decimal(18,2) not null,
+	monto_total decimal(18,2),
 	cantidad_de_pasajes smallint default 1 check(cantidad_de_pasajes > 0),
 	id_medio_de_pago varchar(256) references [LEISTE_EL_CODIGO?].MedioDePago,
 )
@@ -307,7 +307,7 @@ create table [LEISTE_EL_CODIGO?].Pasaje(
 	id_cabina int references [LEISTE_EL_CODIGO?].Cabina,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	id_pago int references [LEISTE_EL_CODIGO?].PagoDeViaje,
-	precio decimal(18,2) not null,
+	precio decimal(18,2),
 	cancelacion nchar(1) default 'N' check(cancelacion in ('S','N')),
 	fecha_cancelacion datetime2(3) null,
 )

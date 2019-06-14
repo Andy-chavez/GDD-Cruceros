@@ -54,7 +54,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].devolverIdPago");
                 procedure.CommandType = CommandType.StoredProcedure;
                 procedure.Parameters.AddWithValue("@idMedioPago", SqlDbType.NVarChar).Value = comboBoxMedios.Text;
-                procedure.Parameters.AddWithValue("@idCliente", SqlDbType.Int).Value = this.cliente; //hay que determinar como llega
+                procedure.Parameters.AddWithValue("@id_cliente", SqlDbType.Int).Value = this.cliente; //hay que determinar como llega
                 procedure.Parameters.AddWithValue("@fechaConfig", SqlDbType.DateTime).Value = fechaConfig;
                 procedure.Parameters.Add("@idPago", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                 bd.ejecutarConsultaDevuelveInt(procedure);

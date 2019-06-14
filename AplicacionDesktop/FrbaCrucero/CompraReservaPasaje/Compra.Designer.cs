@@ -61,6 +61,7 @@
             this.Controls.Add(this.buttonMedio);
             this.Name = "Compra";
             this.Text = "Compra";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Compra_Load);
             this.ResumeLayout(false);
 
