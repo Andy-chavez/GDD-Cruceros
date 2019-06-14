@@ -40,6 +40,7 @@
             this.listaOrigen = new System.Windows.Forms.ComboBox();
             this.botonReserva = new System.Windows.Forms.Button();
             this.botonCompra = new System.Windows.Forms.Button();
+            this.buttonCargarCli = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.viajesDisponibles)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -162,11 +163,22 @@
             this.botonCompra.Text = "Comprar viaje";
             this.botonCompra.UseVisualStyleBackColor = true;
             // 
+            // buttonCargarCli
+            // 
+            this.buttonCargarCli.Location = new System.Drawing.Point(77, 467);
+            this.buttonCargarCli.Name = "buttonCargarCli";
+            this.buttonCargarCli.Size = new System.Drawing.Size(110, 23);
+            this.buttonCargarCli.TabIndex = 5;
+            this.buttonCargarCli.Text = "Carga tus Datos";
+            this.buttonCargarCli.UseVisualStyleBackColor = true;
+            this.buttonCargarCli.Click += new System.EventHandler(this.buttonCargarCli_Click);
+            // 
             // VentanaSeleccionarviaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(563, 556);
+            this.Controls.Add(this.buttonCargarCli);
             this.Controls.Add(this.botonCompra);
             this.Controls.Add(this.botonReserva);
             this.Controls.Add(this.groupBox2);
@@ -197,5 +209,6 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonBuscar;
+        private System.Windows.Forms.Button buttonCargarCli;
     }
 }

@@ -80,6 +80,7 @@ namespace FrbaCrucero.Clases
             }
             desconectar();
         }
+
         public void ejecutarConsultaSinResultado(SqlCommand consulta)
         {
             conectar();

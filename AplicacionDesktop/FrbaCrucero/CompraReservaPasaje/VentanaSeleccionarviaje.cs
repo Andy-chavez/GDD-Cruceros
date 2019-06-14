@@ -22,7 +22,13 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         public BaseDeDato bd = new BaseDeDato();
         public DataTable dt = new DataTable();
-        
+
+        private Cliente cliente;
+
+        public void CargarCliente(Cliente cliente)
+        {
+            this.cliente = cliente;
+        }
 
         #region DataGridView
 
@@ -162,6 +168,13 @@ namespace FrbaCrucero.CompraReservaPasaje
             db.desconectar();
         }
 
+        /*
+         devolverIdPago recibe un medio_de_pago y un cliente
+         comprarPasaje for tantas veces
+         verVoucher 
+             */
+
+
         private void listaOrigen_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -190,6 +203,11 @@ namespace FrbaCrucero.CompraReservaPasaje
             {
                 MessageBox.Show(exception.Message);
             }
+        }
+
+        private void buttonCargarCli_Click(object sender, EventArgs e)
+        {
+            new VentanaCargarCliente(this, cliente).Show();
         }
     }
 }

@@ -1303,6 +1303,8 @@ as
 	end
 go
 
+--select * from [LEISTE_EL_CODIGO?].Cliente
+
 --viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --
 USE GD1C2019
 go

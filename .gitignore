@@ -5,6 +5,7 @@
 *.ide-wal
 *.Cache
 *.cache
+*.txt
 *.suo
 *.sou
 *.pdb

@@ -84,3 +84,5 @@ C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\F
 C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaDarBajaRol.resources
 C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.GeneracionViaje.GenerarViaje.resources
 C:\Users\ANDYPC\Documents\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.PagoReserva.VentanaPagoDeReserva.resources
+C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.DNIDuplicado.resources
+C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.VentanaCargarCliente.resources
