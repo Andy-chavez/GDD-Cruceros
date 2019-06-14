@@ -30,7 +30,6 @@ C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\Apl
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaGestionRecorrido.resources
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaModificarRecorrido.resources
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRecorrido.VentanaTramo.resources
-C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaDeAltaRol.resources
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaGestionRol.resources
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaModificarRol.resources
 C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.CompraReservaPasaje.VentanaSeleccionarviaje.resources
@@ -79,3 +78,6 @@ C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\Aplicacio
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaDarDeAltaRol.resources
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaCrearRol.resources
 C:\Users\Andy\Downloads\TP Frba Crucero 1.0 - 1C 2019\Git\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.PagoReserva.VentanaPagoDeReserva.resources
+C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaDarDeAltaRol.resources
+C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.AbmRol.VentanaCrearRol.resources
+C:\Users\Brenda-Vero-Frank\Desktop\Franco\UTN Cursos\3º\GDD\TP\TPGDD-1C2019\AplicacionDesktop\FrbaCrucero\obj\Debug\FrbaCrucero.PagoReserva.VentanaPagoDeReserva.resources
