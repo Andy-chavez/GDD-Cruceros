@@ -73,10 +73,10 @@ namespace FrbaCrucero.CompraReservaPasaje
                 //BaseDeDato bd = new BaseDeDato();
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].crearReserva");
                 procedure.CommandType = CommandType.StoredProcedure;
-                procedure.Parameters.Add("@idCrucero", SqlDbType.NVarChar).Value = this.viajesDisponibles.CurrentRow.Cells["crucero"].ToString();
-                procedure.Parameters.Add("@idCliente", SqlDbType.DateTime).Value = this.cliente.id;
-                procedure.Parameters.Add("@idViaje", SqlDbType.DateTime2).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
-                procedure.Parameters.Add("@idCabina", SqlDbType.NVarChar).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
+                procedure.Parameters.Add("@idCrucero", SqlDbType.NVarChar).Value = this.viajesDisponibles.CurrentRow.Cells["crucero"].Value;
+                procedure.Parameters.Add("@idCliente", SqlDbType.Int).Value = this.cliente.id;
+                procedure.Parameters.Add("@idViaje", SqlDbType.Int).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
+                procedure.Parameters.Add("@idCabina", SqlDbType.Int).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
                 procedure.Parameters.Add("@fechaConfig", SqlDbType.DateTime).Value = this.fechaConfig;
                 procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                 bd.ejecutarConsultaDevuelveInt(procedure); 
@@ -147,6 +147,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             {
                 BaseDeDato bd = new BaseDeDato();
                 DataTable dt;
+                bd.conectar();
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].mostrarViajesDisponibles");
                 procedure.CommandType = CommandType.StoredProcedure;
                 procedure.Parameters.Add("@fecha_inicio", SqlDbType.DateTime2).Value = this.dateTimePicker1.Value;
@@ -155,6 +156,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 procedure.Parameters.Add("@fechaConfig", SqlDbType.DateTime).Value = this.fechaConfig;
                 dt = bd.obtenerDataTable(procedure);
                 this.viajesDisponibles.DataSource = dt;
+                bd.desconectar();
             }
             catch (Exception exception)
             {

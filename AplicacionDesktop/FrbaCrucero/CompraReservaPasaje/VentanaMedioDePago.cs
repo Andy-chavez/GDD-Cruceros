@@ -18,8 +18,8 @@ namespace FrbaCrucero.CompraReservaPasaje
         public DateTime fechaConfig = DateTime.Parse(System.Configuration.ConfigurationSettings.AppSettings["fechaConfig"]);
         public int idPago;
         private int cliente;
-        Compra ventanaOriginal;
-        public VentanaMedioDePago(Compra ventanaOriginal,int cliente)
+        object ventanaOriginal;
+        public VentanaMedioDePago(object ventanaOriginal,int cliente)
         {
             this.ventanaOriginal = ventanaOriginal;
             this.cliente = cliente;
