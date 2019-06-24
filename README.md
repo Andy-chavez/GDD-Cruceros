@@ -56,13 +56,20 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
     -2: No existe funcionalidad
     -3: el rol ya tiene esa funcionalidad(agregar) o no tiene esa funcionalidad(eliminar)
 
-#### crearNuevoRol (@idFuncionalidad nvarchar(100),@NombreRol nvarchar(255))
+#### crearNuevoRol (@NombreRol nvarchar(255),@idFuncionalidad1 nvarchar(100),
+@idFuncionalidad2 nvarchar(100),@idFuncionalidad3 nvarchar(100),
+@idFuncionalidad4 nvarchar(100),@idFuncionalidad5 nvarchar(100),
+@idFuncionalidad6 nvarchar(100),@idFuncionalidad7 nvarchar(100),
+@idFuncionalidad8 nvarchar(100),@idFuncionalidad9 nvarchar(100),
+@idFuncionalidad10 nvarchar(100))
 
   Valores de retorno:
 
     1: se cargo todo joya
-    -2: No existe funcionalidad
+    -2: No existe funcionalidad, si hacemos un comboBox esto no seria necesario
     -3: el rol ya tiene esa funcionalidad
+    -4: existe un rol con ese nombre
+    -5: hubo algun error en la transaccion
 #### darAltaRol (@idRol nvarchar(255))
 #### darBajaRol (@idRol nvarchar(255))
 
@@ -159,7 +166,7 @@ Nota: se debe hacer en orden del orden mas chico q quieras cambiar al ultimo
       -1: el cliente ya tiene viajes en esa fecha
       1: todo bien, se compró el pasaje reservado
 
-#### eliminarReservasVencidas(@fecha datetime)
+#### eliminarReservasVencidas(@fechaConfig datetime)
 # LISTADO ESTADISTICOS:
 
 #### topRecorridosConMasPasajesComprados (@anio int, @semestre int)
