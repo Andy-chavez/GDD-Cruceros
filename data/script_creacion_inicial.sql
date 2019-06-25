@@ -796,11 +796,11 @@ go
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].crearNuevoRol (@NombreRol nvarchar(255),@idFuncionalidad1 nvarchar(100),
-@idFuncionalidad2 nvarchar(100),@idFuncionalidad3 nvarchar(100),
-@idFuncionalidad4 nvarchar(100),@idFuncionalidad5 nvarchar(100),
-@idFuncionalidad6 nvarchar(100),@idFuncionalidad7 nvarchar(100),
-@idFuncionalidad8 nvarchar(100),@idFuncionalidad9 nvarchar(100),
-@idFuncionalidad10 nvarchar(100))
+@idFuncionalidad2 nvarchar(100)=NULL,@idFuncionalidad3 nvarchar(100)=NULL,
+@idFuncionalidad4 nvarchar(100)=NULL,@idFuncionalidad5 nvarchar(100)=NULL,
+@idFuncionalidad6 nvarchar(100)=NULL,@idFuncionalidad7 nvarchar(100)=NULL,
+@idFuncionalidad8 nvarchar(100)=NULL,@idFuncionalidad9 nvarchar(100)=NULL,
+@idFuncionalidad10 nvarchar(100)=NULL)
 as
 begin
 		declare @valor_retorno smallint
@@ -912,6 +912,11 @@ begin
 		return @valor_retorno
 end
 go
+--pruebas
+--begin transaction 
+--exec [LEISTE_EL_CODIGO?].crearNuevoRol 'facu','generar viaje','abm rol','abm de cruceros',NULL,NULL,NULL,NULL,NULL,NULL,'registro de usuarios'
+--select * from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
+--rollback transaction
 --Dar de baja un rol--
 USE GD1C2019
 go
@@ -1444,8 +1449,8 @@ go
 --actualizar usuario--
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].actualizarUsuario (@idCliente int,@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
-													@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255)) 
+create procedure [LEISTE_EL_CODIGO?].actualizarUsuario (@idCliente int,@nombre varchar(255)=NULL,@apellido varchar(255)=NULL,@dni decimal(18, 0)=NULL,
+													@telefono int=NULL,@mail nvarchar(255)=NULL,@fecha_nacimiento datetime2(3)=NULL,@direccion nvarchar(255)=NULL) 
 as
 	begin
 		update [LEISTE_EL_CODIGO?].Cliente
