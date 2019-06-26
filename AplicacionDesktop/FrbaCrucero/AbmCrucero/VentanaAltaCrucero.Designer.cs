@@ -31,18 +31,28 @@
             this.botonCrear = new System.Windows.Forms.Button();
             this.botonVolver = new System.Windows.Forms.Button();
             this.textoIdCrucero = new System.Windows.Forms.TextBox();
-            this.textoModelo = new System.Windows.Forms.TextBox();
             this.Crucero_id = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textoCabina = new System.Windows.Forms.TextBox();
+            this.ejecutiva = new System.Windows.Forms.TextBox();
             this.comboBoxFabID = new System.Windows.Forms.ComboBox();
+            this.comboModelo = new System.Windows.Forms.ComboBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.suite = new System.Windows.Forms.TextBox();
+            this.exterior = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.balcon = new System.Windows.Forms.Label();
+            this.estandar = new System.Windows.Forms.Label();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // botonCrear
             // 
-            this.botonCrear.Location = new System.Drawing.Point(322, 260);
+            this.botonCrear.Location = new System.Drawing.Point(606, 248);
             this.botonCrear.Name = "botonCrear";
             this.botonCrear.Size = new System.Drawing.Size(75, 23);
             this.botonCrear.TabIndex = 0;
@@ -52,7 +62,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(32, 249);
+            this.botonVolver.Location = new System.Drawing.Point(32, 248);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 1;
@@ -62,24 +72,16 @@
             // 
             // textoIdCrucero
             // 
-            this.textoIdCrucero.Location = new System.Drawing.Point(171, 43);
+            this.textoIdCrucero.Location = new System.Drawing.Point(144, 17);
             this.textoIdCrucero.Name = "textoIdCrucero";
             this.textoIdCrucero.Size = new System.Drawing.Size(176, 20);
             this.textoIdCrucero.TabIndex = 2;
             this.textoIdCrucero.TextChanged += new System.EventHandler(this.textoIdCrucero_TextChanged);
             // 
-            // textoModelo
-            // 
-            this.textoModelo.Location = new System.Drawing.Point(171, 134);
-            this.textoModelo.Name = "textoModelo";
-            this.textoModelo.Size = new System.Drawing.Size(176, 20);
-            this.textoModelo.TabIndex = 4;
-            this.textoModelo.TextChanged += new System.EventHandler(this.textoModelo_TextChanged);
-            // 
             // Crucero_id
             // 
             this.Crucero_id.AutoSize = true;
-            this.Crucero_id.Location = new System.Drawing.Point(39, 46);
+            this.Crucero_id.Location = new System.Drawing.Point(39, 20);
             this.Crucero_id.Name = "Crucero_id";
             this.Crucero_id.Size = new System.Drawing.Size(58, 13);
             this.Crucero_id.TabIndex = 5;
@@ -88,7 +90,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(39, 91);
+            this.label1.Location = new System.Drawing.Point(39, 58);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(71, 13);
             this.label1.TabIndex = 6;
@@ -97,49 +99,140 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(39, 137);
+            this.label2.Location = new System.Drawing.Point(376, 20);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(42, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "Modelo";
             // 
-            // label3
+            // ejecutiva
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(39, 187);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(113, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Cantidada De Cabinas";
-            // 
-            // textoCabina
-            // 
-            this.textoCabina.Location = new System.Drawing.Point(171, 184);
-            this.textoCabina.Name = "textoCabina";
-            this.textoCabina.Size = new System.Drawing.Size(176, 20);
-            this.textoCabina.TabIndex = 9;
-            this.textoCabina.TextChanged += new System.EventHandler(this.textoCabina_TextChanged);
+            this.ejecutiva.Location = new System.Drawing.Point(150, 56);
+            this.ejecutiva.Name = "ejecutiva";
+            this.ejecutiva.Size = new System.Drawing.Size(176, 20);
+            this.ejecutiva.TabIndex = 9;
+            this.ejecutiva.TextChanged += new System.EventHandler(this.textoCabina_TextChanged);
             // 
             // comboBoxFabID
             // 
             this.comboBoxFabID.FormattingEnabled = true;
-            this.comboBoxFabID.Location = new System.Drawing.Point(171, 91);
+            this.comboBoxFabID.Location = new System.Drawing.Point(144, 55);
             this.comboBoxFabID.Name = "comboBoxFabID";
             this.comboBoxFabID.Size = new System.Drawing.Size(176, 21);
             this.comboBoxFabID.TabIndex = 11;
+            // 
+            // comboModelo
+            // 
+            this.comboModelo.FormattingEnabled = true;
+            this.comboModelo.Location = new System.Drawing.Point(442, 17);
+            this.comboModelo.Name = "comboModelo";
+            this.comboModelo.Size = new System.Drawing.Size(176, 21);
+            this.comboModelo.TabIndex = 12;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.estandar);
+            this.groupBox1.Controls.Add(this.balcon);
+            this.groupBox1.Controls.Add(this.textBox4);
+            this.groupBox1.Controls.Add(this.textBox3);
+            this.groupBox1.Controls.Add(this.exterior);
+            this.groupBox1.Controls.Add(this.suite);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.ejecutiva);
+            this.groupBox1.Location = new System.Drawing.Point(32, 104);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(649, 124);
+            this.groupBox1.TabIndex = 13;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Ingrese cantidad de cabinas";
+            this.groupBox1.Enter += new System.EventHandler(this.GroupBox1_Enter);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(50, 26);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(31, 13);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Suite";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(50, 59);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Ejeutiva";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(50, 93);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(42, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Exterior";
+            // 
+            // suite
+            // 
+            this.suite.Location = new System.Drawing.Point(150, 23);
+            this.suite.Name = "suite";
+            this.suite.Size = new System.Drawing.Size(176, 20);
+            this.suite.TabIndex = 12;
+            // 
+            // exterior
+            // 
+            this.exterior.Location = new System.Drawing.Point(150, 90);
+            this.exterior.Name = "exterior";
+            this.exterior.Size = new System.Drawing.Size(176, 20);
+            this.exterior.TabIndex = 13;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(440, 23);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(176, 20);
+            this.textBox3.TabIndex = 14;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(440, 56);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(176, 20);
+            this.textBox4.TabIndex = 15;
+            // 
+            // balcon
+            // 
+            this.balcon.AutoSize = true;
+            this.balcon.Location = new System.Drawing.Point(362, 26);
+            this.balcon.Name = "balcon";
+            this.balcon.Size = new System.Drawing.Size(40, 13);
+            this.balcon.TabIndex = 16;
+            this.balcon.Text = "Balcón";
+            // 
+            // estandar
+            // 
+            this.estandar.AutoSize = true;
+            this.estandar.Location = new System.Drawing.Point(362, 59);
+            this.estandar.Name = "estandar";
+            this.estandar.Size = new System.Drawing.Size(49, 13);
+            this.estandar.TabIndex = 17;
+            this.estandar.Text = "Estandar";
             // 
             // VentanaAltaCrucero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(409, 299);
+            this.ClientSize = new System.Drawing.Size(726, 286);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.comboModelo);
             this.Controls.Add(this.comboBoxFabID);
-            this.Controls.Add(this.textoCabina);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Crucero_id);
-            this.Controls.Add(this.textoModelo);
             this.Controls.Add(this.textoIdCrucero);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.botonCrear);
@@ -147,6 +240,8 @@
             this.Text = "Alta Crucero";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaAltaCrucero_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,12 +252,21 @@
         private System.Windows.Forms.Button botonCrear;
         private System.Windows.Forms.Button botonVolver;
         private System.Windows.Forms.TextBox textoIdCrucero;
-        private System.Windows.Forms.TextBox textoModelo;
         private System.Windows.Forms.Label Crucero_id;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textoCabina;
+        private System.Windows.Forms.TextBox ejecutiva;
         private System.Windows.Forms.ComboBox comboBoxFabID;
+        private System.Windows.Forms.ComboBox comboModelo;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label estandar;
+        private System.Windows.Forms.Label balcon;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox exterior;
+        private System.Windows.Forms.TextBox suite;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -40,6 +40,15 @@ namespace FrbaCrucero.AbmCrucero
             comboBoxFabID.SelectedIndex = 0;
             comboBoxFabID.DropDownStyle = ComboBoxStyle.DropDownList;
             db.desconectar();
+
+            db.conectar();
+            SqlConnection conexion2 = db.obtenerConexion();
+            SqlCommand consulta2 = new SqlCommand("SELECT distinct(modelo) FROM [LEISTE_EL_CODIGO?].Crucero", conexion2);
+            List<String> listaDeTramos2 = db.obtenerListaDeDatos(consulta2);
+            comboModelo.DataSource = listaDeTramos2;
+            comboModelo.SelectedIndex = 0;
+            comboModelo.DropDownStyle = ComboBoxStyle.DropDownList;
+            db.desconectar();
         }
 
         private void botonCrear_Click(object sender, EventArgs e)
@@ -48,17 +57,18 @@ namespace FrbaCrucero.AbmCrucero
             {
                 if (CamposCompletos())
                 {
-                    if (EsIDCruceroNuevo())
+                    if (EsIDCruceroNuevo()) //balcon, est, ext, ejec, suite
                     {
-                        //Crucero crucero = new Crucero();
-                        //crucero.crearCrucero(textoIdCrucero.Text, comboBoxFabID.SelectedItem.ToString(), textoModelo.Text, Convert.ToInt32(textoCabina.Text));
-
                         SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].cargarCrucero");
                         procedure.CommandType = CommandType.StoredProcedure;
                         procedure.Parameters.Add("@id_crucero", SqlDbType.NVarChar).Value = textoIdCrucero.Text;
                         procedure.Parameters.Add("@id_fabricante", SqlDbType.NVarChar).Value = comboBoxFabID.SelectedItem.ToString();
-                        procedure.Parameters.Add("@modelo", SqlDbType.NVarChar).Value = textoModelo.Text;
-                        procedure.Parameters.Add("@cantidadDeCabinas", SqlDbType.Int).Value = Convert.ToInt32(textoCabina.Text);
+                        procedure.Parameters.Add("@modelo", SqlDbType.NVarChar).Value = comboModelo.Text;
+                        procedure.Parameters.Add("@cantidadBalcon", SqlDbType.Int).Value = Convert.ToInt32(balcon.Text);
+                        procedure.Parameters.Add("@cantidadEstandar", SqlDbType.Int).Value = Convert.ToInt32(estandar.Text);
+                        procedure.Parameters.Add("@cantidadExterior", SqlDbType.Int).Value = Convert.ToInt32(exterior.Text);
+                        procedure.Parameters.Add("@cantidadEjecutivo", SqlDbType.Int).Value = Convert.ToInt32(ejecutiva.Text);
+                        procedure.Parameters.Add("@cantidadSuite", SqlDbType.Int).Value = Convert.ToInt32(suite.Text);
                         procedure.Parameters.Add("@valor_retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                         db.ejecutarConsultaDevuelveInt(procedure);
                         int retorno = (int)procedure.Parameters["@valor_retorno"].Value;
@@ -133,7 +143,9 @@ namespace FrbaCrucero.AbmCrucero
         public bool CamposCompletos()
         {
 
-            return textoIdCrucero.Text != "" && textoModelo.Text != "" && textoCabina.Text != "";
+            return textoIdCrucero.Text != "" && ejecutiva.Text != "" && suite.Text != ""
+                && exterior.Text != "" && estandar.Text != ""
+                && balcon.Text != "";
 
         }
 
@@ -154,7 +166,7 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonLimpiar_Click_1(object sender, EventArgs e)
         {
-            textoCabina.Clear();
+            ejecutiva.Clear();
             textoIdCrucero.Clear();
             textoModelo.Clear();
         }
@@ -162,6 +174,11 @@ namespace FrbaCrucero.AbmCrucero
         private void botonVolver_Click_1(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void GroupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -81,16 +81,16 @@ namespace FrbaCrucero.AbmCrucero
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
-            {
+//            if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+ //           {
                 dataGridView1.CurrentRow.Selected = true;
 
                 TextoCruceroSeleccionado.Text = dataGridView1.Rows[e.RowIndex].Cells["id_crucero"].Value.ToString();
-            }
-            else {
-                MessageBox.Show("no hay nada para mostrar ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+//            }
+//            else {
+//                MessageBox.Show("no hay nada para mostrar ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             
-            }
+//            }
 
         }
 
