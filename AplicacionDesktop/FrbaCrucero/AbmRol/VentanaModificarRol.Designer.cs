@@ -134,6 +134,7 @@ namespace FrbaCrucero.AbmRol
             this.comboBoxRoles.Name = "comboBoxRoles";
             this.comboBoxRoles.Size = new System.Drawing.Size(214, 21);
             this.comboBoxRoles.TabIndex = 8;
+            this.comboBoxRoles.SelectedIndexChanged += new System.EventHandler(this.ComboBoxRoles_SelectedIndexChanged);
             // 
             // label3
             // 

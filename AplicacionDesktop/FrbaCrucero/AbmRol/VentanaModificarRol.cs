@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaCrucero.Clases;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace FrbaCrucero.AbmRol
 {
@@ -22,6 +23,7 @@ namespace FrbaCrucero.AbmRol
         public VentanaModificarRol()
         {
             InitializeComponent();
+            
         }
 
         private void VentanaRolSeleccionado_Load(object sender, EventArgs e)
@@ -35,13 +37,13 @@ namespace FrbaCrucero.AbmRol
             comboBoxRoles.ValueMember = "id_rol";
             bd.desconectar();
 
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            comboBoxFuncionalidades.DataSource = dt;
-            comboBoxFuncionalidades.ValueMember = "id_funcionalidad";
-            bd.desconectar();
+            /*            bd.conectar();
+                        adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
+                        dt = new DataTable();
+                        adapt.Fill(dt);
+                        comboBoxFuncionalidades.DataSource = dt;
+                        comboBoxFuncionalidades.ValueMember = "id_funcionalidad";
+                        bd.desconectar();*/
         }
 
         private void botonEliminar_Click(object sender, EventArgs e)
@@ -172,7 +174,53 @@ namespace FrbaCrucero.AbmRol
 
         private void ComboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
         {
+           
+        }
+        private void llenarFuncionalidades(string idRol)
+        {
+            //bd.conectar();
+            bd.desconectar();
+            SqlConnection con = new SqlConnection(bd.getConfig());
+            con.Open();
 
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT id_funcionalidad FROM [LEISTE_EL_CODIGO?].FuncionalidadPorRol WHERE id_rol = '@idRol'";
+            cmd.Parameters.AddWithValue("idRol", idRol);
+            cmd.Connection = con;
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            con.Close();
+            comboBoxFuncionalidades.ValueMember = "id_funcionalidad";
+            comboBoxFuncionalidades.DisplayMember = "id_funcionalidad";
+            comboBoxFuncionalidades.DataSource = dt;
+            /*
+            cmd.CommandType = CommandType.Text;
+            
+            
+            DataTable objDs = new DataTable();*/
+            //conexion.Open();
+            //adapt = new SqlDataAdapter(cmd);
+            //adapt.Fill(objDs);
+            //dt = new DataTable();
+            //adapt.Fill(dt);
+
+            
+            // comboBoxFuncionalidades.DisplayMember = "id_rol";
+
+            // 
+
+            //bd.desconectar();
+        }
+private void ComboBoxRoles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxRoles.Items.Count !=0 )
+            {
+                string idRol = comboBoxRoles.SelectedValue.ToString();
+                llenarFuncionalidades(idRol);
+            }
+            
+           //comboBoxFuncionalidades. = 0;
         }
     }
 }

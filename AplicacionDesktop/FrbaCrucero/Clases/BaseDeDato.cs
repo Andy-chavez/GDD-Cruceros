@@ -20,9 +20,14 @@ namespace FrbaCrucero.Clases
 
         SqlCommand sp;
 
-        private static string configuracionConexionSql = @"Data Source= localhost\SQLSERVER2012; Persist Security Info=True;User ID=gdCruceros2019;Password=gd2019";
+        public static string configuracionConexionSql = @"Data Source= localhost\SQLSERVER2012; Persist Security Info=True;User ID=gdCruceros2019;Password=gd2019";
 
         public static SqlConnection conexion = new SqlConnection(configuracionConexionSql); 
+
+        public String getConfig()
+        {
+            return configuracionConexionSql;
+        }
 
         #endregion
 
