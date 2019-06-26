@@ -14,16 +14,30 @@ namespace FrbaCrucero.AbmCrucero
 {
     public partial class VentanaModificarCrucero : Form
     {
+        private BaseDeDato db = new BaseDeDato();
+
         public VentanaModificarCrucero()
         {
             InitializeComponent();
-
+            SetDefaults();
 
         }
 
         BaseDeDato bd = new BaseDeDato();
         DataTable dt = new DataTable();
         Crucero crucero = new Crucero();
+
+        private void SetDefaults()
+        {
+            db.conectar();
+            SqlConnection conexion = db.obtenerConexion();
+            SqlCommand consulta = new SqlCommand("SELECT id_fabricante FROM [LEISTE_EL_CODIGO?].Fabricante", conexion);
+            List<String> listaDeTramos = db.obtenerListaDeDatos(consulta);
+            comboBoxFabricante.DataSource = listaDeTramos;
+            comboBoxFabricante.SelectedIndex = 0;
+            comboBoxFabricante.DropDownStyle = ComboBoxStyle.DropDownList;
+            db.desconectar();
+        }
 
         private void botonLimpiar_Click(object sender, EventArgs e)
         {
@@ -34,7 +48,7 @@ namespace FrbaCrucero.AbmCrucero
         {
             bd.conectar();
             SqlConnection conexion = bd.obtenerConexion();
-            SqlCommand command = new SqlCommand("SELECT * FROM [LEISTE_EL_CODIGO?].CrucerosDisponibles", conexion);
+            SqlCommand command = new SqlCommand("SELECT distinct * FROM [LEISTE_EL_CODIGO?].CrucerosDisponibles", conexion);
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             adapter.Fill(dt);
             dgv.DataSource = dt;
@@ -50,7 +64,7 @@ namespace FrbaCrucero.AbmCrucero
 
         private void textoModelo_TextChanged(object sender, EventArgs e)
         {
-            this.filtrarDataGrdView(dataGridView1, "SELECT * FROM [LEISTE_EL_CODIGO?].CrucerosDisponibles WHERE modelo LIKE ('" + textoModelo.Text + "%')");
+            this.filtrarDataGrdView(dataGridView1, "SELECT distinct * FROM [LEISTE_EL_CODIGO?].CrucerosDisponibles WHERE modelo LIKE ('" + textoModelo.Text + "%')");
 
 
         }
@@ -97,19 +111,13 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonModificar_Click(object sender, EventArgs e)
         {
-            if (textoFabricanteNuevo.Text != "" && TextoCruceroSeleccionado.Text != "")
+            if (TextoCruceroSeleccionado.Text != "")
             {
 
-                crucero.modificarCrucero((TextoCruceroSeleccionado.Text), (textoFabricanteNuevo.Text));
+                crucero.modificarCrucero((TextoCruceroSeleccionado.Text), (comboBoxFabricante.SelectedValue.ToString()));
             }
             else{
-                if (textoFabricanteNuevo.Text != "")
-                {
-                    MessageBox.Show("Seleccione un crucero", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else {
-                    MessageBox.Show("Seleccione un fabricante nuevo", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } 
+                MessageBox.Show("Seleccione un crucero", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }
@@ -166,7 +174,7 @@ namespace FrbaCrucero.AbmCrucero
         {
             label3.Hide();
             botonModificar.Hide();
-            textoFabricanteNuevo.Hide();
+            comboBoxFabricante.Hide();
 
         }
 
@@ -178,7 +186,6 @@ namespace FrbaCrucero.AbmCrucero
         private void botonLimpiar_Click_1(object sender, EventArgs e)
         {
 
-            textoFabricanteNuevo.Clear();
             TextoCruceroSeleccionado.Clear();
             textoModelo.Clear();
             textoFechaReinicio.Clear();

@@ -65,12 +65,17 @@ namespace FrbaCrucero.Clases
             this.cantCabinas = cantCabinas;
             try
             {
+                object dato;
                 bd.conectar();
                 bd.crearSP("[LEISTE_EL_CODIGO?].cargarCrucero");
-                bd.setearParametroPorValor("id_crucero", id);
-                bd.setearParametroPorValor("id_fabricante", idFabricante);
-                bd.setearParametroPorValor("modelo", modelo);
-                bd.setearParametroPorValor("cantidadDeCabinas", cantCabinas);
+                dato = id;
+                bd.setearParametroPorValor("@id_crucero",dato);
+                dato = idFabricante;
+                bd.setearParametroPorValor("@id_fabricante", dato);
+                dato = modelo;
+                bd.setearParametroPorValor("@modelo", dato);
+                dato = cantCabinas;
+                bd.setearParametroPorValor("@cantidadDeCabinas", dato);
                 bd.ejecutarSP();
             }
             catch (Exception excepcion)
@@ -91,8 +96,8 @@ namespace FrbaCrucero.Clases
             {
                 bd.conectar();
                 bd.crearSP("[LEISTE_EL_CODIGO?].modificarCrucero");
-                bd.setearParametroPorValor("id_crucero", id);
-                bd.setearParametroPorValor("id_fabricante", idFabricante);
+                bd.setearParametroPorValor("@id_crucero", id);
+                bd.setearParametroPorValor("@id_fabricante", idFabricante);
 
                 bd.ejecutarSP();
             }
@@ -112,9 +117,9 @@ namespace FrbaCrucero.Clases
             try
             {
                 bd.conectar();
-                bd.crearSP("[LEISTE_EL_CODIGO?].modificarCrucero");
-                bd.setearParametroPorValor("id_crucero", id);
-                bd.setearParametroPorValor("fecha_actual", fechaActual);
+                bd.crearSP("[LEISTE_EL_CODIGO?].darDeBajaDefinitivaCrucero");
+                bd.setearParametroPorValor("@id_crucero", id);
+                bd.setearParametroPorValor("@fecha_actual", fechaActual);
 
                 bd.ejecutarSP();
             }

@@ -59,7 +59,6 @@ namespace FrbaCrucero.GeneracionViaje
             this.dateTimePickerInicio.Name = "dateTimePickerInicio";
             this.dateTimePickerInicio.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerInicio.TabIndex = 2;
-            this.dateTimePickerInicio.TabStop = false;
             this.dateTimePickerInicio.Value = new System.DateTime(2019, 6, 13, 12, 47, 28, 975);
             // 
             // dateTimePickerFin

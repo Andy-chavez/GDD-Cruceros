@@ -31,14 +31,13 @@
             this.botonCrear = new System.Windows.Forms.Button();
             this.botonVolver = new System.Windows.Forms.Button();
             this.textoIdCrucero = new System.Windows.Forms.TextBox();
-            this.texoIdFabricante = new System.Windows.Forms.TextBox();
             this.textoModelo = new System.Windows.Forms.TextBox();
             this.Crucero_id = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textoCabina = new System.Windows.Forms.TextBox();
-            this.botonLimpiar = new System.Windows.Forms.Button();
+            this.comboBoxFabID = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // botonCrear
@@ -68,14 +67,6 @@
             this.textoIdCrucero.Size = new System.Drawing.Size(176, 20);
             this.textoIdCrucero.TabIndex = 2;
             this.textoIdCrucero.TextChanged += new System.EventHandler(this.textoIdCrucero_TextChanged);
-            // 
-            // texoIdFabricante
-            // 
-            this.texoIdFabricante.Location = new System.Drawing.Point(171, 88);
-            this.texoIdFabricante.Name = "texoIdFabricante";
-            this.texoIdFabricante.Size = new System.Drawing.Size(176, 20);
-            this.texoIdFabricante.TabIndex = 3;
-            this.texoIdFabricante.TextChanged += new System.EventHandler(this.texoIdFabricante_TextChanged);
             // 
             // textoModelo
             // 
@@ -129,34 +120,32 @@
             this.textoCabina.TabIndex = 9;
             this.textoCabina.TextChanged += new System.EventHandler(this.textoCabina_TextChanged);
             // 
-            // botonLimpiar
+            // comboBoxFabID
             // 
-            this.botonLimpiar.Location = new System.Drawing.Point(322, 220);
-            this.botonLimpiar.Name = "botonLimpiar";
-            this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.botonLimpiar.TabIndex = 10;
-            this.botonLimpiar.Text = "Limpiar";
-            this.botonLimpiar.UseVisualStyleBackColor = true;
-            this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click_1);
+            this.comboBoxFabID.FormattingEnabled = true;
+            this.comboBoxFabID.Location = new System.Drawing.Point(171, 91);
+            this.comboBoxFabID.Name = "comboBoxFabID";
+            this.comboBoxFabID.Size = new System.Drawing.Size(176, 21);
+            this.comboBoxFabID.TabIndex = 11;
             // 
             // VentanaAltaCrucero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(409, 299);
-            this.Controls.Add(this.botonLimpiar);
+            this.Controls.Add(this.comboBoxFabID);
             this.Controls.Add(this.textoCabina);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Crucero_id);
             this.Controls.Add(this.textoModelo);
-            this.Controls.Add(this.texoIdFabricante);
             this.Controls.Add(this.textoIdCrucero);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.botonCrear);
             this.Name = "VentanaAltaCrucero";
             this.Text = "Alta Crucero";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaAltaCrucero_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -168,13 +157,12 @@
         private System.Windows.Forms.Button botonCrear;
         private System.Windows.Forms.Button botonVolver;
         private System.Windows.Forms.TextBox textoIdCrucero;
-        private System.Windows.Forms.TextBox texoIdFabricante;
         private System.Windows.Forms.TextBox textoModelo;
         private System.Windows.Forms.Label Crucero_id;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textoCabina;
-        private System.Windows.Forms.Button botonLimpiar;
+        private System.Windows.Forms.ComboBox comboBoxFabID;
     }
 }

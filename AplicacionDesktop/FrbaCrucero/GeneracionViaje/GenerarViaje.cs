@@ -31,7 +31,9 @@ namespace FrbaCrucero.GeneracionViaje
         private void SetDefaults()
         {
             this.dateTimePickerInicio.MinDate = fechaConfig;
+            this.dateTimePickerInicio.Value = fechaConfig;
             this.dateTimePickerFin.MinDate = fechaConfig;
+            this.dateTimePickerFin.Value = fechaConfig;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

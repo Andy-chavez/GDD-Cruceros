@@ -35,7 +35,6 @@
             this.textoModelo = new System.Windows.Forms.TextBox();
             this.botonVolver = new System.Windows.Forms.Button();
             this.TextoCruceroSeleccionado = new System.Windows.Forms.TextBox();
-            this.textoFabricanteNuevo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.botonBajaTemp = new System.Windows.Forms.Button();
@@ -47,6 +46,7 @@
             this.buttonFechaReinicio = new System.Windows.Forms.Button();
             this.textoFechaReinicio = new System.Windows.Forms.TextBox();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.comboBoxFabricante = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -124,31 +124,23 @@
             this.TextoCruceroSeleccionado.TabIndex = 4;
             this.TextoCruceroSeleccionado.TextChanged += new System.EventHandler(this.TextoCruceroSeleccionado_TextChanged);
             // 
-            // textoFabricanteNuevo
-            // 
-            this.textoFabricanteNuevo.Location = new System.Drawing.Point(145, 393);
-            this.textoFabricanteNuevo.Name = "textoFabricanteNuevo";
-            this.textoFabricanteNuevo.Size = new System.Drawing.Size(248, 20);
-            this.textoFabricanteNuevo.TabIndex = 5;
-            this.textoFabricanteNuevo.TextChanged += new System.EventHandler(this.textoFabricanteNuevo_TextChanged);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(20, 348);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(119, 13);
+            this.label2.Size = new System.Drawing.Size(110, 13);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Crucero a seleccionado";
+            this.label2.Text = "Crucero seleccionado";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(20, 393);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(90, 13);
+            this.label3.Size = new System.Drawing.Size(92, 13);
             this.label3.TabIndex = 7;
-            this.label3.Text = "Fabricante nuevo";
+            this.label3.Text = "Nuevo Fabricante";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // botonBajaTemp
@@ -231,18 +223,27 @@
             // 
             // monthCalendar1
             // 
-            this.monthCalendar1.Location = new System.Drawing.Point(212, 263);
+            this.monthCalendar1.Location = new System.Drawing.Point(240, 263);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 17;
             this.monthCalendar1.Visible = false;
             this.monthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged);
             this.monthCalendar1.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateSelected);
             // 
+            // comboBoxFabricante
+            // 
+            this.comboBoxFabricante.FormattingEnabled = true;
+            this.comboBoxFabricante.Location = new System.Drawing.Point(145, 391);
+            this.comboBoxFabricante.Name = "comboBoxFabricante";
+            this.comboBoxFabricante.Size = new System.Drawing.Size(150, 21);
+            this.comboBoxFabricante.TabIndex = 18;
+            // 
             // VentanaModificarCrucero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(539, 572);
+            this.Controls.Add(this.comboBoxFabricante);
             this.Controls.Add(this.monthCalendar1);
             this.Controls.Add(this.textoFechaReinicio);
             this.Controls.Add(this.buttonFechaReinicio);
@@ -254,7 +255,6 @@
             this.Controls.Add(this.botonBajaTemp);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textoFabricanteNuevo);
             this.Controls.Add(this.TextoCruceroSeleccionado);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.groupBox1);
@@ -262,6 +262,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "VentanaModificarCrucero";
             this.Text = "VentanaModificarCrucero";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaModificarCrucero_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -280,7 +281,6 @@
         private System.Windows.Forms.TextBox textoModelo;
         private System.Windows.Forms.Button botonVolver;
         private System.Windows.Forms.TextBox TextoCruceroSeleccionado;
-        private System.Windows.Forms.TextBox textoFabricanteNuevo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button botonBajaTemp;
@@ -292,5 +292,6 @@
         private System.Windows.Forms.Button buttonFechaReinicio;
         private System.Windows.Forms.TextBox textoFechaReinicio;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
+        private System.Windows.Forms.ComboBox comboBoxFabricante;
     }
 }
