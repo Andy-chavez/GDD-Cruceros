@@ -69,5 +69,10 @@ namespace FrbaCrucero.AbmRol
         {
 
         }
+
+        private void ComboBoxRoles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

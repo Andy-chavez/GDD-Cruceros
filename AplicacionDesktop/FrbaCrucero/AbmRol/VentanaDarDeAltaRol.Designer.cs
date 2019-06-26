@@ -38,7 +38,7 @@
             // 
             // botonAlta
             // 
-            this.botonAlta.Location = new System.Drawing.Point(278, 155);
+            this.botonAlta.Location = new System.Drawing.Point(336, 148);
             this.botonAlta.Name = "botonAlta";
             this.botonAlta.Size = new System.Drawing.Size(111, 23);
             this.botonAlta.TabIndex = 2;
@@ -74,10 +74,11 @@
             this.comboBoxRoles.Name = "comboBoxRoles";
             this.comboBoxRoles.Size = new System.Drawing.Size(267, 21);
             this.comboBoxRoles.TabIndex = 0;
+            this.comboBoxRoles.SelectedIndexChanged += new System.EventHandler(this.ComboBoxRoles_SelectedIndexChanged);
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(12, 155);
+            this.botonVolver.Location = new System.Drawing.Point(21, 148);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 4;
@@ -89,7 +90,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(416, 199);
+            this.ClientSize = new System.Drawing.Size(459, 192);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.botonAlta);
