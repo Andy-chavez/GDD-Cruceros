@@ -76,8 +76,6 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void listaDeTramos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (listaDeTramos.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
-            {
                 listaDeTramos.CurrentRow.Selected = true;
 
                 int id = Convert.ToInt32(listaDeTramos.Rows[e.RowIndex].Cells["id_tramo"].Value.ToString());
@@ -110,8 +108,6 @@ namespace FrbaCrucero.AbmRecorrido
                     }
 
                 }
-
-            }
         }
 
         private void Recorrido_SelectedIndexChanged(object sender, EventArgs e)

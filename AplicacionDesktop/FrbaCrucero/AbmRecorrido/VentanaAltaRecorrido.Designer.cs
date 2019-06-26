@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.listaDeTramos = new System.Windows.Forms.DataGridView();
-            this.tramoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.botonLimpiar = new System.Windows.Forms.Button();
@@ -41,19 +40,20 @@
             this.filtroOrigen = new System.Windows.Forms.TextBox();
             this.botonTramo = new System.Windows.Forms.Button();
             this.botonCrear = new System.Windows.Forms.Button();
-            this.tramosDisponiblesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Recorrido = new System.Windows.Forms.ListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.botonEliminar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.botonVolver = new System.Windows.Forms.Button();
             this.botonSacarTramo = new System.Windows.Forms.Button();
+            this.tramoBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tramosDisponiblesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.listaDeTramos)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tramoBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tramosDisponiblesBindingSource)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tramoBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tramosDisponiblesBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // listaDeTramos
@@ -66,10 +66,6 @@
             this.listaDeTramos.TabIndex = 0;
             this.listaDeTramos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listaDeTramos_CellClick);
             this.listaDeTramos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listaDeTramos_CellContentClick);
-            // 
-            // tramoBindingSource
-            // 
-            this.tramoBindingSource.DataMember = "Tramo";
             // 
             // groupBox1
             // 
@@ -230,6 +226,10 @@
             this.botonSacarTramo.UseVisualStyleBackColor = true;
             this.botonSacarTramo.Click += new System.EventHandler(this.botonSacarTramo_Click);
             // 
+            // tramoBindingSource
+            // 
+            this.tramoBindingSource.DataMember = "Tramo";
+            // 
             // VentanaAltaRecorrido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -248,12 +248,12 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.VentanaAltaRecorrido_Load);
             ((System.ComponentModel.ISupportInitialize)(this.listaDeTramos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tramoBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tramosDisponiblesBindingSource)).EndInit();
             this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tramoBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tramosDisponiblesBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
