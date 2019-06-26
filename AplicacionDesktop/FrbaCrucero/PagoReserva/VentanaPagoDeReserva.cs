@@ -45,7 +45,7 @@ namespace FrbaCrucero.PagoReserva
 
         private void BotonCrear_Click(object sender, EventArgs e)
         {
-            try
+ /*           try
             {
                 BaseDeDato bd = new BaseDeDato();
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].comprarPasajeReservado");
@@ -74,7 +74,7 @@ namespace FrbaCrucero.PagoReserva
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
-            }
+            }*/
         }
     }
 }

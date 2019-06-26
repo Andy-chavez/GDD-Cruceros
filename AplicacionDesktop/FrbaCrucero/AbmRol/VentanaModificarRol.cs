@@ -169,5 +169,10 @@ namespace FrbaCrucero.AbmRol
                 MessageBox.Show(exception.Message);
             }
         }
+
+        private void ComboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

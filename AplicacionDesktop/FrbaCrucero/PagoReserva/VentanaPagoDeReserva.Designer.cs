@@ -32,10 +32,7 @@
             this.reserva = new System.Windows.Forms.TextBox();
             this.botonVolver = new System.Windows.Forms.Button();
             this.botonCrear = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.pago = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -57,7 +54,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(38, 213);
+            this.botonVolver.Location = new System.Drawing.Point(38, 118);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(93, 23);
             this.botonVolver.TabIndex = 3;
@@ -67,39 +64,19 @@
             // 
             // botonCrear
             // 
-            this.botonCrear.Location = new System.Drawing.Point(353, 213);
+            this.botonCrear.Location = new System.Drawing.Point(353, 118);
             this.botonCrear.Name = "botonCrear";
             this.botonCrear.Size = new System.Drawing.Size(93, 23);
             this.botonCrear.TabIndex = 4;
-            this.botonCrear.Text = "Asociar Pago";
+            this.botonCrear.Text = "Continuar";
             this.botonCrear.UseVisualStyleBackColor = true;
             this.botonCrear.Click += new System.EventHandler(this.BotonCrear_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.pago);
-            this.groupBox2.Location = new System.Drawing.Point(38, 107);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(408, 80);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Ingrese id de pago de reserva";
-            this.groupBox2.Enter += new System.EventHandler(this.GroupBox2_Enter);
-            // 
-            // pago
-            // 
-            this.pago.Location = new System.Drawing.Point(52, 38);
-            this.pago.Name = "pago";
-            this.pago.Size = new System.Drawing.Size(294, 20);
-            this.pago.TabIndex = 1;
-            this.pago.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
             // VentanaPagoDeReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 248);
-            this.Controls.Add(this.groupBox2);
+            this.ClientSize = new System.Drawing.Size(484, 166);
             this.Controls.Add(this.botonCrear);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.groupBox1);
@@ -108,8 +85,6 @@
             this.TopMost = true;
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -120,7 +95,5 @@
         private System.Windows.Forms.TextBox reserva;
         private System.Windows.Forms.Button botonVolver;
         private System.Windows.Forms.Button botonCrear;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox pago;
     }
 }
