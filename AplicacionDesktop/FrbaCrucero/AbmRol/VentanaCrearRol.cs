@@ -196,7 +196,7 @@ namespace FrbaCrucero.AbmRol
             }
             else
             {
-                MessageBox.Show("Complete el nombre del rol para continuar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Complete el nombre del rol y al menos una funcionalidad para continuar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void textoNombre_TextChanged(object sender, EventArgs e)
