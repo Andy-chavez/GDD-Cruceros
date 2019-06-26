@@ -31,8 +31,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.reserva = new System.Windows.Forms.TextBox();
             this.botonVolver = new System.Windows.Forms.Button();
-            this.botonCrear = new System.Windows.Forms.Button();
+            this.botonPagar = new System.Windows.Forms.Button();
+            this.MedioDePago = new System.Windows.Forms.GroupBox();
+            this.comboBoxMedios = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
+            this.MedioDePago.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -44,6 +47,7 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ingrese Id de reserva";
+            this.groupBox1.Enter += new System.EventHandler(this.GroupBox1_Enter);
             // 
             // reserva
             // 
@@ -54,7 +58,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(38, 118);
+            this.botonVolver.Location = new System.Drawing.Point(38, 192);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(93, 23);
             this.botonVolver.TabIndex = 3;
@@ -62,29 +66,52 @@
             this.botonVolver.UseVisualStyleBackColor = true;
             this.botonVolver.Click += new System.EventHandler(this.BotonVolver_Click);
             // 
-            // botonCrear
+            // botonPagar
             // 
-            this.botonCrear.Location = new System.Drawing.Point(353, 118);
-            this.botonCrear.Name = "botonCrear";
-            this.botonCrear.Size = new System.Drawing.Size(93, 23);
-            this.botonCrear.TabIndex = 4;
-            this.botonCrear.Text = "Continuar";
-            this.botonCrear.UseVisualStyleBackColor = true;
-            this.botonCrear.Click += new System.EventHandler(this.BotonCrear_Click);
+            this.botonPagar.Location = new System.Drawing.Point(353, 192);
+            this.botonPagar.Name = "botonPagar";
+            this.botonPagar.Size = new System.Drawing.Size(93, 23);
+            this.botonPagar.TabIndex = 4;
+            this.botonPagar.Text = "Pagar";
+            this.botonPagar.UseVisualStyleBackColor = true;
+            this.botonPagar.Click += new System.EventHandler(this.BotonCrear_Click);
+            // 
+            // MedioDePago
+            // 
+            this.MedioDePago.Controls.Add(this.comboBoxMedios);
+            this.MedioDePago.Location = new System.Drawing.Point(38, 98);
+            this.MedioDePago.Name = "MedioDePago";
+            this.MedioDePago.Size = new System.Drawing.Size(408, 70);
+            this.MedioDePago.TabIndex = 5;
+            this.MedioDePago.TabStop = false;
+            this.MedioDePago.Text = "Elija Medio de Pago";
+            this.MedioDePago.Enter += new System.EventHandler(this.GroupBox2_Enter_1);
+            // 
+            // comboBoxMedios
+            // 
+            this.comboBoxMedios.FormattingEnabled = true;
+            this.comboBoxMedios.Location = new System.Drawing.Point(52, 14);
+            this.comboBoxMedios.Name = "comboBoxMedios";
+            this.comboBoxMedios.Size = new System.Drawing.Size(294, 21);
+            this.comboBoxMedios.TabIndex = 0;
+            this.comboBoxMedios.SelectedIndexChanged += new System.EventHandler(this.ComboBoxMedios_SelectedIndexChanged);
             // 
             // VentanaPagoDeReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 166);
-            this.Controls.Add(this.botonCrear);
+            this.ClientSize = new System.Drawing.Size(484, 227);
+            this.Controls.Add(this.MedioDePago);
+            this.Controls.Add(this.botonPagar);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.groupBox1);
             this.Name = "VentanaPagoDeReserva";
             this.Text = "Pago de Reserva";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.VentanaPagoDeReserva_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.MedioDePago.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -94,6 +121,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox reserva;
         private System.Windows.Forms.Button botonVolver;
-        private System.Windows.Forms.Button botonCrear;
+        private System.Windows.Forms.Button botonPagar;
+        private System.Windows.Forms.GroupBox MedioDePago;
+        private System.Windows.Forms.ComboBox comboBoxMedios;
     }
 }
