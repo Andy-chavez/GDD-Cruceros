@@ -23,9 +23,9 @@ namespace FrbaCrucero.CompraReservaPasaje
 
 
         private int id_pago;
-        public Compra(Cliente cliente,int idViaje, int idCabina,string idCrucero)
+        public Compra(Cliente cliente,int idViaje, int idCabina,string idCrucero, int cant_pasajes)
         {
-            //this.cant_pasajes = cant_pasajes;
+            this.cant_pasajes = cant_pasajes;
             this.idCabina=idCabina;
             this.idCrucero = idCrucero;
             this.idViaje = idViaje;
@@ -64,21 +64,18 @@ namespace FrbaCrucero.CompraReservaPasaje
                     procedure.Parameters.Add("@idCliente", SqlDbType.Int).Value = cliente.id;
                     procedure.Parameters.Add("@idViaje", SqlDbType.Int).Value = idViaje;
                     procedure.Parameters.Add("@idCabina", SqlDbType.Int).Value = idCabina;
-                    procedure.Parameters.Add("@idCrucero", SqlDbType.Int).Value = idCrucero;
+                    procedure.Parameters.Add("@idCrucero", SqlDbType.NVarChar).Value = idCrucero;
                     procedure.Parameters.Add("@idPago", SqlDbType.Int).Value = id_pago;
-                    procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
+                    procedure.Parameters.Add("@ret", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                     bd.ejecutarConsultaDevuelveInt(procedure);
-                    int retorno = (int)procedure.Parameters["@retorno"].Value;
-                    switch (retorno)
+                    int retorno = Convert.ToInt32(procedure.Parameters["@ret"].Value);
+                    if (retorno==-1)
                     {
-                        case 1:
-                            new MostrarVoucher(id_pago).Show();
-                            break;
-                        case -1:
-                            MessageBox.Show("Error: ya tiene viajes en esa fecha");
-                            break;
+                        MessageBox.Show("Error: ya tiene viajes en esa fecha");
+                        return;
                     }
                 }
+                new MostrarVoucher(id_pago).Show();
             }
             catch (Exception exception)
             {

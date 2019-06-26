@@ -33,10 +33,10 @@
             this.botonAbmRol = new System.Windows.Forms.Button();
             this.botonReserva = new System.Windows.Forms.Button();
             this.botonViaje = new System.Windows.Forms.Button();
-            this.botonPago = new System.Windows.Forms.Button();
+            this.botonRegPagoRes = new System.Windows.Forms.Button();
             this.botonEstadisticas = new System.Windows.Forms.Button();
             this.botonSalir = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonPagarRes = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // botonAdmCrucero
@@ -89,15 +89,15 @@
             this.botonViaje.UseVisualStyleBackColor = true;
             this.botonViaje.Click += new System.EventHandler(this.botonViaje_Click);
             // 
-            // botonPago
+            // botonRegPagoRes
             // 
-            this.botonPago.Location = new System.Drawing.Point(38, 90);
-            this.botonPago.Name = "botonPago";
-            this.botonPago.Size = new System.Drawing.Size(229, 23);
-            this.botonPago.TabIndex = 6;
-            this.botonPago.Text = "Registrar Pago de Reserva";
-            this.botonPago.UseVisualStyleBackColor = true;
-            this.botonPago.Click += new System.EventHandler(this.botonPago_Click);
+            this.botonRegPagoRes.Location = new System.Drawing.Point(38, 90);
+            this.botonRegPagoRes.Name = "botonRegPagoRes";
+            this.botonRegPagoRes.Size = new System.Drawing.Size(229, 23);
+            this.botonRegPagoRes.TabIndex = 6;
+            this.botonRegPagoRes.Text = "Registrar Pago de Reserva";
+            this.botonRegPagoRes.UseVisualStyleBackColor = true;
+            this.botonRegPagoRes.Click += new System.EventHandler(this.botonPago_Click);
             // 
             // botonEstadisticas
             // 
@@ -119,25 +119,25 @@
             this.botonSalir.UseVisualStyleBackColor = true;
             this.botonSalir.Click += new System.EventHandler(this.botonSalir_Click);
             // 
-            // button1
+            // buttonPagarRes
             // 
-            this.button1.Location = new System.Drawing.Point(38, 61);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(229, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Pagar Reserva";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            this.buttonPagarRes.Location = new System.Drawing.Point(38, 61);
+            this.buttonPagarRes.Name = "buttonPagarRes";
+            this.buttonPagarRes.Size = new System.Drawing.Size(229, 23);
+            this.buttonPagarRes.TabIndex = 9;
+            this.buttonPagarRes.Text = "Pagar Reserva";
+            this.buttonPagarRes.UseVisualStyleBackColor = true;
+            this.buttonPagarRes.Click += new System.EventHandler(this.Button1_Click);
             // 
             // VentanaMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(304, 308);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonPagarRes);
             this.Controls.Add(this.botonSalir);
             this.Controls.Add(this.botonEstadisticas);
-            this.Controls.Add(this.botonPago);
+            this.Controls.Add(this.botonRegPagoRes);
             this.Controls.Add(this.botonViaje);
             this.Controls.Add(this.botonReserva);
             this.Controls.Add(this.botonAbmRol);
@@ -158,9 +158,9 @@
         private System.Windows.Forms.Button botonAbmRol;
         private System.Windows.Forms.Button botonReserva;
         private System.Windows.Forms.Button botonViaje;
-        private System.Windows.Forms.Button botonPago;
+        private System.Windows.Forms.Button botonRegPagoRes;
         private System.Windows.Forms.Button botonEstadisticas;
         private System.Windows.Forms.Button botonSalir;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonPagarRes;
     }
 }

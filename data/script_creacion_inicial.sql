@@ -1418,7 +1418,7 @@ as
 		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
 		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
 		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
-		and CAST(v.fecha_inicio as datetime) > @fechaConfig
+		--and CAST(v.fecha_inicio as datetime) > @fechaConfig
 	end
 go --fijarse si hay que hacer un return id_viaje
 --todo despues de seleccionar un viaje--ingresar cliente
@@ -1581,11 +1581,15 @@ as
 	begin
 		declare @fecha datetime2(3),@retorno int,@idPasaje int
 		declare @precioPasaje decimal (18,2)
+		declare @ret int
 		select @fecha = fecha_inicio
 		from [LEISTE_EL_CODIGO?].Viaje
 		exec @retorno = [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha @fecha,@idCliente,@idCrucero,@idViaje,@idCabina
 		if(@retorno =1)
-			return -1 -- ya tiene viajes en esa fecha, ERROR
+			begin
+			set @ret = -1
+			return @ret -- ya tiene viajes en esa fecha, ERROR
+			end
 
 		insert into [LEISTE_EL_CODIGO?].Pasaje (id_cliente,id_viaje,id_cabina,id_crucero,id_pago)
 		values(@idCliente,@idViaje,@idCabina,@idCrucero,@idPago)
@@ -1595,7 +1599,8 @@ as
 		update [LEISTE_EL_CODIGO?].Pasaje
 		set precio = @precioPasaje
 		where id_pasaje = @idPasaje -- para poner el precio ya aca automaticamente.
-		return 1
+		set @ret = 1
+		return @ret
 	end
 go
 
@@ -1733,3 +1738,8 @@ as
 		order by 2 desc
 	end
 go	
+
+select * from [LEISTE_EL_CODIGO?].Viaje where fecha_inicio >SYSDATETIME()
+select * from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido = 43820902
+select * from [LEISTE_EL_CODIGO?].Cliente
+--93960503
