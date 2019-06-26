@@ -105,6 +105,15 @@ namespace FrbaCrucero.AbmRol
             listaFunc10.DataSource = dt;
             listaFunc10.ValueMember = "id_funcionalidad";
             bd.desconectar();
+            vaciarFuncionalidades();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+        private void vaciarFuncionalidades()
+        {
             listaFunc10.SelectedItem = null;
             listaFunc10.SelectedText = "";
             listaFunc9.SelectedItem = null;
@@ -125,10 +134,6 @@ namespace FrbaCrucero.AbmRol
             listaFunc2.SelectedText = "";
             listaFunc1.SelectedItem = null;
             listaFunc1.SelectedText = "";
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
 
         }
 
@@ -203,23 +208,6 @@ namespace FrbaCrucero.AbmRol
 
 
         }
-       /* private void agregarRol()
-        {
-            if (textoNombre.Text != "")
-            {
-
-                rol.crearRol(textoNombre.Text, listaFunc.SelectedValue.ToString());
-
-                DialogResult result = MessageBox.Show("Rol creado exitosamente, agregue nuevas funciones a dicho rol seleccionándolas de las posibles y presionando el boton crear. Presione limpiar si neceista crear un nuevo rol.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            }
-
-            else
-            {
-                MessageBox.Show("Nombre de rol vacío. Inserte el nombre del rol", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        */
         private void listaFuncionalidades_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -229,6 +217,7 @@ namespace FrbaCrucero.AbmRol
         {
             textoNombre.Clear();
             textoNombre.Enabled = true;
+            vaciarFuncionalidades();
         }
 
         private void botonVolver_Click(object sender, EventArgs e)
@@ -248,7 +237,11 @@ namespace FrbaCrucero.AbmRol
         public bool todosLosCamposEstancompletos()
         {
 
-            return textoNombre.Text != "";
+            return textoNombre.Text != "" && (listaFunc1.SelectedText != "" || listaFunc2.SelectedText != "" ||
+                listaFunc3.SelectedText != "" || listaFunc4.SelectedText != "" ||
+                listaFunc5.SelectedText != "" || listaFunc6.SelectedText != "" ||
+                listaFunc7.SelectedText != "" || listaFunc8.SelectedText != "" ||
+                listaFunc9.SelectedText != "" || listaFunc10.SelectedText != "");
 
         }
 
