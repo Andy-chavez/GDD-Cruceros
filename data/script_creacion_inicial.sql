@@ -1418,7 +1418,7 @@ as
 		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
 		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
 		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
-		--and CAST(v.fecha_inicio as datetime) > @fechaConfig
+		and CAST(v.fecha_inicio as datetime) > @fechaConfig
 	end
 go --fijarse si hay que hacer un return id_viaje
 --todo despues de seleccionar un viaje--ingresar cliente
@@ -1739,7 +1739,7 @@ as
 	end
 go	
 
-select * from [LEISTE_EL_CODIGO?].Viaje where fecha_inicio >SYSDATETIME()
-select * from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido = 43820902
-select * from [LEISTE_EL_CODIGO?].Cliente
+--select * from [LEISTE_EL_CODIGO?].Viaje where fecha_inicio >SYSDATETIME()
+--select * from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido = 43820902
+--select * from [LEISTE_EL_CODIGO?].Cliente
 --93960503
