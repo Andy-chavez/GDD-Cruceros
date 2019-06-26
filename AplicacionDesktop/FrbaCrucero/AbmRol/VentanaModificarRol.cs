@@ -104,13 +104,10 @@ namespace FrbaCrucero.AbmRol
 
         private void listaFunc_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
-
         }
 
         private void TextoRol_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void BotonVolver_Click(object sender, EventArgs e)
@@ -178,14 +175,12 @@ namespace FrbaCrucero.AbmRol
         }
         private void llenarFuncionalidades(string idRol)
         {
-            //bd.conectar();
             bd.desconectar();
             SqlConnection con = new SqlConnection(bd.getConfig());
             con.Open();
-
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "SELECT id_funcionalidad FROM [LEISTE_EL_CODIGO?].FuncionalidadPorRol WHERE id_rol = '@idRol'";
-            cmd.Parameters.AddWithValue("idRol", idRol);
+            cmd.Parameters.AddWithValue("@idRol", idRol);
             cmd.Connection = con;
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -204,23 +199,20 @@ namespace FrbaCrucero.AbmRol
             //adapt.Fill(objDs);
             //dt = new DataTable();
             //adapt.Fill(dt);
-
-            
             // comboBoxFuncionalidades.DisplayMember = "id_rol";
-
-            // 
-
             //bd.desconectar();
         }
 private void ComboBoxRoles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxRoles.Items.Count !=0 )
+            if (comboBoxRoles.SelectedText.ToString() != "System.Data.DataRowView")
             {
                 string idRol = comboBoxRoles.SelectedValue.ToString();
                 llenarFuncionalidades(idRol);
             }
-            
-           //comboBoxFuncionalidades. = 0;
+            comboBoxFuncionalidades.Enabled = false;
+            comboBox1.Enabled = false;
+
+            //comboBoxFuncionalidades. = 0;
         }
     }
 }
