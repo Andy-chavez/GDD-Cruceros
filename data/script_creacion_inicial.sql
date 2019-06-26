@@ -1649,10 +1649,10 @@ go
 use GD1C2019
 go
 create proc [LEISTE_EL_CODIGO?].comprarPasajeReservado
-(@idReserva decimal(18,0),@idPago int)
+(@idReserva decimal(18,0),@idMedioDePago varchar(256),@fechaConfig datetime)
 as
 begin
-	declare @idCliente int,@idViaje int,@idCabina int,@idCrucero nvarchar(50)
+	declare @idCliente int,@idViaje int,@idCabina int,@idCrucero nvarchar(50), @idPago int
 	declare @retorno int
 	if(not exists (select 1
 					from [LEISTE_EL_CODIGO?].Reserva
@@ -1663,7 +1663,7 @@ begin
 		end
 	select @idCliente=id_cliente,@idViaje=id_viaje,@idCabina=id_cabina,@idCrucero=id_crucero
 	from [LEISTE_EL_CODIGO?].Reserva where id_reserva = @idReserva
-	
+	exec @idPago = [LEISTE_EL_CODIGO?].devolverIdPago @idMedioDePago,@idCliente,@fechaConfig
 	exec @retorno= [LEISTE_EL_CODIGO?].comprarPasaje @idCliente,@idViaje,@idCabina,@idCrucero,@idPago
 
 	if(@retorno=1)
