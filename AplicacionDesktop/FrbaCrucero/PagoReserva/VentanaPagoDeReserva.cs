@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaCrucero.Clases;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 
 namespace FrbaCrucero.PagoReserva
 {
@@ -18,6 +19,7 @@ namespace FrbaCrucero.PagoReserva
         private DataTable dt = new DataTable();
         private List<object> listaFuncion = new List<object>();
         SqlDataAdapter adapt;
+        public string fechaConfig = System.Configuration.ConfigurationSettings.AppSettings["fechaConfig"];
         public VentanaPagoDeReserva()
         {
             InitializeComponent();
@@ -45,20 +47,21 @@ namespace FrbaCrucero.PagoReserva
 
         private void BotonCrear_Click(object sender, EventArgs e)
         {
- /*           try
+            try
             {
                 BaseDeDato bd = new BaseDeDato();
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].comprarPasajeReservado");
+                DateTime enteredDate = DateTime.Parse(fechaConfig);
                 procedure.CommandType = CommandType.StoredProcedure;
                 procedure.Parameters.AddWithValue("@idReserva", SqlDbType.NVarChar).Value = System.Convert.ToDecimal(reserva.Text);
-                procedure.Parameters.Add("@idPago", SqlDbType.NVarChar).Value = System.Convert.ToInt32(pago.Text);
+                procedure.Parameters.Add("@idMedioDePago", SqlDbType.NVarChar).Value = comboBoxMedios.Text;
+                procedure.Parameters.AddWithValue("@fechaConfig", SqlDbType.DateTime).Value = enteredDate;
                 procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                 bd.ejecutarConsultaDevuelveInt(procedure);
                 int retorno = (int)procedure.Parameters["@retorno"].Value;
                 if (retorno == 1) //joya
                 {
-                    MessageBox.Show("Pago asociado exitosamente.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    pago.Clear();
+                    MessageBox.Show("Reserva pagada exitosamente.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     reserva.Clear();
 
                 }
@@ -74,7 +77,38 @@ namespace FrbaCrucero.PagoReserva
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
-            }*/
+            }
+        }
+
+        private void VentanaPagoDeReserva_Load(object sender, EventArgs e)
+        {
+            bd.conectar();
+            adapt = new SqlDataAdapter("select id_medio_de_pago from [LEISTE_EL_CODIGO?].MedioDePago", bd.obtenerConexion());
+            dt = new DataTable();
+            adapt.Fill(dt);
+            comboBoxMedios.DataSource = dt;
+            comboBoxMedios.ValueMember = "id_medio_de_pago";
+            bd.desconectar();
+        }
+
+        private void GroupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GroupBox2_Enter_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboBoxMedios_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

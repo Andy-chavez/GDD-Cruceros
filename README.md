@@ -159,7 +159,7 @@ Nota: se debe hacer en orden del orden mas chico q quieras cambiar al ultimo
 
 #### mostrarReserva(@idReserva decimal(18,0))
 
-#### comprarPasajeReservado(@idReserva decimal(18,0),@idPago int)
+#### comprarPasajeReservado(@idReserva decimal(18,0),@idMedioDePago varchar(256),@fechaConfig datetime)
 
   Valores de retorno:
       -2 : no existe una reserva o la reserva se vencio
