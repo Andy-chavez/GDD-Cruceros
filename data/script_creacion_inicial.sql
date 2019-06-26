@@ -217,7 +217,7 @@ create table [LEISTE_EL_CODIGO?].Puerto(
 )
 go
 create table [LEISTE_EL_CODIGO?].Recorrido(
-	id_recorrido decimal(18,0) primary key,
+	id_recorrido decimal(18,0) identity primary key,
 	estado char(1) default 'A' check(estado in ('A','I')),
 	id_origen nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
 	id_destino nvarchar(255) references [LEISTE_EL_CODIGO?].Puerto,
@@ -532,9 +532,11 @@ insert into [LEISTE_EL_CODIGO?].Puerto
 select distinct PUERTO_DESDE from gd_esquema.Maestra where PUERTO_DESDE<> PUERTO_HASTA --corroborado
 go
 ------------------------------------------ Recorrido ----------------------------------------------------
+SET IDENTITY_INSERT [LEISTE_EL_CODIGO?].Recorrido  ON
 insert into [LEISTE_EL_CODIGO?].Recorrido (id_recorrido)
 select distinct RECORRIDO_CODIGO
 from gd_esquema.Maestra
+SET IDENTITY_INSERT [LEISTE_EL_CODIGO?].Recorrido  OFF
 go
 -----------------------------------------Tramo----------------------------------------------------------
 create table #tramoTemp(
@@ -906,7 +908,7 @@ begin
 				begin catch
 					rollback transaction
 					set @valor_retorno = -5;
-					throw 50000,'Hubo un error en la transaccion', 1
+					--throw 50000,'Hubo un error en la transaccion', 1
 				end catch
 			end
 		return @valor_retorno
@@ -1102,7 +1104,7 @@ go
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].modificarRecorrido
-(@idRecorrido decimal(13,0),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
+(@idRecorrido decimal(18,0),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
 as
 	begin
 	if exists(select p.id_viaje from [LEISTE_EL_CODIGO?].Pasaje p 
