@@ -178,9 +178,9 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
             int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
             int id_cabina = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
-            string id_crucero = this.viajesDisponibles.CurrentRow.Cells["crucero"].ToString();
-            //int cantidad_pasajes = (int)this.comboBoxCantPasajes.SelectedValue;
-            new Compra(cliente,viaje,id_cabina,id_crucero).Show();//necesita origen,destino,viaje,inicio,cantidad
+            string id_crucero = this.viajesDisponibles.CurrentRow.Cells["crucero"].Value.ToString();
+            int cantidad_pasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
+            new Compra(cliente,viaje,id_cabina,id_crucero,cantidad_pasajes).Show();//necesita origen,destino,viaje,inicio,cantidad
             //compra va a crear la ventana medio de pago new ventanamediodepago(this,cliente.id).Show()
         }
 

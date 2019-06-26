@@ -1213,18 +1213,19 @@ go
 --calcular cabinas por tipo --
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].calcularCabinaPorTipo (@idCrucero nvarchar(50),@tipoCabina nvarchar(255),@retorno int out)
+create procedure [LEISTE_EL_CODIGO?].calcularCabinaPorTipo (@idCrucero nvarchar(50),@tipoCabina nvarchar(255))
 as
 	begin
+		declare @retorno int
 		if(@tipoCabina like 'Cabina Balc%') --por el acento a veces no lo agarra el batch
 			begin
-				select retorno = count(*)
+				select @retorno = count(*)
 				from [LEISTE_EL_CODIGO?].Cabina 
 				where id_crucero = @idCrucero and id_tipo = @tipoCabina
 			end
 		else
 			begin
-				select retorno = count(*)
+				select @retorno = count(*)
 				from [LEISTE_EL_CODIGO?].Cabina 
 				where id_crucero = @idCrucero and id_tipo = @tipoCabina
 			end
@@ -1239,11 +1240,11 @@ as
 		declare @idCruceroReemplazante nvarchar(50),@cantidadCabinasBalcon int, @cantidadEstandar int, @cantidadExterior int,
 		@cantidadEjecutivo int, @cantidadSuite int,@cantidadCabinasBalcon2 int, @cantidadEstandar2 int, @cantidadExterior2 int,
 		@cantidadEjecutivo2 int, @cantidadSuite2 int
-		exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Balcón',@cantidadCabinasBalcon out
-		exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Estandar',@cantidadEstandar out
-		exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Exterior',@cantidadExterior out
-		exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Ejecutivo',@cantidadEjecutivo out
-		exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Suite',@cantidadSuite out
+		exec @cantidadCabinasBalcon = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Balcón'
+		exec @cantidadEstandar = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Estandar'
+		exec @cantidadExterior =[LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Exterior'
+		exec @cantidadEjecutivo = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Ejecutivo'
+		exec @cantidadSuite = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Suite'
 
 		declare cursorCrucero cursor for
 		select id_crucero from [LEISTE_EL_CODIGO?].Crucero
@@ -1253,11 +1254,11 @@ as
 		into @idCruceroReemplazante
 		while @@FETCH_STATUS = 0
 			begin
-				exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Balcón',@cantidadCabinasBalcon2 out
-				exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Estandar',@cantidadEstandar2 out
-				exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Exterior',@cantidadExterior2 out
-				exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Ejecutivo',@cantidadEjecutivo2 out
-				exec [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Suite',@cantidadSuite2 out
+				exec @cantidadCabinasBalcon2 =[LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Balcón'
+				exec @cantidadEstandar2 = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Estandar'
+				exec @cantidadExterior2 = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Exterior'
+				exec @cantidadEjecutivo2 = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Ejecutivo'
+				exec @cantidadSuite2 = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Suite'
 
 				if(@cantidadCabinasBalcon = @cantidadCabinasBalcon2 and @cantidadEjecutivo = @cantidadEjecutivo2
 				and @cantidadEstandar = @cantidadEstandar2 and @cantidadSuite = @cantidadSuite2 and @cantidadExterior = @cantidadExterior2)
@@ -1494,7 +1495,8 @@ create procedure [LEISTE_EL_CODIGO?].actualizarMontoTotal (@idPago int)
 as	
 	begin
 		declare @cantidadDePasajes smallint, @montoTotal  decimal(18,2), @precio decimal(18,2)
-
+		set @cantidadDePasajes = 0
+		set @montoTotal = 0
 		declare sumador cursor for
 		select precio
 		from [LEISTE_EL_CODIGO?].Pasaje
@@ -1527,7 +1529,11 @@ as
 
 	begin
 		exec [LEISTE_EL_CODIGO?].actualizarMontoTotal @idPago --porque cuando se ejecuta voucher es que se termino la compra
-		select @idPago voucher,c.nombre +',' + c.apellido nombrePasajero,v.fecha_inicio,v.id_crucero Crucero,r.id_origen Origen,r.id_destino Destino,p.precio precioPasaje,pv.monto_total
+		select @idPago voucher,c.nombre +',' + c.apellido nombrePasajero,v.fecha_inicio,v.id_crucero Crucero,r.id_origen Origen,
+		r.id_destino Destino,p.precio precioPasaje,pv.monto_total, (select cuotas_sin_interes
+																	from [LEISTE_EL_CODIGO?].MedioDePago m1 join [LEISTE_EL_CODIGO?].PagoDeViaje pv1
+																	On m1.id_medio_de_pago = pv1.id_medio_de_pago
+																	where id_pago = @idPago) cuotasSinInteres
 		from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].Cliente c
 		ON p.id_cliente = c.id_cliente
 		join [LEISTE_EL_CODIGO?].PagoDeViaje pv
@@ -1550,8 +1556,8 @@ as
 		select t.precio_base
 		from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].Viaje v
 		on p.id_viaje = v.id_viaje
-		join [LEISTE_EL_CODIGO?].Recorrido r on v.id_recorrido = r.id_recorrido
-		join [LEISTE_EL_CODIGO?].Tramo t on r.id_recorrido = t.id_tramo 
+		join [LEISTE_EL_CODIGO?].Recorrido r on r.id_recorrido = v.id_recorrido
+		join [LEISTE_EL_CODIGO?].Tramo t on r.id_recorrido = t.id_recorrido 
 		where p.id_pasaje = @idPasaje
 
 		open cursorPrecio
@@ -1573,6 +1579,13 @@ as
 		set @precio = @precio*@recargoCabina
 	end
 go
+--pruebas
+--begin transaction
+--declare @precio decimal (18,2)
+--set @precio = 0
+--exec [LEISTE_EL_CODIGO?].calcularPrecioPasaje 28797566,@precio out
+--print @precio
+--rollback transaction
 ---------------------COMPRAR PASAJE-#----------------------- ver tema de seleccionar viaje y devolver voucher
 USE GD1C2019
 go 
@@ -1581,11 +1594,16 @@ as
 	begin
 		declare @fecha datetime2(3),@retorno int,@idPasaje int
 		declare @precioPasaje decimal (18,2)
+		declare @ret int
+		set @precioPasaje =0
 		select @fecha = fecha_inicio
 		from [LEISTE_EL_CODIGO?].Viaje
 		exec @retorno = [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha @fecha,@idCliente,@idCrucero,@idViaje,@idCabina
 		if(@retorno =1)
-			return -1 -- ya tiene viajes en esa fecha, ERROR
+			begin
+			set @ret = -1
+			return @ret -- ya tiene viajes en esa fecha, ERROR
+			end
 
 		insert into [LEISTE_EL_CODIGO?].Pasaje (id_cliente,id_viaje,id_cabina,id_crucero,id_pago)
 		values(@idCliente,@idViaje,@idCabina,@idCrucero,@idPago)
@@ -1595,10 +1613,18 @@ as
 		update [LEISTE_EL_CODIGO?].Pasaje
 		set precio = @precioPasaje
 		where id_pasaje = @idPasaje -- para poner el precio ya aca automaticamente.
-		return 1
+		set @ret = 1
+		return @ret
 	end
 go
-
+--pruebas
+--begin transaction
+--declare @idPago int
+--exec @idPago = [LEISTE_EL_CODIGO?].devolverIdPago 'Efectivo',1,'2018-01-01 07:00:00.000'
+--exec [LEISTE_EL_CODIGO?].comprarPasaje 1,1,1,'ETKLGK-24399',@idPago
+--exec [LEISTE_EL_CODIGO?].verVoucher @idPago
+--select * from [LEISTE_EL_CODIGO?].PagoDeViaje where id_pago = @idPago
+--rollback transaction
 --........................................<ABM 9> PAGO DE RESERVA		......................................................
 use GD1C2019
 go
@@ -1626,7 +1652,7 @@ as
 begin
 	declare @idCliente int,@idViaje int,@idCabina int,@idCrucero nvarchar(50)
 	declare @retorno int
-	if(not exists (select *
+	if(not exists (select 1
 					from [LEISTE_EL_CODIGO?].Reserva
 					where id_reserva = @idReserva))
 		begin
@@ -1733,3 +1759,8 @@ as
 		order by 2 desc
 	end
 go	
+
+--select * from [LEISTE_EL_CODIGO?].Viaje where fecha_inicio >SYSDATETIME()
+--select * from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido = 43820902
+--select * from [LEISTE_EL_CODIGO?].Cliente
+--93960503
