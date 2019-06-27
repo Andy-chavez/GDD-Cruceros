@@ -140,12 +140,10 @@
     <Compile Include="Clases\Cabina.cs" />
     <Compile Include="Clases\BaseDeDato.cs" />
     <Compile Include="Clases\Cliente.cs" />
-    <Compile Include="Clases\Pasaje.cs" />
     <Compile Include="Clases\Tramo.cs" />
     <Compile Include="Clases\Recorrido.cs" />
     <Compile Include="Clases\Puerto.cs" />
     <Compile Include="Clases\Reserva.cs" />
-    <Compile Include="Clases\Funcionalidad.cs" />
     <Compile Include="Clases\Crucero.cs" />
     <Compile Include="CompraReservaPasaje\Compra.cs">
       <SubType>Form</SubType>
