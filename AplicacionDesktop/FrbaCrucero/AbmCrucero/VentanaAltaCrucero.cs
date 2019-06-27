@@ -63,17 +63,17 @@ namespace FrbaCrucero.AbmCrucero
                         SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].cargarCrucero");
                         procedure.CommandType = CommandType.StoredProcedure;
                         procedure.Parameters.Add("@id_crucero", SqlDbType.NVarChar).Value = textoIdCrucero.Text;
-                        procedure.Parameters.Add("@id_fabricante", SqlDbType.NVarChar).Value = comboBoxFabID.SelectedItem.ToString();
+                        procedure.Parameters.Add("@id_fabricante", SqlDbType.NVarChar).Value = comboBoxFabID.Text;
                         procedure.Parameters.Add("@modelo", SqlDbType.NVarChar).Value = comboModelo.Text;
-                        procedure.Parameters.Add("@cantidadBalcon", SqlDbType.Int).Value = Convert.ToInt32(balcon.Text);
-                        procedure.Parameters.Add("@cantidadEstandar", SqlDbType.Int).Value = Convert.ToInt32(estandar.Text);
-                        procedure.Parameters.Add("@cantidadExterior", SqlDbType.Int).Value = Convert.ToInt32(exterior.Text);
-                        procedure.Parameters.Add("@cantidadEjecutivo", SqlDbType.Int).Value = Convert.ToInt32(ejecutiva.Text);
-                        procedure.Parameters.Add("@cantidadSuite", SqlDbType.Int).Value = Convert.ToInt32(suite.Text);
+                        string value = balcon.Text.ToString();
+                        procedure.Parameters.Add("@cantidadBalcon", SqlDbType.Int).Value =int.Parse(value);
+                        procedure.Parameters.Add("@cantidadEstandar", SqlDbType.Int).Value = int.Parse(estandar.Text.ToString());
+                        procedure.Parameters.Add("@cantidadExterior", SqlDbType.Int).Value = Convert.ToInt32(exterior.Text.ToString());
+                        procedure.Parameters.Add("@cantidadEjecutivo", SqlDbType.Int).Value = Convert.ToInt32(ejecutiva.Text.ToString());
+                        procedure.Parameters.Add("@cantidadSuite", SqlDbType.Int).Value = Convert.ToInt32(suite.Text.ToString());
                         procedure.Parameters.Add("@valor_retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                         db.ejecutarConsultaDevuelveInt(procedure);
                         int retorno = (int)procedure.Parameters["@valor_retorno"].Value;
-
                         switch (retorno)
                         {
                             case -1:
@@ -145,8 +145,8 @@ namespace FrbaCrucero.AbmCrucero
         {
 
             return textoIdCrucero.Text != "" && ejecutiva.Text != "" && suite.Text != ""
-                && exterior.Text != "" && estandar.Text != ""
-                && balcon.Text != "";
+                && exterior.Text != "" && estandarLabel.Text != ""
+                && balconLabel.Text != "";
 
         }
 
@@ -183,6 +183,11 @@ namespace FrbaCrucero.AbmCrucero
         }
 
         private void ComboModelo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Suite_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -38,15 +38,15 @@
             this.comboBoxFabID = new System.Windows.Forms.ComboBox();
             this.comboModelo = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.suite = new System.Windows.Forms.TextBox();
+            this.estandarLabel = new System.Windows.Forms.Label();
+            this.balconLabel = new System.Windows.Forms.Label();
+            this.estandar = new System.Windows.Forms.TextBox();
+            this.balcon = new System.Windows.Forms.TextBox();
             this.exterior = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.balcon = new System.Windows.Forms.Label();
-            this.estandar = new System.Windows.Forms.Label();
+            this.suite = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -132,10 +132,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.estandarLabel);
+            this.groupBox1.Controls.Add(this.balconLabel);
             this.groupBox1.Controls.Add(this.estandar);
             this.groupBox1.Controls.Add(this.balcon);
-            this.groupBox1.Controls.Add(this.textBox4);
-            this.groupBox1.Controls.Add(this.textBox3);
             this.groupBox1.Controls.Add(this.exterior);
             this.groupBox1.Controls.Add(this.suite);
             this.groupBox1.Controls.Add(this.label5);
@@ -150,23 +150,52 @@
             this.groupBox1.Text = "Ingrese cantidad de cabinas";
             this.groupBox1.Enter += new System.EventHandler(this.GroupBox1_Enter);
             // 
-            // label4
+            // estandarLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(50, 26);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(31, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Suite";
+            this.estandarLabel.AutoSize = true;
+            this.estandarLabel.Location = new System.Drawing.Point(362, 59);
+            this.estandarLabel.Name = "estandarLabel";
+            this.estandarLabel.Size = new System.Drawing.Size(49, 13);
+            this.estandarLabel.TabIndex = 17;
+            this.estandarLabel.Text = "Estandar";
             // 
-            // label3
+            // balconLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(50, 59);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 13);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Ejeutiva";
+            this.balconLabel.AutoSize = true;
+            this.balconLabel.Location = new System.Drawing.Point(362, 26);
+            this.balconLabel.Name = "balconLabel";
+            this.balconLabel.Size = new System.Drawing.Size(40, 13);
+            this.balconLabel.TabIndex = 16;
+            this.balconLabel.Text = "Balcón";
+            // 
+            // estandar
+            // 
+            this.estandar.Location = new System.Drawing.Point(440, 56);
+            this.estandar.Name = "estandar";
+            this.estandar.Size = new System.Drawing.Size(176, 20);
+            this.estandar.TabIndex = 15;
+            // 
+            // balcon
+            // 
+            this.balcon.Location = new System.Drawing.Point(440, 23);
+            this.balcon.Name = "balcon";
+            this.balcon.Size = new System.Drawing.Size(176, 20);
+            this.balcon.TabIndex = 14;
+            // 
+            // exterior
+            // 
+            this.exterior.Location = new System.Drawing.Point(150, 90);
+            this.exterior.Name = "exterior";
+            this.exterior.Size = new System.Drawing.Size(176, 20);
+            this.exterior.TabIndex = 13;
+            // 
+            // suite
+            // 
+            this.suite.Location = new System.Drawing.Point(150, 23);
+            this.suite.Name = "suite";
+            this.suite.Size = new System.Drawing.Size(176, 20);
+            this.suite.TabIndex = 12;
+            this.suite.TextChanged += new System.EventHandler(this.Suite_TextChanged);
             // 
             // label5
             // 
@@ -177,51 +206,23 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "Exterior";
             // 
-            // suite
+            // label3
             // 
-            this.suite.Location = new System.Drawing.Point(150, 23);
-            this.suite.Name = "suite";
-            this.suite.Size = new System.Drawing.Size(176, 20);
-            this.suite.TabIndex = 12;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(50, 59);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Ejeutiva";
             // 
-            // exterior
+            // label4
             // 
-            this.exterior.Location = new System.Drawing.Point(150, 90);
-            this.exterior.Name = "exterior";
-            this.exterior.Size = new System.Drawing.Size(176, 20);
-            this.exterior.TabIndex = 13;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(440, 23);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(176, 20);
-            this.textBox3.TabIndex = 14;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(440, 56);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(176, 20);
-            this.textBox4.TabIndex = 15;
-            // 
-            // balcon
-            // 
-            this.balcon.AutoSize = true;
-            this.balcon.Location = new System.Drawing.Point(362, 26);
-            this.balcon.Name = "balcon";
-            this.balcon.Size = new System.Drawing.Size(40, 13);
-            this.balcon.TabIndex = 16;
-            this.balcon.Text = "Balcón";
-            // 
-            // estandar
-            // 
-            this.estandar.AutoSize = true;
-            this.estandar.Location = new System.Drawing.Point(362, 59);
-            this.estandar.Name = "estandar";
-            this.estandar.Size = new System.Drawing.Size(49, 13);
-            this.estandar.TabIndex = 17;
-            this.estandar.Text = "Estandar";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(50, 26);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(31, 13);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Suite";
             // 
             // VentanaAltaCrucero
             // 
@@ -261,10 +262,10 @@
         private System.Windows.Forms.ComboBox comboModelo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label estandar;
-        private System.Windows.Forms.Label balcon;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label estandarLabel;
+        private System.Windows.Forms.Label balconLabel;
+        private System.Windows.Forms.TextBox estandar;
+        private System.Windows.Forms.TextBox balcon;
         private System.Windows.Forms.TextBox exterior;
         private System.Windows.Forms.TextBox suite;
         private System.Windows.Forms.Label label5;
