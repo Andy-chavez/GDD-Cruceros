@@ -1339,6 +1339,12 @@ as
 		exec [LEISTE_EL_CODIGO?].auditarCancelacion @id_crucero, @motivo
 	end
 go
+--pruebas
+--begin transaction
+--exec [LEISTE_EL_CODIGO?].cancelarPasajes 'ASHFLJ-66175','2018-07-22 07:00:00.000','tu vieja'
+--select * from [LEISTE_EL_CODIGO?].Crucero
+--select * from [LEISTE_EL_CODIGO?].AuditoriaDeCruceros
+--rollback transaction
 --........................................<ABM 7> GENERAR VIAJE	......................................................
 USE GD1C2019
 go
