@@ -122,33 +122,39 @@ namespace FrbaCrucero.AbmRol
         {
             try
             {
-                BaseDeDato bd = new BaseDeDato();
-                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol");
-                procedure.CommandType = CommandType.StoredProcedure;
-                procedure.Parameters.AddWithValue("@idRol", SqlDbType.NVarChar).Value = this.id;
-                procedure.Parameters.Add("@idNuevaFuncionalidad", SqlDbType.NVarChar).Value = comboBoxFuncAgregar.Text;
-                procedure.Parameters.Add("@nuevoNombreRol", SqlDbType.NVarChar).Value = casillaUsuario.Text;
-                procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
-                bd.ejecutarConsultaDevuelveInt(procedure);
-                int retorno = (int)procedure.Parameters["@retorno"].Value;
-                if (retorno == 1) //joya
+                if (casillaUsuario.Text != "")
                 {
-                    VentanaMenu menu = new VentanaMenu();
-                    this.Hide();
+
+                    BaseDeDato bd = new BaseDeDato();
+                    SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol");
+                    procedure.CommandType = CommandType.StoredProcedure;
+                    procedure.Parameters.AddWithValue("@idRolAImitar", SqlDbType.NVarChar).Value = this.id;
+                    procedure.Parameters.Add("@idNuevaFuncionalidad", SqlDbType.NVarChar).Value = comboBoxFuncAgregar.Text;
+                    procedure.Parameters.Add("@nuevoNombreRol", SqlDbType.NVarChar).Value = casillaUsuario.Text;
+                    procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
+                    bd.ejecutarConsultaDevuelveInt(procedure);
+                    int retorno = (int)procedure.Parameters["@retorno"].Value;
+                    if (retorno == 1) //joya
+                    {
+                        MessageBox.Show("Operacion completada correctamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.None);
+                        this.Hide();
+                    }
+                    else if (retorno == -1) // no existe el rol
+                    { //no existe usuario
+                        MessageBox.Show("No Existe el Rol", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else if (retorno == -2) //-2: No existe funcionalidad
+                    { //no existe usuario
+                        MessageBox.Show("No Existe dicha Funcionalidad", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else if (retorno == -3) //el rol ya tiene esa funcionalidad(agregar) o no tiene esa funcionalidad(eliminar)
+                    { //no existe usuario
+                        MessageBox.Show("El rol seleccionado ya tiene dicha funcionalidad", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    //this.Hide();
                 }
-                else if (retorno == -1) // no existe el rol
-                { //no existe usuario
-                    MessageBox.Show("No Existe el Rol");
-                }
-                else if (retorno == -2) //-2: No existe funcionalidad
-                { //no existe usuario
-                    MessageBox.Show("No Existe dicha Funcionalidad");
-                }
-                else if (retorno == -3) //el rol ya tiene esa funcionalidad(agregar) o no tiene esa funcionalidad(eliminar)
-                { //no existe usuario
-                    MessageBox.Show("El rol seleccionado ya tiene dicha funcionalidad");
-                }
-                //this.Hide();
+                else
+                    MessageBox.Show("Complete el nombre del nuevo rol antes de proseguir con la ejecución.", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
             catch (Exception exception)

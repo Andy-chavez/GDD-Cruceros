@@ -38,6 +38,7 @@ namespace FrbaCrucero.AbmRol
         {
             VentanaModificarRol ventana = new VentanaModificarRol(comboBox1.Text.ToString());
             ventana.Show();
+            this.Hide();
         }
 
         private void BotonVolver_Click(object sender, EventArgs e)

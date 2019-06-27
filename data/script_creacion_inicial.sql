@@ -786,19 +786,12 @@ as
 		else if
 		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidadAEliminar)) set @valor_retorno = -2 -- no existe funcionalidad
 		else if
-		(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
+		(not exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
 						where id_funcionalidad= @idFuncionalidadAEliminar and id_rol = @idRol)) set @valor_retorno = -3 -- no tiene esa funcionalidad
-		
 		else
 			begin
-				insert into [LEISTE_EL_CODIGO?].Rol(id_rol)
-				values(@nuevoNombreRol) --agrego rol en la tabla
-		
-
-				insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) -- todas menos la funcionalidad a eliminar 
-				select @nuevoNombreRol,id_funcionalidad
-				from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
-				where id_rol= @idRol and id_funcionalidad <> @idFuncionalidadAEliminar
+				DELETE FROM [LEISTE_EL_CODIGO?].FuncionalidadPorRol
+				WHERE id_rol = @idRol and id_funcionalidad = @idFuncionalidadAEliminar
 
 				set @valor_retorno = 1 -- se cargo correctamente el nuevo rol
 			end
