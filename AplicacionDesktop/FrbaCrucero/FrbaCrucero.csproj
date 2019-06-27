@@ -137,6 +137,12 @@
     <Compile Include="AbmRol\VentanaModificarRol.Designer.cs">
       <DependentUpon>VentanaModificarRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmRol\ventanaPedirRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\ventanaPedirRol.Designer.cs">
+      <DependentUpon>ventanaPedirRol.cs</DependentUpon>
+    </Compile>
     <Compile Include="Clases\BaseDeDato.cs" />
     <Compile Include="Clases\Cliente.cs" />
     <Compile Include="Clases\Tramo.cs" />
@@ -263,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\VentanaModificarRol.resx">
       <DependentUpon>VentanaModificarRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\ventanaPedirRol.resx">
+      <DependentUpon>ventanaPedirRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\Compra.resx">
       <DependentUpon>Compra.cs</DependentUpon>

@@ -18,28 +18,23 @@ namespace FrbaCrucero.AbmRol
         private BaseDeDato bd = new BaseDeDato();
         private DataTable dt = new DataTable();
         private List<object> listaFuncion = new List<object>();
+        private String id;
        // private Rol rol = new Rol();
         SqlDataAdapter adapt;
-        public VentanaModificarRol()
+        public VentanaModificarRol(string idRol)
         {
             InitializeComponent();
-            this.llenardataGridView(listaFunc);
-            this.llenarRoles();
+            this.llenardataGridView(listaFunc); 
+            this.id = idRol;
+            rolSelect.Text = idRol;
+            rolSelect.Enabled = false;
+            this.llenarFuncionalidades(idRol);
+            this.llenarNoFuncionalidades(idRol);
         }
 
         private void VentanaRolSeleccionado_Load(object sender, EventArgs e)
         {
-
-
-            /*            bd.conectar();
-                        adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
-                        dt = new DataTable();
-                        adapt.Fill(dt);
-                        comboBoxFuncionalidades.DataSource = dt;
-                        comboBoxFuncionalidades.ValueMember = "id_funcionalidad";
-                        bd.desconectar();*/
         }
-
         private void botonEliminar_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -48,7 +43,7 @@ namespace FrbaCrucero.AbmRol
                 BaseDeDato bd = new BaseDeDato();
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].eliminarFuncionalidadRol");
                 procedure.CommandType = CommandType.StoredProcedure;
-                procedure.Parameters.AddWithValue("@idRol", SqlDbType.NVarChar).Value = comboBoxRoles.Text;
+                procedure.Parameters.AddWithValue("@idRol", SqlDbType.NVarChar).Value = this.id;
                 procedure.Parameters.Add("@idFuncionalidadAEliminar", SqlDbType.NVarChar).Value = comboBoxFuncionalidades.Text;
                 procedure.Parameters.Add("@nuevoNombreRol", SqlDbType.NVarChar).Value = casillaUsuario.Text;
                 procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
@@ -82,18 +77,8 @@ namespace FrbaCrucero.AbmRol
 
         private void listaFunc_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+        }
 
-        }
-        private void llenarRoles()
-        {
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_rol from [LEISTE_EL_CODIGO?].RolesHabilitados", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            comboBoxRoles.DataSource = dt;
-            comboBoxRoles.ValueMember = "id_rol";
-            bd.desconectar();
-        }
         public void llenardataGridView(DataGridView dgv)
         {
             bd.conectar();
@@ -140,8 +125,8 @@ namespace FrbaCrucero.AbmRol
                 BaseDeDato bd = new BaseDeDato();
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol");
                 procedure.CommandType = CommandType.StoredProcedure;
-                procedure.Parameters.AddWithValue("@idRol", SqlDbType.NVarChar).Value = comboBoxRoles.Text;
-                procedure.Parameters.Add("@idNuevaFuncionalidad", SqlDbType.NVarChar).Value = comboBoxFuncionalidades.Text;
+                procedure.Parameters.AddWithValue("@idRol", SqlDbType.NVarChar).Value = this.id;
+                procedure.Parameters.Add("@idNuevaFuncionalidad", SqlDbType.NVarChar).Value = comboBoxFuncAgregar.Text;
                 procedure.Parameters.Add("@nuevoNombreRol", SqlDbType.NVarChar).Value = casillaUsuario.Text;
                 procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                 bd.ejecutarConsultaDevuelveInt(procedure);
@@ -176,46 +161,71 @@ namespace FrbaCrucero.AbmRol
         {
            
         }
-        private void llenarFuncionalidades(string idRol)
+        private void llenarNoFuncionalidades(string idRol)
         {
-            bd.desconectar();
             SqlConnection con = new SqlConnection(bd.getConfig());
             con.Open();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "SELECT id_funcionalidad FROM [LEISTE_EL_CODIGO?].FuncionalidadPorRol WHERE id_rol = '@idRol'";
+
+            SqlParameter parameter = new SqlParameter();
+
+            parameter.ParameterName = "@idRol";
+
+            parameter.SqlDbType = SqlDbType.NVarChar;
+
+            parameter.Direction = ParameterDirection.Input;
+
+            parameter.Value = idRol;
+            cmd.Connection = con;
+            string sqlCmd = @"SELECT distinct id_funcionalidad FROM [LEISTE_EL_CODIGO?].FuncionalidadPorRol WHERE id_funcionalidad not in (select id_funcionalidad
+		FROM [LEISTE_EL_CODIGO?].FuncionalidadPorRol WHERE id_rol like @idRol)";
+            cmd.CommandText = sqlCmd;
+
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@idRol", idRol);
+
+            cmd.Connection = con;
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            con.Close();
+            comboBoxFuncAgregar.ValueMember = "id_funcionalidad";
+            comboBoxFuncAgregar.DataSource = dt;
+        }
+        private void llenarFuncionalidades(string idRol)
+        {
+            SqlConnection con = new SqlConnection(bd.getConfig());
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+
+            SqlParameter parameter = new SqlParameter();
+
+            parameter.ParameterName = "@idRol";
+
+            parameter.SqlDbType = SqlDbType.NVarChar;
+
+            parameter.Direction = ParameterDirection.Input;
+
+            parameter.Value = idRol;
+            cmd.Connection = con;
+            string sqlCmd = @"SELECT id_funcionalidad FROM [LEISTE_EL_CODIGO?].FuncionalidadPorRol WHERE id_rol = @idRol";
+            cmd.CommandText = sqlCmd;
+
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@idRol", idRol);
+
             cmd.Connection = con;
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             sda.Fill(dt);
             con.Close();
             comboBoxFuncionalidades.ValueMember = "id_funcionalidad";
-            comboBoxFuncionalidades.DisplayMember = "id_funcionalidad";
             comboBoxFuncionalidades.DataSource = dt;
-            /*
-            cmd.CommandType = CommandType.Text;
-            
-            
-            DataTable objDs = new DataTable();*/
-            //conexion.Open();
-            //adapt = new SqlDataAdapter(cmd);
-            //adapt.Fill(objDs);
-            //dt = new DataTable();
-            //adapt.Fill(dt);
-            // comboBoxFuncionalidades.DisplayMember = "id_rol";
-            //bd.desconectar();
         }
-private void ComboBoxRoles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxRoles.SelectedText.ToString() != "System.Data.DataRowView" || comboBoxRoles.SelectedText.ToString() != "")
-            {
-                string idRol = comboBoxRoles.SelectedValue.ToString();
-                llenarFuncionalidades(idRol);
-            }
-            comboBoxFuncionalidades.Enabled = false;
-            comboBoxFuncAgregar.Enabled = false;
 
-            //comboBoxFuncionalidades. = 0;
+        private void RolSelect_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

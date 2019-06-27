@@ -40,11 +40,11 @@ namespace FrbaCrucero.AbmRol
             this.botonAgregar = new System.Windows.Forms.Button();
             this.comboBoxFuncionalidades = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBoxRoles = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.casillaUsuario = new System.Windows.Forms.TextBox();
             this.comboBoxFuncAgregar = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.rolSelect = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listaFunc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadPorRolBindingSource)).BeginInit();
@@ -127,15 +127,6 @@ namespace FrbaCrucero.AbmRol
             this.label2.TabIndex = 7;
             this.label2.Text = "Funcionalidades del Rol seleccionado";
             // 
-            // comboBoxRoles
-            // 
-            this.comboBoxRoles.FormattingEnabled = true;
-            this.comboBoxRoles.Location = new System.Drawing.Point(239, 32);
-            this.comboBoxRoles.Name = "comboBoxRoles";
-            this.comboBoxRoles.Size = new System.Drawing.Size(214, 21);
-            this.comboBoxRoles.TabIndex = 8;
-            this.comboBoxRoles.SelectedIndexChanged += new System.EventHandler(this.ComboBoxRoles_SelectedIndexChanged);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -172,16 +163,24 @@ namespace FrbaCrucero.AbmRol
             this.label4.TabIndex = 12;
             this.label4.Text = "Funcionalidades que pueden agregarse:";
             // 
+            // rolSelect
+            // 
+            this.rolSelect.Location = new System.Drawing.Point(239, 28);
+            this.rolSelect.Name = "rolSelect";
+            this.rolSelect.Size = new System.Drawing.Size(214, 20);
+            this.rolSelect.TabIndex = 13;
+            this.rolSelect.TextChanged += new System.EventHandler(this.RolSelect_TextChanged);
+            // 
             // VentanaModificarRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(474, 509);
+            this.Controls.Add(this.rolSelect);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.comboBoxFuncAgregar);
             this.Controls.Add(this.casillaUsuario);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBoxRoles);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxFuncionalidades);
             this.Controls.Add(this.botonAgregar);
@@ -215,10 +214,10 @@ namespace FrbaCrucero.AbmRol
         private System.Windows.Forms.Button botonAgregar;
         private System.Windows.Forms.ComboBox comboBoxFuncionalidades;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBoxRoles;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox casillaUsuario;
         private System.Windows.Forms.ComboBox comboBoxFuncAgregar;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox rolSelect;
     }
 }

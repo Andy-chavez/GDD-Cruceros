@@ -27,7 +27,8 @@ namespace FrbaCrucero.AbmRol
 
         private void botonModificar_Click(object sender, EventArgs e)
         {
-            VentanaModificarRol ventana = new VentanaModificarRol();
+
+            ventanaPedirRol ventana = new ventanaPedirRol();
             //ventanaDeBaja.esconderBotonEliminar();
             ventana.Show();
         }
