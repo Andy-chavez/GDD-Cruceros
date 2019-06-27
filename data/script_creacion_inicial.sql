@@ -488,7 +488,7 @@ set id_servicio = 4
 where id_tipo = 'Suite'
 go
 update [LEISTE_EL_CODIGO?].TipoCabina
-set id_servicio = 5
+set id_servicio = 4
 where id_tipo like 'Cabina Balc%'
 go
 --Crucero-- (son 37 cruceros, se repiten varias veces por cada viaje)
@@ -650,6 +650,16 @@ set id_pago = p.id_pago
 from [LEISTE_EL_CODIGO?].PagoDeViaje p
 where Pasaje.id_cliente = p.id_cliente
 go
+
+---------------------------------SACAR ACENTO DE CABINA BALCON--------------------------------------
+insert into [LEISTE_EL_CODIGO?].TipoCabina(id_tipo,id_servicio,porcentaje_recargo)
+values('Cabina Balcon',5,1.60)
+update [LEISTE_EL_CODIGO?].Cabina
+set id_tipo = 'Cabina Balcon'
+where id_tipo like 'Cabina Balc%'
+delete 
+from [LEISTE_EL_CODIGO?].TipoCabina
+where id_tipo like 'Cabina Balc%' and id_servicio = 4
 -----------------------------------------RESERVAS PAGADAS-------------------------------------
 insert into [LEISTE_EL_CODIGO?].ReservasPagadas(id_reserva,id_cliente)
 select r.id_reserva,r.id_cliente
@@ -1181,7 +1191,7 @@ as
 			begin
 				insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,id_fabricante,modelo,cantidadDeCabinas)
 				values(@id_crucero,@id_fabricante, @modelo, @cantidadDeCabinas)
-				exec [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero @id_Crucero,@cantidadBalcon,'Cabina Balcón'
+				exec [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero @id_Crucero,@cantidadBalcon,'Cabina Balcon'
 				exec [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero @id_Crucero,@cantidadEstandar,'Cabina estandar'
 				exec [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero @id_Crucero,@cantidadExterior,'Cabina Exterior'
 				exec [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero @id_Crucero,@cantidadEjecutivo,'Ejecutivo'
@@ -1250,18 +1260,9 @@ create procedure [LEISTE_EL_CODIGO?].calcularCabinaPorTipo (@idCrucero nvarchar(
 as
 	begin
 		declare @retorno int
-		if(@tipoCabina like 'Cabina Balc%') --por el acento a veces no lo agarra el batch
-			begin
-				select @retorno = count(*)
-				from [LEISTE_EL_CODIGO?].Cabina 
-				where id_crucero = @idCrucero and id_tipo = @tipoCabina
-			end
-		else
-			begin
-				select @retorno = count(*)
-				from [LEISTE_EL_CODIGO?].Cabina 
-				where id_crucero = @idCrucero and id_tipo = @tipoCabina
-			end
+		select @retorno = count(*)
+		from [LEISTE_EL_CODIGO?].Cabina 
+		where id_crucero = @idCrucero and id_tipo = @tipoCabina
 	end
 go
 --reemplazarViajesCruceroPorOtro--
@@ -1273,7 +1274,7 @@ as
 		declare @idCruceroReemplazante nvarchar(50),@cantidadCabinasBalcon int, @cantidadEstandar int, @cantidadExterior int,
 		@cantidadEjecutivo int, @cantidadSuite int,@cantidadCabinasBalcon2 int, @cantidadEstandar2 int, @cantidadExterior2 int,
 		@cantidadEjecutivo2 int, @cantidadSuite2 int
-		exec @cantidadCabinasBalcon = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Balcón'
+		exec @cantidadCabinasBalcon = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Balcon'
 		exec @cantidadEstandar = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Estandar'
 		exec @cantidadExterior =[LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Exterior'
 		exec @cantidadEjecutivo = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Ejecutivo'
@@ -1287,7 +1288,7 @@ as
 		into @idCruceroReemplazante
 		while @@FETCH_STATUS = 0
 			begin
-				exec @cantidadCabinasBalcon2 =[LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Balcón'
+				exec @cantidadCabinasBalcon2 =[LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Balcon'
 				exec @cantidadEstandar2 = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Estandar'
 				exec @cantidadExterior2 = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Cabina Exterior'
 				exec @cantidadEjecutivo2 = [LEISTE_EL_CODIGO?].calcularCabinaPorTipo @id_crucero, 'Ejecutivo'
