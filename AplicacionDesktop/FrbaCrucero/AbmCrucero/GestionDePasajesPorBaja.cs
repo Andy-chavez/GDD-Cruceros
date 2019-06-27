@@ -16,7 +16,7 @@ namespace FrbaCrucero.AbmCrucero
     {
         public string fechaConfig = System.Configuration.ConfigurationSettings.AppSettings["fechaConfig"];
         private string idCrucero;
-        private BaseDeDato db;
+        private BaseDeDato db = new BaseDeDato();
         public GestionDePasajesPorBaja(string id)
         {
             InitializeComponent();
@@ -96,7 +96,7 @@ namespace FrbaCrucero.AbmCrucero
                     procedure.Parameters.Add("@id_crucero", SqlDbType.NVarChar).Value = this.idCrucero;
                     DateTime enteredDate = DateTime.Parse(fechaConfig);
                     procedure.Parameters.AddWithValue("@fecha_actual", SqlDbType.DateTime).Value = enteredDate;
-                    procedure.Parameters.Add("@motivo", SqlDbType.NVarChar).Value = motivo.Text.ToString();
+                    procedure.Parameters.Add("@motivo", SqlDbType.VarChar).Value = motivo.Text;
                     db.ejecutarConsultaSinResultado(procedure);
                     MessageBox.Show("Operacion completada con exito.", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
