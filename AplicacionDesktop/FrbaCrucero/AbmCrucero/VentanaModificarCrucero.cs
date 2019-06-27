@@ -15,6 +15,7 @@ namespace FrbaCrucero.AbmCrucero
     public partial class VentanaModificarCrucero : Form
     {
         private BaseDeDato db = new BaseDeDato();
+        public string fechaConfig = System.Configuration.ConfigurationSettings.AppSettings["fechaConfig"];
 
         public VentanaModificarCrucero()
         {
@@ -37,6 +38,7 @@ namespace FrbaCrucero.AbmCrucero
             comboBoxFabricante.SelectedIndex = 0;
             comboBoxFabricante.DropDownStyle = ComboBoxStyle.DropDownList;
             db.desconectar();
+
         }
 
         private void botonLimpiar_Click(object sender, EventArgs e)
@@ -111,43 +113,69 @@ namespace FrbaCrucero.AbmCrucero
 
         private void botonModificar_Click(object sender, EventArgs e)
         {
-            if (TextoCruceroSeleccionado.Text != "")
+            try
             {
-
-                crucero.modificarCrucero((TextoCruceroSeleccionado.Text), (comboBoxFabricante.SelectedValue.ToString()));
+                if (TextoCruceroSeleccionado.Text != "" && comboBoxFabricante.Text != "")
+                {
+                    SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].modificarCrucero");
+                    procedure.CommandType = CommandType.StoredProcedure;
+                    procedure.Parameters.Add("@id_crucero", SqlDbType.NVarChar).Value = TextoCruceroSeleccionado.Text;
+                    procedure.Parameters.AddWithValue("@id_fabricante", SqlDbType.NVarChar).Value = comboBoxFabricante.Text;
+                    db.ejecutarConsultaSinResultado(procedure);
+                    MessageBox.Show("Operacion completada con exito.", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                    MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else{
-                MessageBox.Show("Seleccione un crucero", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
-
-        }
+}
 
         private void botonBajaTemp_Click(object sender, EventArgs e)
         {
-            if (textoFechaReinicio.Text != "" && TextoCruceroSeleccionado.Text != "")
+            try
             {
-
-                crucero.bajaTemporal(Convert.ToDateTime(textoFechaReinicio.Text), TextoCruceroSeleccionado.Text.ToString());
+                if (TextoCruceroSeleccionado.Text != "" && textoFechaReinicio.Text!= "")
+                {
+                    SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].darDeBajaTemporalCrucero");
+                    procedure.CommandType = CommandType.StoredProcedure;
+                    procedure.Parameters.Add("@id_crucero", SqlDbType.NVarChar).Value = TextoCruceroSeleccionado.Text;
+                    procedure.Parameters.AddWithValue("@fecha_reinicio", SqlDbType.DateTime).Value = Convert.ToDateTime(textoFechaReinicio.Text);
+                    db.ejecutarConsultaSinResultado(procedure);
+                    MessageBox.Show("Operacion completada con exito.", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                    MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else
+            catch (Exception ex)
             {
-
-                MessageBox.Show("Seleccione un crucero y una fecha para continuar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void botonBajaFinal_Click(object sender, EventArgs e)
         {
-            if (TextoCruceroSeleccionado.Text != "")
+            try
             {
-
-                crucero.bajaDefinitiva(Convert.ToDateTime(textoFecha.Text), TextoCruceroSeleccionado.Text.ToString());
+                if (TextoCruceroSeleccionado.Text != "")
+                {
+                    SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].darDeBajaDefinitivaCrucero"); //(@id_crucero nvarchar(50),@fecha_actual datetime2)
+                    procedure.CommandType = CommandType.StoredProcedure;
+                    procedure.Parameters.Add("@id_crucero", SqlDbType.NVarChar).Value = TextoCruceroSeleccionado.Text;
+                    DateTime enteredDate = DateTime.Parse(fechaConfig);
+                    procedure.Parameters.AddWithValue("@fecha_actual", SqlDbType.DateTime).Value = enteredDate;
+                    db.ejecutarConsultaSinResultado(procedure);
+                    MessageBox.Show("Operacion completada con exito.", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                    MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Seleccione un crucero para continuar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.Message);
             }
-
         }
 
         private void textoFecha_TextChanged(object sender, EventArgs e)

@@ -49,6 +49,7 @@ namespace FrbaCrucero.AbmCrucero
             comboModelo.SelectedIndex = 0;
             comboModelo.DropDownStyle = ComboBoxStyle.DropDownList;
             db.desconectar();
+
         }
 
         private void botonCrear_Click(object sender, EventArgs e)
@@ -168,7 +169,7 @@ namespace FrbaCrucero.AbmCrucero
         {
             ejecutiva.Clear();
             textoIdCrucero.Clear();
-            textoModelo.Clear();
+            //textoModelo.Clear();
         }
 
         private void botonVolver_Click_1(object sender, EventArgs e)
@@ -177,6 +178,11 @@ namespace FrbaCrucero.AbmCrucero
         }
 
         private void GroupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboModelo_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

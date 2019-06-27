@@ -68,7 +68,7 @@
             // 
             // botonModificar
             // 
-            this.botonModificar.Location = new System.Drawing.Point(344, 506);
+            this.botonModificar.Location = new System.Drawing.Point(357, 506);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.Size = new System.Drawing.Size(75, 23);
             this.botonModificar.TabIndex = 1;
@@ -107,7 +107,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(25, 522);
+            this.botonVolver.Location = new System.Drawing.Point(23, 506);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 3;
@@ -145,7 +145,7 @@
             // 
             // botonBajaTemp
             // 
-            this.botonBajaTemp.Location = new System.Drawing.Point(212, 535);
+            this.botonBajaTemp.Location = new System.Drawing.Point(225, 535);
             this.botonBajaTemp.Name = "botonBajaTemp";
             this.botonBajaTemp.Size = new System.Drawing.Size(207, 29);
             this.botonBajaTemp.TabIndex = 8;
@@ -155,7 +155,7 @@
             // 
             // botonBajaFinal
             // 
-            this.botonBajaFinal.Location = new System.Drawing.Point(212, 471);
+            this.botonBajaFinal.Location = new System.Drawing.Point(225, 471);
             this.botonBajaFinal.Name = "botonBajaFinal";
             this.botonBajaFinal.Size = new System.Drawing.Size(207, 29);
             this.botonBajaFinal.TabIndex = 9;
@@ -233,7 +233,7 @@
             // comboBoxFabricante
             // 
             this.comboBoxFabricante.FormattingEnabled = true;
-            this.comboBoxFabricante.Location = new System.Drawing.Point(145, 391);
+            this.comboBoxFabricante.Location = new System.Drawing.Point(145, 393);
             this.comboBoxFabricante.Name = "comboBoxFabricante";
             this.comboBoxFabricante.Size = new System.Drawing.Size(150, 21);
             this.comboBoxFabricante.TabIndex = 18;
@@ -242,7 +242,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(471, 585);
+            this.ClientSize = new System.Drawing.Size(463, 585);
             this.Controls.Add(this.comboBoxFabricante);
             this.Controls.Add(this.monthCalendar1);
             this.Controls.Add(this.textoFechaReinicio);

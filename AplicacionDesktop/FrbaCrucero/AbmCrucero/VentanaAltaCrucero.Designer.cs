@@ -128,6 +128,7 @@
             this.comboModelo.Name = "comboModelo";
             this.comboModelo.Size = new System.Drawing.Size(176, 21);
             this.comboModelo.TabIndex = 12;
+            this.comboModelo.SelectedIndexChanged += new System.EventHandler(this.ComboModelo_SelectedIndexChanged);
             // 
             // groupBox1
             // 
