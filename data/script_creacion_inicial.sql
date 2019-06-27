@@ -144,6 +144,8 @@ if exists (select * from sys.procedures where name = 'crucerosDisponiblesParaVia
 	drop procedure [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje
 if exists (select * from sys.procedures where name = 'obtenerIdCliente')
 	drop procedure [LEISTE_EL_CODIGO?].obtenerIdCliente
+if exists (select * from sys.procedures where name = 'crearCabinasDeTipoACrucero')
+	drop procedure [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero
 go
  if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
@@ -263,8 +265,8 @@ create table [LEISTE_EL_CODIGO?].Cabina(
 	id_cabina int identity primary key,
 	id_crucero nvarchar(50) references [LEISTE_EL_CODIGO?].Crucero,
 	id_tipo nvarchar(255) references [LEISTE_EL_CODIGO?].TipoCabina,
-	numero decimal(18,0) not null,
-	piso decimal(18,0) not null
+	numero decimal(18,0),
+	piso decimal(18,0)
 )
 go
 create table [LEISTE_EL_CODIGO?].Viaje(
@@ -1141,12 +1143,30 @@ as
 		where id_crucero = @id_crucero
 	end
 go
+
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].cargarCrucero(@id_crucero nvarchar(50),@id_fabricante nvarchar(255),@modelo nvarchar(50),@cantidadDeCabinas int)
+create procedure [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero (@idCrucero nvarchar(50),@cantidadCabinas int,@tipo nvarchar(255))
+as
+	begin
+		while @cantidadCabinas > 0
+		begin
+			insert into [LEISTE_EL_CODIGO?].Cabina(id_crucero,id_tipo)
+			values(@idCrucero,@tipo)
+			set @cantidadCabinas = @cantidadCabinas -1
+		end
+	end
+go
+
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].cargarCrucero(@id_crucero nvarchar(50),@id_fabricante nvarchar(255),@modelo nvarchar(50),
+@cantidadBalcon int,@cantidadEstandar int,@cantidadExterior int,@cantidadEjecutivo int,@cantidadSuite int)
 as
 	begin
 		declare @valor_retorno tinyint
+		declare @cantidadDeCabinas int
+		set @cantidadDeCabinas = @cantidadBalcon+@cantidadEstandar+@cantidadExterior+@cantidadEjecutivo+@cantidadSuite
 		if not exists( select id_fabricante
 						from [LEISTE_EL_CODIGO?].Fabricante 
 						where id_fabricante=@id_fabricante)
@@ -1161,11 +1181,22 @@ as
 			begin
 				insert into [LEISTE_EL_CODIGO?].Crucero(id_crucero,id_fabricante,modelo,cantidadDeCabinas)
 				values(@id_crucero,@id_fabricante, @modelo, @cantidadDeCabinas)
+				exec [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero @id_Crucero,@cantidadBalcon,'Cabina Balcón'
+				exec [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero @id_Crucero,@cantidadEstandar,'Cabina estandar'
+				exec [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero @id_Crucero,@cantidadExterior,'Cabina Exterior'
+				exec [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero @id_Crucero,@cantidadEjecutivo,'Ejecutivo'
+				exec [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero @id_Crucero,@cantidadEjecutivo,'Suite'
 				set @valor_retorno = 1 --se cargo el crucero
 			end
 		return @valor_retorno
 	end
-go											     
+go
+--pruebas
+--begin transaction
+--exec [LEISTE_EL_CODIGO?].cargarCrucero 'ASHFLJ-66174','AIDA Cruises','Cruiser7',0,10,2,1,0
+--select * from [LEISTE_EL_CODIGO?].Crucero where id_crucero = 'ASHFLJ-66174'
+--select * from [LEISTE_EL_CODIGO?].Cabina where id_crucero = 'ASHFLJ-66174'
+--rollback transaction
 --DAR CRUCERO DE BAJA DEFINITIVA--
 USE GD1C2019
 go
