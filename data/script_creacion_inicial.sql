@@ -1730,6 +1730,7 @@ begin
 	from [LEISTE_EL_CODIGO?].Reserva where id_reserva = @idReserva
 	exec @idPago = [LEISTE_EL_CODIGO?].devolverIdPago @idMedioDePago,@idCliente,@fechaConfig
 	exec @retorno= [LEISTE_EL_CODIGO?].comprarPasaje @idCliente,@idViaje,@idCabina,@idCrucero,@idPago
+	exec [LEISTE_EL_CODIGO?].verVoucher @idPago
 
 	if(@retorno=1)
 	begin
