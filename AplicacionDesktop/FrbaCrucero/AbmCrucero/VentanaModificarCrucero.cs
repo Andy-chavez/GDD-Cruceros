@@ -144,7 +144,12 @@ namespace FrbaCrucero.AbmCrucero
                     procedure.Parameters.Add("@id_crucero", SqlDbType.NVarChar).Value = TextoCruceroSeleccionado.Text;
                     procedure.Parameters.AddWithValue("@fecha_reinicio", SqlDbType.DateTime).Value = Convert.ToDateTime(textoFechaReinicio.Text);
                     db.ejecutarConsultaSinResultado(procedure);
-                    MessageBox.Show("Operacion completada con exito.", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    GestionDePasajesPorBaja gp = new GestionDePasajesPorBaja(TextoCruceroSeleccionado.Text.ToString());
+                    gp.Show();
+                    gp.esconderCosasTemporal();
+                    this.Hide();
+
+                    //MessageBox.Show("Operacion completada con exito.", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                     MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -167,7 +172,13 @@ namespace FrbaCrucero.AbmCrucero
                     DateTime enteredDate = DateTime.Parse(fechaConfig);
                     procedure.Parameters.AddWithValue("@fecha_actual", SqlDbType.DateTime).Value = enteredDate;
                     db.ejecutarConsultaSinResultado(procedure);
-                    MessageBox.Show("Operacion completada con exito.", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    GestionDePasajesPorBaja gp = new GestionDePasajesPorBaja(TextoCruceroSeleccionado.Text.ToString());
+                    gp.Show();
+                    gp.esconderCosasDefinitiva();
+                    this.Hide();
+
+                    // MessageBox.Show("Operacion completada con exito.", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                     MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);

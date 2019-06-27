@@ -59,6 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbmCrucero\GestionDePasajesPorBaja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCrucero\GestionDePasajesPorBaja.Designer.cs">
+      <DependentUpon>GestionDePasajesPorBaja.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmCrucero\VentanaGestionCrucero.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -225,6 +231,9 @@
       <DependentUpon>VentanaPagoDeReserva.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AbmCrucero\GestionDePasajesPorBaja.resx">
+      <DependentUpon>GestionDePasajesPorBaja.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmCrucero\VentanaAltaCrucero.resx">
       <DependentUpon>VentanaAltaCrucero.cs</DependentUpon>
       <SubType>Designer</SubType>
