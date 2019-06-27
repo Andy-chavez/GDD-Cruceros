@@ -39,7 +39,7 @@
             this.botonAlta.Name = "botonAlta";
             this.botonAlta.Size = new System.Drawing.Size(139, 23);
             this.botonAlta.TabIndex = 0;
-            this.botonAlta.Text = "Dar de alta";
+            this.botonAlta.Text = "Crear";
             this.botonAlta.UseVisualStyleBackColor = true;
             this.botonAlta.Click += new System.EventHandler(this.botonAlta_Click);
             // 
@@ -49,7 +49,7 @@
             this.botonBaja.Name = "botonBaja";
             this.botonBaja.Size = new System.Drawing.Size(139, 23);
             this.botonBaja.TabIndex = 1;
-            this.botonBaja.Text = "Dar de Baja";
+            this.botonBaja.Text = "Eliminar";
             this.botonBaja.UseVisualStyleBackColor = true;
             this.botonBaja.Click += new System.EventHandler(this.botonBaja_Click);
             // 
@@ -73,6 +73,7 @@
             this.Controls.Add(this.botonAlta);
             this.Name = "VentanaGestionRecorrido";
             this.Text = "Gestionar Recorridos";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaGestionRecorrido_Load);
             this.ResumeLayout(false);
 

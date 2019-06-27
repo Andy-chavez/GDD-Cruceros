@@ -83,11 +83,23 @@
     <Compile Include="AbmCrucero\VentanaModificarCrucero.Designer.cs">
       <DependentUpon>VentanaModificarCrucero.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmRecorrido\TrueModificarRecorrido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRecorrido\TrueModificarRecorrido.Designer.cs">
+      <DependentUpon>TrueModificarRecorrido.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmRecorrido\VentanaAltaRecorrido.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AbmRecorrido\VentanaAltaRecorrido.Designer.cs">
       <DependentUpon>VentanaAltaRecorrido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRecorrido\VentanaBorrarTramo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRecorrido\VentanaBorrarTramo.Designer.cs">
+      <DependentUpon>VentanaBorrarTramo.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRecorrido\VentanaModificarRecorrido.cs">
       <SubType>Form</SubType>
@@ -243,8 +255,14 @@
     <EmbeddedResource Include="AbmCrucero\VentanaModificarCrucero.resx">
       <DependentUpon>VentanaModificarCrucero.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AbmRecorrido\TrueModificarRecorrido.resx">
+      <DependentUpon>TrueModificarRecorrido.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmRecorrido\VentanaAltaRecorrido.resx">
       <DependentUpon>VentanaAltaRecorrido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRecorrido\VentanaBorrarTramo.resx">
+      <DependentUpon>VentanaBorrarTramo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRecorrido\VentanaGestionRecorrido.resx">
       <DependentUpon>VentanaGestionRecorrido.cs</DependentUpon>

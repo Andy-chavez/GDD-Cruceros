@@ -12,16 +12,15 @@ using System.Data.SqlClient;
 
 namespace FrbaCrucero.AbmRecorrido
 {
-    public partial class VentanaModificarRecorrido : Form
+    public partial class VentanaDarDeBajaRecorrido : Form //es la ventana de eliminar recorrido en realidad
     {
-        public VentanaModificarRecorrido()
+        public VentanaDarDeBajaRecorrido()
         {
             InitializeComponent();
         }
 
         private Recorrido recorrido = new Recorrido();
         private BaseDeDato bd = new BaseDeDato();
-        private DataTable dt = new DataTable();
 
         private void recorridosActuales_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -33,6 +32,7 @@ namespace FrbaCrucero.AbmRecorrido
             SqlConnection conexion = bd.obtenerConexion();
             SqlCommand command = new SqlCommand(nombreConsulta, conexion);
             SqlDataAdapter adapter = new SqlDataAdapter(command);
+            DataTable dt = new DataTable();
             adapter.Fill(dt);
             dgv.DataSource = dt;
             bd.desconectar();
@@ -40,9 +40,9 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void VentanaModificarRecorrido_Load(object sender, EventArgs e)
         {
-            llenardataGridView(recorridosActuales, "SELECT * FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
-            llenarCombo(nuevoOrigen, "SELECT id_origen FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
-            llenarCombo(nuevoDestino, "SELECT id_origen FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
+            llenardataGridView(dataGridRecorridosActuales, "SELECT id_recorrido,id_origen,id_destino FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
+            //llenarCombo(nuevoOrigen, "SELECT id_origen FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
+            //llenarCombo(nuevoDestino, "SELECT id_destino FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
 
         }
 
@@ -52,18 +52,30 @@ namespace FrbaCrucero.AbmRecorrido
         }
 
         private void botonModificarRecorrido_Click(object sender, EventArgs e)
-        {
+        {/*
             if (nuevoOrigen.Text != nuevoDestino.Text)
             {
                 recorrido.modificarRecorrido(Convert.ToDecimal(textoRecorridoSeleccionado.Text), nuevoOrigen.Text.ToString(), nuevoDestino.Text.ToString());
             }
             else {
                       MessageBox.Show("el origen y el destino deben ser distintos ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            }*/
         }
         private void botonDardeBaja_Click(object sender, EventArgs e)
         {
-            recorrido.darDeBaja(Convert.ToDecimal(textoRecorridoSeleccionado.Text));
+            try
+            {
+                BaseDeDato bd = new BaseDeDato();
+                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].darDeBajaRecorrido");
+                procedure.CommandType = CommandType.StoredProcedure;
+                procedure.Parameters.Add("@idRecorrido", SqlDbType.Decimal).Value = Convert.ToDecimal(textoRecorridoSeleccionado.Text);
+                int result = bd.ejecutarConsultaDevuelveInt(procedure);
+                if (result > 0) MessageBox.Show("Se eliminó el recorrido");
+                else MessageBox.Show("No existe el recorrido");
+            } catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void textoRecorridoSeleccionado_TextChanged(object sender, EventArgs e)
@@ -99,11 +111,6 @@ namespace FrbaCrucero.AbmRecorrido
         {
 
         }
-        public void esconderCosasModificar()
-        {
-            groupBox2.Hide();
-            botonModificarRecorrido.Hide();
-        }
         public void esconderCosasBaja()
         {
             botonDardeBaja.Hide();
@@ -111,11 +118,30 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void recorridosActuales_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (recorridosActuales.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            if (dataGridRecorridosActuales.CurrentRow.Cells[0].Value != null)
             {
-                recorridosActuales.CurrentRow.Selected = true;
+                dataGridRecorridosActuales.CurrentRow.Selected = true;
 
-                textoRecorridoSeleccionado.Text = recorridosActuales.Rows[e.RowIndex].Cells["id_recorrido"].Value.ToString();
+                textoRecorridoSeleccionado.Text = dataGridRecorridosActuales.CurrentRow.Cells["id_recorrido"].Value.ToString();
+
+                try
+                {
+                    bd.conectar();
+                    SqlConnection conexion = bd.obtenerConexion();
+                    string msg = "SELECT id_tramo,id_origen,id_destino,orden,precio_base FROM [LEISTE_EL_CODIGO?].Tramo WHERE @idRec = id_recorrido";
+                    SqlCommand proc = new SqlCommand(msg, conexion);
+                    proc.Parameters.Add("@idRec", SqlDbType.Decimal).Value = Convert.ToDecimal(dataGridRecorridosActuales.CurrentRow.Cells["id_recorrido"].Value);
+                    SqlDataAdapter adapter = new SqlDataAdapter(proc);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    dataGridTramos.DataSource = dt;
+                    bd.desconectar();
+                }
+                catch(Exception ex)
+                {
+                    bd.desconectar();
+                    MessageBox.Show(ex.Message);
+                }
             }
             else
             {
@@ -126,8 +152,8 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void botonLimpiar_Click(object sender, EventArgs e)
         {
-            nuevoOrigen.SelectedIndex = -1;
-            nuevoDestino.SelectedIndex = -1;
+            //nuevoOrigen.SelectedIndex = -1;
+            //nuevoDestino.SelectedIndex = -1;
             textoRecorridoSeleccionado.Clear();
         }
 

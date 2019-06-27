@@ -146,6 +146,10 @@ if exists (select * from sys.procedures where name = 'obtenerIdCliente')
 	drop procedure [LEISTE_EL_CODIGO?].obtenerIdCliente
 if exists (select * from sys.procedures where name = 'crearCabinasDeTipoACrucero')
 	drop procedure [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero
+if exists (select * from sys.procedures where name = 'eliminarTramosDelRecorrido')
+	drop procedure [LEISTE_EL_CODIGO?].eliminarTramosDelRecorrido
+if exists (select * from sys.procedures where name = 'esRecorridoModificable')
+	drop procedure [LEISTE_EL_CODIGO?].esRecorridoModificable
 go
  if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
@@ -1036,6 +1040,7 @@ go
 
 --crearTramo--
 --la creacion debe ir en orden, del 1 al ultimo
+
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].crearTramo
@@ -1044,7 +1049,7 @@ as
 	begin
 	--confio que va a cumplir con el destino que indicó en recorrido asi q no chequeo eso
 	if @origen = @destino return -1 --origen y destino son el mismo
-	else if @orden<>1 and @origen <> (select id_destino from [LEISTE_EL_CODIGO?].Tramo where id_recorrido = @idRecorrido and orden = @orden-1)
+	if @orden<>1 and @origen <> (select id_destino from [LEISTE_EL_CODIGO?].Tramo where id_recorrido = @idRecorrido and orden = @orden-1)
 		return -2 --el origen de este tramo no es el destino del tramo anterior
 	
 	insert into [LEISTE_EL_CODIGO?].Tramo(id_recorrido,id_origen,id_destino,orden,precio_base)
@@ -1052,8 +1057,10 @@ as
 	return 1
 	end
 go
+
 --modificarTramo--
 --se debe hacer tmb en orden del 1ero q quieras cambiar al ultimo
+
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].modificarTramo
@@ -1074,13 +1081,24 @@ as
 		return 1
 	end
 go
+
 --eliminarTramo--
+
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].eliminarTramo(@id_tramo smallint)
 as
 	delete from [LEISTE_EL_CODIGO?].Tramo where id_tramo=@id_tramo
 go
+
+-- eliminarTramosDelRecorrido --
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].eliminarTramosDelRecorrido(@id_recorrido decimal(18,0))
+as
+	delete from [LEISTE_EL_CODIGO?].Tramo where id_recorrido=@id_recorrido
+go
+
 --crearRecorrido--
 USE GD1C2019
 go
@@ -1105,6 +1123,21 @@ go
 --modificarRecorrido--
 --si el retorno es correcto entonces podes avanzar a modificar los tramos
 
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].esRecorridoModificable
+(@idRecorrido decimal(13,0),@fechaConfig datetime)
+as
+	begin
+	if exists(select p.id_pasaje from [LEISTE_EL_CODIGO?].Pasaje p 
+				join [LEISTE_EL_CODIGO?].Viaje v 
+				on p.id_viaje = v.id_viaje and CAST(v.fecha_inicio as datetime) > @fechaConfig 
+					and v.id_recorrido = @idRecorrido
+				where p.cancelacion = 'N'
+	) return -1 --no se puede modificar xq todavia hay pasajes vendidos q no hicieron el viaje
+	else return 1
+	end
+go
 
 USE GD1C2019
 go
@@ -1114,7 +1147,8 @@ as
 	begin
 	if exists(select p.id_viaje from [LEISTE_EL_CODIGO?].Pasaje p 
 				join [LEISTE_EL_CODIGO?].Viaje v 
-				on p.id_viaje = v.id_viaje and CAST(v.fecha_inicio as datetime) > @fechaConfig
+				on p.id_viaje = v.id_viaje and CAST(v.fecha_inicio as datetime) > @fechaConfig 
+					and v.id_recorrido = @idRecorrido
 				where p.cancelacion = 'N'
 	) return -1 --no se puede modificar xq todavia hay pasajes vendidos q no hicieron el viaje
 	update [LEISTE_EL_CODIGO?].Recorrido
@@ -1792,8 +1826,3 @@ as
 		order by 2 desc
 	end
 go	
-
---select * from [LEISTE_EL_CODIGO?].Viaje where fecha_inicio >SYSDATETIME()
---select * from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido = 43820902
---select * from [LEISTE_EL_CODIGO?].Cliente
---93960503

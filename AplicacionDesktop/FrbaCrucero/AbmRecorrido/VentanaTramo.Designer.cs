@@ -34,8 +34,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textoPrecio = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.botonLimpiar = new System.Windows.Forms.Button();
-            this.botonVolver = new System.Windows.Forms.Button();
             this.botonCrear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -92,25 +90,6 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "Precio";
             // 
-            // botonLimpiar
-            // 
-            this.botonLimpiar.Location = new System.Drawing.Point(43, 194);
-            this.botonLimpiar.Name = "botonLimpiar";
-            this.botonLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.botonLimpiar.TabIndex = 6;
-            this.botonLimpiar.Text = "Limpiar";
-            this.botonLimpiar.UseVisualStyleBackColor = true;
-            this.botonLimpiar.Click += new System.EventHandler(this.botonLimpiar_Click);
-            // 
-            // botonVolver
-            // 
-            this.botonVolver.Location = new System.Drawing.Point(42, 255);
-            this.botonVolver.Name = "botonVolver";
-            this.botonVolver.Size = new System.Drawing.Size(76, 23);
-            this.botonVolver.TabIndex = 7;
-            this.botonVolver.Text = "Volver";
-            this.botonVolver.UseVisualStyleBackColor = true;
-            // 
             // botonCrear
             // 
             this.botonCrear.Location = new System.Drawing.Point(210, 255);
@@ -127,8 +106,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(331, 309);
             this.Controls.Add(this.botonCrear);
-            this.Controls.Add(this.botonVolver);
-            this.Controls.Add(this.botonLimpiar);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textoPrecio);
             this.Controls.Add(this.label2);
@@ -136,7 +113,8 @@
             this.Controls.Add(this.listaDestino);
             this.Controls.Add(this.listaOrigen);
             this.Name = "VentanaTramo";
-            this.Text = "VentanaTramo";
+            this.Text = "Crear Tramo";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaTramo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -151,8 +129,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textoPrecio;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button botonLimpiar;
-        private System.Windows.Forms.Button botonVolver;
         private System.Windows.Forms.Button botonCrear;
     }
 }

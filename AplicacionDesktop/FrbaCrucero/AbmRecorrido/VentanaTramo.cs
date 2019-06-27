@@ -22,9 +22,8 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void VentanaTramo_Load(object sender, EventArgs e)
         {
-            this.llenarCombo(listaOrigen, "SELECT id_origen FROM [LEISTE_EL_CODIGO?].Tramo");
-            this.llenarCombo(listaDestino, "SELECT id_destino FROM [LEISTE_EL_CODIGO?].Tramo");
-
+            this.llenarCombo(listaOrigen, "SELECT distinct id_origen FROM [LEISTE_EL_CODIGO?].Tramo");
+            this.llenarCombo(listaDestino, "SELECT distinct id_destino FROM [LEISTE_EL_CODIGO?].Tramo");
         }
 
 
@@ -32,12 +31,30 @@ namespace FrbaCrucero.AbmRecorrido
         {
             if (this.todosLosCamposEstancompletos())
             {
-                string origen = (string)listaOrigen.SelectedItem;
-                string destino = (string)listaDestino.SelectedItem;
+                string origen = listaOrigen.SelectedItem.ToString();
+                string destino = listaDestino.SelectedItem.ToString();
                 int precio = Convert.ToInt16(textoPrecio.Text);
-                Tramo tramo = new Tramo();
-                tramo.crearTramo(origen, destino, precio);
-                this.Close();
+
+                try
+                {
+                    BaseDeDato bd = new BaseDeDato();
+                    DataTable dt;
+                    SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].crearTramo");
+                    procedure.CommandType = CommandType.StoredProcedure;
+                    //procedure.Parameters.Add("@idRecorrido", SqlDbType.Decimal).Value = de donde saco el id de rec?
+                    procedure.Parameters.Add("@origen", SqlDbType.NVarChar).Value = this.listaOrigen.SelectedItem.ToString();
+                    procedure.Parameters.Add("@origen", SqlDbType.NVarChar).Value = this.listaDestino.SelectedItem.ToString();
+                    //procedure.Parameters.Add("@orden", SqlDbType.SmallInt).Value = de donde saco el orden?
+                    procedure.Parameters.Add("@precio", SqlDbType.Decimal).Value = Convert.ToDecimal(textoPrecio.Text);
+                    dt = bd.obtenerDataTable(procedure);
+                    //this.dataGridViewTop5s.DataSource = dt;
+                    //this.dataGridViewTop5s.Refresh();
+                }
+                catch (Exception exception)
+                {
+
+                    MessageBox.Show(exception.Message);
+                }
             }
             else
             {
@@ -48,7 +65,7 @@ namespace FrbaCrucero.AbmRecorrido
         public bool todosLosCamposEstancompletos()
         {
 
-            return listaDestino.Text != "" && listaOrigen.Text != "" && textoPrecio.Text != "";
+            return textoPrecio.Text != "";
 
         }
 
