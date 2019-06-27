@@ -43,7 +43,7 @@ namespace FrbaCrucero.AbmRol
             this.comboBoxRoles = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.casillaUsuario = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxFuncAgregar = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listaFunc)).BeginInit();
@@ -154,14 +154,14 @@ namespace FrbaCrucero.AbmRol
             this.casillaUsuario.TabIndex = 10;
             this.casillaUsuario.TextChanged += new System.EventHandler(this.CasillaUsuario_TextChanged);
             // 
-            // comboBox1
+            // comboBoxFuncAgregar
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(239, 123);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(214, 21);
-            this.comboBox1.TabIndex = 11;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged_1);
+            this.comboBoxFuncAgregar.FormattingEnabled = true;
+            this.comboBoxFuncAgregar.Location = new System.Drawing.Point(239, 123);
+            this.comboBoxFuncAgregar.Name = "comboBoxFuncAgregar";
+            this.comboBoxFuncAgregar.Size = new System.Drawing.Size(214, 21);
+            this.comboBoxFuncAgregar.TabIndex = 11;
+            this.comboBoxFuncAgregar.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged_1);
             // 
             // label4
             // 
@@ -178,7 +178,7 @@ namespace FrbaCrucero.AbmRol
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(474, 509);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.comboBoxFuncAgregar);
             this.Controls.Add(this.casillaUsuario);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBoxRoles);
@@ -218,7 +218,7 @@ namespace FrbaCrucero.AbmRol
         private System.Windows.Forms.ComboBox comboBoxRoles;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox casillaUsuario;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxFuncAgregar;
         private System.Windows.Forms.Label label4;
     }
 }

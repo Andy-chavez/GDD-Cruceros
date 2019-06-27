@@ -23,19 +23,13 @@ namespace FrbaCrucero.AbmRol
         public VentanaModificarRol()
         {
             InitializeComponent();
-            
+            this.llenardataGridView(listaFunc);
+            this.llenarRoles();
         }
 
         private void VentanaRolSeleccionado_Load(object sender, EventArgs e)
         {
-            this.llenardataGridView(listaFunc);
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_rol from [LEISTE_EL_CODIGO?].RolesHabilitados", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            comboBoxRoles.DataSource = dt;
-            comboBoxRoles.ValueMember = "id_rol";
-            bd.desconectar();
+
 
             /*            bd.conectar();
                         adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
@@ -90,7 +84,16 @@ namespace FrbaCrucero.AbmRol
         {
 
         }
-
+        private void llenarRoles()
+        {
+            bd.conectar();
+            adapt = new SqlDataAdapter("select id_rol from [LEISTE_EL_CODIGO?].RolesHabilitados", bd.obtenerConexion());
+            dt = new DataTable();
+            adapt.Fill(dt);
+            comboBoxRoles.DataSource = dt;
+            comboBoxRoles.ValueMember = "id_rol";
+            bd.desconectar();
+        }
         public void llenardataGridView(DataGridView dgv)
         {
             bd.conectar();
@@ -204,13 +207,13 @@ namespace FrbaCrucero.AbmRol
         }
 private void ComboBoxRoles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxRoles.SelectedText.ToString() != "System.Data.DataRowView")
+            if (comboBoxRoles.SelectedText.ToString() != "System.Data.DataRowView" || comboBoxRoles.SelectedText.ToString() != "")
             {
                 string idRol = comboBoxRoles.SelectedValue.ToString();
                 llenarFuncionalidades(idRol);
             }
             comboBoxFuncionalidades.Enabled = false;
-            comboBox1.Enabled = false;
+            comboBoxFuncAgregar.Enabled = false;
 
             //comboBoxFuncionalidades. = 0;
         }

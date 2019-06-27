@@ -137,7 +137,6 @@
     <Compile Include="AbmRol\VentanaModificarRol.Designer.cs">
       <DependentUpon>VentanaModificarRol.cs</DependentUpon>
     </Compile>
-    <Compile Include="Clases\Cabina.cs" />
     <Compile Include="Clases\BaseDeDato.cs" />
     <Compile Include="Clases\Cliente.cs" />
     <Compile Include="Clases\Tramo.cs" />
