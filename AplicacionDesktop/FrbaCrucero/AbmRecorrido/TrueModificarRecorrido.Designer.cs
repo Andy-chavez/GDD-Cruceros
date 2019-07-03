@@ -248,7 +248,7 @@
             // 
             // buttonActualizar
             // 
-            this.buttonActualizar.Location = new System.Drawing.Point(544, 831);
+            this.buttonActualizar.Location = new System.Drawing.Point(584, 819);
             this.buttonActualizar.Name = "buttonActualizar";
             this.buttonActualizar.Size = new System.Drawing.Size(116, 23);
             this.buttonActualizar.TabIndex = 15;
@@ -258,7 +258,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(33, 831);
+            this.botonVolver.Location = new System.Drawing.Point(19, 819);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(110, 23);
             this.botonVolver.TabIndex = 16;
@@ -279,7 +279,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(718, 866);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(738, 733);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.buttonActualizar);

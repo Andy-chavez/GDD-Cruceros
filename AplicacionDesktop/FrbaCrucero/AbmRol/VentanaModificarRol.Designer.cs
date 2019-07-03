@@ -32,8 +32,6 @@ namespace FrbaCrucero.AbmRol
         {
             this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.listaFunc = new System.Windows.Forms.DataGridView();
             this.funcionalidadPorRolBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.botonVolver = new System.Windows.Forms.Button();
             this.botonEliminar = new System.Windows.Forms.Button();
@@ -45,8 +43,6 @@ namespace FrbaCrucero.AbmRol
             this.comboBoxFuncAgregar = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.rolSelect = new System.Windows.Forms.TextBox();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.listaFunc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadPorRolBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,29 +55,9 @@ namespace FrbaCrucero.AbmRol
             this.label1.TabIndex = 1;
             this.label1.Text = "Rol seleccionado";
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.listaFunc);
-            this.groupBox1.Location = new System.Drawing.Point(39, 213);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(335, 216);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Funcionalidades por Rol hasta el momento";
-            // 
-            // listaFunc
-            // 
-            this.listaFunc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.listaFunc.Location = new System.Drawing.Point(32, 30);
-            this.listaFunc.Name = "listaFunc";
-            this.listaFunc.Size = new System.Drawing.Size(267, 168);
-            this.listaFunc.TabIndex = 0;
-            this.listaFunc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listaFunc_CellClick);
-            this.listaFunc.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listaFunc_CellContentClick);
-            // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(30, 462);
+            this.botonVolver.Location = new System.Drawing.Point(30, 209);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 3;
@@ -91,7 +67,7 @@ namespace FrbaCrucero.AbmRol
             // 
             // botonEliminar
             // 
-            this.botonEliminar.Location = new System.Drawing.Point(378, 435);
+            this.botonEliminar.Location = new System.Drawing.Point(378, 209);
             this.botonEliminar.Name = "botonEliminar";
             this.botonEliminar.Size = new System.Drawing.Size(75, 23);
             this.botonEliminar.TabIndex = 4;
@@ -101,7 +77,7 @@ namespace FrbaCrucero.AbmRol
             // 
             // botonAgregar
             // 
-            this.botonAgregar.Location = new System.Drawing.Point(378, 474);
+            this.botonAgregar.Location = new System.Drawing.Point(378, 249);
             this.botonAgregar.Name = "botonAgregar";
             this.botonAgregar.Size = new System.Drawing.Size(75, 23);
             this.botonAgregar.TabIndex = 5;
@@ -175,7 +151,7 @@ namespace FrbaCrucero.AbmRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(474, 509);
+            this.ClientSize = new System.Drawing.Size(474, 287);
             this.Controls.Add(this.rolSelect);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.comboBoxFuncAgregar);
@@ -186,14 +162,11 @@ namespace FrbaCrucero.AbmRol
             this.Controls.Add(this.botonAgregar);
             this.Controls.Add(this.botonEliminar);
             this.Controls.Add(this.botonVolver);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.Name = "VentanaModificarRol";
             this.Text = "Modificar Rol";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaRolSeleccionado_Load);
-            this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.listaFunc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadPorRolBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -202,8 +175,6 @@ namespace FrbaCrucero.AbmRol
 
         #endregion
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView listaFunc;
 
         private System.Windows.Forms.BindingSource funcionalidadPorRolBindingSource;
 

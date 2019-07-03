@@ -24,7 +24,6 @@ namespace FrbaCrucero.AbmRol
         public VentanaModificarRol(string idRol)
         {
             InitializeComponent();
-            this.llenardataGridView(listaFunc); 
             this.id = idRol;
             rolSelect.Text = idRol;
             rolSelect.Enabled = false;
@@ -77,17 +76,6 @@ namespace FrbaCrucero.AbmRol
 
         private void listaFunc_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-        }
-
-        public void llenardataGridView(DataGridView dgv)
-        {
-            bd.conectar();
-            SqlConnection conexion = bd.obtenerConexion();
-            SqlCommand command = new SqlCommand("SELECT * FROM [LEISTE_EL_CODIGO?].FuncionalidadPorRol", conexion);
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            adapter.Fill(dt);
-            dgv.DataSource = dt;
-            bd.desconectar();
         }
 
         private void listaFunc_CellClick(object sender, DataGridViewCellEventArgs e)
