@@ -77,16 +77,16 @@ namespace FrbaCrucero.AbmCrucero
                         switch (retorno)
                         {
                             case -1:
-                                MessageBox.Show("No existe el fabricante");
+                                MessageBox.Show("No existe el fabricante", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 break;
                             case -2:
-                                MessageBox.Show("Cantidad de cabinas invalida");
+                                MessageBox.Show("Cantidad de cabinas invalida", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 break;
                             case 1:
-                                MessageBox.Show("Nuevo crucero creado");
+                                MessageBox.Show("Nuevo crucero creado", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 break;
                             default:
-                                MessageBox.Show("Error desconocido");
+                                MessageBox.Show("Error desconocido", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 break;
                         }
 
@@ -98,7 +98,7 @@ namespace FrbaCrucero.AbmCrucero
                     MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Verifique los campos completados", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -145,8 +145,8 @@ namespace FrbaCrucero.AbmCrucero
         {
 
             return textoIdCrucero.Text != "" && ejecutiva.Text != "" && suite.Text != ""
-                && exterior.Text != "" && estandarLabel.Text != ""
-                && balconLabel.Text != "";
+                && exterior.Text != "" && estandar.Text != ""
+                && balcon.Text != "";
 
         }
 
