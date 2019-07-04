@@ -148,8 +148,6 @@ namespace FrbaCrucero.AbmCrucero
                     gp.Show();
                     gp.esconderCosasTemporal();
                     this.Hide();
-
-                    //MessageBox.Show("Operacion completada con exito.", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                     MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);

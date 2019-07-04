@@ -1414,11 +1414,12 @@ go
 create procedure [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje(@fecha_inicio datetime2,@fecha_finalizacion_estimada datetime2)
 as
 	begin
-		select c.id_crucero,id_fabricante,modelo
-			from [LEISTE_EL_CODIGO?].CrucerosDisponibles c join [LEISTE_EL_CODIGO?].Viaje v
+		select distinct c.id_crucero,id_fabricante,modelo
+			from [LEISTE_EL_CODIGO?].CrucerosDisponibles c left join [LEISTE_EL_CODIGO?].Viaje v
 			On c.id_crucero = v.id_crucero
-			where v.fecha_inicio <> @fecha_inicio and v.fecha_finalizacion_estimada <>@fecha_inicio 
-				and v.fecha_inicio <> @fecha_finalizacion_estimada and v.fecha_finalizacion_estimada <> @fecha_finalizacion_estimada
+			where (v.fecha_inicio <> @fecha_inicio and v.fecha_finalizacion_estimada <>@fecha_inicio 
+				and v.fecha_inicio <> @fecha_finalizacion_estimada and v.fecha_finalizacion_estimada <> @fecha_finalizacion_estimada)
+				or v.fecha_finalizacion_estimada is null and v.fecha_inicio is null
 	end
 go
 --.......................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE	......................................................

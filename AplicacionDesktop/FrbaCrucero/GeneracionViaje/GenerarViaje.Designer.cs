@@ -44,6 +44,7 @@ namespace FrbaCrucero.GeneracionViaje
             this.dataGridViewCruc = new System.Windows.Forms.DataGridView();
             this.buttonGenViaje = new System.Windows.Forms.Button();
             this.buttonCruc = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.generarViajeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRec)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCruc)).BeginInit();
@@ -54,7 +55,7 @@ namespace FrbaCrucero.GeneracionViaje
             // 
             this.dateTimePickerInicio.CustomFormat = "dd-MM-yyyy hh:mm:ss";
             this.dateTimePickerInicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerInicio.Location = new System.Drawing.Point(208, 318);
+            this.dateTimePickerInicio.Location = new System.Drawing.Point(250, 279);
             this.dateTimePickerInicio.MinDate = new System.DateTime(2019, 6, 13, 12, 47, 28, 975);
             this.dateTimePickerInicio.Name = "dateTimePickerInicio";
             this.dateTimePickerInicio.Size = new System.Drawing.Size(200, 20);
@@ -65,7 +66,7 @@ namespace FrbaCrucero.GeneracionViaje
             // 
             this.dateTimePickerFin.CustomFormat = "dd-MM-yyyy hh:mm:ss";
             this.dateTimePickerFin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerFin.Location = new System.Drawing.Point(208, 416);
+            this.dateTimePickerFin.Location = new System.Drawing.Point(250, 328);
             this.dateTimePickerFin.MinDate = new System.DateTime(2019, 6, 13, 12, 47, 28, 975);
             this.dateTimePickerFin.Name = "dateTimePickerFin";
             this.dateTimePickerFin.Size = new System.Drawing.Size(200, 20);
@@ -73,7 +74,8 @@ namespace FrbaCrucero.GeneracionViaje
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(247, 277);
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(31, 279);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(121, 20);
@@ -84,7 +86,8 @@ namespace FrbaCrucero.GeneracionViaje
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(236, 368);
+            this.textBox2.Enabled = false;
+            this.textBox2.Location = new System.Drawing.Point(31, 328);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(143, 20);
@@ -94,7 +97,8 @@ namespace FrbaCrucero.GeneracionViaje
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(247, 37);
+            this.textBox3.Enabled = false;
+            this.textBox3.Location = new System.Drawing.Point(31, 24);
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(121, 20);
@@ -105,23 +109,24 @@ namespace FrbaCrucero.GeneracionViaje
             // dataGridViewRec
             // 
             this.dataGridViewRec.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewRec.Location = new System.Drawing.Point(49, 87);
+            this.dataGridViewRec.Location = new System.Drawing.Point(31, 65);
             this.dataGridViewRec.Name = "dataGridViewRec";
-            this.dataGridViewRec.Size = new System.Drawing.Size(515, 150);
+            this.dataGridViewRec.Size = new System.Drawing.Size(466, 169);
             this.dataGridViewRec.TabIndex = 8;
             this.dataGridViewRec.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRec_CellContentClick);
             // 
             // dataGridViewCruc
             // 
             this.dataGridViewCruc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewCruc.Location = new System.Drawing.Point(49, 517);
+            this.dataGridViewCruc.Location = new System.Drawing.Point(68, 423);
             this.dataGridViewCruc.Name = "dataGridViewCruc";
-            this.dataGridViewCruc.Size = new System.Drawing.Size(515, 150);
+            this.dataGridViewCruc.Size = new System.Drawing.Size(367, 217);
             this.dataGridViewCruc.TabIndex = 9;
+            this.dataGridViewCruc.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewCruc_CellContentClick);
             // 
             // buttonGenViaje
             // 
-            this.buttonGenViaje.Location = new System.Drawing.Point(274, 691);
+            this.buttonGenViaje.Location = new System.Drawing.Point(422, 675);
             this.buttonGenViaje.Name = "buttonGenViaje";
             this.buttonGenViaje.Size = new System.Drawing.Size(75, 23);
             this.buttonGenViaje.TabIndex = 10;
@@ -131,13 +136,23 @@ namespace FrbaCrucero.GeneracionViaje
             // 
             // buttonCruc
             // 
-            this.buttonCruc.Location = new System.Drawing.Point(257, 462);
+            this.buttonCruc.Location = new System.Drawing.Point(68, 383);
             this.buttonCruc.Name = "buttonCruc";
-            this.buttonCruc.Size = new System.Drawing.Size(102, 23);
+            this.buttonCruc.Size = new System.Drawing.Size(192, 23);
             this.buttonCruc.TabIndex = 11;
-            this.buttonCruc.Text = "Elegir Crucero";
+            this.buttonCruc.Text = "Mostrar cruceros disponibles";
             this.buttonCruc.UseVisualStyleBackColor = true;
             this.buttonCruc.Click += new System.EventHandler(this.buttonCruc_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(31, 675);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "Volver";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click_1);
             // 
             // generarViajeBindingSource
             // 
@@ -147,7 +162,8 @@ namespace FrbaCrucero.GeneracionViaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 729);
+            this.ClientSize = new System.Drawing.Size(535, 729);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonCruc);
             this.Controls.Add(this.buttonGenViaje);
             this.Controls.Add(this.dataGridViewCruc);
@@ -180,5 +196,6 @@ namespace FrbaCrucero.GeneracionViaje
         private System.Windows.Forms.Button buttonGenViaje;
         private System.Windows.Forms.Button buttonCruc;
         private BindingSource generarViajeBindingSource;
+        private Button button1;
     }
 }

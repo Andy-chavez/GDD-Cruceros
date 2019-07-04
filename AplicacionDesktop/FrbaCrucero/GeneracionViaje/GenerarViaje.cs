@@ -129,5 +129,15 @@ namespace FrbaCrucero.GeneracionViaje
         {
 
         }
+
+        private void DataGridViewCruc_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Button1_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
