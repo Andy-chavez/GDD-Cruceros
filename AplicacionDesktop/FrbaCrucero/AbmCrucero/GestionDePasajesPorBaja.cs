@@ -46,7 +46,7 @@ namespace FrbaCrucero.AbmCrucero
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Ocurrio un error en la base de datos", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -74,7 +74,7 @@ namespace FrbaCrucero.AbmCrucero
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Ocurrio un error en la base de datos", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         public void esconderCosasDefinitiva()
@@ -106,7 +106,7 @@ namespace FrbaCrucero.AbmCrucero
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Ocurrio un error en la base de datos", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
