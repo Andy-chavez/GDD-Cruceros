@@ -43,6 +43,11 @@
             this.botonReserva = new System.Windows.Forms.Button();
             this.botonCompra = new System.Windows.Forms.Button();
             this.buttonCargarCli = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxCruceros = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.viajesDisponibles)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -53,7 +58,7 @@
             this.viajesDisponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.viajesDisponibles.Location = new System.Drawing.Point(6, 19);
             this.viajesDisponibles.Name = "viajesDisponibles";
-            this.viajesDisponibles.Size = new System.Drawing.Size(471, 274);
+            this.viajesDisponibles.Size = new System.Drawing.Size(471, 160);
             this.viajesDisponibles.TabIndex = 0;
             this.viajesDisponibles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.viajesDisponibles_CellClick);
             this.viajesDisponibles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.viajesDisponibles_CellContentClick);
@@ -63,10 +68,10 @@
             this.groupBox1.Controls.Add(this.viajesDisponibles);
             this.groupBox1.Location = new System.Drawing.Point(30, 157);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(483, 299);
+            this.groupBox1.Size = new System.Drawing.Size(483, 188);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "seleccionar viajes disponibles";
+            this.groupBox1.Text = "Seleccione viaje";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // groupBox2
@@ -179,7 +184,7 @@
             // 
             // botonReserva
             // 
-            this.botonReserva.Location = new System.Drawing.Point(278, 461);
+            this.botonReserva.Location = new System.Drawing.Point(278, 471);
             this.botonReserva.Name = "botonReserva";
             this.botonReserva.Size = new System.Drawing.Size(235, 23);
             this.botonReserva.TabIndex = 3;
@@ -199,7 +204,7 @@
             // 
             // buttonCargarCli
             // 
-            this.buttonCargarCli.Location = new System.Drawing.Point(77, 516);
+            this.buttonCargarCli.Location = new System.Drawing.Point(30, 471);
             this.buttonCargarCli.Name = "buttonCargarCli";
             this.buttonCargarCli.Size = new System.Drawing.Size(110, 23);
             this.buttonCargarCli.TabIndex = 5;
@@ -207,11 +212,60 @@
             this.buttonCargarCli.UseVisualStyleBackColor = true;
             this.buttonCargarCli.Click += new System.EventHandler(this.buttonCargarCli_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(30, 516);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "Volver";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click_1);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(30, 409);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(125, 23);
+            this.button3.TabIndex = 14;
+            this.button3.Text = "Seleccione butacas";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(209, 411);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(272, 20);
+            this.textBox1.TabIndex = 16;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(33, 373);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(110, 13);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "Crucero seleccionado";
+            this.label5.Click += new System.EventHandler(this.Label5_Click);
+            // 
+            // textBoxCruceros
+            // 
+            this.textBoxCruceros.Location = new System.Drawing.Point(209, 370);
+            this.textBoxCruceros.Name = "textBoxCruceros";
+            this.textBoxCruceros.Size = new System.Drawing.Size(184, 20);
+            this.textBoxCruceros.TabIndex = 18;
+            // 
             // VentanaSeleccionarviaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(563, 556);
+            this.Controls.Add(this.textBoxCruceros);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonCargarCli);
             this.Controls.Add(this.botonCompra);
             this.Controls.Add(this.botonReserva);
@@ -226,6 +280,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -246,5 +301,10 @@
         private System.Windows.Forms.Button buttonCargarCli;
         private System.Windows.Forms.ComboBox comboBoxCantPasajes;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBoxCruceros;
     }
 }

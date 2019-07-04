@@ -98,7 +98,7 @@ namespace FrbaCrucero.AbmCrucero
                     MessageBox.Show("Complete todos los campos para seguir", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }catch(Exception ex)
             {
-                MessageBox.Show("Verifique los campos completados", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Verifique el formato de los campos completados", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

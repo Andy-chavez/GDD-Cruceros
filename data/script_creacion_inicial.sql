@@ -937,6 +937,8 @@ as
 		declare @valor_retorno smallint
 		if
 		(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 -- no existe rol
+		else if exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol and baja_logica = 'S' )
+			set @valor_retorno = 0
 		else 
 			begin
 				update [LEISTE_EL_CODIGO?].Rol
@@ -965,7 +967,9 @@ as
 		declare @valor_retorno smallint
 		if
 		(not exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol)) set @valor_retorno = -1 -- no existe rol
-		else 
+		else if exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @idRol and baja_logica = 'N' )
+			set @valor_retorno = 0
+		else
 			begin
 				update [LEISTE_EL_CODIGO?].Rol
 				set baja_logica = 'N'
@@ -1466,13 +1470,13 @@ as
 	return SCOPE_IDENTITY()--todo bien
 	end
 go
---viajes disponibles para esa fecha, junto con las cabinas (y sus tipos) --
+--viajes disponibles para esa fecha --
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
 as
 	begin
-		select v.id_viaje,v.fecha_inicio,v.id_crucero crucero, ca.id_tipo,rec.id_recorrido,rec.id_origen origen,rec.id_destino destino, ca.id_cabina,
+		select  distinct v.id_viaje,v.fecha_finalizacion_estimada fechaDeFinalizacion,v.id_crucero crucero,
 		cr.cantidadDeCabinas -
 		(select count(*) 
 		from [LEISTE_EL_CODIGO?].Reserva r

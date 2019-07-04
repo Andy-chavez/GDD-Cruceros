@@ -40,30 +40,30 @@
             // 
             // botonAdmCrucero
             // 
-            this.botonAdmCrucero.Location = new System.Drawing.Point(26, 79);
+            this.botonAdmCrucero.Location = new System.Drawing.Point(26, 99);
             this.botonAdmCrucero.Name = "botonAdmCrucero";
-            this.botonAdmCrucero.Size = new System.Drawing.Size(229, 23);
-            this.botonAdmCrucero.TabIndex = 0;
+            this.botonAdmCrucero.Size = new System.Drawing.Size(190, 23);
+            this.botonAdmCrucero.TabIndex = 2;
             this.botonAdmCrucero.Text = "Gestionar Cruceros";
             this.botonAdmCrucero.UseVisualStyleBackColor = true;
             this.botonAdmCrucero.Click += new System.EventHandler(this.botonAdmCrucero_Click);
             // 
             // botonAdmRecorrido
             // 
-            this.botonAdmRecorrido.Location = new System.Drawing.Point(26, 108);
+            this.botonAdmRecorrido.Location = new System.Drawing.Point(26, 59);
             this.botonAdmRecorrido.Name = "botonAdmRecorrido";
-            this.botonAdmRecorrido.Size = new System.Drawing.Size(229, 23);
-            this.botonAdmRecorrido.TabIndex = 2;
+            this.botonAdmRecorrido.Size = new System.Drawing.Size(190, 23);
+            this.botonAdmRecorrido.TabIndex = 1;
             this.botonAdmRecorrido.Text = "Gestionar Recorrido";
             this.botonAdmRecorrido.UseVisualStyleBackColor = true;
             this.botonAdmRecorrido.Click += new System.EventHandler(this.botonAdmRecorrido_Click);
             // 
             // botonAbmRol
             // 
-            this.botonAbmRol.Location = new System.Drawing.Point(26, 137);
+            this.botonAbmRol.Location = new System.Drawing.Point(265, 59);
             this.botonAbmRol.Name = "botonAbmRol";
-            this.botonAbmRol.Size = new System.Drawing.Size(229, 23);
-            this.botonAbmRol.TabIndex = 3;
+            this.botonAbmRol.Size = new System.Drawing.Size(190, 23);
+            this.botonAbmRol.TabIndex = 4;
             this.botonAbmRol.Text = "Gestionar Rol";
             this.botonAbmRol.UseVisualStyleBackColor = true;
             this.botonAbmRol.Click += new System.EventHandler(this.botonAbmRol_Click);
@@ -72,17 +72,17 @@
             // 
             this.botonReserva.Location = new System.Drawing.Point(26, 21);
             this.botonReserva.Name = "botonReserva";
-            this.botonReserva.Size = new System.Drawing.Size(229, 23);
-            this.botonReserva.TabIndex = 4;
+            this.botonReserva.Size = new System.Drawing.Size(190, 23);
+            this.botonReserva.TabIndex = 0;
             this.botonReserva.Text = "Comprar o Reservar Pasaje";
             this.botonReserva.UseVisualStyleBackColor = true;
             this.botonReserva.Click += new System.EventHandler(this.botonReserva_Click);
             // 
             // botonViaje
             // 
-            this.botonViaje.Location = new System.Drawing.Point(26, 166);
+            this.botonViaje.Location = new System.Drawing.Point(265, 99);
             this.botonViaje.Name = "botonViaje";
-            this.botonViaje.Size = new System.Drawing.Size(229, 23);
+            this.botonViaje.Size = new System.Drawing.Size(190, 23);
             this.botonViaje.TabIndex = 5;
             this.botonViaje.Text = "Generar Viaje";
             this.botonViaje.UseVisualStyleBackColor = true;
@@ -90,30 +90,30 @@
             // 
             // botonEstadisticas
             // 
-            this.botonEstadisticas.Location = new System.Drawing.Point(26, 195);
+            this.botonEstadisticas.Location = new System.Drawing.Point(265, 137);
             this.botonEstadisticas.Name = "botonEstadisticas";
-            this.botonEstadisticas.Size = new System.Drawing.Size(229, 23);
-            this.botonEstadisticas.TabIndex = 7;
+            this.botonEstadisticas.Size = new System.Drawing.Size(190, 23);
+            this.botonEstadisticas.TabIndex = 6;
             this.botonEstadisticas.Text = "Estadisticas";
             this.botonEstadisticas.UseVisualStyleBackColor = true;
             this.botonEstadisticas.Click += new System.EventHandler(this.botonEstadisticas_Click);
             // 
             // botonSalir
             // 
-            this.botonSalir.Location = new System.Drawing.Point(26, 224);
+            this.botonSalir.Location = new System.Drawing.Point(26, 137);
             this.botonSalir.Name = "botonSalir";
-            this.botonSalir.Size = new System.Drawing.Size(229, 23);
-            this.botonSalir.TabIndex = 8;
+            this.botonSalir.Size = new System.Drawing.Size(89, 23);
+            this.botonSalir.TabIndex = 7;
             this.botonSalir.Text = "Salir";
             this.botonSalir.UseVisualStyleBackColor = true;
             this.botonSalir.Click += new System.EventHandler(this.botonSalir_Click);
             // 
             // buttonPagarRes
             // 
-            this.buttonPagarRes.Location = new System.Drawing.Point(26, 50);
+            this.buttonPagarRes.Location = new System.Drawing.Point(265, 21);
             this.buttonPagarRes.Name = "buttonPagarRes";
-            this.buttonPagarRes.Size = new System.Drawing.Size(229, 23);
-            this.buttonPagarRes.TabIndex = 9;
+            this.buttonPagarRes.Size = new System.Drawing.Size(190, 23);
+            this.buttonPagarRes.TabIndex = 3;
             this.buttonPagarRes.Text = "Pagar Reserva";
             this.buttonPagarRes.UseVisualStyleBackColor = true;
             this.buttonPagarRes.Click += new System.EventHandler(this.Button1_Click);
@@ -122,7 +122,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(281, 264);
+            this.ClientSize = new System.Drawing.Size(493, 184);
             this.Controls.Add(this.buttonPagarRes);
             this.Controls.Add(this.botonSalir);
             this.Controls.Add(this.botonEstadisticas);

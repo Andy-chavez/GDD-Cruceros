@@ -50,18 +50,22 @@ namespace FrbaCrucero.AbmRol
                 int retorno = (int)procedure.Parameters["@retorno"].Value;
                 if (retorno == 1) //joya
                 {
-                    MessageBox.Show("Operacion completada correctamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.None);
+                    MessageBox.Show("Operacion completada correctamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();
+                }
+                else if (retorno == 0) // ya esta habilitado
+                { //no existe usuario
+                    MessageBox.Show("El rol que selecciono ya estaba habilitado", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (retorno == -1) // no existe el rol
                 { //no existe usuario
-                    MessageBox.Show("No Existe el Rol");
+                    MessageBox.Show("No Existe el Rol", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show("Error en la base de datos", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -91,6 +95,10 @@ namespace FrbaCrucero.AbmRol
                     MessageBox.Show("Operacion completada correctamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();
                 }
+                else if (retorno == 0) 
+                { //no existe usuario
+                    MessageBox.Show("El rol seleccionado ya se encontraba deshabilitado.", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
                 else if (retorno == -1) // no existe el rol
                 { //no existe usuario
                     MessageBox.Show("No Existe el Rol", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -99,7 +107,7 @@ namespace FrbaCrucero.AbmRol
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show("Error en la base de datos", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

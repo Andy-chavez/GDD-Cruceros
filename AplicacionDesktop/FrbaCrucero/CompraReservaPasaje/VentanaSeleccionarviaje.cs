@@ -47,7 +47,10 @@ namespace FrbaCrucero.CompraReservaPasaje
             this.llenarComboOrigen(listaOrigen);
             this.llenarComboDestino(listaDestino);
         }
-
+        public int viajeSeleccionado()
+        {
+            return (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
+        }
 
         private void textoFechaInicio_TextChanged(object sender, EventArgs e)
         {
@@ -59,11 +62,14 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         }
 
-        private void viajesDisponibles_CellClick(object sender, DataGridViewCellEventArgs e) { }
+        private void viajesDisponibles_CellClick(object sender, DataGridViewCellEventArgs e) {
+            textBoxCruceros.Text = viajesDisponibles.CurrentRow.Cells["crucero"].Value.ToString();
+            textBoxCruceros.Enabled = false;
+        }
 
         private void viajesDisponibles_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            
         }
 
         private void botonReserva_Click(object sender, EventArgs e)
@@ -76,6 +82,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 procedure.Parameters.Add("@idCrucero", SqlDbType.NVarChar).Value = this.viajesDisponibles.CurrentRow.Cells["crucero"].Value;
                 procedure.Parameters.Add("@idCliente", SqlDbType.Int).Value = this.cliente.id;
                 procedure.Parameters.Add("@idViaje", SqlDbType.Int).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
+                //cuidado que hay que remodelar esto porque va a fallar de momento
                 procedure.Parameters.Add("@idCabina", SqlDbType.Int).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
                 procedure.Parameters.Add("@fechaConfig", SqlDbType.DateTime).Value = this.fechaConfig;
                 procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
@@ -185,6 +192,20 @@ namespace FrbaCrucero.CompraReservaPasaje
         }
 
         private void DateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button1_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void Label5_Click(object sender, EventArgs e)
         {
 
         }
