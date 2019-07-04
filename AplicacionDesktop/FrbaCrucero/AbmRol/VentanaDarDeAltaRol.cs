@@ -74,5 +74,40 @@ namespace FrbaCrucero.AbmRol
         {
 
         }
+
+        private void BotonEliminar_Click(object sender, EventArgs e)
+        { 
+            try
+            {
+                BaseDeDato bd = new BaseDeDato();
+                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].darBajaRol");
+                procedure.CommandType = CommandType.StoredProcedure;
+                procedure.Parameters.AddWithValue("@idRol", SqlDbType.NVarChar).Value = comboBoxRoles.Text;
+                procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
+                bd.ejecutarConsultaDevuelveInt(procedure);
+                int retorno = (int)procedure.Parameters["@retorno"].Value;
+                if (retorno == 1) //joya
+                {
+                    MessageBox.Show("Operacion completada correctamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Hide();
+                }
+                else if (retorno == -1) // no existe el rol
+                { //no existe usuario
+                    MessageBox.Show("No Existe el Rol", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            VentanaModificarRol ventana = new VentanaModificarRol(comboBoxRoles.Text.ToString());
+            ventana.Show();
+            this.Hide();
+        }
     }
 }

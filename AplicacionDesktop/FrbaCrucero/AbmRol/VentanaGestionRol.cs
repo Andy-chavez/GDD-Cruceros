@@ -25,13 +25,6 @@ namespace FrbaCrucero.AbmRol
             new VentanaCrearRol().Show();
         }
 
-        private void botonModificar_Click(object sender, EventArgs e)
-        {
-
-            ventanaPedirRol ventana = new ventanaPedirRol();
-            //ventanaDeBaja.esconderBotonEliminar();
-            ventana.Show();
-        }
 
         private void botonListado_Click(object sender, EventArgs e)
         {
@@ -43,10 +36,6 @@ namespace FrbaCrucero.AbmRol
 
         }
 
-        private void botonBaja_Click(object sender, EventArgs e)
-        {
-            new VentanaDarBajaRol().Show(); //BAJA
-        }
 
         private void Button1_Click(object sender, EventArgs e)
         {

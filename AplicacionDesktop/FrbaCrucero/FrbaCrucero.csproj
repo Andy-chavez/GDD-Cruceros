@@ -137,23 +137,11 @@
     <Compile Include="AbmRol\VentanaGestionRol.Designer.cs">
       <DependentUpon>VentanaGestionRol.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\VentanaDarBajaRol.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmRol\VentanaDarBajaRol.Designer.cs">
-      <DependentUpon>VentanaDarBajaRol.cs</DependentUpon>
-    </Compile>
     <Compile Include="AbmRol\VentanaModificarRol.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AbmRol\VentanaModificarRol.Designer.cs">
       <DependentUpon>VentanaModificarRol.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmRol\ventanaPedirRol.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmRol\ventanaPedirRol.Designer.cs">
-      <DependentUpon>ventanaPedirRol.cs</DependentUpon>
     </Compile>
     <Compile Include="Clases\BaseDeDato.cs" />
     <Compile Include="Clases\Cliente.cs" />
@@ -282,14 +270,8 @@
     <EmbeddedResource Include="AbmRol\VentanaGestionRol.resx">
       <DependentUpon>VentanaGestionRol.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmRol\VentanaDarBajaRol.resx">
-      <DependentUpon>VentanaDarBajaRol.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\VentanaModificarRol.resx">
       <DependentUpon>VentanaModificarRol.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmRol\ventanaPedirRol.resx">
-      <DependentUpon>ventanaPedirRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\Compra.resx">
       <DependentUpon>Compra.cs</DependentUpon>
