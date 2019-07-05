@@ -75,8 +75,8 @@ namespace FrbaCrucero.AbmCrucero
             bd.conectar();
             SqlCommand consulta = new SqlCommand(nombreConsulta, bd.obtenerConexion());
             DataTable tabla = bd.obtenerDataTable(consulta);
-            SqlDataAdapter adapter = new SqlDataAdapter(consulta);
-            adapter.Fill(tabla);
+            //SqlDataAdapter adapter = new SqlDataAdapter(consulta);
+            //adapter.Fill(tabla);
             dgv.DataSource = tabla;
             bd.desconectar();
         }

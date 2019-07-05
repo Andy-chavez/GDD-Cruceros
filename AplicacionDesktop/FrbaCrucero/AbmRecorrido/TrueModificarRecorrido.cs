@@ -17,19 +17,61 @@ namespace FrbaCrucero.AbmRecorrido
     public partial class TrueModificarRecorrido : Form
     {
         private BaseDeDato bd = new BaseDeDato();
-        private List<Tramo> listaTramos = new List<Tramo>();
-        int orden = 1;
+        //private List<Tramo> listaTramos = new List<Tramo>();
+        //int orden = 1;
         decimal idRec=-1;
         private DateTime fechaConfig = DateTime.Parse(System.Configuration.ConfigurationSettings.AppSettings["fechaConfig"]);
 
         public TrueModificarRecorrido()
         {
             InitializeComponent();
+            SetDefaults();
+        }
+
+        void SetDefaults()
+        {
+            this.dataGridTramos.ColumnCount = 3;
+            this.dataGridTramos.Columns[0].Name = "Origen";
+            this.dataGridTramos.Columns[1].Name = "Destino";
+            this.dataGridTramos.Columns[2].Name = "Precio";
+            this.dataGridTramos.EditingControlShowing += dataGridTramos_EditingControlShowing;
+            this.dataGridTramos.Columns[0].ReadOnly = true;
+            this.dataGridTramos.Columns[1].ReadOnly = true;
+            this.textBoxFiltroOrigen.Text = "";
+            this.textBoxFiltroDestino.Text = "";
+        }
+
+        private void dataGridTramos_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            e.Control.KeyPress -= new KeyPressEventHandler(Column2_KeyPress);
+            if (dataGridTramos.CurrentCell.ColumnIndex == 2) //Desired Column
+            {
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    tb.KeyPress += new KeyPressEventHandler(Column2_KeyPress);
+                }
+            }
+        }
+
+        private void Column2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (this.dataGridTramos.CurrentRow.Cells["Origen"].Value.ToString() == ""
+                || this.dataGridTramos.CurrentRow.Cells["Destino"].Value.ToString() == "")
+            {
+                e.Handled = true;
+                return;
+            }
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar)
+                 && !(e.KeyChar == ',' && !this.dataGridTramos.CurrentRow.Cells["Precio"].EditedFormattedValue.ToString().Contains(",")))
+            {
+                e.Handled = true;
+            }
         }
 
         private void TrueModificarRecorrido_Load(object sender, EventArgs e)
         {
-            llenardataGridView(dataGridRecorridosActuales, "SELECT id_recorrido,id_origen,id_destino FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
+            llenardataGridView(dataGridRecorridosActuales, "SELECT id_recorrido ID,id_origen Origen,id_destino Destino FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
         }
         public void llenardataGridView(DataGridView dgv,string msg)
         {
@@ -39,88 +81,89 @@ namespace FrbaCrucero.AbmRecorrido
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
+            dgv.DataSource = null;
             dgv.DataSource = dt;
             bd.desconectar();
         }
 
         private void dataGridRecorridosActuales_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            textoRecorridoSeleccionado.Text = dataGridRecorridosActuales.CurrentRow.Cells["id_recorrido"].Value.ToString();
+            textoRecorridoSeleccionado.Text = dataGridRecorridosActuales.CurrentRow.Cells["ID"].Value.ToString();
 
-            idRec = Convert.ToDecimal(dataGridRecorridosActuales.CurrentRow.Cells["id_recorrido"].Value);
+            idRec = Convert.ToDecimal(dataGridRecorridosActuales.CurrentRow.Cells["ID"].Value);
 
             bd.conectar();
             SqlConnection conexion = bd.obtenerConexion();
-            string msg = "SELECT id_tramo,id_origen,id_destino,orden,precio_base FROM [LEISTE_EL_CODIGO?].Tramo WHERE @idRec = id_recorrido";
+            string msg = "SELECT id_origen Origen,id_destino Destino,precio_base Precio FROM [LEISTE_EL_CODIGO?].Tramo WHERE @idRec = id_recorrido order by orden ASC";
             SqlCommand proc = new SqlCommand(msg, conexion);
-            proc.Parameters.Add("@idRec", SqlDbType.Decimal).Value = Convert.ToDecimal(dataGridRecorridosActuales.CurrentRow.Cells["id_recorrido"].Value);
+            proc.Parameters.Add("@idRec", SqlDbType.Decimal).Value = Convert.ToDecimal(dataGridRecorridosActuales.CurrentRow.Cells["ID"].Value);
             SqlDataAdapter adapter = new SqlDataAdapter(proc);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
+            dataGridTramosRecOrig.DataSource = null;
             dataGridTramosRecOrig.DataSource = dt;
             bd.desconectar();
 
-            llenardataGridView(dataGridTramosDisp, "SELECT id_tramo,id_origen,id_destino,precio_base FROM [LEISTE_EL_CODIGO?].TramosDisponibles");
+            llenardataGridView(dataGridPuertos, "SELECT id_puerto Puerto FROM [LEISTE_EL_CODIGO?].Puerto");
 
-            listaTramos.Clear();
-            listBoxNuevosTramos.Items.Clear();
+            this.dataGridTramos.Rows.Clear();
+            this.dataGridTramos.Refresh();
         }
 
         private void botonLimpiar_Click(object sender, EventArgs e)
         {
-            filtroDestino.Clear();
             filtroOrigen.Clear();
-            textoRecorridoSeleccionado.Clear();
-            buttonBuscar_Click(null, null);
+            //textoRecorridoSeleccionado.Clear();
+            llenardataGridView(dataGridPuertos, "SELECT id_puerto Puerto FROM [LEISTE_EL_CODIGO?].Puerto");
         }
 
         private void buttonBuscar_Click(object sender, EventArgs e)
         {
-            this.filtrarDataGrdView(dataGridTramosDisp, "SELECT id_origen,id_destino,precio_base FROM [LEISTE_EL_CODIGO?].TramosDisponibles WHERE id_origen LIKE ('" + filtroOrigen.Text + "%') AND id_destino LIKE ('" + filtroDestino.Text + "%')");
+            this.filtrarDataGrdView(dataGridPuertos, "SELECT id_puerto Puerto FROM [LEISTE_EL_CODIGO?].Puerto WHERE id_puerto LIKE ('" + filtroOrigen.Text + "%')");
         }
         public void filtrarDataGrdView(DataGridView dgv, string nombreConsulta)
         {
             bd.conectar();
             SqlCommand consulta = new SqlCommand(nombreConsulta, bd.obtenerConexion());
             DataTable tabla = bd.obtenerDataTable(consulta);
-            SqlDataAdapter adapter = new SqlDataAdapter(consulta);
-            adapter.Fill(tabla);
+            //SqlDataAdapter adapter = new SqlDataAdapter(consulta);
+            //adapter.Fill(tabla);
+            dgv.DataSource = null;
             dgv.DataSource = tabla;
             bd.desconectar();
         }
 
         private void buttonAddTramo_Click(object sender, EventArgs e)
         {
-            DataGridViewRow rowTramo = this.dataGridTramosDisp.CurrentRow;
+            if (this.dataGridPuertos.CurrentRow == null) return;
+            if (this.dataGridPuertos.CurrentRow.Cells[0] == null) return;
 
-            string origen = rowTramo.Cells["id_origen"].Value.ToString();
-            string destino = rowTramo.Cells["id_destino"].Value.ToString();
-            decimal precio = Convert.ToDecimal(rowTramo.Cells["precio_base"].Value);
+            string puerto = this.dataGridPuertos.CurrentRow.Cells["Puerto"].Value.ToString();
 
-            Tramo tramoElegido = new Tramo(0, 0, origen, destino, orden, precio);
+            int indice = this.dataGridTramos.Rows.Count - 1;
 
-            if (listBoxNuevosTramos.Items.Count == 0)
+            if (indice == -1)
             {
-
-                listaTramos.Add(tramoElegido);
-                listBoxNuevosTramos.Items.Add(("Origen: " + tramoElegido.id_origen + " - Destino: " + tramoElegido.destino + " - Precio: " + tramoElegido.precio));
-                orden++;
+                this.dataGridTramos.Rows.Add(puerto, "", "");
+                //orden++;
             }
             else
             {
-
-                if (listaTramos.Last().destino == tramoElegido.id_origen)
+                if (this.dataGridTramos.Rows[indice].Cells["Origen"].Value.ToString() == puerto)
                 {
-                    listaTramos.Add(tramoElegido);
-                    listBoxNuevosTramos.Items.Add(("Origen: " + tramoElegido.id_origen + " - Destino: " + tramoElegido.destino + " - Precio: " + tramoElegido.precio));
-                    orden++;
+                    MessageBox.Show("El origen no puede ser igual al destino", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                if (this.dataGridTramos.Rows[indice].Cells["Origen"].Value.ToString() == "")
+                {
+                    this.dataGridTramos.Rows[indice].Cells["Origen"].Value = puerto;
                 }
                 else
                 {
-                    MessageBox.Show("Tramos inconexos, elija un tramo que se conecte con el anterior", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    this.dataGridTramos.Rows[indice].Cells["Destino"].Value = puerto;
+                    this.dataGridTramos.Rows.Add(puerto, "", "");
                 }
-
+                //orden++;
             }
         }
 
@@ -131,16 +174,23 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void buttonBorrarLastTramo_Click(object sender, EventArgs e)
         {
-            if (listBoxNuevosTramos.Items.Count > 0)
+            int indice = this.dataGridTramos.Rows.Count - 1;
+            if (indice == -1) return;
+
+            if (this.dataGridTramos.Rows[indice].Cells["Origen"].Value.ToString() != "")
             {
 
-                listBoxNuevosTramos.Items.RemoveAt(listBoxNuevosTramos.Items.Count - 1);
-                listaTramos.Remove(listaTramos.Last());
-                orden--;
-            }
-            else
-            {
-                MessageBox.Show("No hay tramos para sacar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (this.dataGridTramos.Rows.Count > 1)
+                {
+                    this.dataGridTramos.Rows[indice - 1].Cells["Destino"].Value = "";
+                    this.dataGridTramos.Rows[indice - 1].Cells["Precio"].Value = "";
+                    this.dataGridTramos.Rows.RemoveAt(indice);
+                }
+                else
+                {
+                    this.dataGridTramos.Rows[indice].Cells["Origen"].Value = "";
+                    this.dataGridTramos.Rows[indice].Cells["Precio"].Value = "";
+                }
             }
         }
 
@@ -148,8 +198,28 @@ namespace FrbaCrucero.AbmRecorrido
         {
             if (idRec < 0)
             {
-                MessageBox.Show("Primero Elija el recorrido a modificar");
+                MessageBox.Show("Primero elija el recorrido a modificar");
                 return;
+            }
+
+            if (this.dataGridTramos.Rows.Count == 1)
+            {
+                MessageBox.Show("Debe ingresar al menos un origen y un destino");
+                return;
+            }
+
+            string primerOrigen = this.dataGridTramos.Rows[0].Cells["Origen"].Value.ToString();
+            string ultimoDestino = this.dataGridTramos.Rows[this.dataGridTramos.Rows.Count - 1].Cells["Origen"].Value.ToString();//fue el ultimo destino
+
+            //check que todos los precios ten cargados y sean validos decimal
+            for (int i = 0; i < this.dataGridTramos.Rows.Count - 1; i++)
+            {
+                decimal testval;
+                if (!Decimal.TryParse(this.dataGridTramos.Rows[i].Cells["Precio"].Value.ToString(), out testval))
+                {
+                    MessageBox.Show("El precio de la fila " + (i + 1) + " es invalido");
+                    return;
+                }
             }
 
             try
@@ -173,15 +243,7 @@ namespace FrbaCrucero.AbmRecorrido
                 MessageBox.Show("ERROR: No se pudo verificar que el recorrido es modificable");
                 return;
             }
-
-            if (listaTramos.First() == null)
-            {
-                MessageBox.Show("Indique los nuevos tramos");
-                return;
-            }
-            string primerOrigen = listaTramos.First().id_origen;
-            string ultimoDestino = listaTramos.Last().destino;
-
+            
             try
             {
                 BaseDeDato bd = new BaseDeDato();
@@ -195,7 +257,7 @@ namespace FrbaCrucero.AbmRecorrido
                 MessageBox.Show("ERROR: No se pudieron borrar los tramos anteriores del recorrido, por favor vuelva a intentarlo");
                 return;
             }
-            for (int i = 1; i < orden; i++)
+            for (int i = 0; i < this.dataGridTramos.Rows.Count - 1; i++)
             {
                 try
                 {
@@ -203,10 +265,10 @@ namespace FrbaCrucero.AbmRecorrido
                     SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].crearTramo");
                     procedure.CommandType = CommandType.StoredProcedure;
                     procedure.Parameters.Add("@idRecorrido", SqlDbType.Decimal).Value = idRec;
-                    procedure.Parameters.Add("@origen", SqlDbType.NVarChar).Value = listaTramos[i-1].id_origen;
-                    procedure.Parameters.Add("@destino", SqlDbType.NVarChar).Value = listaTramos[i-1].destino;
-                    procedure.Parameters.Add("@orden", SqlDbType.SmallInt).Value = Convert.ToInt16(i);
-                    procedure.Parameters.Add("@precio", SqlDbType.Decimal).Value = listaTramos[i - 1].precio;
+                    procedure.Parameters.Add("@origen", SqlDbType.NVarChar).Value = this.dataGridTramos.Rows[i].Cells["Origen"].Value.ToString();
+                    procedure.Parameters.Add("@destino", SqlDbType.NVarChar).Value = this.dataGridTramos.Rows[i].Cells["Destino"].Value.ToString();
+                    procedure.Parameters.Add("@orden", SqlDbType.SmallInt).Value = Convert.ToInt16(i + 1);
+                    procedure.Parameters.Add("@precio", SqlDbType.Decimal).Value = Convert.ToDecimal(this.dataGridTramos.Rows[i].Cells["Precio"].Value.ToString());
                     procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                     bd.ejecutarConsultaDevuelveInt(procedure);
                     int result = Convert.ToInt32(procedure.Parameters["@retorno"].Value);
@@ -245,12 +307,35 @@ namespace FrbaCrucero.AbmRecorrido
                 bd.ejecutarConsultaDevuelveInt(procedure);
                 //no chequeo si lo puede modificar xq ya lo hago antes
             }
-            catch(Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("No se pudo modificar el recorrido", "Error Desconocido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             MessageBox.Show("Recorrido modificado correctamente");
+            TrueModificarRecorrido_Load(null, null);
+            this.dataGridTramosRecOrig.DataSource = null;
+            this.textoRecorridoSeleccionado.Text = "";
+            botonLimpiar_Click(null, null);
+            this.dataGridTramos.Rows.Clear();
+            this.dataGridTramos.Refresh();
+            this.textBoxFiltroDestino.Text = "";
+            this.textBoxFiltroOrigen.Text = "";
+        }
+
+        private void buttonFiltrarRecs_Click(object sender, EventArgs e)
+        {
+            this.filtrarDataGrdView(dataGridRecorridosActuales,
+                "SELECT id_recorrido ID,id_origen Origen,id_destino Destino FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles WHERE id_origen LIKE ('" + this.textBoxFiltroOrigen.Text + "%') AND id_destino LIKE ('"+this.textBoxFiltroDestino.Text+ "%')");
+        }
+
+        private void buttonLimpiarRecs_Click(object sender, EventArgs e)
+        {
+            this.textBoxFiltroDestino.Text = "";
+            this.textBoxFiltroOrigen.Text = "";
+            TrueModificarRecorrido_Load(null, null);
+            this.dataGridTramosRecOrig.DataSource = null;
         }
     }
 }

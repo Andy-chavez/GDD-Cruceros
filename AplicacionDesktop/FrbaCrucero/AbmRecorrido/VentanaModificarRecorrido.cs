@@ -40,7 +40,7 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void VentanaModificarRecorrido_Load(object sender, EventArgs e)
         {
-            llenardataGridView(dataGridRecorridosActuales, "SELECT id_recorrido,id_origen,id_destino FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
+            llenardataGridView(dataGridRecorridosActuales, "SELECT id_recorrido ID,id_origen Origen,id_destino Destino FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
             //llenarCombo(nuevoOrigen, "SELECT id_origen FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
             //llenarCombo(nuevoDestino, "SELECT id_destino FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
 
@@ -70,7 +70,12 @@ namespace FrbaCrucero.AbmRecorrido
                 procedure.CommandType = CommandType.StoredProcedure;
                 procedure.Parameters.Add("@idRecorrido", SqlDbType.Decimal).Value = Convert.ToDecimal(textoRecorridoSeleccionado.Text);
                 int result = bd.ejecutarConsultaDevuelveInt(procedure);
-                if (result > 0) MessageBox.Show("Se eliminó el recorrido");
+                if (result > 0)
+                {
+                    MessageBox.Show("Se dió de baja el recorrido");
+                    this.dataGridTramos.DataSource = null;
+                    VentanaModificarRecorrido_Load(null, null);
+                }
                 else MessageBox.Show("No existe el recorrido");
             } catch(Exception ex)
             {
@@ -122,15 +127,15 @@ namespace FrbaCrucero.AbmRecorrido
             {
                 dataGridRecorridosActuales.CurrentRow.Selected = true;
 
-                textoRecorridoSeleccionado.Text = dataGridRecorridosActuales.CurrentRow.Cells["id_recorrido"].Value.ToString();
+                textoRecorridoSeleccionado.Text = dataGridRecorridosActuales.CurrentRow.Cells["ID"].Value.ToString();
 
                 try
                 {
                     bd.conectar();
                     SqlConnection conexion = bd.obtenerConexion();
-                    string msg = "SELECT id_tramo,id_origen,id_destino,orden,precio_base FROM [LEISTE_EL_CODIGO?].Tramo WHERE @idRec = id_recorrido";
+                    string msg = "SELECT id_origen Origen,id_destino Destino,precio_base Precio FROM [LEISTE_EL_CODIGO?].Tramo WHERE @idRec = id_recorrido order by orden asc";
                     SqlCommand proc = new SqlCommand(msg, conexion);
-                    proc.Parameters.Add("@idRec", SqlDbType.Decimal).Value = Convert.ToDecimal(dataGridRecorridosActuales.CurrentRow.Cells["id_recorrido"].Value);
+                    proc.Parameters.Add("@idRec", SqlDbType.Decimal).Value = Convert.ToDecimal(dataGridRecorridosActuales.CurrentRow.Cells["ID"].Value);
                     SqlDataAdapter adapter = new SqlDataAdapter(proc);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
@@ -145,7 +150,7 @@ namespace FrbaCrucero.AbmRecorrido
             }
             else
             {
-                MessageBox.Show("no hay nada para mostrar ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("No hay nada para mostrar ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
         }
@@ -160,6 +165,32 @@ namespace FrbaCrucero.AbmRecorrido
         public void esconderBaja()
         {
             botonDardeBaja.Hide();
+        }
+
+        private void filtrarDataGrdView(DataGridView dgv, string nombreConsulta)
+        {
+            bd.conectar();
+            SqlCommand consulta = new SqlCommand(nombreConsulta, bd.obtenerConexion());
+            DataTable tabla = bd.obtenerDataTable(consulta);
+            //SqlDataAdapter adapter = new SqlDataAdapter(consulta);
+            //adapter.Fill(tabla);
+            dgv.DataSource = null;
+            dgv.DataSource = tabla;
+            bd.desconectar();
+        }
+
+        private void buttonFiltrarRecs_Click(object sender, EventArgs e)
+        {
+            this.filtrarDataGrdView(dataGridRecorridosActuales,
+                "SELECT id_recorrido ID,id_origen Origen,id_destino Destino FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles WHERE id_origen LIKE ('" + this.textBoxFiltroOrigen.Text + "%') AND id_destino LIKE ('" + this.textBoxFiltroDestino.Text + "%')");
+        }
+
+        private void buttonLimpiarRecs_Click(object sender, EventArgs e)
+        {
+            this.textBoxFiltroDestino.Text = "";
+            this.textBoxFiltroOrigen.Text = "";
+            VentanaModificarRecorrido_Load(null, null);
+            this.dataGridTramos.DataSource = null;
         }
     }
 }
