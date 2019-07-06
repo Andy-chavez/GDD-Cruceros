@@ -170,6 +170,12 @@ namespace FrbaCrucero.AbmRecorrido
                     MessageBox.Show("El precio de la fila " + (i + 1) + " es invalido");
                     return;
                 }
+                decimal limit = 0.0099999999999999999999999999m;
+                if (testval <= limit)
+                {
+                    MessageBox.Show("El precio de la fila " + (i + 1) + " es menor o igual a 0,00");
+                    return;
+                }
             }
 
             decimal idRec;
