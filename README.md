@@ -80,7 +80,7 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
 
 ### Pasaje:
 #### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
-
+#### mostrarCabinasLibres (@idViaje int)
 #### cargarMedioDePago (@cuotas smallint,@tipoTarjeta varchar(256),@nombreTarjeta varchar(256))
 
 #### devolverIdPago (@idMedioPago varchar(256),@id_cliente int,@fechaConfig datetime) -- mas facil asi, cargo desde la base de datos el total y la cantidad, cuando compras el pasaje.

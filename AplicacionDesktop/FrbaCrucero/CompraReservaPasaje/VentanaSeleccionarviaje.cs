@@ -39,6 +39,7 @@ namespace FrbaCrucero.CompraReservaPasaje
         private void SetDefaults()
         {
             this.dateTimePicker1.MinDate = fechaConfig;
+            this.dateTimePicker1.Value = fechaConfig;
             this.comboBoxCantPasajes.SelectedIndex = 0;
         }
 
@@ -206,6 +207,11 @@ namespace FrbaCrucero.CompraReservaPasaje
         }
 
         private void Label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
         {
 
         }

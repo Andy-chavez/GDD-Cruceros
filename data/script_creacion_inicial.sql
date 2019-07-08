@@ -151,6 +151,9 @@ if exists (select * from sys.procedures where name = 'eliminarTramosDelRecorrido
 if exists (select * from sys.procedures where name = 'esRecorridoModificable')
 	drop procedure [LEISTE_EL_CODIGO?].esRecorridoModificable
 go
+if exists (select * from sys.procedures where name = 'mostrarCabinasLibres')
+	drop procedure [LEISTE_EL_CODIGO?].mostrarCabinasLibres
+go
  if exists(select * from sys.views where object_name(object_id)='CrucerosDisponibles' and schema_name(schema_id)='LEISTE_EL_CODIGO?')
 	begin
 		drop view [LEISTE_EL_CODIGO?].CrucerosDisponibles
@@ -671,7 +674,7 @@ from [LEISTE_EL_CODIGO?].Reserva r
 where exists(select id_pasaje
 				from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].PagoDeViaje pv ON p.id_pago = pv.id_pago
 				where r.id_cabina = p.id_cabina and r.id_cliente = p.id_cliente and r.id_crucero = p.id_crucero
-				and r.id_viaje = p.id_viaje and (pv.fecha_pago between r.fecha_actual and DATEADD(day,3,r.fecha_actual)))
+				and r.id_viaje = p.id_viaje) --and (pv.fecha_pago between r.fecha_actual and DATEADD(day,3,r.fecha_actual)))
 delete from [LEISTE_EL_CODIGO?].Reserva
 where id_reserva in (select id_reserva
 						from [LEISTE_EL_CODIGO?].ReservasPagadas)
@@ -1494,6 +1497,48 @@ as
 		and CAST(v.fecha_inicio as datetime) > @fechaConfig
 	end
 go --fijarse si hay que hacer un return id_viaje
+------------------------Mostrar butacas libres para ese viaje---------------
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].mostrarCabinasLibres (@idViaje int)
+as
+	begin
+		declare @idCrucero nvarchar(50)
+		select @idCrucero = id_crucero
+		from [LEISTE_EL_CODIGO?].Viaje
+		where id_viaje = @idViaje
+		
+		select c.numero,c.piso,c.id_tipo,s.descripcion servicioAsociado
+		from [LEISTE_EL_CODIGO?].Cabina c join [LEISTE_EL_CODIGO?].TipoCabina t
+		ON c.id_tipo = t.id_tipo
+		join [LEISTE_EL_CODIGO?].Servicio s ON t.id_servicio = s.id_servicio
+		where id_cabina not in ((select id_cabina 
+		from [LEISTE_EL_CODIGO?].Reserva r
+		where r.id_viaje = @idViaje) union
+		(select id_cabina
+		from [LEISTE_EL_CODIGO?].Pasaje p
+		where p.id_viaje = @idViaje)) and c.id_crucero = @idCrucero
+	end
+go
+
+select * from [LEISTE_EL_CODIGO?].Viaje where id_viaje = 1
+select * from [LEISTE_EL_CODIGO?].Crucero where id_crucero = 'ETKLGK-24399'
+exec [LEISTE_EL_CODIGO?].mostrarCabinasLibres 1
+select * from [LEISTE_EL_CODIGO?].Viaje where id_recorrido = 43820864
+select count(*)
+from (select id_cabina,fecha_actual,id_cliente
+		from [LEISTE_EL_CODIGO?].Reserva r
+		where r.id_viaje = 1
+		--union 
+		select id_cabina,pv.fecha_pago,p.id_cliente
+		from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].PagoDeViaje pv
+		ON p.id_pago = pv.id_pago
+		where p.id_viaje = 1) t
+select * from [LEISTE_EL_CODIGO?].Reserva
+select * from [LEISTE_EL_CODIGO?].Tramo where id_recorrido = 43820864
+select * from [LEISTE_EL_CODIGO?].Recorrido
+exec [LEISTE_EL_CODIGO?].eliminarReservasVencidas '2018-05-07 06:00:00.000'
+exec [LEISTE_EL_CODIGO?].mostrarViajesDisponibles '2018-07-22 07:00:00.000','LUANDA','ARGEL','2018-05-07 06:00:00.000'
 --todo despues de seleccionar un viaje--ingresar cliente
 USE GD1C2019
 go
