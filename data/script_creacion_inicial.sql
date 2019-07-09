@@ -434,7 +434,6 @@ insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) val
 go
 
 --Pepe (para pruebas)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('Usuario Especial','pago de reserva')
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('Usuario Especial','listado estadistico')
 ----Contraseñas
 declare @algo nvarchar(32)
@@ -1566,7 +1565,6 @@ as
 		where p.id_viaje = @idViaje)) and c.id_crucero = @idCrucero
 	end
 go
-select * from [LEISTE_EL_CODIGO?].Cabina
 --pruebas
 --select * from [LEISTE_EL_CODIGO?].Viaje where id_viaje = 1
 --select * from [LEISTE_EL_CODIGO?].Crucero where id_crucero = 'ETKLGK-24399'

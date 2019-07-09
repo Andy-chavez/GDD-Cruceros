@@ -70,6 +70,7 @@ namespace FrbaCrucero
                     VentanaMenu menu = new VentanaMenu();
                     this.Hide();
                     menu.Show();
+                    menu.ocultarBotones(casillaUsuario.Text);
                 }
                 else if (retorno == 0){ //hay intentos todavia
                     MessageBox.Show("Contraseña incorrecta, pruebe nuevamente");
@@ -105,7 +106,7 @@ namespace FrbaCrucero
             bd.ejecutarConsultaSinResultado(reservasVencidas);
             VentanaMenu menu = new VentanaMenu();
             menu.Show();
-            menu.ocultarBotones();
+            menu.ocultarBotones("cliente");
             
         }
 
