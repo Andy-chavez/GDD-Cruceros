@@ -106,6 +106,8 @@ if exists (select * from sys.procedures where name = 'crearReserva')
 	drop procedure [LEISTE_EL_CODIGO?].crearReserva
 if exists (select * from sys.procedures where name = 'pasajeroYaTieneViajeEnLaFecha')
 	drop procedure [LEISTE_EL_CODIGO?].pasajeroYaTieneViajeEnLaFecha
+if exists (select * from sys.procedures where name = 'itemsMenu')
+	drop procedure [LEISTE_EL_CODIGO?].itemsMenu
 if exists (select * from sys.procedures where name = 'mostrarViajesDisponibles')
 	drop procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles
 if exists (select * from sys.procedures where name = 'ingresarCliente')
@@ -400,6 +402,7 @@ go
 insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('administrador general')			--Rol 1 = administrador general
 insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('administrador')					--Rol 2 = administrador
 insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('cliente')						--Rol 3 = cliente
+insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('Usuario Especial')				--Rol 4 = Usuario Especial (para pruebas de logueo)
 go
 -- Funcionalidad por Rol
 --ADMINISTRADOR GENERAL
@@ -425,11 +428,14 @@ insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) val
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('administrador','listado estadistico')
 go
 
---******************************************creo que estos inserts feos pueden hacerse de otra forma 
 --Cliente
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('cliente','compra y/o reserva de viaje')
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('cliente','pago de reserva')
 go
+
+--Pepe (para pruebas)
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('Usuario Especial','pago de reserva')
+insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('Usuario Especial','listado estadistico')
 ----Contraseñas
 declare @algo nvarchar(32)
 set @algo = 'w23e'
@@ -440,6 +446,8 @@ insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin'
 --ADMINISTRADORES
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('adminNuestro','administrador',@hash)
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin2','administrador',@hash)
+--USUARIO ESPECIAL (para pruebas)
+insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('pepe','Usuario Especial',@hash)
 go
 --........................................ MIGRACION ......................................................
 --CLIENTE--
@@ -1041,6 +1049,44 @@ as
 		return @valor_retorno
 	end
 go
+
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].itemsMenu(@id_ingresado nvarchar(50),@puedeReco smallint out,@puedeCrucero smallint out,
+@puedeRol smallint out,@puedeEst smallint out,@puedeViaje smallint out)
+as
+	begin
+		declare @idRol nvarchar(255)
+		select @idRol = id_rol
+		from [LEISTE_EL_CODIGO?].Usuario
+		where id_usuario = @id_ingresado
+		set @puedeRol = 0
+		set @puedeReco=0
+		set @puedeCrucero=0
+		set @puedeEst=0
+		set @puedeViaje=0
+		if exists (select 1
+					from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
+					where id_rol = @idRol and id_funcionalidad = 'abm de recorrido')
+					set @puedeReco = 1
+		if exists (select 1
+					from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
+					where id_rol = @idRol and id_funcionalidad = 'abm de cruceros')
+					set @puedeCrucero = 1
+		if exists (select 1
+					from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
+					where id_rol = @idRol and id_funcionalidad = 'abm de rol')
+					set @puedeRol = 1
+		if exists (select 1
+					from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
+					where id_rol = @idRol and id_funcionalidad = 'listado estadistico')
+					set @puedeEst = 1
+		if exists (select 1
+					from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
+					where id_rol = @idRol and id_funcionalidad = 'generar viaje')
+					set @puedeViaje = 1
+	end
+go
 --........................................<ABM 3> REGISTRO DE USUARIOS-no se hace......................................................
 --........................................<ABM 4> PUERTOS-no se hace		......................................................
 --........................................<ABM 5> RECORRIDO			......................................................
@@ -1496,7 +1542,7 @@ as
 		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
 		and CAST(v.fecha_inicio as datetime) > @fechaConfig
 	end
-go --fijarse si hay que hacer un return id_viaje
+go
 ------------------------Mostrar butacas libres para ese viaje---------------
 USE GD1C2019
 go
@@ -1508,7 +1554,7 @@ as
 		from [LEISTE_EL_CODIGO?].Viaje
 		where id_viaje = @idViaje
 		
-		select c.numero,c.piso,c.id_tipo,s.descripcion servicioAsociado
+		select id_cabina,c.numero,c.piso,c.id_tipo,s.descripcion servicioAsociado
 		from [LEISTE_EL_CODIGO?].Cabina c join [LEISTE_EL_CODIGO?].TipoCabina t
 		ON c.id_tipo = t.id_tipo
 		join [LEISTE_EL_CODIGO?].Servicio s ON t.id_servicio = s.id_servicio
@@ -1520,25 +1566,26 @@ as
 		where p.id_viaje = @idViaje)) and c.id_crucero = @idCrucero
 	end
 go
-
-select * from [LEISTE_EL_CODIGO?].Viaje where id_viaje = 1
-select * from [LEISTE_EL_CODIGO?].Crucero where id_crucero = 'ETKLGK-24399'
-exec [LEISTE_EL_CODIGO?].mostrarCabinasLibres 1
-select * from [LEISTE_EL_CODIGO?].Viaje where id_recorrido = 43820864
-select count(*)
-from (select id_cabina,fecha_actual,id_cliente
-		from [LEISTE_EL_CODIGO?].Reserva r
-		where r.id_viaje = 1
-		--union 
-		select id_cabina,pv.fecha_pago,p.id_cliente
-		from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].PagoDeViaje pv
-		ON p.id_pago = pv.id_pago
-		where p.id_viaje = 1) t
-select * from [LEISTE_EL_CODIGO?].Reserva
-select * from [LEISTE_EL_CODIGO?].Tramo where id_recorrido = 43820864
-select * from [LEISTE_EL_CODIGO?].Recorrido
-exec [LEISTE_EL_CODIGO?].eliminarReservasVencidas '2018-05-07 06:00:00.000'
-exec [LEISTE_EL_CODIGO?].mostrarViajesDisponibles '2018-07-22 07:00:00.000','LUANDA','ARGEL','2018-05-07 06:00:00.000'
+select * from [LEISTE_EL_CODIGO?].Cabina
+--pruebas
+--select * from [LEISTE_EL_CODIGO?].Viaje where id_viaje = 1
+--select * from [LEISTE_EL_CODIGO?].Crucero where id_crucero = 'ETKLGK-24399'
+--exec [LEISTE_EL_CODIGO?].mostrarCabinasLibres 1
+--select * from [LEISTE_EL_CODIGO?].Viaje where id_recorrido = 43820864
+--select count(*)
+--from (select id_cabina,fecha_actual,id_cliente
+--		from [LEISTE_EL_CODIGO?].Reserva r
+--		where r.id_viaje = 1
+--		union 
+--		select id_cabina,pv.fecha_pago,p.id_cliente
+--		from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].PagoDeViaje pv
+--		ON p.id_pago = pv.id_pago
+--		where p.id_viaje = 1) t
+--select * from [LEISTE_EL_CODIGO?].Reserva
+--select * from [LEISTE_EL_CODIGO?].Tramo where id_recorrido = 43820864
+--select * from [LEISTE_EL_CODIGO?].Recorrido
+--exec [LEISTE_EL_CODIGO?].eliminarReservasVencidas '2018-05-07 06:00:00.000'
+--exec [LEISTE_EL_CODIGO?].mostrarViajesDisponibles '2018-07-22 07:00:00.000','LUANDA','ARGEL','2018-05-07 06:00:00.000'
 --todo despues de seleccionar un viaje--ingresar cliente
 USE GD1C2019
 go

@@ -22,8 +22,9 @@ namespace FrbaCrucero
 {
     public partial class VentanaMenu : Form
     {
-        
 
+
+        public string usuario;
         public VentanaMenu()
 
         {
@@ -74,13 +75,18 @@ namespace FrbaCrucero
         {
             new ListadoEstadistico.ListadoEstadistico().Show();
         }
-        public void ocultarBotones()
+        public void ocultarBotones(string usuario)
         {
-            botonAdmRecorrido.Hide();
-            botonAdmCrucero.Hide();
-            botonAbmRol.Hide();
-            botonEstadisticas.Hide();
-            botonViaje.Hide();
+            if (usuario == "cliente")
+            {
+                botonAdmRecorrido.Hide();
+                botonAdmCrucero.Hide();
+                botonAbmRol.Hide();
+                botonEstadisticas.Hide();
+                botonViaje.Hide();
+                return;
+            }
+           
         }
 
         private void botonSalir_Click(object sender, EventArgs e)

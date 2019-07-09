@@ -1,6 +1,6 @@
 ﻿# TPGDD-1C2019
 # ...: PROCEDURES :...
-
+####create procedure [LEISTE_EL_CODIGO?].itemsMenu(@id_ingresado nvarchar(50),@puedeReco smallint out,@puedeCrucero smallint out,@puedeRol smallint out,@puedeEst smallint out,@puedeViaje smallint out)
 #### sp_login(@id_ingresado nvarchar(50), @contra_ingresada nvarchar(32))
 
   Valores de retorno:
