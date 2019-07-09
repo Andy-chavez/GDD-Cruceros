@@ -247,8 +247,9 @@ namespace FrbaCrucero.CompraReservaPasaje
                 int cantidadPasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
                 new CabinasDisponibles(viaje, this,cantidadPasajes).Show();
             }
-            catch
+            catch //(Exception exception)
             {
+                //MessageBox.Show(exception.Message);
                 MessageBox.Show("Por favor seleccione primero el viaje deseado para poder elejir las cabinas");
             }
         }

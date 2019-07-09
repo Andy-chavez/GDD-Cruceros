@@ -31,7 +31,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             this.cabinas=cabinas;
             this.idCrucero = idCrucero;
             this.idViaje = idViaje;
-            if(cliente is null) throw new Exception("Error ya contiene esta cabina");
+            if(cliente is null) throw new Exception("Error cliente no puede ser nulo");
             this.cliente = cliente;
             InitializeComponent();
         }

@@ -1524,7 +1524,7 @@ go
 create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
 as
 	begin
-		select  distinct v.id_viaje IdViaje,v.fecha_finalizacion_estimada FechaDeFinalizacion,v.id_crucero CruceroAsignado,
+		select  distinct v.id_viaje,v.fecha_finalizacion_estimada FechaDeFinalizacion,v.id_crucero crucero,
 		cr.cantidadDeCabinas -
 		(select count(*) 
 		from [LEISTE_EL_CODIGO?].Reserva r
@@ -1585,6 +1585,7 @@ go
 --exec [LEISTE_EL_CODIGO?].eliminarReservasVencidas '2018-05-07 06:00:00.000'
 --exec [LEISTE_EL_CODIGO?].mostrarViajesDisponibles '2018-07-22 07:00:00.000','LUANDA','ARGEL','2018-05-07 06:00:00.000'
 --todo despues de seleccionar un viaje--ingresar cliente
+select * from [LEISTE_EL_CODIGO?].Cliente order by fecha_nacimiento desc
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
