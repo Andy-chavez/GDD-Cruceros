@@ -80,9 +80,9 @@ namespace FrbaCrucero.CompraReservaPasaje
                         break;
                 }
             }
-            catch (Exception exep)
+            catch (Exception exeption)
             {
-
+                MessageBox.Show(exeption.Message);
             }
         }
         
@@ -135,9 +135,11 @@ namespace FrbaCrucero.CompraReservaPasaje
             procedure.Parameters.Add("@mail", SqlDbType.NVarChar).Value = mail;
             procedure.Parameters.Add("@fecha_nacimiento", SqlDbType.DateTime2).Value = nacimiento;
             procedure.Parameters.Add("@direccion", SqlDbType.NVarChar).Value = direccion;
-            bd.ejecutarConsultaSinResultado(procedure);
+            procedure.Parameters.Add("@idCLiente", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
+            bd.ejecutarConsultaDevuelveInt(procedure);
+            int idCliente = (int)procedure.Parameters["@idCLiente"].Value;
 
-            Cliente cliente = new Cliente(currentClientID,nombre, apellido, dni, direccion, telefono, mail, nacimiento);
+            Cliente cliente = new Cliente(idCliente, nombre, apellido, dni, direccion, telefono, mail, nacimiento);
 
             this.ventanaOriginal.CargarCliente(cliente);
             this.Close();
@@ -207,9 +209,9 @@ namespace FrbaCrucero.CompraReservaPasaje
                         break;
                 }
             }
-            catch(Exception exep)
+            catch(Exception exeption)
             {
-
+                MessageBox.Show(exeption.Message);
             }
         }
 

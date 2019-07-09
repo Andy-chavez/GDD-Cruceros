@@ -61,6 +61,7 @@
             // dataGridPuertos
             // 
             this.dataGridPuertos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridPuertos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridPuertos.Location = new System.Drawing.Point(6, 15);
             this.dataGridPuertos.Name = "dataGridPuertos";
             this.dataGridPuertos.ReadOnly = true;
@@ -172,6 +173,7 @@
             this.dataGridTramos.Name = "dataGridTramos";
             this.dataGridTramos.Size = new System.Drawing.Size(335, 241);
             this.dataGridTramos.TabIndex = 11;
+            this.dataGridTramos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridTramos_CellContentClick);
             // 
             // label3
             // 

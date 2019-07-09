@@ -1521,10 +1521,10 @@ go
 --viajes disponibles para esa fecha --
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
+create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime,@cantPasajes smallint)
 as
 	begin
-		select  distinct v.id_viaje IdViaje,v.fecha_finalizacion_estimada FechaDeFinalizacion,v.id_crucero CruceroAsignado,
+		select  distinct v.id_viaje,v.fecha_finalizacion_estimada FechaDeFinalizacion,v.id_crucero crucero,
 		cr.cantidadDeCabinas -
 		(select count(*) 
 		from [LEISTE_EL_CODIGO?].Reserva r
@@ -1539,7 +1539,7 @@ as
 		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
 		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
 		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
-		and CAST(v.fecha_inicio as datetime) > @fechaConfig
+		and CAST(v.fecha_inicio as datetime) > @fechaConfig and cantidadDeCabinas>= @cantPasajes
 	end
 go
 ------------------------Mostrar butacas libres para ese viaje---------------
@@ -1809,10 +1809,10 @@ go
 use GD1C2019
 go
 create proc [LEISTE_EL_CODIGO?].comprarPasajeReservado
-(@idReserva decimal(18,0),@idMedioDePago varchar(256),@fechaConfig datetime)
+(@idReserva decimal(18,0),@idMedioDePago varchar(256),@fechaConfig datetime,@idPago int out)
 as
 begin
-	declare @idCliente int,@idViaje int,@idCabina int,@idCrucero nvarchar(50), @idPago int
+	declare @idCliente int,@idViaje int,@idCabina int,@idCrucero nvarchar(50)
 	declare @retorno int
 	if(not exists (select 1
 					from [LEISTE_EL_CODIGO?].Reserva
@@ -1825,7 +1825,7 @@ begin
 	from [LEISTE_EL_CODIGO?].Reserva where id_reserva = @idReserva
 	exec @idPago = [LEISTE_EL_CODIGO?].devolverIdPago @idMedioDePago,@idCliente,@fechaConfig
 	exec @retorno= [LEISTE_EL_CODIGO?].comprarPasaje @idCliente,@idViaje,@idCabina,@idCrucero,@idPago
-	exec [LEISTE_EL_CODIGO?].verVoucher @idPago
+	--exec [LEISTE_EL_CODIGO?].verVoucher @idPago
 
 	if(@retorno=1)
 	begin
@@ -1921,4 +1921,4 @@ as
 		--group by id_crucero
 		order by 2 desc
 	end
-go	
+go

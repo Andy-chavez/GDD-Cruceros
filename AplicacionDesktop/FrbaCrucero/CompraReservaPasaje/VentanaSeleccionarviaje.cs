@@ -36,9 +36,18 @@ namespace FrbaCrucero.CompraReservaPasaje
         public void recibirIdCabina(int idCabina) {
             if (cabinas.Contains(idCabina))
             {
-                throw new System.InvalidOperationException("Error ya contiene esta cabina");
+                throw new System.InvalidOperationException("Error ya selecciono esta cabina");
             }
             this.cabinas.Add(idCabina);
+        }
+        public void eliminarIdCabina(int idCabina)
+        {
+            if (!cabinas.Contains(idCabina))
+            {
+                throw new System.InvalidOperationException("Error la cabina no habia sido seleccionada");
+            }
+            this.cabinas.Remove(idCabina);
+            MessageBox.Show("Cabina eliminada correctamente");
         }
         private void groupBox1_Enter(object sender, EventArgs e)
         {
@@ -73,6 +82,9 @@ namespace FrbaCrucero.CompraReservaPasaje
         }
 
         private void viajesDisponibles_CellClick(object sender, DataGridViewCellEventArgs e) {
+
+            if (this.viajesDisponibles.CurrentRow == null) return;
+            if (this.viajesDisponibles.CurrentRow.Cells[0] == null) return;
             textBoxCruceros.Text = viajesDisponibles.CurrentRow.Cells["crucero"].Value.ToString();
             textBoxCruceros.Enabled = false;
         }
@@ -182,6 +194,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 procedure.Parameters.Add("@origen", SqlDbType.NVarChar).Value = this.listaOrigen.SelectedItem.ToString();
                 procedure.Parameters.Add("@destino", SqlDbType.NVarChar).Value = this.listaDestino.SelectedItem.ToString();
                 procedure.Parameters.Add("@fechaConfig", SqlDbType.DateTime).Value = this.fechaConfig;
+                procedure.Parameters.Add("@cantPasajes", SqlDbType.SmallInt).Value = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
                 dt = bd.obtenerDataTable(procedure);
                 this.viajesDisponibles.DataSource = dt;
                 bd.desconectar();
@@ -207,15 +220,14 @@ namespace FrbaCrucero.CompraReservaPasaje
             try
             {
                 int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
-                //int id_cabina = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
                 string id_crucero = this.viajesDisponibles.CurrentRow.Cells["crucero"].Value.ToString();
                 int cantidad_pasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
                 new Compra(cliente, viaje, this.cabinas, id_crucero, cantidad_pasajes).Show();//necesita origen,destino,viaje,inicio,cantidad
                                                                                                  //compra va a crear la ventana medio de pago new ventanamediodepago(this,cliente.id).Show()
             }
-            catch
+            catch (Exception exception)
             {
-                MessageBox.Show("Error: Por favor seleccione la/s cabina/s deseada/s o cargue sus datos antes de proceder al pago de pasaje");
+                MessageBox.Show(exception.Message);
             }
         }
 
@@ -247,9 +259,10 @@ namespace FrbaCrucero.CompraReservaPasaje
                 int cantidadPasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
                 new CabinasDisponibles(viaje, this,cantidadPasajes).Show();
             }
-            catch
+            catch (Exception exception)
             {
-                MessageBox.Show("Por favor seleccione primero el viaje deseado para poder elejir las cabinas");
+                MessageBox.Show(exception.Message);
+                //MessageBox.Show("Por favor seleccione primero el viaje deseado para poder elejir las cabinas");
             }
         }
 

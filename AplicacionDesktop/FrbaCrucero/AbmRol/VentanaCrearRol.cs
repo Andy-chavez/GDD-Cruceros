@@ -21,7 +21,8 @@ namespace FrbaCrucero.AbmRol
         }
         private BaseDeDato bd = new BaseDeDato();
         private DataTable dt = new DataTable();
-        private List<object> listaFuncion = new List<object>();
+        private int posicion = 0;
+        private List<String> funcionalidadesParaRol = new List<string>() { "", "", "", "", "", "", "", "", "", "" };
        // private Rol rol = new Rol();
         SqlDataAdapter adapt;
         private void VentanaDeAltaRol_Load(object sender, EventArgs e)
@@ -30,82 +31,10 @@ namespace FrbaCrucero.AbmRol
             adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
             dt = new DataTable();
             adapt.Fill(dt);
-            listaFunc1.DataSource = dt;
-            listaFunc1.ValueMember = "id_funcionalidad";
-            bd.desconectar();
-
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            listaFunc2.DataSource = dt;
-            listaFunc2.ValueMember = "id_funcionalidad";
-            bd.desconectar();
-
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            listaFunc3.DataSource = dt;
-            listaFunc3.ValueMember = "id_funcionalidad";
-            bd.desconectar();
-
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            listaFunc4.DataSource = dt;
-            listaFunc4.ValueMember = "id_funcionalidad";
-            bd.desconectar();
-
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            listaFunc5.DataSource = dt;
-            listaFunc5.ValueMember = "id_funcionalidad";
-            bd.desconectar();
-
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            listaFunc6.DataSource = dt;
-            listaFunc6.ValueMember = "id_funcionalidad";
-            bd.desconectar();
-
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            listaFunc7.DataSource = dt;
-            listaFunc7.ValueMember = "id_funcionalidad";
-            bd.desconectar();
-
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            listaFunc8.DataSource = dt;
-            listaFunc8.ValueMember = "id_funcionalidad";
-            bd.desconectar();
-
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            listaFunc9.DataSource = dt;
-            listaFunc9.ValueMember = "id_funcionalidad";
-            bd.desconectar();
-
-            bd.conectar();
-            adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
-            dt = new DataTable();
-            adapt.Fill(dt);
-            listaFunc10.DataSource = dt;
-            listaFunc10.ValueMember = "id_funcionalidad";
+            dataGridFuncionalidades.DataSource = dt;
             bd.desconectar();
             vaciarFuncionalidades();
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -114,26 +43,6 @@ namespace FrbaCrucero.AbmRol
         }
         private void vaciarFuncionalidades()
         {
-            listaFunc10.SelectedItem = null;
-            listaFunc10.SelectedText = "";
-            listaFunc9.SelectedItem = null;
-            listaFunc9.SelectedText = "";
-            listaFunc8.SelectedItem = null;
-            listaFunc8.SelectedText = "";
-            listaFunc7.SelectedItem = null;
-            listaFunc7.SelectedText = "";
-            listaFunc6.SelectedItem = null;
-            listaFunc6.SelectedItem = "";
-            listaFunc5.SelectedItem = null;
-            listaFunc5.SelectedItem = "";
-            listaFunc4.SelectedItem = null;
-            listaFunc4.SelectedItem = "";
-            listaFunc3.SelectedItem = null;
-            listaFunc3.SelectedText = "";
-            listaFunc2.SelectedItem = null;
-            listaFunc2.SelectedText = "";
-            listaFunc1.SelectedItem = null;
-            listaFunc1.SelectedText = "";
 
         }
 
@@ -148,16 +57,16 @@ namespace FrbaCrucero.AbmRol
                     SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].crearNuevoRol");
                     procedure.CommandType = CommandType.StoredProcedure;
                     procedure.Parameters.AddWithValue("@NombreRol", SqlDbType.NVarChar).Value = textoNombre.Text;
-                    procedure.Parameters.Add("@idFuncionalidad1", SqlDbType.NVarChar).Value = listaFunc1.Text;
-                    procedure.Parameters.Add("@idFuncionalidad2", SqlDbType.NVarChar).Value = listaFunc2.Text;
-                    procedure.Parameters.Add("@idFuncionalidad3", SqlDbType.NVarChar).Value = listaFunc3.Text;
-                    procedure.Parameters.Add("@idFuncionalidad4", SqlDbType.NVarChar).Value = listaFunc4.Text;
-                    procedure.Parameters.Add("@idFuncionalidad5", SqlDbType.NVarChar).Value = listaFunc5.Text;
-                    procedure.Parameters.Add("@idFuncionalidad6", SqlDbType.NVarChar).Value = listaFunc6.Text;
-                    procedure.Parameters.Add("@idFuncionalidad7", SqlDbType.NVarChar).Value = listaFunc7.Text;
-                    procedure.Parameters.Add("@idFuncionalidad8", SqlDbType.NVarChar).Value = listaFunc8.Text;
-                    procedure.Parameters.Add("@idFuncionalidad9", SqlDbType.NVarChar).Value = listaFunc9.Text;
-                    procedure.Parameters.Add("@idFuncionalidad10", SqlDbType.NVarChar).Value = listaFunc10.Text;
+                    procedure.Parameters.Add("@idFuncionalidad1", SqlDbType.NVarChar).Value = funcionalidadesParaRol[0];
+                    procedure.Parameters.Add("@idFuncionalidad2", SqlDbType.NVarChar).Value = funcionalidadesParaRol[1];
+                    procedure.Parameters.Add("@idFuncionalidad3", SqlDbType.NVarChar).Value = funcionalidadesParaRol[2];
+                    procedure.Parameters.Add("@idFuncionalidad4", SqlDbType.NVarChar).Value = funcionalidadesParaRol[3];
+                    procedure.Parameters.Add("@idFuncionalidad5", SqlDbType.NVarChar).Value = funcionalidadesParaRol[4];
+                    procedure.Parameters.Add("@idFuncionalidad6", SqlDbType.NVarChar).Value = funcionalidadesParaRol[5];
+                    procedure.Parameters.Add("@idFuncionalidad7", SqlDbType.NVarChar).Value = funcionalidadesParaRol[6];
+                    procedure.Parameters.Add("@idFuncionalidad8", SqlDbType.NVarChar).Value = funcionalidadesParaRol[7];
+                    procedure.Parameters.Add("@idFuncionalidad9", SqlDbType.NVarChar).Value = funcionalidadesParaRol[8];
+                    procedure.Parameters.Add("@idFuncionalidad10", SqlDbType.NVarChar).Value = funcionalidadesParaRol[9];
                     procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                     bd.ejecutarConsultaDevuelveInt(procedure);
                     int retorno = (int)procedure.Parameters["@retorno"].Value;
@@ -237,11 +146,11 @@ namespace FrbaCrucero.AbmRol
         public bool todosLosCamposEstancompletos()
         {
 
-            return textoNombre.Text != "" && (listaFunc1.SelectedText != "" || listaFunc2.SelectedText != "" ||
-                listaFunc3.SelectedText != "" || listaFunc4.SelectedText != "" ||
-                listaFunc5.SelectedText != "" || listaFunc6.SelectedText != "" ||
-                listaFunc7.SelectedText != "" || listaFunc8.SelectedText != "" ||
-                listaFunc9.SelectedText != "" || listaFunc10.SelectedText != "");
+            return textoNombre.Text != "" && (funcionalidadesParaRol[0] != "" || funcionalidadesParaRol[1] != "" ||
+                funcionalidadesParaRol[2] != "" || funcionalidadesParaRol[3] != "" ||
+                funcionalidadesParaRol[4] != "" || funcionalidadesParaRol[5] != "" ||
+                funcionalidadesParaRol[6] != "" || funcionalidadesParaRol[7] != "" ||
+                funcionalidadesParaRol[8] != "" || funcionalidadesParaRol[9] != "");
 
         }
 
@@ -278,6 +187,84 @@ namespace FrbaCrucero.AbmRol
         private void ComboBox6_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void GroupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void agregarFuncionalidad(string funcionalidad)
+        {
+            if (this.posicion < 9 || !funcionalidadesParaRol.Contains(funcionalidad))
+            {
+                this.funcionalidadesParaRol.Insert(this.posicion, funcionalidad);
+                this.posicion++;
+            }
+            else
+            {
+                throw new Exception("Ya contiene esa funcionalidad, elija otra");
+            }
+        }
+        private void SeleccionFuncionalidad_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.dataGridFuncionalidades.CurrentRow == null) return;
+                if (this.dataGridFuncionalidades.CurrentRow.Cells[0] == null) return;
+                string funcionalidad = this.dataGridFuncionalidades.CurrentRow.Cells["id_funcionalidad"].Value.ToString();
+
+                int indice = this.dataGridSeleccionadas.Rows.Count - 1;
+
+                this.agregarFuncionalidad(funcionalidad);
+
+                this.dataGridSeleccionadas.Rows.Add(funcionalidad);
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+                return;
+            }
+        }
+
+        private void DataGridSeleccionadas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void eliminarFuncionalidad(String funcionalidad)
+        {
+            if (posicion > 0 && funcionalidadesParaRol.Contains(funcionalidad))
+            {
+                this.posicion--;
+                this.funcionalidadesParaRol.Insert(posicion,"");
+            }
+            else
+            {
+                throw new Exception("No contiene la funcionalidad");
+            }
+        }
+        private void Quitar_Click(object sender, EventArgs e)
+        {
+            int indice = this.dataGridSeleccionadas.Rows.Count - 1;
+            if (indice == -1) return;
+            try
+            {
+                String funcionalidad = this.dataGridSeleccionadas.Rows[indice - 1].Cells["FuncionalidadesAgregadas"].Value.ToString();
+                this.eliminarFuncionalidad(funcionalidad);
+                this.dataGridSeleccionadas.Rows[indice].Cells["FuncionalidadesAgregadas"].Value = "";
+                this.dataGridSeleccionadas.Rows.RemoveAt(indice - 1);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
     }
 }

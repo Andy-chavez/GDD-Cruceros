@@ -79,7 +79,7 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
     -1: no existe el rol
 
 ### Pasaje:
-#### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
+#### mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime,@cantPasajes smallint)
 #### mostrarCabinasLibres (@idViaje int)
 #### cargarMedioDePago (@cuotas smallint,@tipoTarjeta varchar(256),@nombreTarjeta varchar(256))
 
@@ -159,7 +159,7 @@ Nota: se debe hacer en orden del orden mas chico q quieras cambiar al ultimo
 
 #### mostrarReserva(@idReserva decimal(18,0))
 
-#### comprarPasajeReservado(@idReserva decimal(18,0),@idMedioDePago varchar(256),@fechaConfig datetime)
+#### comprarPasajeReservado(@idReserva decimal(18,0),@idMedioDePago varchar(256),@fechaConfig datetime,@idPago int out)
 
   Valores de retorno:
       -2 : no existe una reserva o la reserva se vencio

@@ -313,5 +313,9 @@ namespace FrbaCrucero.AbmRecorrido
             this.Close();
         }
 
+        private void DataGridTramos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
