@@ -343,5 +343,10 @@ namespace FrbaCrucero.AbmRecorrido
             TrueModificarRecorrido_Load(null, null);
             this.dataGridTramosRecOrig.DataSource = null;
         }
+
+        private void DataGridTramos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

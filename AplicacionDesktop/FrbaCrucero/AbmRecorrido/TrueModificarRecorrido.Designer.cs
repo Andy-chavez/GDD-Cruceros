@@ -52,12 +52,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.textBoxFiltroDestino = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.textBoxFiltroOrigen = new System.Windows.Forms.TextBox();
             this.buttonFiltrarRecs = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.buttonLimpiarRecs = new System.Windows.Forms.Button();
-            this.textBoxFiltroDestino = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridRecorridosActuales)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -73,6 +73,7 @@
             // 
             // dataGridRecorridosActuales
             // 
+            this.dataGridRecorridosActuales.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridRecorridosActuales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridRecorridosActuales.Location = new System.Drawing.Point(7, 18);
             this.dataGridRecorridosActuales.Name = "dataGridRecorridosActuales";
@@ -169,6 +170,7 @@
             // 
             // dataGridTramosRecOrig
             // 
+            this.dataGridTramosRecOrig.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridTramosRecOrig.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridTramosRecOrig.Location = new System.Drawing.Point(6, 19);
             this.dataGridTramosRecOrig.Name = "dataGridTramosRecOrig";
@@ -187,6 +189,7 @@
             // 
             // dataGridPuertos
             // 
+            this.dataGridPuertos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridPuertos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridPuertos.Location = new System.Drawing.Point(7, 20);
             this.dataGridPuertos.Name = "dataGridPuertos";
@@ -207,11 +210,13 @@
             // 
             this.dataGridTramos.AllowUserToAddRows = false;
             this.dataGridTramos.AllowUserToDeleteRows = false;
+            this.dataGridTramos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridTramos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridTramos.Location = new System.Drawing.Point(7, 20);
             this.dataGridTramos.Name = "dataGridTramos";
             this.dataGridTramos.Size = new System.Drawing.Size(354, 212);
             this.dataGridTramos.TabIndex = 0;
+            this.dataGridTramos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridTramos_CellContentClick);
             // 
             // buttonAddTramo
             // 
@@ -306,6 +311,22 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Filtrar Recorrido";
             // 
+            // textBoxFiltroDestino
+            // 
+            this.textBoxFiltroDestino.Location = new System.Drawing.Point(111, 73);
+            this.textBoxFiltroDestino.Name = "textBoxFiltroDestino";
+            this.textBoxFiltroDestino.Size = new System.Drawing.Size(174, 20);
+            this.textBoxFiltroDestino.TabIndex = 12;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(42, 77);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(43, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Destino";
+            // 
             // textBoxFiltroOrigen
             // 
             this.textBoxFiltroOrigen.Location = new System.Drawing.Point(111, 30);
@@ -342,28 +363,12 @@
             this.buttonLimpiarRecs.UseVisualStyleBackColor = true;
             this.buttonLimpiarRecs.Click += new System.EventHandler(this.buttonLimpiarRecs_Click);
             // 
-            // textBoxFiltroDestino
-            // 
-            this.textBoxFiltroDestino.Location = new System.Drawing.Point(111, 73);
-            this.textBoxFiltroDestino.Name = "textBoxFiltroDestino";
-            this.textBoxFiltroDestino.Size = new System.Drawing.Size(174, 20);
-            this.textBoxFiltroDestino.TabIndex = 12;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(42, 77);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(43, 13);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Destino";
-            // 
             // TrueModificarRecorrido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(726, 884);
+            this.ClientSize = new System.Drawing.Size(743, 741);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.label5);
