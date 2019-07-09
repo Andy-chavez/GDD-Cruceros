@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaCrucero.Clases;
 using System.Data.SqlClient;
+using System.Collections;
 
 namespace FrbaCrucero.CompraReservaPasaje
 {
@@ -25,7 +26,7 @@ namespace FrbaCrucero.CompraReservaPasaje
         public DataTable dt = new DataTable();
 
         private Cliente cliente;
-        private int idCabina;
+        private ArrayList cabinas = new ArrayList();
 
         public void CargarCliente(Cliente cliente)
         {
@@ -33,7 +34,11 @@ namespace FrbaCrucero.CompraReservaPasaje
         }
 
         public void recibirIdCabina(int idCabina) {
-            this.idCabina = idCabina;
+            if (cabinas.Contains(idCabina))
+            {
+                throw new System.InvalidOperationException("Error ya contiene esta cabina");
+            }
+            this.cabinas.Add(idCabina);
         }
         private void groupBox1_Enter(object sender, EventArgs e)
         {
@@ -79,9 +84,15 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         private void botonReserva_Click(object sender, EventArgs e)
         {
-            if(this.idCabina == 0)
+            int cantidad_pasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
+            if (cantidad_pasajes != 1)
             {
-                MessageBox.Show("Seleccione una cabina antes de realizar una reserva");
+                MessageBox.Show("Error: la cantidad de pasajes tiene que ser igual a 1 en las reservas");
+                return;
+            }
+            if (this.cabinas.Count < cantidad_pasajes)
+            {
+                MessageBox.Show("Seleccione la cabina antes de realizar una reserva");
                 return;
             }
             try
@@ -93,7 +104,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 procedure.Parameters.Add("@idCliente", SqlDbType.Int).Value = this.cliente.id;
                 procedure.Parameters.Add("@idViaje", SqlDbType.Int).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
                 //cuidado que hay que remodelar esto porque va a fallar de momento
-                procedure.Parameters.Add("@idCabina", SqlDbType.Int).Value = (int)this.idCabina;
+                procedure.Parameters.Add("@idCabina", SqlDbType.Int).Value = (int) this.cabinas[0];
                 procedure.Parameters.Add("@fechaConfig", SqlDbType.DateTime).Value = this.fechaConfig;
                 procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                 bd.ejecutarConsultaDevuelveInt(procedure); 
@@ -199,12 +210,12 @@ namespace FrbaCrucero.CompraReservaPasaje
                 //int id_cabina = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
                 string id_crucero = this.viajesDisponibles.CurrentRow.Cells["crucero"].Value.ToString();
                 int cantidad_pasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
-                new Compra(cliente, viaje, this.idCabina, id_crucero, cantidad_pasajes).Show();//necesita origen,destino,viaje,inicio,cantidad
+                new Compra(cliente, viaje, this.cabinas, id_crucero, cantidad_pasajes).Show();//necesita origen,destino,viaje,inicio,cantidad
                                                                                                  //compra va a crear la ventana medio de pago new ventanamediodepago(this,cliente.id).Show()
             }
             catch
             {
-                MessageBox.Show("Por favor seleccione la cabina deseada antes de pagar");
+                MessageBox.Show("Error: Por favor seleccione la/s cabina/s deseada/s o cargue sus datos antes de proceder al pago de pasaje");
             }
         }
 
@@ -233,7 +244,8 @@ namespace FrbaCrucero.CompraReservaPasaje
             {
                 string id_crucero = this.viajesDisponibles.CurrentRow.Cells["crucero"].Value.ToString();
                 int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
-                new CabinasDisponibles(viaje, this).Show();
+                int cantidadPasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
+                new CabinasDisponibles(viaje, this,cantidadPasajes).Show();
             }
             catch
             {

@@ -17,13 +17,14 @@ namespace FrbaCrucero.CompraReservaPasaje
         public BaseDeDato bd = new BaseDeDato();
         public DataTable dt = new DataTable();
         public int idViaje;
+        public int cantidadPasajes;
         VentanaSeleccionarviaje ventanaOriginal;
-        public CabinasDisponibles(int idViaje, VentanaSeleccionarviaje ventanaOriginal)
+        public CabinasDisponibles(int idViaje, VentanaSeleccionarviaje ventanaOriginal,int cantidadPasajes)
         {
             this.idViaje = idViaje;
             this.ventanaOriginal = ventanaOriginal;
             InitializeComponent();
-
+            this.cantidadPasajes = cantidadPasajes;
         }
 
         private void Cabinas_Enter(object sender, EventArgs e)
@@ -34,10 +35,26 @@ namespace FrbaCrucero.CompraReservaPasaje
         private void Button1_Click(object sender, EventArgs e)
         {
             int cabina = (int) this.CabinasParaSeleccionar.CurrentRow.Cells["id_cabina"].Value;
-            ventanaOriginal.recibirIdCabina(cabina);
-            MessageBox.Show("Cabina Seleccionada exitosamente proceda con el pago del pasaje");
-
-            this.Hide();
+            try
+            {
+                ventanaOriginal.recibirIdCabina(cabina);
+                cantidadPasajes--;
+            }
+            catch
+            {
+                MessageBox.Show("Debe seleccionar una cabina distinta a las ya seleccionadas");
+                return;
+            }
+            if (cantidadPasajes == 0)
+            {
+                MessageBox.Show("Cabinas Seleccionadas exitosamente proceda con el pago del pasaje");
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Cabina seleccionada le faltan seleccionar "+ cantidadPasajes + " cabina/s");
+                return;
+            }
         }
 
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

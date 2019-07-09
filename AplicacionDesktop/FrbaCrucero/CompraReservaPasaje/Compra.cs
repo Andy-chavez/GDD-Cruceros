@@ -11,6 +11,7 @@ using FrbaCrucero.Clases;
 using System.Windows.Forms;
 using FrbaCrucero.Clases;
 using System.Data.SqlClient;
+using System.Collections;
 
 namespace FrbaCrucero.CompraReservaPasaje
 {
@@ -18,17 +19,19 @@ namespace FrbaCrucero.CompraReservaPasaje
     {
         private Cliente cliente;
         private int idViaje;
-        int idCabina, cant_pasajes;
+        int cant_pasajes;
+        private ArrayList cabinas = new ArrayList();
         string idCrucero;
 
 
         private int id_pago;
-        public Compra(Cliente cliente,int idViaje, int idCabina,string idCrucero, int cant_pasajes)
+        public Compra(Cliente cliente,int idViaje,ArrayList cabinas,string idCrucero, int cant_pasajes)
         {
             this.cant_pasajes = cant_pasajes;
-            this.idCabina=idCabina;
+            this.cabinas=cabinas;
             this.idCrucero = idCrucero;
             this.idViaje = idViaje;
+            if(cliente is null) throw new Exception("Error ya contiene esta cabina");
             this.cliente = cliente;
             InitializeComponent();
         }
@@ -63,7 +66,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                     procedure.CommandType = CommandType.StoredProcedure;
                     procedure.Parameters.Add("@idCliente", SqlDbType.Int).Value = cliente.id;
                     procedure.Parameters.Add("@idViaje", SqlDbType.Int).Value = idViaje;
-                    procedure.Parameters.Add("@idCabina", SqlDbType.Int).Value = idCabina;
+                    procedure.Parameters.Add("@idCabina", SqlDbType.Int).Value = (int) this.cabinas[i];
                     procedure.Parameters.Add("@idCrucero", SqlDbType.NVarChar).Value = idCrucero;
                     procedure.Parameters.Add("@idPago", SqlDbType.Int).Value = id_pago;
                     procedure.Parameters.Add("@ret", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;

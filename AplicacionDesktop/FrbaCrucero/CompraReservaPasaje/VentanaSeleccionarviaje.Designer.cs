@@ -54,7 +54,10 @@
             // 
             // viajesDisponibles
             // 
+            this.viajesDisponibles.AllowUserToAddRows = false;
+            this.viajesDisponibles.AllowUserToDeleteRows = false;
             this.viajesDisponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.viajesDisponibles.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.viajesDisponibles.Location = new System.Drawing.Point(6, 19);
             this.viajesDisponibles.Name = "viajesDisponibles";
             this.viajesDisponibles.Size = new System.Drawing.Size(471, 160);

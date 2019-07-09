@@ -37,10 +37,13 @@
             // CabinasParaSeleccionar
             // 
             this.CabinasParaSeleccionar.AllowDrop = true;
+            this.CabinasParaSeleccionar.AllowUserToAddRows = false;
+            this.CabinasParaSeleccionar.AllowUserToDeleteRows = false;
             this.CabinasParaSeleccionar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.CabinasParaSeleccionar.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.CabinasParaSeleccionar.Location = new System.Drawing.Point(22, 57);
             this.CabinasParaSeleccionar.Name = "CabinasParaSeleccionar";
-            this.CabinasParaSeleccionar.Size = new System.Drawing.Size(564, 187);
+            this.CabinasParaSeleccionar.Size = new System.Drawing.Size(413, 241);
             this.CabinasParaSeleccionar.TabIndex = 0;
             this.CabinasParaSeleccionar.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
             // 
@@ -48,19 +51,19 @@
             // 
             this.Cabinas.Location = new System.Drawing.Point(22, 38);
             this.Cabinas.Name = "Cabinas";
-            this.Cabinas.Size = new System.Drawing.Size(564, 13);
+            this.Cabinas.Size = new System.Drawing.Size(413, 13);
             this.Cabinas.TabIndex = 1;
             this.Cabinas.TabStop = false;
-            this.Cabinas.Text = "Elija Cabina";
+            this.Cabinas.Text = "Elija la/s Cabinas";
             this.Cabinas.Enter += new System.EventHandler(this.Cabinas_Enter);
             // 
             // SeleccionCabina
             // 
-            this.SeleccionCabina.Location = new System.Drawing.Point(493, 268);
+            this.SeleccionCabina.Location = new System.Drawing.Point(22, 322);
             this.SeleccionCabina.Name = "SeleccionCabina";
             this.SeleccionCabina.Size = new System.Drawing.Size(93, 23);
             this.SeleccionCabina.TabIndex = 2;
-            this.SeleccionCabina.Text = "Seleccionar";
+            this.SeleccionCabina.Text = "Agregar";
             this.SeleccionCabina.UseVisualStyleBackColor = true;
             this.SeleccionCabina.Click += new System.EventHandler(this.Button1_Click);
             // 
@@ -68,7 +71,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(638, 337);
+            this.ClientSize = new System.Drawing.Size(460, 387);
             this.Controls.Add(this.SeleccionCabina);
             this.Controls.Add(this.Cabinas);
             this.Controls.Add(this.CabinasParaSeleccionar);
