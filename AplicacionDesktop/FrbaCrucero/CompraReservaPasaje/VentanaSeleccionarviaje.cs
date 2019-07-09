@@ -25,12 +25,16 @@ namespace FrbaCrucero.CompraReservaPasaje
         public DataTable dt = new DataTable();
 
         private Cliente cliente;
+        private int idCabina;
 
         public void CargarCliente(Cliente cliente)
         {
             this.cliente = cliente;
         }
 
+        public void recibirIdCabina(int idCabina) {
+            this.idCabina = idCabina;
+        }
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
@@ -75,6 +79,11 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         private void botonReserva_Click(object sender, EventArgs e)
         {
+            if(this.idCabina == 0)
+            {
+                MessageBox.Show("Seleccione una cabina antes de realizar una reserva");
+                return;
+            }
             try
             {
                 //BaseDeDato bd = new BaseDeDato();
@@ -84,7 +93,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 procedure.Parameters.Add("@idCliente", SqlDbType.Int).Value = this.cliente.id;
                 procedure.Parameters.Add("@idViaje", SqlDbType.Int).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
                 //cuidado que hay que remodelar esto porque va a fallar de momento
-                procedure.Parameters.Add("@idCabina", SqlDbType.Int).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
+                procedure.Parameters.Add("@idCabina", SqlDbType.Int).Value = (int)this.idCabina;
                 procedure.Parameters.Add("@fechaConfig", SqlDbType.DateTime).Value = this.fechaConfig;
                 procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                 bd.ejecutarConsultaDevuelveInt(procedure); 
@@ -94,7 +103,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                     MessageBox.Show("Su numero de reserva es:"+retorno+"\nSi desea abonarlo, ingrese el codigo en la opcion Pagar del menú principal.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
-                else if (retorno == -1) // no existe funcionalidad
+                else if (retorno == -1) 
                 {
                     MessageBox.Show("El cliente ya posee una reserva en dicha fecha. \nVerifique los campos.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -184,12 +193,19 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         private void botonCompra_Click(object sender, EventArgs e)
         {
-            int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
-            int id_cabina = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
-            string id_crucero = this.viajesDisponibles.CurrentRow.Cells["crucero"].Value.ToString();
-            int cantidad_pasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
-            new Compra(cliente,viaje,id_cabina,id_crucero,cantidad_pasajes).Show();//necesita origen,destino,viaje,inicio,cantidad
-            //compra va a crear la ventana medio de pago new ventanamediodepago(this,cliente.id).Show()
+            try
+            {
+                int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
+                //int id_cabina = (int)this.viajesDisponibles.CurrentRow.Cells["id_cabina"].Value;
+                string id_crucero = this.viajesDisponibles.CurrentRow.Cells["crucero"].Value.ToString();
+                int cantidad_pasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
+                new Compra(cliente, viaje, this.idCabina, id_crucero, cantidad_pasajes).Show();//necesita origen,destino,viaje,inicio,cantidad
+                                                                                                 //compra va a crear la ventana medio de pago new ventanamediodepago(this,cliente.id).Show()
+            }
+            catch
+            {
+                MessageBox.Show("Por favor seleccione la cabina deseada antes de pagar");
+            }
         }
 
         private void DateTimePicker1_ValueChanged(object sender, EventArgs e)
@@ -212,6 +228,20 @@ namespace FrbaCrucero.CompraReservaPasaje
         }
 
         private void Button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string id_crucero = this.viajesDisponibles.CurrentRow.Cells["crucero"].Value.ToString();
+                int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
+                new CabinasDisponibles(viaje, this).Show();
+            }
+            catch
+            {
+                MessageBox.Show("Por favor seleccione primero el viaje deseado para poder elejir las cabinas");
+            }
+        }
+
+        private void TextBoxCruceros_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -144,12 +144,19 @@
       <DependentUpon>VentanaModificarRol.cs</DependentUpon>
     </Compile>
     <Compile Include="Clases\BaseDeDato.cs" />
+    <Compile Include="Clases\Cabina.cs" />
     <Compile Include="Clases\Cliente.cs" />
     <Compile Include="Clases\Tramo.cs" />
     <Compile Include="Clases\Recorrido.cs" />
     <Compile Include="Clases\Puerto.cs" />
     <Compile Include="Clases\Reserva.cs" />
     <Compile Include="Clases\Crucero.cs" />
+    <Compile Include="CompraReservaPasaje\CabinasDisponibles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompraReservaPasaje\CabinasDisponibles.Designer.cs">
+      <DependentUpon>CabinasDisponibles.cs</DependentUpon>
+    </Compile>
     <Compile Include="CompraReservaPasaje\Compra.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -272,6 +279,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\VentanaModificarRol.resx">
       <DependentUpon>VentanaModificarRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CompraReservaPasaje\CabinasDisponibles.resx">
+      <DependentUpon>CabinasDisponibles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CompraReservaPasaje\Compra.resx">
       <DependentUpon>Compra.cs</DependentUpon>

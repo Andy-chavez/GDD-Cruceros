@@ -44,8 +44,7 @@
             this.botonCompra = new System.Windows.Forms.Button();
             this.buttonCargarCli = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.SeleccionButaca = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxCruceros = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.viajesDisponibles)).BeginInit();
@@ -222,22 +221,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click_1);
             // 
-            // button3
+            // SeleccionButaca
             // 
-            this.button3.Location = new System.Drawing.Point(30, 409);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(125, 23);
-            this.button3.TabIndex = 14;
-            this.button3.Text = "Seleccione butacas";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.Button3_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(209, 411);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(272, 20);
-            this.textBox1.TabIndex = 16;
+            this.SeleccionButaca.Location = new System.Drawing.Point(30, 409);
+            this.SeleccionButaca.Name = "SeleccionButaca";
+            this.SeleccionButaca.Size = new System.Drawing.Size(125, 23);
+            this.SeleccionButaca.TabIndex = 14;
+            this.SeleccionButaca.Text = "Seleccionar Cabinas";
+            this.SeleccionButaca.UseVisualStyleBackColor = true;
+            this.SeleccionButaca.Click += new System.EventHandler(this.Button3_Click);
             // 
             // label5
             // 
@@ -255,6 +247,7 @@
             this.textBoxCruceros.Name = "textBoxCruceros";
             this.textBoxCruceros.Size = new System.Drawing.Size(184, 20);
             this.textBoxCruceros.TabIndex = 18;
+            this.textBoxCruceros.TextChanged += new System.EventHandler(this.TextBoxCruceros_TextChanged);
             // 
             // VentanaSeleccionarviaje
             // 
@@ -264,8 +257,7 @@
             this.ClientSize = new System.Drawing.Size(563, 556);
             this.Controls.Add(this.textBoxCruceros);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.SeleccionButaca);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonCargarCli);
             this.Controls.Add(this.botonCompra);
@@ -303,8 +295,7 @@
         private System.Windows.Forms.ComboBox comboBoxCantPasajes;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button SeleccionButaca;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxCruceros;
     }

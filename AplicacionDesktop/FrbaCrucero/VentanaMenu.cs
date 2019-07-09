@@ -74,7 +74,7 @@ namespace FrbaCrucero
         {
             new ListadoEstadistico.ListadoEstadistico().Show();
         }
-        public void ocultarBotones( )
+        public void ocultarBotones()
         {
             botonAdmRecorrido.Hide();
             botonAdmCrucero.Hide();

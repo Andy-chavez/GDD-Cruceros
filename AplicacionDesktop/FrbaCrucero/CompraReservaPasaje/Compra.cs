@@ -34,7 +34,7 @@ namespace FrbaCrucero.CompraReservaPasaje
         }
         public void RecibirIDPago(int id)
         {
-            id_pago = id;
+            this.id_pago = id;
         }
 
         private void Compra_Load(object sender, EventArgs e)
