@@ -1921,4 +1921,4 @@ as
 		--group by id_crucero
 		order by 2 desc
 	end
-go	
+go
