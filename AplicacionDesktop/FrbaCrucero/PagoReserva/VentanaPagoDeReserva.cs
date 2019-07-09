@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using FrbaCrucero.Clases;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using FrbaCrucero.CompraReservaPasaje;
 
 namespace FrbaCrucero.PagoReserva
 {
@@ -56,6 +57,7 @@ namespace FrbaCrucero.PagoReserva
                 procedure.Parameters.AddWithValue("@idReserva", SqlDbType.NVarChar).Value = System.Convert.ToDecimal(reserva.Text);
                 procedure.Parameters.Add("@idMedioDePago", SqlDbType.NVarChar).Value = comboBoxMedios.Text;
                 procedure.Parameters.AddWithValue("@fechaConfig", SqlDbType.DateTime).Value = enteredDate;
+                procedure.Parameters.Add("@idPago", SqlDbType.Int).Direction = ParameterDirection.Output;
                 procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                 bd.ejecutarConsultaDevuelveInt(procedure);
                 int retorno = (int)procedure.Parameters["@retorno"].Value;
@@ -63,7 +65,8 @@ namespace FrbaCrucero.PagoReserva
                 {
                     MessageBox.Show("Reserva pagada exitosamente.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     reserva.Clear();
-
+                    int idPago = Convert.ToInt32(procedure.Parameters["@idPago"].Value);
+                    new MostrarVoucher(idPago).Show();
                 }
                 else if (retorno == -2) // no existe reserva o se vencio
                 {

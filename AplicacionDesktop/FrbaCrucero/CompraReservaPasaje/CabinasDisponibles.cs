@@ -102,12 +102,12 @@ namespace FrbaCrucero.CompraReservaPasaje
             }
             if (cantidadPasajes == 0)
             {
-                MessageBox.Show("Cabinas seleccionadas exitosamente proceda con el pago del pasaje o a cargar sus datos");
+                MessageBox.Show("Cabinas seleccionadas exitosamente proceda con el pago/reserva del pasaje o a cargar sus datos");
                 this.Hide();
             }
             else
             {
-                MessageBox.Show("Cabina seleccionada le faltan seleccionar "+ cantidadPasajes + " cabina/s");
+                MessageBox.Show("Cabina seleccionada, le faltan seleccionar "+ cantidadPasajes + " cabina/s");
                 return;
             }
         }
