@@ -106,8 +106,20 @@
             "6",
             "7",
             "8",
-            "9"});
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"});
             this.comboBoxCantPasajes.Location = new System.Drawing.Point(154, 98);
+            this.comboBoxCantPasajes.MaxDropDownItems = 20;
             this.comboBoxCantPasajes.Name = "comboBoxCantPasajes";
             this.comboBoxCantPasajes.Size = new System.Drawing.Size(87, 21);
             this.comboBoxCantPasajes.TabIndex = 11;

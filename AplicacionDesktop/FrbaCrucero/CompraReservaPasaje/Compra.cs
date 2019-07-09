@@ -28,10 +28,11 @@ namespace FrbaCrucero.CompraReservaPasaje
         public Compra(Cliente cliente,int idViaje,ArrayList cabinas,string idCrucero, int cant_pasajes)
         {
             this.cant_pasajes = cant_pasajes;
+            if(cabinas.Count == 0) throw new Exception("Error seleccione las cabinas antes de proceder con la compra");
             this.cabinas=cabinas;
             this.idCrucero = idCrucero;
             this.idViaje = idViaje;
-            if(cliente is null) throw new Exception("Error cliente no puede ser nulo");
+            if(cliente is null) throw new Exception("Error Ingrese sus datos antes de realizar la compra");
             this.cliente = cliente;
             InitializeComponent();
         }

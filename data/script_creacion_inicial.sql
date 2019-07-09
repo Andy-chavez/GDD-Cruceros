@@ -1521,7 +1521,7 @@ go
 --viajes disponibles para esa fecha --
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
+create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime,@cantPasajes smallint)
 as
 	begin
 		select  distinct v.id_viaje,v.fecha_finalizacion_estimada FechaDeFinalizacion,v.id_crucero crucero,
@@ -1539,7 +1539,7 @@ as
 		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
 		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
 		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
-		and CAST(v.fecha_inicio as datetime) > @fechaConfig
+		and CAST(v.fecha_inicio as datetime) > @fechaConfig and cantidadDeCabinas>= @cantPasajes
 	end
 go
 ------------------------Mostrar butacas libres para ese viaje---------------
@@ -1585,7 +1585,6 @@ go
 --exec [LEISTE_EL_CODIGO?].eliminarReservasVencidas '2018-05-07 06:00:00.000'
 --exec [LEISTE_EL_CODIGO?].mostrarViajesDisponibles '2018-07-22 07:00:00.000','LUANDA','ARGEL','2018-05-07 06:00:00.000'
 --todo despues de seleccionar un viaje--ingresar cliente
-select * from [LEISTE_EL_CODIGO?].Cliente order by fecha_nacimiento desc
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),

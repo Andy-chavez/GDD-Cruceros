@@ -74,9 +74,9 @@
             // 
             // dataGridSeleccionadas
             // 
+            this.dataGridSeleccionadas.AllowDrop = true;
             this.dataGridSeleccionadas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridSeleccionadas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridSeleccionadas.Enabled = false;
             this.dataGridSeleccionadas.Location = new System.Drawing.Point(422, 57);
             this.dataGridSeleccionadas.Name = "dataGridSeleccionadas";
             this.dataGridSeleccionadas.Size = new System.Drawing.Size(330, 241);
