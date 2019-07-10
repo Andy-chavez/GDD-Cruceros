@@ -55,7 +55,8 @@ cuando lo selecciones me tenes que pasar despues el id de viaje,el id de de reco
     -1: no existe el rol
     -2: No existe funcionalidad
     -3: el rol ya tiene esa funcionalidad(agregar) o no tiene esa funcionalidad(eliminar)
-
+#### agregarFuncionalidadRol (@NombreRol nvarchar(255),@idFuncionalidad nvarchar(100))
+#### crearNuevoRolNombre (@NombreRol nvarchar(255)) //agrego estos dos pero hay que testearlos
 #### crearNuevoRol (@NombreRol nvarchar(255),@idFuncionalidad1 nvarchar(100),
 @idFuncionalidad2 nvarchar(100),@idFuncionalidad3 nvarchar(100),
 @idFuncionalidad4 nvarchar(100),@idFuncionalidad5 nvarchar(100),

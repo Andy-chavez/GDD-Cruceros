@@ -148,6 +148,10 @@ if exists (select * from sys.procedures where name = 'crucerosDisponiblesParaVia
 	drop procedure [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje
 if exists (select * from sys.procedures where name = 'obtenerIdCliente')
 	drop procedure [LEISTE_EL_CODIGO?].obtenerIdCliente
+if exists (select * from sys.procedures where name = 'crearNuevoRolNombre')
+	drop procedure [LEISTE_EL_CODIGO?].crearNuevoRolNombre
+if exists (select * from sys.procedures where name = 'agregarFuncionalidadRol')
+	drop procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadRol
 if exists (select * from sys.procedures where name = 'crearCabinasDeTipoACrucero')
 	drop procedure [LEISTE_EL_CODIGO?].crearCabinasDeTipoACrucero
 if exists (select * from sys.procedures where name = 'eliminarTramosDelRecorrido')
@@ -824,8 +828,38 @@ as
 		return @valor_retorno
 	end
 go
-
---Crear Nuevo Rol -- deberia usarse dentro de un while, lo hago para uno a la vez por ahora
+--------------------------CREAR NUEVO ROL CON SU NOMBRE----------------------
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].crearNuevoRolNombre (@NombreRol nvarchar(255))
+as
+	begin
+				if(exists (select 1 from [LEISTE_EL_CODIGO?].Rol where id_rol= @NombreRol)) 
+					begin;
+						throw 50000,'Ya existe un rol con ese nombre', 1  --existe un rol con ese nombre
+					end
+		insert into [LEISTE_EL_CODIGO?].Rol (id_rol)
+		values (@NombreRol)
+	end
+go
+--------------------------AGREGAR FUNCIONALIDAD A ROL---------------------
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadRol (@NombreRol nvarchar(255),@idFuncionalidad nvarchar(100))
+as
+	begin
+		if exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
+							where id_funcionalidad= @idFuncionalidad and id_rol = @NombreRol) 
+			begin
+				delete from [LEISTE_EL_CODIGO?].FuncionalidadPorRol where id_rol = @NombreRol
+				delete from [LEISTE_EL_CODIGO?].Rol where id_rol = @NombreRol; -- vuelvo todo atras la transaccion
+				throw 50000,'Rol ya tiene funcionalidad',1					-- asi no quedan datos volando
+			end
+		insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
+		values(@NombreRol,@idFuncionalidad)
+	end
+go
+--Crear Nuevo Rol -- (lo dejo por ahora, quizas no lo use, pero primero quiero probar que lo otro funque.
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].crearNuevoRol (@NombreRol nvarchar(255),@idFuncionalidad1 nvarchar(100),
@@ -845,13 +879,13 @@ begin
 			end
 		else
 			begin
-				if(exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @NombreRol)) 
-					begin
-						set @valor_retorno = -4 --existe un rol con ese nombre
-						return @valor_retorno
-					end
-				insert into [LEISTE_EL_CODIGO?].Rol (id_rol)
-				values (@NombreRol)
+				--if(exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @NombreRol)) 
+					--begin
+						--set @valor_retorno = -4 --existe un rol con ese nombre
+						--return @valor_retorno
+					--end
+				--insert into [LEISTE_EL_CODIGO?].Rol (id_rol)
+				--values (@NombreRol)
 
 				if
 					(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 

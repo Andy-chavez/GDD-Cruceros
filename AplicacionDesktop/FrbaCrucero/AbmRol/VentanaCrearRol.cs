@@ -22,8 +22,9 @@ namespace FrbaCrucero.AbmRol
         private BaseDeDato bd = new BaseDeDato();
         private DataTable dt = new DataTable();
         private int posicion = 0;
-        private List<String> funcionalidadesParaRol = new List<string>() { "", "", "", "", "", "", "", "", "", "" };
-       // private Rol rol = new Rol();
+        //private List<String> funcionalidadesParaRol = new List<string>() { "", "", "", "", "", "", "", "", "", "" };
+        private List<String> funcionalidadesParaRol = new List<string>();
+        // private Rol rol = new Rol();
         SqlDataAdapter adapt;
         private void VentanaDeAltaRol_Load(object sender, EventArgs e)
         {
@@ -51,7 +52,8 @@ namespace FrbaCrucero.AbmRol
                 dataGridSeleccionadas.Rows.RemoveAt(0);
 
             }
-            for (int i = 0; i < 10; i++)
+            int cantElementos = this.funcionalidadesParaRol.Count();
+            for (int i = 0; i < cantElementos; i++)
             {
                 funcionalidadesParaRol[i] = "";
 
@@ -63,10 +65,25 @@ namespace FrbaCrucero.AbmRol
             if (this.todosLosCamposEstancompletos())
             {
                 textoNombre.Enabled = false;
+                BaseDeDato bd = new BaseDeDato();
                 try
                 {
-                    BaseDeDato bd = new BaseDeDato();
-                    SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].crearNuevoRol");
+                    int cantElementos = this.funcionalidadesParaRol.Count();
+                    SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].crearNuevoRolNombre");
+                    procedure.CommandType = CommandType.StoredProcedure;
+                    procedure.Parameters.AddWithValue("@NombreRol", SqlDbType.NVarChar).Value = textoNombre.Text;
+                    bd.ejecutarConsultaSinResultado(procedure);
+                    for (int i=0; i < cantElementos; i++)
+                    {
+                        SqlCommand procedure2 = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].agregarFuncionalidadRol");
+                        procedure.CommandType = CommandType.StoredProcedure;
+                        procedure.Parameters.AddWithValue("@NombreRol", SqlDbType.NVarChar).Value = textoNombre.Text;
+                        procedure.Parameters.AddWithValue("@idFuncionalidad", SqlDbType.NVarChar).Value = funcionalidadesParaRol[i];
+                        bd.ejecutarConsultaSinResultado(procedure);
+                    }
+                    bd.desconectar();
+                    /*BaseDeDato bd2 = new BaseDeDato();
+                    SqlCommand procedure2 = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].crearNuevoRol");
                     procedure.CommandType = CommandType.StoredProcedure;
                     procedure.Parameters.AddWithValue("@NombreRol", SqlDbType.NVarChar).Value = textoNombre.Text;
                     procedure.Parameters.Add("@idFuncionalidad1", SqlDbType.NVarChar).Value = funcionalidadesParaRol[0];
@@ -79,12 +96,12 @@ namespace FrbaCrucero.AbmRol
                     procedure.Parameters.Add("@idFuncionalidad8", SqlDbType.NVarChar).Value = funcionalidadesParaRol[7];
                     procedure.Parameters.Add("@idFuncionalidad9", SqlDbType.NVarChar).Value = funcionalidadesParaRol[8];
                     procedure.Parameters.Add("@idFuncionalidad10", SqlDbType.NVarChar).Value = funcionalidadesParaRol[9];
-                    procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
-                    bd.ejecutarConsultaDevuelveInt(procedure);
-                    int retorno = (int)procedure.Parameters["@retorno"].Value;
+                    procedure.Parameters.Add("@valor_retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
+                    bd2.ejecutarConsultaDevuelveInt(procedure);
+                    int retorno = (int)procedure.Parameters["@valor_retorno"].Value;
                     if (retorno == 1) //joya
                     {
-                        bd.desconectar();
+                        bd2.desconectar();
                         MessageBox.Show("Rol creado exitosamente.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         textoNombre.Clear();
                         textoNombre.Enabled = true;
@@ -92,24 +109,24 @@ namespace FrbaCrucero.AbmRol
                     }
                     else if (retorno == -2) // no existe funcionalidad
                     {
-                        bd.desconectar();
+                        bd2.desconectar();
                         MessageBox.Show("No Existe dicha Funcionalidad.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error); 
                     }
                     else if (retorno == -5) // el rol ya tiene esa funcionalidad
                     {
-                        bd.desconectar();
+                        bd2.desconectar();
                         MessageBox.Show("Error al cargar el rol.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else if (retorno == -4) // el rol ya tiene esa funcionalidad
                     {
-                        bd.desconectar();
+                        bd2.desconectar();
                         MessageBox.Show("El nombre de rol ingresado ya existe.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else if (retorno == -3) // el rol ya tiene esa funcionalidad
                     {
-                        bd.desconectar();
+                        bd2.desconectar();
                         MessageBox.Show("El nombre de rol ingresado ya posee la funcionalidad seleccionada.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    }*/
 
                 }
                 catch (Exception exception)
@@ -160,11 +177,7 @@ namespace FrbaCrucero.AbmRol
         public bool todosLosCamposEstancompletos()
         {
 
-            return textoNombre.Text != "" && (funcionalidadesParaRol[0] != "" || funcionalidadesParaRol[1] != "" ||
-                funcionalidadesParaRol[2] != "" || funcionalidadesParaRol[3] != "" ||
-                funcionalidadesParaRol[4] != "" || funcionalidadesParaRol[5] != "" ||
-                funcionalidadesParaRol[6] != "" || funcionalidadesParaRol[7] != "" ||
-                funcionalidadesParaRol[8] != "" || funcionalidadesParaRol[9] != "");
+            return textoNombre.Text != "" && (funcionalidadesParaRol.Any(item => item != ""));
 
         }
 
@@ -212,7 +225,9 @@ namespace FrbaCrucero.AbmRol
             if (this.dataGridFuncionalidades.CurrentRow == null) return;
             if (this.dataGridFuncionalidades.CurrentRow.Cells[0] == null) return;
             if (funcionalidadesParaRol.Contains(this.dataGridFuncionalidades.CurrentRow.Cells["Funcionalidad"].Value.ToString())) return;
-            for (int i = 0; i < 10; i++)
+            this.funcionalidadesParaRol.Add(this.dataGridFuncionalidades.CurrentRow.Cells["Funcionalidad"].Value.ToString());
+            this.dataGridSeleccionadas.Rows.Add(this.dataGridFuncionalidades.CurrentRow.Cells["Funcionalidad"].Value.ToString());
+            /*for (int i = 0; i < 10; i++)
             {
                 if (funcionalidadesParaRol[i] == "")
                 {
@@ -222,7 +237,7 @@ namespace FrbaCrucero.AbmRol
                     this.dataGridSeleccionadas.Rows.Add(funcionalidadesParaRol[i]);
                     return;
                 }
-            }
+            }*/
         }
         private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
@@ -260,8 +275,8 @@ namespace FrbaCrucero.AbmRol
             if (posicion > 0 && funcionalidadesParaRol.Contains(funcionalidad))
             {
                 this.funcionalidadesParaRol.Remove(funcionalidad);//
-                this.funcionalidadesParaRol.Insert(posicion,"");
-                this.posicion--;
+                //this.funcionalidadesParaRol.Insert(posicion,"");
+                //this.posicion--;
             }
             else
             {
