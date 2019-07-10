@@ -39,34 +39,7 @@ namespace FrbaCrucero.AbmRol
 
         private void BotonAlta_Click_1(object sender, EventArgs e)
         {
-            try
-            {
-                BaseDeDato bd = new BaseDeDato();
-                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].darAltaRol");
-                procedure.CommandType = CommandType.StoredProcedure;
-                procedure.Parameters.AddWithValue("@idRol", SqlDbType.NVarChar).Value = comboBoxRoles.Text;
-                procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
-                bd.ejecutarConsultaDevuelveInt(procedure);
-                int retorno = (int)procedure.Parameters["@retorno"].Value;
-                if (retorno == 1) //joya
-                {
-                    MessageBox.Show("Operacion completada correctamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Hide();
-                }
-                else if (retorno == 0) // ya esta habilitado
-                { //no existe usuario
-                    MessageBox.Show("El rol que selecciono ya estaba habilitado", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else if (retorno == -1) // no existe el rol
-                { //no existe usuario
-                    MessageBox.Show("No Existe el Rol", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show("Error en la base de datos", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            
         }
 
         private void GroupBox1_Enter(object sender, EventArgs e)
@@ -81,34 +54,7 @@ namespace FrbaCrucero.AbmRol
 
         private void BotonEliminar_Click(object sender, EventArgs e)
         { 
-            try
-            {
-                BaseDeDato bd = new BaseDeDato();
-                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].darBajaRol");
-                procedure.CommandType = CommandType.StoredProcedure;
-                procedure.Parameters.AddWithValue("@idRol", SqlDbType.NVarChar).Value = comboBoxRoles.Text;
-                procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
-                bd.ejecutarConsultaDevuelveInt(procedure);
-                int retorno = (int)procedure.Parameters["@retorno"].Value;
-                if (retorno == 1) //joya
-                {
-                    MessageBox.Show("Operacion completada correctamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Hide();
-                }
-                else if (retorno == 0) 
-                { //no existe usuario
-                    MessageBox.Show("El rol seleccionado ya se encontraba deshabilitado.", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else if (retorno == -1) // no existe el rol
-                { //no existe usuario
-                    MessageBox.Show("No Existe el Rol", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show("Error en la base de datos", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+           
         }
 
         private void Button1_Click(object sender, EventArgs e)

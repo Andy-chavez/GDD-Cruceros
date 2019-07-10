@@ -28,25 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.botonAlta = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxRoles = new System.Windows.Forms.ComboBox();
             this.botonVolver = new System.Windows.Forms.Button();
-            this.botonEliminar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // botonAlta
-            // 
-            this.botonAlta.Location = new System.Drawing.Point(336, 146);
-            this.botonAlta.Name = "botonAlta";
-            this.botonAlta.Size = new System.Drawing.Size(111, 23);
-            this.botonAlta.TabIndex = 2;
-            this.botonAlta.Text = "Habilitar";
-            this.botonAlta.UseVisualStyleBackColor = true;
-            this.botonAlta.Click += new System.EventHandler(this.BotonAlta_Click_1);
             // 
             // groupBox1
             // 
@@ -80,7 +68,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(21, 148);
+            this.botonVolver.Location = new System.Drawing.Point(12, 129);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(75, 23);
             this.botonVolver.TabIndex = 4;
@@ -88,21 +76,11 @@
             this.botonVolver.UseVisualStyleBackColor = true;
             this.botonVolver.Click += new System.EventHandler(this.BotonVolver_Click_1);
             // 
-            // botonEliminar
-            // 
-            this.botonEliminar.Location = new System.Drawing.Point(336, 117);
-            this.botonEliminar.Name = "botonEliminar";
-            this.botonEliminar.Size = new System.Drawing.Size(111, 23);
-            this.botonEliminar.TabIndex = 5;
-            this.botonEliminar.Text = "Deshabilitar";
-            this.botonEliminar.UseVisualStyleBackColor = true;
-            this.botonEliminar.Click += new System.EventHandler(this.BotonEliminar_Click);
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(336, 175);
+            this.button1.Location = new System.Drawing.Point(346, 129);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(111, 23);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 6;
             this.button1.Text = "Modificar";
             this.button1.UseVisualStyleBackColor = true;
@@ -112,12 +90,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(459, 214);
+            this.ClientSize = new System.Drawing.Size(439, 166);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.botonEliminar);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.botonAlta);
             this.Name = "VentanaDarDeAltaRol";
             this.Text = "VentanaDarDeAltaRol";
             this.TopMost = true;
@@ -129,13 +105,10 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button botonAlta;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxRoles;
         private System.Windows.Forms.Button botonVolver;
-        private System.Windows.Forms.Button botonEliminar;
         private System.Windows.Forms.Button button1;
     }
 }

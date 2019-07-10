@@ -60,6 +60,8 @@ begin
 	print 'Esquema LEISTE_EL_CODIGO? creado'
 end
 go
+if exists (select * from sys.procedures where name = 'actualizarUsuariosPorRolCambiado')
+	drop procedure [LEISTE_EL_CODIGO?].actualizarUsuariosPorRolCambiado 
 if exists (select * from sys.procedures where name = 'sp_login')
 	drop procedure [LEISTE_EL_CODIGO?].sp_login
 if exists (select * from sys.procedures where name = 'cargarViaje')
@@ -760,6 +762,16 @@ go
 ------Agregar nueva funcionalidad a un rol-------REQUERIMIENTO: 
 		--En la modificación de un rol solo se pueden alterar ambos campos: el nombre y el
 		--listado de funcionalidades.
+USE GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].actualizarUsuariosPorRolCambiado (@idRolViejo nvarchar(255),@idRolNuevo nvarchar(255))
+as
+begin
+	update [LEISTE_EL_CODIGO?].Usuario
+	set id_rol = @idRolNuevo
+	where id_rol = @idRolViejo
+end
+go
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol (@idRolAImitar nvarchar(255),@idNuevaFuncionalidad nvarchar(100),@nuevoNombreRol nvarchar(255))
@@ -1521,10 +1533,10 @@ go
 --viajes disponibles para esa fecha --
 USE GD1C2019
 go
-create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime,@cantPasajes smallint)
+create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
 as
 	begin
-		select  distinct v.id_viaje,v.fecha_finalizacion_estimada FechaDeFinalizacion,v.id_crucero crucero,
+		select  distinct v.id_viaje IdViaje,v.fecha_finalizacion_estimada FechaDeFinalizacion,v.id_crucero CruceroAsignado,
 		cr.cantidadDeCabinas -
 		(select count(*) 
 		from [LEISTE_EL_CODIGO?].Reserva r
@@ -1539,7 +1551,7 @@ as
 		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
 		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
 		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
-		and CAST(v.fecha_inicio as datetime) > @fechaConfig and cantidadDeCabinas>= @cantPasajes
+		and CAST(v.fecha_inicio as datetime) > @fechaConfig
 	end
 go
 ------------------------Mostrar butacas libres para ese viaje---------------
@@ -1809,10 +1821,10 @@ go
 use GD1C2019
 go
 create proc [LEISTE_EL_CODIGO?].comprarPasajeReservado
-(@idReserva decimal(18,0),@idMedioDePago varchar(256),@fechaConfig datetime,@idPago int out)
+(@idReserva decimal(18,0),@idMedioDePago varchar(256),@fechaConfig datetime)
 as
 begin
-	declare @idCliente int,@idViaje int,@idCabina int,@idCrucero nvarchar(50)
+	declare @idCliente int,@idViaje int,@idCabina int,@idCrucero nvarchar(50), @idPago int
 	declare @retorno int
 	if(not exists (select 1
 					from [LEISTE_EL_CODIGO?].Reserva
@@ -1825,7 +1837,7 @@ begin
 	from [LEISTE_EL_CODIGO?].Reserva where id_reserva = @idReserva
 	exec @idPago = [LEISTE_EL_CODIGO?].devolverIdPago @idMedioDePago,@idCliente,@fechaConfig
 	exec @retorno= [LEISTE_EL_CODIGO?].comprarPasaje @idCliente,@idViaje,@idCabina,@idCrucero,@idPago
-	--exec [LEISTE_EL_CODIGO?].verVoucher @idPago
+	exec [LEISTE_EL_CODIGO?].verVoucher @idPago
 
 	if(@retorno=1)
 	begin
@@ -1921,4 +1933,4 @@ as
 		--group by id_crucero
 		order by 2 desc
 	end
-go
+go	
