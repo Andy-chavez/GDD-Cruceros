@@ -207,8 +207,7 @@ namespace FrbaCrucero.AbmRol
         {
 
         }
-
-        private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (this.dataGridFuncionalidades.CurrentRow == null) return;
             if (this.dataGridFuncionalidades.CurrentRow.Cells[0] == null) return;
@@ -225,19 +224,10 @@ namespace FrbaCrucero.AbmRol
                 }
             }
         }
-
-        /*private void agregarFuncionalidad(string funcionalidad)
+        private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            if (this.posicion < 9 && !funcionalidadesParaRol.Contains(funcionalidad))
-            {
-                this.funcionalidadesParaRol.Insert(this.posicion, funcionalidad);
-                this.posicion++;
-            }
-            else
-            {
-                throw new Exception("Ya contiene esa funcionalidad, elija otra");
-            }
-        }*/
+        }
+
         private void SeleccionFuncionalidad_Click(object sender, EventArgs e)
         {
             /*try

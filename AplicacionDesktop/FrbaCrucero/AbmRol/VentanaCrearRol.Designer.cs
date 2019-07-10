@@ -127,6 +127,7 @@
             this.dataGridFuncionalidades.ReadOnly = true;
             this.dataGridFuncionalidades.Size = new System.Drawing.Size(211, 234);
             this.dataGridFuncionalidades.TabIndex = 0;
+            this.dataGridFuncionalidades.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellClick);
             this.dataGridFuncionalidades.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             // 
             // botonLimpiar
