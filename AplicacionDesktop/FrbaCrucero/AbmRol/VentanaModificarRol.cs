@@ -17,7 +17,7 @@ namespace FrbaCrucero.AbmRol
     {
         private BaseDeDato bd = new BaseDeDato();
         private DataTable dt = new DataTable();
-        private DataTable dtNT = new DataTable();
+       
         private String id;
         private int posicion = 0;
         private List<String> funcionalidadesParaRol = new List<string>() { "", "", "", "", "", "", "", "", "", "" };
@@ -26,55 +26,55 @@ namespace FrbaCrucero.AbmRol
         public VentanaModificarRol(string idRol)
         {
             InitializeComponent();
+            this.dataGridTiene.ColumnCount = 1;
+            this.dataGridTiene.Columns[0].Name = "Funcionalidad";
             this.id = idRol;
             rolSelect.Text = idRol;
-            rolSelect.Enabled = false;
-//            this.cargarListaFuncionalidades(idRol);
-            this.llenarFuncionalidades(idRol);
+            rolSelect.Enabled = false;            
+            this.cargarListaFuncionalidades(idRol);
+            //this.llenarFuncionalidades(idRol);
             this.llenarNoFuncionalidades(idRol);
         }
 
         private void VentanaRolSeleccionado_Load(object sender, EventArgs e)
         {
         }
+        private void eliminarFuncionalidad(String funcionalidad)
+        {
+            if (posicion > 0 && funcionalidadesParaRol.Contains(funcionalidad))
+            {
+                this.funcionalidadesParaRol.Remove(funcionalidad);//
+                this.funcionalidadesParaRol.Insert(posicion, "");
+                this.posicion--;
+            }
+            else
+            {
+                throw new Exception("No contiene la funcionalidad");
+            }
+        }
         private void botonEliminar_Click(object sender, EventArgs e)
         {
-           /* this.Hide();
+            int indice = this.dataGridTiene.Rows.Count - 1;
+            if (indice == -1) return;
             try
             {
-                BaseDeDato bd = new BaseDeDato();
-                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].eliminarFuncionalidadRol");
-                procedure.CommandType = CommandType.StoredProcedure;
-                procedure.Parameters.AddWithValue("@idRol", SqlDbType.NVarChar).Value = this.id;
-                procedure.Parameters.Add("@idFuncionalidadAEliminar", SqlDbType.NVarChar).Value = comboBoxFuncionalidades.Text;
-                procedure.Parameters.Add("@nuevoNombreRol", SqlDbType.NVarChar).Value = casillaUsuario2.Text;
-                procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
-                bd.ejecutarConsultaDevuelveInt(procedure);
-                int retorno = (int)procedure.Parameters["@retorno"].Value;
-                if (retorno == 1) //joya
+                String funcionalidad = this.dataGridTiene.Rows[indice].Cells["Funcionalidad"].Value.ToString();
+                this.eliminarFuncionalidad(funcionalidad);
+                this.dataGridTiene.Rows[indice].Cells["Funcionalidad"].Value = "";
+                this.dataGridTiene.Rows.RemoveAt(indice);// - 1);
+                this.dataGridNoTiene.DataSource = null;
+                while (dataGridNoTiene.Rows.Count > 0)
                 {
-                    MessageBox.Show("Operacion completada correctamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.None);
-                    this.Hide();
+                    dataGridNoTiene.Rows.RemoveAt(0);
                 }
-                else if(retorno == -1) // no existe el rol
-                { //no existe usuario
-                    MessageBox.Show("No Existe el Rol");
-                }
-                else if (retorno == -2) //-2: No existe funcionalidad
-                { //no existe usuario
-                    MessageBox.Show("No Existe dicha funcionalidad");
-                }
-                else if (retorno == -3) //el rol ya tiene esa funcionalidad(agregar) o no tiene esa funcionalidad(eliminar)
-                { //no existe usuario
-                    MessageBox.Show("El rol seleccionado no tiene dicha funcionalidad");
-                }
-                //this.Hide();
+                //this.dtNT.Clear();
+                this.llenarNoFuncionalidades(id);
 
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
-            }*/
+            }
         }
 
         private void listaFunc_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -203,6 +203,7 @@ namespace FrbaCrucero.AbmRol
         }
         private void llenarNoFuncionalidades(string idRol)
         {
+            DataTable dtNT = new DataTable();
             SqlConnection con = new SqlConnection(bd.getConfig());
             con.Open();
             SqlCommand cmd = new SqlCommand();
@@ -220,7 +221,6 @@ namespace FrbaCrucero.AbmRol
 
             sda.Fill(dtNT);
             con.Close();
-            //comboBoxFuncAgregar.ValueMember = "id_funcionalidad";
             dataGridNoTiene.DataSource = dtNT;
         }
         private void llenarFuncionalidades(string idRol)
@@ -267,13 +267,13 @@ namespace FrbaCrucero.AbmRol
 
             while (reader.Read())
             {
-                funcionalidadesParaRol.Add(reader.GetString(0));
+                funcionalidadesParaRol.Insert(posicion,reader.GetString(0));
                 this.dataGridTiene.Rows.Add(funcionalidadesParaRol[posicion]);
                 posicion++;
             }
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
+           // DataTable dt = new DataTable();
+           // sda.Fill(dt);
             con.Close();
             //comboBoxFuncionalidades.ValueMember = "id_funcionalidad";
             //dataGridTiene.DataSource = dt;
