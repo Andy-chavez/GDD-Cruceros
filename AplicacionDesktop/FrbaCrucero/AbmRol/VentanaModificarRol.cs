@@ -28,6 +28,8 @@ namespace FrbaCrucero.AbmRol
             InitializeComponent();
             this.dataGridTiene.ColumnCount = 1;
             this.dataGridTiene.Columns[0].Name = "Funcionalidad";
+            this.dataGridNoTiene.ColumnCount = 1;
+            this.dataGridNoTiene.Columns[0].Name = "Funcionalidad";
             this.id = idRol;
             rolSelect.Text = idRol;
             rolSelect.Enabled = false;            
@@ -62,13 +64,29 @@ namespace FrbaCrucero.AbmRol
                 this.eliminarFuncionalidad(funcionalidad);
                 this.dataGridTiene.Rows[indice].Cells["Funcionalidad"].Value = "";
                 this.dataGridTiene.Rows.RemoveAt(indice);// - 1);
-                this.dataGridNoTiene.DataSource = null;
+                /*this.dataGridNoTiene.DataSource = null;
                 while (dataGridNoTiene.Rows.Count > 0)
                 {
                     dataGridNoTiene.Rows.RemoveAt(0);
                 }
-                //this.dtNT.Clear();
-                this.llenarNoFuncionalidades(id);
+                this.dtNT.Clear();
+                this.llenarNoFuncionalidades(id);*/
+                bool seEncontro = false;
+                if (dataGridNoTiene.RowCount > 0)
+                {
+                    for (int i = 0; i < dataGridNoTiene.RowCount; i++)
+                    {
+                        if (dataGridNoTiene.Rows[i].Cells["Funcionalidad"].Value.ToString() == funcionalidad)
+                        {
+                            seEncontro = true;
+                        }    
+                    }
+                }
+                if(seEncontro == false)
+                {
+                    dataGridNoTiene.Rows.Add(funcionalidad);
+                }
+               // this.dataGridNoTiene.Rows.Add(funcionalidad);
 
             }
             catch (Exception exception)
@@ -217,11 +235,19 @@ namespace FrbaCrucero.AbmRol
             cmd.Parameters.AddWithValue("@idRol", idRol);
 
             cmd.Connection = con;
-            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                //funcionalidadesParaRol.Insert(posicion, reader.GetString(0));
+                this.dataGridNoTiene.Rows.Add(reader.GetString(0));
+                //posicion++;
+            }
+            /*SqlDataAdapter sda = new SqlDataAdapter(cmd);
 
             sda.Fill(dtNT);
+            dataGridNoTiene.DataSource = dtNT;*/
             con.Close();
-            dataGridNoTiene.DataSource = dtNT;
         }
         private void llenarFuncionalidades(string idRol)
         {
