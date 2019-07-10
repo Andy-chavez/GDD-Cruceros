@@ -113,5 +113,10 @@ namespace FrbaCrucero.ListadoEstadistico
         {
             this.Close();
         }
+
+        private void GroupBox6_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

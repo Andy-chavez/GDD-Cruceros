@@ -41,9 +41,8 @@
             this.funcionalidadBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dataGridSeleccionadas = new System.Windows.Forms.DataGridView();
-            this.SeleccionFuncionalidad = new System.Windows.Forms.Button();
-            this.Quitar = new System.Windows.Forms.Button();
             this.FuncionalidadesAgregadas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Quitar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidadBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -57,7 +56,7 @@
             // 
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.textoNombre);
-            this.groupBox1.Location = new System.Drawing.Point(233, 24);
+            this.groupBox1.Location = new System.Drawing.Point(24, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(435, 53);
             this.groupBox1.TabIndex = 0;
@@ -88,7 +87,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(12, 342);
+            this.botonVolver.Location = new System.Drawing.Point(12, 378);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(93, 23);
             this.botonVolver.TabIndex = 2;
@@ -98,7 +97,7 @@
             // 
             // botonCrear
             // 
-            this.botonCrear.Location = new System.Drawing.Point(707, 333);
+            this.botonCrear.Location = new System.Drawing.Point(396, 378);
             this.botonCrear.Name = "botonCrear";
             this.botonCrear.Size = new System.Drawing.Size(93, 23);
             this.botonCrear.TabIndex = 3;
@@ -111,7 +110,7 @@
             this.groupBox2.Controls.Add(this.dataGridFuncionalidades);
             this.groupBox2.Location = new System.Drawing.Point(24, 83);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(384, 224);
+            this.groupBox2.Size = new System.Drawing.Size(232, 260);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Seleccione las funcionalidades a agregar";
@@ -119,18 +118,20 @@
             // 
             // dataGridFuncionalidades
             // 
+            this.dataGridFuncionalidades.AllowUserToAddRows = false;
             this.dataGridFuncionalidades.AllowUserToDeleteRows = false;
+            this.dataGridFuncionalidades.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridFuncionalidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridFuncionalidades.Location = new System.Drawing.Point(7, 20);
+            this.dataGridFuncionalidades.Location = new System.Drawing.Point(6, 20);
             this.dataGridFuncionalidades.Name = "dataGridFuncionalidades";
             this.dataGridFuncionalidades.ReadOnly = true;
-            this.dataGridFuncionalidades.Size = new System.Drawing.Size(371, 179);
+            this.dataGridFuncionalidades.Size = new System.Drawing.Size(211, 234);
             this.dataGridFuncionalidades.TabIndex = 0;
             this.dataGridFuncionalidades.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick_1);
             // 
             // botonLimpiar
             // 
-            this.botonLimpiar.Location = new System.Drawing.Point(12, 313);
+            this.botonLimpiar.Location = new System.Drawing.Point(12, 349);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(93, 23);
             this.botonLimpiar.TabIndex = 5;
@@ -141,9 +142,9 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dataGridSeleccionadas);
-            this.groupBox3.Location = new System.Drawing.Point(425, 83);
+            this.groupBox3.Location = new System.Drawing.Point(262, 83);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(375, 224);
+            this.groupBox3.Size = new System.Drawing.Size(227, 260);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "FuncionalidadesSeleccionadas";
@@ -152,49 +153,40 @@
             // dataGridSeleccionadas
             // 
             this.dataGridSeleccionadas.AllowDrop = true;
+            this.dataGridSeleccionadas.AllowUserToAddRows = false;
+            this.dataGridSeleccionadas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridSeleccionadas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridSeleccionadas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.FuncionalidadesAgregadas});
             this.dataGridSeleccionadas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridSeleccionadas.Location = new System.Drawing.Point(15, 20);
+            this.dataGridSeleccionadas.Location = new System.Drawing.Point(6, 20);
             this.dataGridSeleccionadas.Name = "dataGridSeleccionadas";
-            this.dataGridSeleccionadas.Size = new System.Drawing.Size(295, 179);
+            this.dataGridSeleccionadas.Size = new System.Drawing.Size(211, 234);
             this.dataGridSeleccionadas.TabIndex = 8;
             this.dataGridSeleccionadas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridSeleccionadas_CellContentClick);
-            // 
-            // SeleccionFuncionalidad
-            // 
-            this.SeleccionFuncionalidad.Location = new System.Drawing.Point(145, 313);
-            this.SeleccionFuncionalidad.Name = "SeleccionFuncionalidad";
-            this.SeleccionFuncionalidad.Size = new System.Drawing.Size(131, 23);
-            this.SeleccionFuncionalidad.TabIndex = 7;
-            this.SeleccionFuncionalidad.Text = "Agregar Funcionalidad";
-            this.SeleccionFuncionalidad.UseVisualStyleBackColor = true;
-            this.SeleccionFuncionalidad.Click += new System.EventHandler(this.SeleccionFuncionalidad_Click);
-            // 
-            // Quitar
-            // 
-            this.Quitar.Location = new System.Drawing.Point(534, 313);
-            this.Quitar.Name = "Quitar";
-            this.Quitar.Size = new System.Drawing.Size(145, 23);
-            this.Quitar.TabIndex = 9;
-            this.Quitar.Text = "Quitar Ultima Funcionalidad";
-            this.Quitar.UseVisualStyleBackColor = true;
-            this.Quitar.Click += new System.EventHandler(this.Quitar_Click);
             // 
             // FuncionalidadesAgregadas
             // 
             this.FuncionalidadesAgregadas.HeaderText = "FuncionalidadesAgregadas";
             this.FuncionalidadesAgregadas.Name = "FuncionalidadesAgregadas";
-            this.FuncionalidadesAgregadas.Width = 150;
+            // 
+            // Quitar
+            // 
+            this.Quitar.Location = new System.Drawing.Point(344, 349);
+            this.Quitar.Name = "Quitar";
+            this.Quitar.Size = new System.Drawing.Size(145, 23);
+            this.Quitar.TabIndex = 9;
+            this.Quitar.Text = "Quitar ultima funcionalidad";
+            this.Quitar.UseVisualStyleBackColor = true;
+            this.Quitar.Click += new System.EventHandler(this.Quitar_Click);
             // 
             // VentanaCrearRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(817, 368);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(532, 413);
             this.Controls.Add(this.Quitar);
-            this.Controls.Add(this.SeleccionFuncionalidad);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.botonLimpiar);
             this.Controls.Add(this.groupBox2);
@@ -233,7 +225,6 @@
         private System.Windows.Forms.BindingSource funcionalidadBindingSource1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.DataGridView dataGridFuncionalidades;
-        private System.Windows.Forms.Button SeleccionFuncionalidad;
         private System.Windows.Forms.DataGridView dataGridSeleccionadas;
         private System.Windows.Forms.Button Quitar;
         private System.Windows.Forms.DataGridViewTextBoxColumn FuncionalidadesAgregadas;

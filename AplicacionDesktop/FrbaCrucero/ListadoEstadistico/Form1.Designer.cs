@@ -36,12 +36,14 @@
             this.dataGridViewTop5s = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.botonVolver = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTop5s)).BeginInit();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // top5_rec_pasajes
             // 
-            this.top5_rec_pasajes.Location = new System.Drawing.Point(124, 48);
+            this.top5_rec_pasajes.Location = new System.Drawing.Point(52, 32);
             this.top5_rec_pasajes.Name = "top5_rec_pasajes";
             this.top5_rec_pasajes.Size = new System.Drawing.Size(257, 23);
             this.top5_rec_pasajes.TabIndex = 0;
@@ -51,7 +53,7 @@
             // 
             // top5_rec_cabinas
             // 
-            this.top5_rec_cabinas.Location = new System.Drawing.Point(124, 102);
+            this.top5_rec_cabinas.Location = new System.Drawing.Point(52, 75);
             this.top5_rec_cabinas.Name = "top5_rec_cabinas";
             this.top5_rec_cabinas.Size = new System.Drawing.Size(257, 23);
             this.top5_rec_cabinas.TabIndex = 1;
@@ -61,7 +63,7 @@
             // 
             // top5cruc_fuera_serv
             // 
-            this.top5cruc_fuera_serv.Location = new System.Drawing.Point(124, 154);
+            this.top5cruc_fuera_serv.Location = new System.Drawing.Point(52, 122);
             this.top5cruc_fuera_serv.Name = "top5cruc_fuera_serv";
             this.top5cruc_fuera_serv.Size = new System.Drawing.Size(257, 23);
             this.top5cruc_fuera_serv.TabIndex = 2;
@@ -84,7 +86,7 @@
             "2012",
             "2011",
             "2010"});
-            this.comboBoxAnio.Location = new System.Drawing.Point(183, 213);
+            this.comboBoxAnio.Location = new System.Drawing.Point(228, 22);
             this.comboBoxAnio.Name = "comboBoxAnio";
             this.comboBoxAnio.Size = new System.Drawing.Size(87, 21);
             this.comboBoxAnio.TabIndex = 4;
@@ -97,23 +99,25 @@
             this.comboBoxSemestre.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.comboBoxSemestre.Location = new System.Drawing.Point(302, 213);
+            this.comboBoxSemestre.Location = new System.Drawing.Point(376, 22);
             this.comboBoxSemestre.Name = "comboBoxSemestre";
             this.comboBoxSemestre.Size = new System.Drawing.Size(79, 21);
             this.comboBoxSemestre.TabIndex = 5;
             // 
             // dataGridViewTop5s
             // 
+            this.dataGridViewTop5s.AllowUserToAddRows = false;
+            this.dataGridViewTop5s.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewTop5s.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTop5s.Location = new System.Drawing.Point(29, 257);
             this.dataGridViewTop5s.Name = "dataGridViewTop5s";
-            this.dataGridViewTop5s.Size = new System.Drawing.Size(446, 192);
+            this.dataGridViewTop5s.Size = new System.Drawing.Size(426, 168);
             this.dataGridViewTop5s.TabIndex = 6;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(32, 216);
+            this.label2.Location = new System.Drawing.Point(41, 25);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(122, 13);
             this.label2.TabIndex = 7;
@@ -122,7 +126,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(29, 470);
+            this.botonVolver.Location = new System.Drawing.Point(29, 442);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(93, 23);
             this.botonVolver.TabIndex = 8;
@@ -130,24 +134,37 @@
             this.botonVolver.UseVisualStyleBackColor = true;
             this.botonVolver.Click += new System.EventHandler(this.BotonVolver_Click);
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.top5_rec_pasajes);
+            this.groupBox6.Controls.Add(this.top5_rec_cabinas);
+            this.groupBox6.Controls.Add(this.top5cruc_fuera_serv);
+            this.groupBox6.Location = new System.Drawing.Point(69, 80);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(358, 158);
+            this.groupBox6.TabIndex = 19;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Elija el listado que desee:";
+            this.groupBox6.Enter += new System.EventHandler(this.GroupBox6_Enter);
+            // 
             // ListadoEstadistico
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(500, 507);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(500, 477);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridViewTop5s);
             this.Controls.Add(this.comboBoxSemestre);
             this.Controls.Add(this.comboBoxAnio);
-            this.Controls.Add(this.top5cruc_fuera_serv);
-            this.Controls.Add(this.top5_rec_cabinas);
-            this.Controls.Add(this.top5_rec_pasajes);
             this.Name = "ListadoEstadistico";
             this.Text = "Listado Estadístico";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.ListadoEstadistico_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTop5s)).EndInit();
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -163,5 +180,6 @@
         private System.Windows.Forms.DataGridView dataGridViewTop5s;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button botonVolver;
+        private System.Windows.Forms.GroupBox groupBox6;
     }
 }

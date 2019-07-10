@@ -28,12 +28,12 @@ namespace FrbaCrucero.AbmRol
         private void VentanaDeAltaRol_Load(object sender, EventArgs e)
         {
             bd.conectar();
-            adapt = new SqlDataAdapter("select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
+            adapt = new SqlDataAdapter("select id_funcionalidad Funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad", bd.obtenerConexion());
             dt = new DataTable();
             adapt.Fill(dt);
             dataGridFuncionalidades.DataSource = dt;
             bd.desconectar();
-            vaciarFuncionalidades();
+            //vaciarFuncionalidades();
 
         }
 
@@ -43,7 +43,19 @@ namespace FrbaCrucero.AbmRol
         }
         private void vaciarFuncionalidades()
         {
+            dataGridSeleccionadas.DataSource = null;
+            while (dataGridSeleccionadas.Rows.Count > 0)
 
+            {
+
+                dataGridSeleccionadas.Rows.RemoveAt(0);
+
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                funcionalidadesParaRol[i] = "";
+
+            }
         }
 
         private void botonCrear_Click(object sender, EventArgs e)
@@ -73,8 +85,10 @@ namespace FrbaCrucero.AbmRol
                     if (retorno == 1) //joya
                     {
                         bd.desconectar();
-                        MessageBox.Show("Rol creado exitosamente. \nAgregue nuevas funciones a dicho rol seleccionándolas de las posibles y presionando el boton crear.\nPresione limpiar si necesita crear un nuevo rol.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                        MessageBox.Show("Rol creado exitosamente.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        textoNombre.Clear();
+                        textoNombre.Enabled = true;
+                        vaciarFuncionalidades();
                     }
                     else if (retorno == -2) // no existe funcionalidad
                     {
@@ -105,7 +119,7 @@ namespace FrbaCrucero.AbmRol
             }
             else
             {
-                MessageBox.Show("Complete el nombre del rol y al menos una funcionalidad para continuar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Complete el nombre del rol y seleccione al menos una funcionalidad", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void textoNombre_TextChanged(object sender, EventArgs e)
@@ -196,12 +210,25 @@ namespace FrbaCrucero.AbmRol
 
         private void DataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-
+            if (this.dataGridFuncionalidades.CurrentRow == null) return;
+            if (this.dataGridFuncionalidades.CurrentRow.Cells[0] == null) return;
+            if (funcionalidadesParaRol.Contains(this.dataGridFuncionalidades.CurrentRow.Cells["Funcionalidad"].Value.ToString())) return;
+            for (int i = 0; i < 10; i++)
+            {
+                if (funcionalidadesParaRol[i] == "")
+                {
+                    this.funcionalidadesParaRol.Insert(i, this.dataGridFuncionalidades.CurrentRow.Cells["Funcionalidad"].Value.ToString());
+                    //funcionalidadesParaRol[i] = ;
+                    posicion++;
+                    this.dataGridSeleccionadas.Rows.Add(funcionalidadesParaRol[i]);
+                    return;
+                }
+            }
         }
 
-        private void agregarFuncionalidad(string funcionalidad)
+        /*private void agregarFuncionalidad(string funcionalidad)
         {
-            if (this.posicion < 9 || !funcionalidadesParaRol.Contains(funcionalidad))
+            if (this.posicion < 9 && !funcionalidadesParaRol.Contains(funcionalidad))
             {
                 this.funcionalidadesParaRol.Insert(this.posicion, funcionalidad);
                 this.posicion++;
@@ -210,14 +237,14 @@ namespace FrbaCrucero.AbmRol
             {
                 throw new Exception("Ya contiene esa funcionalidad, elija otra");
             }
-        }
+        }*/
         private void SeleccionFuncionalidad_Click(object sender, EventArgs e)
         {
-            try
+            /*try
             {
                 if (this.dataGridFuncionalidades.CurrentRow == null) return;
                 if (this.dataGridFuncionalidades.CurrentRow.Cells[0] == null) return;
-                string funcionalidad = this.dataGridFuncionalidades.CurrentRow.Cells["id_funcionalidad"].Value.ToString();
+                string funcionalidad = this.dataGridFuncionalidades.CurrentRow.Cells["Funcionalidad"].Value.ToString();
 
                 int indice = this.dataGridSeleccionadas.Rows.Count - 1;
 
@@ -230,7 +257,7 @@ namespace FrbaCrucero.AbmRol
             {
                 MessageBox.Show(exception.Message);
                 return;
-            }
+            }*/
         }
 
         private void DataGridSeleccionadas_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -242,8 +269,9 @@ namespace FrbaCrucero.AbmRol
         {
             if (posicion > 0 && funcionalidadesParaRol.Contains(funcionalidad))
             {
-                this.posicion--;
+                this.funcionalidadesParaRol.Remove(funcionalidad);//
                 this.funcionalidadesParaRol.Insert(posicion,"");
+                this.posicion--;
             }
             else
             {
@@ -256,10 +284,10 @@ namespace FrbaCrucero.AbmRol
             if (indice == -1) return;
             try
             {
-                String funcionalidad = this.dataGridSeleccionadas.Rows[indice - 1].Cells["FuncionalidadesAgregadas"].Value.ToString();
+                String funcionalidad = this.dataGridSeleccionadas.Rows[indice].Cells["FuncionalidadesAgregadas"].Value.ToString();
                 this.eliminarFuncionalidad(funcionalidad);
                 this.dataGridSeleccionadas.Rows[indice].Cells["FuncionalidadesAgregadas"].Value = "";
-                this.dataGridSeleccionadas.Rows.RemoveAt(indice - 1);
+                this.dataGridSeleccionadas.Rows.RemoveAt(indice);// - 1);
             }
             catch (Exception exception)
             {
