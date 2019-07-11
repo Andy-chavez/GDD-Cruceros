@@ -261,6 +261,7 @@ namespace FrbaCrucero.AbmRol
         {
             if (this.dataGridNoTiene.CurrentRow == null) return;
             if (this.dataGridNoTiene.CurrentRow.Cells[0] == null) return;
+            if (e.RowIndex < 0) return;
             if (funcionalidadesParaRol.Contains(this.dataGridNoTiene.CurrentRow.Cells["Funcionalidad"].Value.ToString())) return;
 
             this.funcionalidadesParaRol.Add(this.dataGridNoTiene.CurrentRow.Cells["Funcionalidad"].Value.ToString());
@@ -341,6 +342,11 @@ namespace FrbaCrucero.AbmRol
             {
                 MessageBox.Show("Error en la base de datos", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void DataGridTiene_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

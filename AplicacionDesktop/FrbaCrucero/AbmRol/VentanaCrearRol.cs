@@ -169,6 +169,7 @@ namespace FrbaCrucero.AbmRol
         {
             if (this.dataGridFuncionalidades.CurrentRow == null) return;
             if (this.dataGridFuncionalidades.CurrentRow.Cells[0] == null) return;
+            if (e.RowIndex < 0) return;
             if (funcionalidadesParaRol.Contains(this.dataGridFuncionalidades.CurrentRow.Cells["Funcionalidad"].Value.ToString())) return;
             this.funcionalidadesParaRol.Add(this.dataGridFuncionalidades.CurrentRow.Cells["Funcionalidad"].Value.ToString());
             this.dataGridSeleccionadas.Rows.Add(this.dataGridFuncionalidades.CurrentRow.Cells["Funcionalidad"].Value.ToString());

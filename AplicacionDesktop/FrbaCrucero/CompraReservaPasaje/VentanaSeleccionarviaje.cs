@@ -68,7 +68,7 @@ namespace FrbaCrucero.CompraReservaPasaje
         }
         public int viajeSeleccionado()
         {
-            return (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
+            return (int)this.viajesDisponibles.CurrentRow.Cells["IdViaje"].Value;
         }
 
         private void textoFechaInicio_TextChanged(object sender, EventArgs e)
@@ -85,7 +85,8 @@ namespace FrbaCrucero.CompraReservaPasaje
 
             if (this.viajesDisponibles.CurrentRow == null) return;
             if (this.viajesDisponibles.CurrentRow.Cells[0] == null) return;
-            textBoxCruceros.Text = viajesDisponibles.CurrentRow.Cells["crucero"].Value.ToString();
+            if (e.RowIndex < 0) return;
+            textBoxCruceros.Text = viajesDisponibles.CurrentRow.Cells["CruceroAsignado"].Value.ToString();
             textBoxCruceros.Enabled = false;
         }
 
@@ -112,9 +113,9 @@ namespace FrbaCrucero.CompraReservaPasaje
                 //BaseDeDato bd = new BaseDeDato();
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].crearReserva");
                 procedure.CommandType = CommandType.StoredProcedure;
-                procedure.Parameters.Add("@idCrucero", SqlDbType.NVarChar).Value = this.viajesDisponibles.CurrentRow.Cells["crucero"].Value;
+                procedure.Parameters.Add("@idCrucero", SqlDbType.NVarChar).Value = this.viajesDisponibles.CurrentRow.Cells["CruceroAsignado"].Value;
                 procedure.Parameters.Add("@idCliente", SqlDbType.Int).Value = this.cliente.id;
-                procedure.Parameters.Add("@idViaje", SqlDbType.Int).Value = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
+                procedure.Parameters.Add("@idViaje", SqlDbType.Int).Value = (int)this.viajesDisponibles.CurrentRow.Cells["IdViaje"].Value;
                 //cuidado que hay que remodelar esto porque va a fallar de momento
                 procedure.Parameters.Add("@idCabina", SqlDbType.Int).Value = (int) this.cabinas[0];
                 procedure.Parameters.Add("@fechaConfig", SqlDbType.DateTime).Value = this.fechaConfig;
@@ -194,7 +195,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 procedure.Parameters.Add("@origen", SqlDbType.NVarChar).Value = this.listaOrigen.SelectedItem.ToString();
                 procedure.Parameters.Add("@destino", SqlDbType.NVarChar).Value = this.listaDestino.SelectedItem.ToString();
                 procedure.Parameters.Add("@fechaConfig", SqlDbType.DateTime).Value = this.fechaConfig;
-                procedure.Parameters.Add("@cantPasajes", SqlDbType.SmallInt).Value = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
+                //procedure.Parameters.Add("@cantPasajes", SqlDbType.SmallInt).Value = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
                 dt = bd.obtenerDataTable(procedure);
                 this.viajesDisponibles.DataSource = dt;
                 bd.desconectar();
@@ -202,6 +203,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
+                bd.desconectar();
             }
         }
 
@@ -219,8 +221,8 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
             try
             {
-                int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
-                string id_crucero = this.viajesDisponibles.CurrentRow.Cells["crucero"].Value.ToString();
+                int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["IdViaje"].Value;
+                string id_crucero = this.viajesDisponibles.CurrentRow.Cells["CruceroAsignado"].Value.ToString();
                 int cantidad_pasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
                 new Compra(cliente, viaje, this.cabinas, id_crucero, cantidad_pasajes).Show();//necesita origen,destino,viaje,inicio,cantidad
                                                                                                  //compra va a crear la ventana medio de pago new ventanamediodepago(this,cliente.id).Show()
@@ -254,9 +256,14 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
             try
             {
-                string id_crucero = this.viajesDisponibles.CurrentRow.Cells["crucero"].Value.ToString();
-                int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["id_viaje"].Value;
+                string id_crucero = this.viajesDisponibles.CurrentRow.Cells["CruceroAsignado"].Value.ToString();
+                int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["IdViaje"].Value;
                 int cantidadPasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
+                if (Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem) > (int)this.viajesDisponibles.CurrentRow.Cells["cantidadDeCabinasDisponibles"].Value)
+                {
+                    MessageBox.Show("No puede comprar mas pasajes que los disponibles");
+                    return;
+                }
                 new CabinasDisponibles(viaje, this,cantidadPasajes).Show();
             }
             catch (Exception exception)

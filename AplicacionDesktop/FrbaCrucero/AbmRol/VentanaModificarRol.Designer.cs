@@ -194,6 +194,7 @@ namespace FrbaCrucero.AbmRol
             this.dataGridTiene.ReadOnly = true;
             this.dataGridTiene.Size = new System.Drawing.Size(220, 234);
             this.dataGridTiene.TabIndex = 0;
+            this.dataGridTiene.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridTiene_CellContentClick);
             // 
             // button1
             // 
