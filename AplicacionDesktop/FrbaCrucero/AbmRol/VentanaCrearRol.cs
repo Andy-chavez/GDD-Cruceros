@@ -21,10 +21,7 @@ namespace FrbaCrucero.AbmRol
         }
         private BaseDeDato bd = new BaseDeDato();
         private DataTable dt = new DataTable();
-        private int posicion = 0;
-        //private List<String> funcionalidadesParaRol = new List<string>() { "", "", "", "", "", "", "", "", "", "" };
         private List<String> funcionalidadesParaRol = new List<string>();
-        // private Rol rol = new Rol();
         SqlDataAdapter adapt;
         private void VentanaDeAltaRol_Load(object sender, EventArgs e)
         {
@@ -34,8 +31,6 @@ namespace FrbaCrucero.AbmRol
             adapt.Fill(dt);
             dataGridFuncionalidades.DataSource = dt;
             bd.desconectar();
-            //vaciarFuncionalidades();
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -48,9 +43,7 @@ namespace FrbaCrucero.AbmRol
             while (dataGridSeleccionadas.Rows.Count > 0)
 
             {
-
                 dataGridSeleccionadas.Rows.RemoveAt(0);
-
             }
             funcionalidadesParaRol.Clear();
         }
