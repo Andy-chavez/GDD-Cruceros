@@ -86,8 +86,6 @@ if exists (select * from sys.procedures where name = 'agregarFuncionalidadPorRol
 	drop procedure [LEISTE_EL_CODIGO?].agregarFuncionalidadPorRol
 if exists (select * from sys.procedures where name = 'eliminarFuncionalidadRol')
 	drop procedure [LEISTE_EL_CODIGO?].eliminarFuncionalidadRol
-if exists (select * from sys.procedures where name = 'crearNuevoRol')
-	drop procedure [LEISTE_EL_CODIGO?].crearNuevoRol
 if exists (select * from sys.procedures where name = 'darBajaRol')
 	drop procedure [LEISTE_EL_CODIGO?].darBajaRol
 if exists (select * from sys.procedures where name = 'darAltaRol')
@@ -859,132 +857,13 @@ as
 		values(@NombreRol,@idFuncionalidad)
 	end
 go
---Crear Nuevo Rol -- (lo dejo por ahora, quizas no lo use, pero primero quiero probar que lo otro funque.
-USE GD1C2019
-go
-create procedure [LEISTE_EL_CODIGO?].crearNuevoRol (@NombreRol nvarchar(255),@idFuncionalidad1 nvarchar(100),
-@idFuncionalidad2 nvarchar(100)=NULL,@idFuncionalidad3 nvarchar(100)=NULL,
-@idFuncionalidad4 nvarchar(100)=NULL,@idFuncionalidad5 nvarchar(100)=NULL,
-@idFuncionalidad6 nvarchar(100)=NULL,@idFuncionalidad7 nvarchar(100)=NULL,
-@idFuncionalidad8 nvarchar(100)=NULL,@idFuncionalidad9 nvarchar(100)=NULL,
-@idFuncionalidad10 nvarchar(100)=NULL)
-as
-begin
-		declare @valor_retorno smallint
-		if
-		(not exists (select id_funcionalidad from [LEISTE_EL_CODIGO?].Funcionalidad where id_funcionalidad= @idFuncionalidad1)) 
-			begin
-			set @valor_retorno = -2 -- no existe funcionalidad
-			return @valor_retorno
-			end
-		else
-			begin
-				--if(exists (select id_rol from [LEISTE_EL_CODIGO?].Rol where id_rol= @NombreRol)) 
-					--begin
-						--set @valor_retorno = -4 --existe un rol con ese nombre
-						--return @valor_retorno
-					--end
-				--insert into [LEISTE_EL_CODIGO?].Rol (id_rol)
-				--values (@NombreRol)
-
-				if
-					(exists (select id_funcionalidad,id_rol from [LEISTE_EL_CODIGO?].FuncionalidadPorRol 
-								where id_funcionalidad= @idFuncionalidad1 and id_rol = @NombreRol)) 
-							begin
-								set @valor_retorno = -3 -- ya tiene esa funcionalidad
-								return @valor_retorno
-							end
-				begin try
-				begin transaction
-					if(@idFuncionalidad1 is not null and exists (select id_funcionalidad
-																	from [LEISTE_EL_CODIGO?].Funcionalidad
-																	where id_funcionalidad = @idFuncionalidad1))
-					begin
-						insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-						values(@NombreRol,@idFuncionalidad1)
-					end
-				if(@idFuncionalidad2 is not null and exists (select id_funcionalidad
-																	from [LEISTE_EL_CODIGO?].Funcionalidad
-																	where id_funcionalidad = @idFuncionalidad2))
-					begin
-						insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-						values(@NombreRol,@idFuncionalidad2)
-					end
-				if(@idFuncionalidad3 is not null and exists (select id_funcionalidad
-																	from [LEISTE_EL_CODIGO?].Funcionalidad
-																	where id_funcionalidad = @idFuncionalidad3))
-					begin
-						insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-						values(@NombreRol,@idFuncionalidad3)
-					end
-				if(@idFuncionalidad4 is not null and exists (select id_funcionalidad
-																	from [LEISTE_EL_CODIGO?].Funcionalidad
-																	where id_funcionalidad = @idFuncionalidad4))
-					begin
-						insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-						values(@NombreRol,@idFuncionalidad4)
-					end
-				if(@idFuncionalidad5 is not null and exists (select id_funcionalidad
-																	from [LEISTE_EL_CODIGO?].Funcionalidad
-																	where id_funcionalidad = @idFuncionalidad5))
-					begin
-						insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-						values(@NombreRol,@idFuncionalidad5)
-					end
-				if(@idFuncionalidad6 is not null and exists (select id_funcionalidad
-																	from [LEISTE_EL_CODIGO?].Funcionalidad
-																	where id_funcionalidad = @idFuncionalidad6))
-					begin
-						insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-						values(@NombreRol,@idFuncionalidad6)
-					end
-				if(@idFuncionalidad7 is not null and exists (select id_funcionalidad
-																	from [LEISTE_EL_CODIGO?].Funcionalidad
-																	where id_funcionalidad = @idFuncionalidad7))
-					begin
-						insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-						values(@NombreRol,@idFuncionalidad7)
-					end
-				if(@idFuncionalidad8 is not null and exists (select id_funcionalidad
-																	from [LEISTE_EL_CODIGO?].Funcionalidad
-																	where id_funcionalidad = @idFuncionalidad8))
-					begin
-						insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-						values(@NombreRol,@idFuncionalidad8)
-					end
-				if(@idFuncionalidad9 is not null and exists (select id_funcionalidad
-																	from [LEISTE_EL_CODIGO?].Funcionalidad
-																	where id_funcionalidad = @idFuncionalidad9))
-					begin
-						insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-						values(@NombreRol,@idFuncionalidad9)
-					end
-				if(@idFuncionalidad10 is not null and exists (select id_funcionalidad
-																	from [LEISTE_EL_CODIGO?].Funcionalidad
-																	where id_funcionalidad = @idFuncionalidad10))
-					begin
-						insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad)
-						values(@NombreRol,@idFuncionalidad10)
-					end
-
-				set @valor_retorno = 1
-				commit transaction
-				end try
-				begin catch
-					rollback transaction
-					set @valor_retorno = -5;
-					--throw 50000,'Hubo un error en la transaccion', 1
-				end catch
-			end
-		return @valor_retorno
-end
-go
---pruebas
---begin transaction 
---exec [LEISTE_EL_CODIGO?].crearNuevoRol 'facu','generar viaje','abm rol','abm de cruceros',NULL,NULL,NULL,NULL,NULL,NULL,'registro de usuarios'
+-----pruebas
+--exec [LEISTE_EL_CODIGO?].crearNuevoRolNombre 'fac'
+--exec [LEISTE_EL_CODIGO?].agregarFuncionalidadRol 'fac','abm de rol'
+--exec [LEISTE_EL_CODIGO?].agregarFuncionalidadRol 'fac','abm de cruceros'
+--exec [LEISTE_EL_CODIGO?].agregarFuncionalidadRol 'fac','abm de cruceros' --vuelve todo atras si se trata de hacer esto
 --select * from [LEISTE_EL_CODIGO?].FuncionalidadPorRol
---rollback transaction
---Dar de baja un rol--
+
 USE GD1C2019
 go
 create procedure [LEISTE_EL_CODIGO?].darBajaRol (@idRol nvarchar(255))
