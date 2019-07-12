@@ -406,7 +406,6 @@ go
 insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('administrador general')			--Rol 1 = administrador general
 insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('administrador')					--Rol 2 = administrador
 insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('cliente')						--Rol 3 = cliente
-insert into [LEISTE_EL_CODIGO?].Rol(id_rol) values('Usuario Especial')				--Rol 4 = Usuario Especial (para pruebas de logueo)
 go
 -- Funcionalidad por Rol
 --ADMINISTRADOR GENERAL
@@ -437,8 +436,6 @@ insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) val
 insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('cliente','pago de reserva')
 go
 
---Pepe (para pruebas)
-insert into [LEISTE_EL_CODIGO?].FuncionalidadPorRol(id_rol,id_funcionalidad) values('Usuario Especial','listado estadistico')
 ----Contraseñas
 declare @algo nvarchar(32)
 set @algo = 'w23e'
@@ -449,8 +446,6 @@ insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin'
 --ADMINISTRADORES
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('adminNuestro','administrador',@hash)
 insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('admin2','administrador',@hash)
---USUARIO ESPECIAL (para pruebas)
-insert into [LEISTE_EL_CODIGO?].Usuario(id_usuario,id_rol,contra) values('pepe','Usuario Especial',@hash)
 go
 --........................................ MIGRACION ......................................................
 --CLIENTE--
@@ -464,7 +459,6 @@ insert into [LEISTE_EL_CODIGO?].Fabricante
 select distinct CRU_FABRICANTE
 from gd_esquema.Maestra
 go
-
 --------------------------------------Medio de pago--------------------------------------
 insert into [LEISTE_EL_CODIGO?].MedioDePago(id_medio_de_pago,cuotas_sin_interes)
 values('Efectivo',0)
@@ -1360,14 +1354,14 @@ as
 			begin
 				set @valor_retorno = -1 --fecha mal ingresada, se quiere generar viaje de fecha anterior a la actual
 			end
-		else if exists( select id_viaje
-						from [LEISTE_EL_CODIGO?].Viaje v join [LEISTE_EL_CODIGO?].Crucero cru
-						on (v.id_crucero = @id_crucero and v.id_crucero = cru.id_crucero)
-						where fecha_inicio between @fecha_inicio and @fecha_finalizacion_estimada --fijarse cambiar los between
-							and fecha_finalizacion_estimada between @fecha_inicio and @fecha_finalizacion_estimada)
-			begin
-				set @valor_retorno = -2 -- crucero ocupado
-			end
+		--else if exists( select id_viaje
+		--				from [LEISTE_EL_CODIGO?].Viaje v join [LEISTE_EL_CODIGO?].Crucero cru
+		--				on (v.id_crucero = @id_crucero and v.id_crucero = cru.id_crucero)
+		--				where fecha_inicio between @fecha_inicio and @fecha_finalizacion_estimada --fijarse cambiar los between
+		--					and fecha_finalizacion_estimada between @fecha_inicio and @fecha_finalizacion_estimada)
+		--	begin
+		--		set @valor_retorno = -2 -- crucero ocupado
+		--	end
 		else if exists(select id_recorrido from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido = @id_recorrido and estado = 'I')
 			begin
 				set @valor_retorno = -3 --recorrido inhabilitado
@@ -1392,13 +1386,15 @@ create procedure [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje(@fecha_inicio 
 as
 	begin
 		select distinct c.id_crucero,id_fabricante,modelo
-			from [LEISTE_EL_CODIGO?].CrucerosDisponibles c left join [LEISTE_EL_CODIGO?].Viaje v
-			On c.id_crucero = v.id_crucero
-			where (v.fecha_inicio <> @fecha_inicio and v.fecha_finalizacion_estimada <>@fecha_inicio 
-				and v.fecha_inicio <> @fecha_finalizacion_estimada and v.fecha_finalizacion_estimada <> @fecha_finalizacion_estimada)
-				or v.fecha_finalizacion_estimada is null and v.fecha_inicio is null
+			from [LEISTE_EL_CODIGO?].CrucerosDisponibles c
+			where c.id_crucero not in(select distinct id_crucero from [LEISTE_EL_CODIGO?].Viaje 
+										where fecha_inicio = @fecha_inicio or fecha_inicio = @fecha_finalizacion_estimada
+										or fecha_finalizacion_estimada = @fecha_inicio or fecha_finalizacion = @fecha_finalizacion_estimada)
 	end
 go
+--pruebas
+--select distinct id_crucero from [LEISTE_EL_CODIGO?].Viaje where fecha_inicio = '2018-07-22 07:00:00.000'
+--exec [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje '2018-07-22 07:00:00.000','2018-07-22 19:00:00.000'
 --.......................................<ABM 8> COMPRA Y/O RESERVA DE VIAJE	......................................................
 USE GD1C2019
 go
