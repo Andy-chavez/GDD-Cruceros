@@ -264,6 +264,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                     MessageBox.Show("No puede comprar mas pasajes que los disponibles");
                     return;
                 }
+                this.cabinas = new ArrayList();
                 new CabinasDisponibles(viaje, this,cantidadPasajes).Show();
             }
             catch (Exception exception)
@@ -271,6 +272,10 @@ namespace FrbaCrucero.CompraReservaPasaje
                 MessageBox.Show(exception.Message);
                 //MessageBox.Show("Por favor seleccione primero el viaje deseado para poder elejir las cabinas");
             }
+        }
+        public void crearNuevaLista()
+        {
+            this.cabinas = new ArrayList();
         }
 
         private void TextBoxCruceros_TextChanged(object sender, EventArgs e)

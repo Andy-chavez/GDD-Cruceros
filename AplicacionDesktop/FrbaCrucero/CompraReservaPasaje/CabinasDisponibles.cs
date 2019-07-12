@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaCrucero.Clases;
 using System.Data.SqlClient;
+using System.Collections;
 
 namespace FrbaCrucero.CompraReservaPasaje
 {
@@ -43,7 +44,6 @@ namespace FrbaCrucero.CompraReservaPasaje
             this.dataGridSeleccionadas.Columns[3].ReadOnly = true;
             this.dataGridSeleccionadas.Columns[4].ReadOnly = true;
         }
-
         private void dataGridSeleccionadas_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             e.Control.KeyPress -= new KeyPressEventHandler(Column2_KeyPress);
@@ -88,6 +88,11 @@ namespace FrbaCrucero.CompraReservaPasaje
                 string descripcion = this.CabinasParaSeleccionar.CurrentRow.Cells["servicioAsociado"].Value.ToString();
 
                 int indice = this.dataGridSeleccionadas.Rows.Count-1;
+                if(cantidadPasajes == 0)
+                {
+                    MessageBox.Show("Max de cabinas alcanzado, reemplace una cabina por otra, o aumente la cantidad de pasajes", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 ventanaOriginal.recibirIdCabina(cabina);
                 cantidadPasajes--; //lo hago antes para que rompa si esta repetido
 
@@ -96,14 +101,13 @@ namespace FrbaCrucero.CompraReservaPasaje
             }
             catch(Exception exception)
             {
-                MessageBox.Show(exception.Message);
-                //MessageBox.Show("Debe seleccionar una cabina distinta a las ya seleccionadas");
+                MessageBox.Show(exception.Message, "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (cantidadPasajes == 0)
             {
                 MessageBox.Show("Cabinas seleccionadas exitosamente proceda con el pago/reserva del pasaje o a cargar sus datos");
-                this.Hide();
+                //this.Hide();
             }
             else
             {
@@ -164,6 +168,11 @@ namespace FrbaCrucero.CompraReservaPasaje
         public void Label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Button1_Click_2(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

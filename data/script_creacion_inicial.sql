@@ -1392,6 +1392,7 @@ as
 										or fecha_finalizacion_estimada = @fecha_inicio or fecha_finalizacion = @fecha_finalizacion_estimada)
 	end
 go
+select * from [LEISTE_EL_CODIGO?].Cliente where dni = 65212110
 --pruebas
 --select distinct id_crucero from [LEISTE_EL_CODIGO?].Viaje where fecha_inicio = '2018-07-22 07:00:00.000'
 --exec [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje '2018-07-22 07:00:00.000','2018-07-22 19:00:00.000'
