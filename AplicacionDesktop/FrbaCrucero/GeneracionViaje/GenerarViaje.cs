@@ -48,6 +48,17 @@ namespace FrbaCrucero.GeneracionViaje
 
         private void buttonCruc_Click(object sender, EventArgs e)
         {
+            int ret = DateTime.Compare(this.dateTimePickerInicio.Value, this.dateTimePickerFin.Value);
+            if (ret == 0)
+            {
+                MessageBox.Show("La fecha de inicio y fin son iguales");
+                return;
+            }
+            else if (ret > 0)
+            {
+                MessageBox.Show("La fecha de inicio es mayor a la de fin");
+                return;
+            }
             try
             {
                 BaseDeDato bd = new BaseDeDato();
@@ -91,6 +102,17 @@ namespace FrbaCrucero.GeneracionViaje
                 DataGridViewRow rowRec = this.dataGridViewRec.CurrentRow;//id_recorrido
                 DataGridViewRow rowCruc = this.dataGridViewCruc.CurrentRow;
 
+                int ret = DateTime.Compare(this.dateTimePickerInicio.Value,this.dateTimePickerFin.Value);
+                if (ret == 0)
+                {
+                    MessageBox.Show("La fecha de inicio y fin son iguales");
+                    return;
+                }else if (ret > 0)
+                {
+                    MessageBox.Show("La fecha de inicio es mayor a la de fin");
+                    return;
+                }
+
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].cargarViaje");
                 procedure.CommandType = CommandType.StoredProcedure;
                 procedure.Parameters.Add("@id_recorrido", SqlDbType.Decimal).Value = rowRec.Cells["id_recorrido"].Value;
@@ -121,7 +143,7 @@ namespace FrbaCrucero.GeneracionViaje
                 }
             }catch(Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show("Primero seleccione el recorrido y el crucero");
             }
         }
 

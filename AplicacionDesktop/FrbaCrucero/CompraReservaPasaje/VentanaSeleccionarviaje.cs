@@ -227,9 +227,9 @@ namespace FrbaCrucero.CompraReservaPasaje
                 new Compra(cliente, viaje, this.cabinas, id_crucero, cantidad_pasajes).Show();//necesita origen,destino,viaje,inicio,cantidad
                                                                                                  //compra va a crear la ventana medio de pago new ventanamediodepago(this,cliente.id).Show()
             }
-            catch (Exception exception)
+            catch
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show("Seleccione la cabina antes de realizar una compra");
             }
         }
 
@@ -267,10 +267,9 @@ namespace FrbaCrucero.CompraReservaPasaje
                 this.cabinas = new ArrayList();
                 new CabinasDisponibles(viaje, this,cantidadPasajes).Show();
             }
-            catch (Exception exception)
+            catch
             {
-                MessageBox.Show(exception.Message);
-                //MessageBox.Show("Por favor seleccione primero el viaje deseado para poder elejir las cabinas");
+                MessageBox.Show("Por favor seleccione primero el viaje deseado");
             }
         }
         public void crearNuevaLista()

@@ -60,7 +60,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             //ingresarCliente (@nombre varchar(255),@apellido varchar(255),@dni decimal(18, 0),
             //@telefono int,@mail nvarchar(255),@fecha_nacimiento datetime2(3),@direccion nvarchar(255))
 
-                BaseDeDato bd = new BaseDeDato();
+            BaseDeDato bd = new BaseDeDato();
 
             try
             {
@@ -80,9 +80,9 @@ namespace FrbaCrucero.CompraReservaPasaje
                         break;
                 }
             }
-            catch (Exception exeption)
+            catch
             {
-                MessageBox.Show(exeption.Message);
+                MessageBox.Show("Ingrese sus datos correctamente");
             }
         }
         

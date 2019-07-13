@@ -197,9 +197,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(20, 439);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(78, 13);
+            this.label4.Size = new System.Drawing.Size(93, 13);
             this.label4.TabIndex = 14;
-            this.label4.Text = "Fecha Reinicio";
+            this.label4.Text = "Fecha de Reinicio";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // buttonFechaReinicio
@@ -261,7 +261,7 @@
             this.Controls.Add(this.botonModificar);
             this.Controls.Add(this.dataGridView1);
             this.Name = "VentanaModificarCrucero";
-            this.Text = "VentanaModificarCrucero";
+            this.Text = "Modificar Crucero";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaModificarCrucero_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

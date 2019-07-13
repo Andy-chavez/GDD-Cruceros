@@ -77,9 +77,9 @@ namespace FrbaCrucero.AbmRecorrido
                     VentanaModificarRecorrido_Load(null, null);
                 }
                 else MessageBox.Show("No existe el recorrido");
-            } catch(Exception ex)
+            } catch
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Debe elegir un recorrido");
             }
         }
 
@@ -189,6 +189,7 @@ namespace FrbaCrucero.AbmRecorrido
         {
             this.textBoxFiltroDestino.Text = "";
             this.textBoxFiltroOrigen.Text = "";
+            this.textoRecorridoSeleccionado.Text = "";
             VentanaModificarRecorrido_Load(null, null);
             this.dataGridTramos.DataSource = null;
         }

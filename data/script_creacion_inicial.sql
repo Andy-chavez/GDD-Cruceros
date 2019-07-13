@@ -1392,7 +1392,7 @@ as
 										or fecha_finalizacion_estimada = @fecha_inicio or fecha_finalizacion = @fecha_finalizacion_estimada)
 	end
 go
-select * from [LEISTE_EL_CODIGO?].Cliente where dni = 65212110
+--select * from [LEISTE_EL_CODIGO?].Cliente where dni = 65212110
 --pruebas
 --select distinct id_crucero from [LEISTE_EL_CODIGO?].Viaje where fecha_inicio = '2018-07-22 07:00:00.000'
 --exec [LEISTE_EL_CODIGO?].crucerosDisponiblesParaViaje '2018-07-22 07:00:00.000','2018-07-22 19:00:00.000'
@@ -1736,7 +1736,7 @@ as
 begin
 	declare @idCliente int,@idViaje int,@idCabina int,@idCrucero nvarchar(50), @idPago int
 	declare @retorno int
-	if(not exists (select 1
+	if(not exists (select *
 					from [LEISTE_EL_CODIGO?].Reserva
 					where id_reserva = @idReserva))
 		begin
@@ -1747,16 +1747,18 @@ begin
 	from [LEISTE_EL_CODIGO?].Reserva where id_reserva = @idReserva
 	exec @idPago = [LEISTE_EL_CODIGO?].devolverIdPago @idMedioDePago,@idCliente,@fechaConfig
 	exec @retorno= [LEISTE_EL_CODIGO?].comprarPasaje @idCliente,@idViaje,@idCabina,@idCrucero,@idPago
-	exec [LEISTE_EL_CODIGO?].verVoucher @idPago
+	--exec [LEISTE_EL_CODIGO?].verVoucher @idPago
 
-	if(@retorno=1)
+	if(@retorno=1)--1 se compró el pasaje reservado
 	begin
 		insert into [LEISTE_EL_CODIGO?].ReservasPagadas(id_reserva,id_cliente)
 		select id_reserva, id_cliente
 		from [LEISTE_EL_CODIGO?].Reserva
 		delete from [LEISTE_EL_CODIGO?].Reserva where id_reserva=@idReserva
+		set @retorno = @idPago
+		return @retorno
 	end
-	return @retorno -- -1:ya tiene viajes en esa fecha, 1 se compró el pasaje reservado
+	return @retorno -- aca devuelve -1:ya tiene viajes en esa fecha
 end
 go
 

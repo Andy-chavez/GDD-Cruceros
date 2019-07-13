@@ -152,7 +152,7 @@ namespace FrbaCrucero.AbmRecorrido
 
         private void botonCrear_Click(object sender, EventArgs e)
         {
-            if (this.dataGridTramos.Rows.Count == 1)
+            if (this.dataGridTramos.Rows.Count == 1 || this.dataGridTramos.Rows.Count == 0)
             {
                 MessageBox.Show("Debe ingresar al menos un origen y un destino");
                 return;

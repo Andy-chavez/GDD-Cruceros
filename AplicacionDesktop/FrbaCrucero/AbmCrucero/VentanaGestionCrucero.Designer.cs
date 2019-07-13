@@ -72,7 +72,7 @@
             this.Controls.Add(this.botonModificar);
             this.Controls.Add(this.botonAlta);
             this.Name = "VentanaGestionCrucero";
-            this.Text = "VentanaAltaCrucero";
+            this.Text = "Cruceros";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.VentanaGestionCrucero_Load);
             this.ResumeLayout(false);

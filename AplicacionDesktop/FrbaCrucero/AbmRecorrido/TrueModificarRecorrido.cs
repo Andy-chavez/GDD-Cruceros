@@ -202,7 +202,7 @@ namespace FrbaCrucero.AbmRecorrido
                 return;
             }
 
-            if (this.dataGridTramos.Rows.Count == 1)
+            if (this.dataGridTramos.Rows.Count == 1 || this.dataGridTramos.Rows.Count == 0)
             {
                 MessageBox.Show("Debe ingresar al menos un origen y un destino");
                 return;

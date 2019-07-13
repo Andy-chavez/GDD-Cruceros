@@ -48,6 +48,12 @@ namespace FrbaCrucero.PagoReserva
 
         private void BotonCrear_Click(object sender, EventArgs e)
         {
+            if (this.reserva.Text == "")
+            {
+                MessageBox.Show("Ingrese el código de reserva");
+                return;
+            }
+                
             try
             {
                 BaseDeDato bd = new BaseDeDato();
@@ -57,24 +63,24 @@ namespace FrbaCrucero.PagoReserva
                 procedure.Parameters.AddWithValue("@idReserva", SqlDbType.NVarChar).Value = System.Convert.ToDecimal(reserva.Text);
                 procedure.Parameters.Add("@idMedioDePago", SqlDbType.NVarChar).Value = comboBoxMedios.Text;
                 procedure.Parameters.AddWithValue("@fechaConfig", SqlDbType.DateTime).Value = enteredDate;
-                procedure.Parameters.Add("@idPago", SqlDbType.Int).Direction = ParameterDirection.Output;
+                //procedure.Parameters.Add("@idPago", SqlDbType.Int).Direction = ParameterDirection.Output;
                 procedure.Parameters.Add("@retorno", SqlDbType.Int).Direction = System.Data.ParameterDirection.ReturnValue;
                 bd.ejecutarConsultaDevuelveInt(procedure);
                 int retorno = (int)procedure.Parameters["@retorno"].Value;
-                if (retorno == 1) //joya
-                {
-                    MessageBox.Show("Reserva pagada exitosamente.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    reserva.Clear();
-                    int idPago = Convert.ToInt32(procedure.Parameters["@idPago"].Value);
-                    new MostrarVoucher(idPago).Show();
-                }
-                else if (retorno == -2) // no existe reserva o se vencio
+                if (retorno == -2) // no existe reserva o se vencio
                 {
                     MessageBox.Show("La reserva ingresada no existe o ya ha cadudado.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (retorno == -1) // el cliente ya tiene viajes en esa fecha
                 {
                     MessageBox.Show("El cliente del pasaje reservado ya tenia viajes pagados en la fecha de dicha reserva.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else //joya
+                {
+                    MessageBox.Show("Reserva pagada exitosamente.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    reserva.Clear();
+                    int idPago = retorno;// Convert.ToInt32(procedure.Parameters["@idPago"].Value);
+                    new MostrarVoucher(idPago).Show();
                 }
             }
             catch (Exception exception)
