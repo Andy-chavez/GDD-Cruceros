@@ -148,10 +148,10 @@ namespace FrbaCrucero.CompraReservaPasaje
         {
             int indice = this.dataGridSeleccionadas.Rows.Count - 1;
             if (indice == -1) return;
-            int cabina = Convert.ToInt32(this.dataGridSeleccionadas.Rows[indice-1].Cells["Cabina"].Value);
 
             try
             {
+                int cabina = Convert.ToInt32(this.dataGridSeleccionadas.Rows[indice-1].Cells["Cabina"].Value);
                 this.ventanaOriginal.eliminarIdCabina(cabina);
                 this.dataGridSeleccionadas.Rows[indice].Cells["Cabina"].Value = "";
                 this.dataGridSeleccionadas.Rows[indice].Cells["Piso"].Value = "";
@@ -161,8 +161,8 @@ namespace FrbaCrucero.CompraReservaPasaje
                 this.dataGridSeleccionadas.Rows.RemoveAt(indice - 1);
                 cantidadPasajes++;
             }
-            catch (Exception exception) {
-                MessageBox.Show(exception.Message);
+            catch {
+                
             }
         }
         public void Label1_Click(object sender, EventArgs e)
