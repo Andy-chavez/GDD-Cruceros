@@ -21,6 +21,7 @@ namespace FrbaCrucero.GeneracionViaje
             InitializeComponent();
             RecorridosDisp();
             SetDefaults();
+            this.dataGridViewRec.CellClick += dataGridViewRec_CellContentClick;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -43,7 +44,25 @@ namespace FrbaCrucero.GeneracionViaje
 
         private void dataGridViewRec_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            BaseDeDato bd = new BaseDeDato();
+            try
+            {
+                bd.conectar();
+                SqlConnection conexion = bd.obtenerConexion();
+                string msg = "SELECT id_origen Origen,id_destino Destino,precio_base Precio FROM [LEISTE_EL_CODIGO?].Tramo WHERE @idRec = id_recorrido order by orden asc";
+                SqlCommand proc = new SqlCommand(msg, conexion);
+                proc.Parameters.Add("@idRec", SqlDbType.Decimal).Value = Convert.ToDecimal(dataGridViewRec.CurrentRow.Cells["ID"].Value);
+                SqlDataAdapter adapter = new SqlDataAdapter(proc);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                dataGridTramos.DataSource = dt;
+                bd.desconectar();
+            }
+            catch (Exception ex)
+            {
+                bd.desconectar();
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void buttonCruc_Click(object sender, EventArgs e)
@@ -81,7 +100,7 @@ namespace FrbaCrucero.GeneracionViaje
             {
                 BaseDeDato bd = new BaseDeDato();
                 DataTable dt;
-                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("SELECT * FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
+                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("SELECT id_recorrido ID, id_origen Origen, id_destino Destino FROM [LEISTE_EL_CODIGO?].RecorridosDisponibles");
                 //procedure.CommandType = CommandType.TableDirect;
                 //procedure.Parameters.Add("@anio", SqlDbType.NVarChar).Value = this.comboBoxAnio.SelectedItem.ToString();
                 //procedure.Parameters.Add("@semestre", SqlDbType.NVarChar).Value = this.comboBoxSemestre.SelectedItem.ToString();
@@ -115,7 +134,7 @@ namespace FrbaCrucero.GeneracionViaje
 
                 SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].cargarViaje");
                 procedure.CommandType = CommandType.StoredProcedure;
-                procedure.Parameters.Add("@id_recorrido", SqlDbType.Decimal).Value = rowRec.Cells["id_recorrido"].Value;
+                procedure.Parameters.Add("@id_recorrido", SqlDbType.Decimal).Value = rowRec.Cells["ID"].Value;
                 procedure.Parameters.Add("@id_crucero", SqlDbType.NVarChar).Value = rowCruc.Cells["id_crucero"].Value;
                 procedure.Parameters.Add("@fecha_inicio", SqlDbType.DateTime2).Value = this.dateTimePickerInicio.Value;
                 procedure.Parameters.Add("@fecha_finalizacion_estimada", SqlDbType.DateTime2).Value = this.dateTimePickerFin.Value;

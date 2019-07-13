@@ -47,9 +47,13 @@
             this.SeleccionButaca = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxCruceros = new System.Windows.Forms.TextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.dataGridTramos = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.viajesDisponibles)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridTramos)).BeginInit();
             this.SuspendLayout();
             // 
             // viajesDisponibles
@@ -199,7 +203,7 @@
             // 
             // botonReserva
             // 
-            this.botonReserva.Location = new System.Drawing.Point(278, 471);
+            this.botonReserva.Location = new System.Drawing.Point(278, 645);
             this.botonReserva.Name = "botonReserva";
             this.botonReserva.Size = new System.Drawing.Size(235, 23);
             this.botonReserva.TabIndex = 3;
@@ -209,7 +213,7 @@
             // 
             // botonCompra
             // 
-            this.botonCompra.Location = new System.Drawing.Point(278, 516);
+            this.botonCompra.Location = new System.Drawing.Point(278, 690);
             this.botonCompra.Name = "botonCompra";
             this.botonCompra.Size = new System.Drawing.Size(235, 23);
             this.botonCompra.TabIndex = 4;
@@ -219,7 +223,7 @@
             // 
             // buttonCargarCli
             // 
-            this.buttonCargarCli.Location = new System.Drawing.Point(30, 471);
+            this.buttonCargarCli.Location = new System.Drawing.Point(30, 645);
             this.buttonCargarCli.Name = "buttonCargarCli";
             this.buttonCargarCli.Size = new System.Drawing.Size(110, 23);
             this.buttonCargarCli.TabIndex = 5;
@@ -229,7 +233,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(30, 516);
+            this.button1.Location = new System.Drawing.Point(30, 690);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
@@ -239,7 +243,7 @@
             // 
             // SeleccionButaca
             // 
-            this.SeleccionButaca.Location = new System.Drawing.Point(30, 409);
+            this.SeleccionButaca.Location = new System.Drawing.Point(30, 601);
             this.SeleccionButaca.Name = "SeleccionButaca";
             this.SeleccionButaca.Size = new System.Drawing.Size(125, 23);
             this.SeleccionButaca.TabIndex = 14;
@@ -265,12 +269,31 @@
             this.textBoxCruceros.TabIndex = 18;
             this.textBoxCruceros.TextChanged += new System.EventHandler(this.TextBoxCruceros_TextChanged);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.dataGridTramos);
+            this.groupBox3.Location = new System.Drawing.Point(36, 407);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(477, 178);
+            this.groupBox3.TabIndex = 20;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Tramos que contiene:";
+            // 
+            // dataGridTramos
+            // 
+            this.dataGridTramos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridTramos.Location = new System.Drawing.Point(7, 20);
+            this.dataGridTramos.Name = "dataGridTramos";
+            this.dataGridTramos.Size = new System.Drawing.Size(458, 150);
+            this.dataGridTramos.TabIndex = 0;
+            // 
             // VentanaSeleccionarviaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(563, 556);
+            this.ClientSize = new System.Drawing.Size(544, 733);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.textBoxCruceros);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.SeleccionButaca);
@@ -288,6 +311,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridTramos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,5 +339,7 @@
         private System.Windows.Forms.Button SeleccionButaca;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxCruceros;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.DataGridView dataGridTramos;
     }
 }

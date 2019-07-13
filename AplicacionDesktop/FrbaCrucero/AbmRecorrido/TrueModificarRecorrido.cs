@@ -26,6 +26,7 @@ namespace FrbaCrucero.AbmRecorrido
         {
             InitializeComponent();
             SetDefaults();
+            this.dataGridRecorridosActuales.CellClick += dataGridRecorridosActuales_CellContentClick;
         }
 
         void SetDefaults()

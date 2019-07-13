@@ -157,6 +157,9 @@ if exists (select * from sys.procedures where name = 'eliminarTramosDelRecorrido
 if exists (select * from sys.procedures where name = 'esRecorridoModificable')
 	drop procedure [LEISTE_EL_CODIGO?].esRecorridoModificable
 go
+if exists (select * from sys.procedures where name = 'recorridoDelViaje')
+	drop procedure [LEISTE_EL_CODIGO?].recorridoDelViaje
+go
 if exists (select * from sys.procedures where name = 'mostrarCabinasLibres')
 	drop procedure [LEISTE_EL_CODIGO?].mostrarCabinasLibres
 go
@@ -1138,6 +1141,16 @@ as
 	set estado = 'I'
 	where id_recorrido = @idRecorrido
 	--@no se q onda con el tema de si ya tiene pasajes vendidos
+go
+
+use GD1C2019
+go
+create procedure [LEISTE_EL_CODIGO?].recorridoDelViaje
+(@idViaje int)
+as
+	declare @ret decimal(18,0)
+	select @ret=id_recorrido from [LEISTE_EL_CODIGO?].Viaje where id_viaje = @idViaje
+	return @ret
 go
 
 --........................................<ABM 6> CRUCEROS......................................................

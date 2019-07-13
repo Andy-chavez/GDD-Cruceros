@@ -47,7 +47,6 @@ namespace FrbaCrucero.CompraReservaPasaje
                 throw new System.InvalidOperationException("Error la cabina no habia sido seleccionada");
             }
             this.cabinas.Remove(idCabina);
-            MessageBox.Show("Cabina eliminada correctamente");
         }
         private void groupBox1_Enter(object sender, EventArgs e)
         {
@@ -88,6 +87,36 @@ namespace FrbaCrucero.CompraReservaPasaje
             if (e.RowIndex < 0) return;
             textBoxCruceros.Text = viajesDisponibles.CurrentRow.Cells["CruceroAsignado"].Value.ToString();
             textBoxCruceros.Enabled = false;
+            BaseDeDato bd = new BaseDeDato();
+            try
+            {
+
+                //
+                SqlCommand procedure = Clases.BaseDeDato.crearConsulta("[LEISTE_EL_CODIGO?].recorridoDelViaje");
+                procedure.CommandType = CommandType.StoredProcedure;
+                procedure.Parameters.Add("@idViaje", SqlDbType.Int).Value = (int)this.viajesDisponibles.CurrentRow.Cells["IdViaje"].Value;
+                procedure.Parameters.Add("@ret", SqlDbType.Decimal).Direction = System.Data.ParameterDirection.ReturnValue;
+                bd.ejecutarConsultaDevuelveInt(procedure);
+                decimal idRec = Convert.ToDecimal(procedure.Parameters["@ret"].Value);
+                //
+
+                bd.conectar();
+                SqlConnection conexion = bd.obtenerConexion();
+                conexion = bd.obtenerConexion();
+                string msg = "SELECT id_origen Origen,id_destino Destino,precio_base Precio FROM [LEISTE_EL_CODIGO?].Tramo WHERE @idRec = id_recorrido order by orden asc";
+                SqlCommand proc = new SqlCommand(msg, conexion);
+                proc.Parameters.Add("@idRec", SqlDbType.Decimal).Value = idRec;
+                SqlDataAdapter adapter = new SqlDataAdapter(proc);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                dataGridTramos.DataSource = dt;
+                bd.desconectar();
+            }
+            catch (Exception ex)
+            {
+                bd.desconectar();
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void viajesDisponibles_CellContentClick(object sender, DataGridViewCellEventArgs e)

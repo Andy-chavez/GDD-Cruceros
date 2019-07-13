@@ -45,17 +45,20 @@ namespace FrbaCrucero.GeneracionViaje
             this.buttonGenViaje = new System.Windows.Forms.Button();
             this.buttonCruc = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.generarViajeBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridTramos = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRec)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCruc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.generarViajeBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridTramos)).BeginInit();
             this.SuspendLayout();
             // 
             // dateTimePickerInicio
             // 
             this.dateTimePickerInicio.CustomFormat = "dd-MM-yyyy hh:mm:ss";
             this.dateTimePickerInicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerInicio.Location = new System.Drawing.Point(250, 279);
+            this.dateTimePickerInicio.Location = new System.Drawing.Point(250, 372);
             this.dateTimePickerInicio.MinDate = new System.DateTime(2019, 6, 13, 12, 47, 28, 975);
             this.dateTimePickerInicio.Name = "dateTimePickerInicio";
             this.dateTimePickerInicio.Size = new System.Drawing.Size(200, 20);
@@ -66,7 +69,7 @@ namespace FrbaCrucero.GeneracionViaje
             // 
             this.dateTimePickerFin.CustomFormat = "dd-MM-yyyy hh:mm:ss";
             this.dateTimePickerFin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerFin.Location = new System.Drawing.Point(250, 328);
+            this.dateTimePickerFin.Location = new System.Drawing.Point(250, 421);
             this.dateTimePickerFin.MinDate = new System.DateTime(2019, 6, 13, 12, 47, 28, 975);
             this.dateTimePickerFin.Name = "dateTimePickerFin";
             this.dateTimePickerFin.Size = new System.Drawing.Size(200, 20);
@@ -75,7 +78,7 @@ namespace FrbaCrucero.GeneracionViaje
             // textBox1
             // 
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(31, 279);
+            this.textBox1.Location = new System.Drawing.Point(68, 372);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(121, 20);
@@ -87,7 +90,7 @@ namespace FrbaCrucero.GeneracionViaje
             // textBox2
             // 
             this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(31, 328);
+            this.textBox2.Location = new System.Drawing.Point(68, 421);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(143, 20);
@@ -111,14 +114,14 @@ namespace FrbaCrucero.GeneracionViaje
             this.dataGridViewRec.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewRec.Location = new System.Drawing.Point(31, 65);
             this.dataGridViewRec.Name = "dataGridViewRec";
-            this.dataGridViewRec.Size = new System.Drawing.Size(466, 169);
+            this.dataGridViewRec.Size = new System.Drawing.Size(419, 169);
             this.dataGridViewRec.TabIndex = 8;
             this.dataGridViewRec.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRec_CellContentClick);
             // 
             // dataGridViewCruc
             // 
             this.dataGridViewCruc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewCruc.Location = new System.Drawing.Point(68, 423);
+            this.dataGridViewCruc.Location = new System.Drawing.Point(466, 303);
             this.dataGridViewCruc.Name = "dataGridViewCruc";
             this.dataGridViewCruc.Size = new System.Drawing.Size(367, 217);
             this.dataGridViewCruc.TabIndex = 9;
@@ -126,7 +129,7 @@ namespace FrbaCrucero.GeneracionViaje
             // 
             // buttonGenViaje
             // 
-            this.buttonGenViaje.Location = new System.Drawing.Point(422, 675);
+            this.buttonGenViaje.Location = new System.Drawing.Point(758, 555);
             this.buttonGenViaje.Name = "buttonGenViaje";
             this.buttonGenViaje.Size = new System.Drawing.Size(75, 23);
             this.buttonGenViaje.TabIndex = 10;
@@ -136,7 +139,7 @@ namespace FrbaCrucero.GeneracionViaje
             // 
             // buttonCruc
             // 
-            this.buttonCruc.Location = new System.Drawing.Point(68, 383);
+            this.buttonCruc.Location = new System.Drawing.Point(466, 263);
             this.buttonCruc.Name = "buttonCruc";
             this.buttonCruc.Size = new System.Drawing.Size(192, 23);
             this.buttonCruc.TabIndex = 11;
@@ -146,7 +149,7 @@ namespace FrbaCrucero.GeneracionViaje
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(31, 675);
+            this.button1.Location = new System.Drawing.Point(31, 555);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
@@ -154,15 +157,36 @@ namespace FrbaCrucero.GeneracionViaje
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click_1);
             // 
+            // textBox4
+            // 
+            this.textBox4.Enabled = false;
+            this.textBox4.Location = new System.Drawing.Point(466, 24);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
+            this.textBox4.Size = new System.Drawing.Size(121, 20);
+            this.textBox4.TabIndex = 13;
+            this.textBox4.Text = "Tramos que contiene:";
+            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // generarViajeBindingSource
             // 
             this.generarViajeBindingSource.DataSource = typeof(FrbaCrucero.GeneracionViaje.GenerarViaje);
+            // 
+            // dataGridTramos
+            // 
+            this.dataGridTramos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridTramos.Location = new System.Drawing.Point(466, 65);
+            this.dataGridTramos.Name = "dataGridTramos";
+            this.dataGridTramos.Size = new System.Drawing.Size(367, 169);
+            this.dataGridTramos.TabIndex = 14;
             // 
             // GenerarViaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(535, 729);
+            this.ClientSize = new System.Drawing.Size(867, 595);
+            this.Controls.Add(this.dataGridTramos);
+            this.Controls.Add(this.textBox4);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonCruc);
             this.Controls.Add(this.buttonGenViaje);
@@ -180,6 +204,7 @@ namespace FrbaCrucero.GeneracionViaje
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRec)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCruc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.generarViajeBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridTramos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -197,5 +222,7 @@ namespace FrbaCrucero.GeneracionViaje
         private System.Windows.Forms.Button buttonCruc;
         private BindingSource generarViajeBindingSource;
         private Button button1;
+        private TextBox textBox4;
+        private DataGridView dataGridTramos;
     }
 }
