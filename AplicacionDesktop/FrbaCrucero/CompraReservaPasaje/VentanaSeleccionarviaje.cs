@@ -134,7 +134,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             int cantidad_pasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
             if (cantidad_pasajes != 1)
             {
-                MessageBox.Show("Error: la cantidad de pasajes tiene que ser igual a 1 en las reservas");
+                MessageBox.Show("Solo puede reservar un pasaje, si quiere múltiples debe comprarlos");
                 return;
             }
             if (this.cabinas.Count < cantidad_pasajes)
