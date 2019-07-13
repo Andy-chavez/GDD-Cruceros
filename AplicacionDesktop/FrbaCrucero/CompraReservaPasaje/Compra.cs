@@ -20,11 +20,12 @@ namespace FrbaCrucero.CompraReservaPasaje
         int cant_pasajes;
         private ArrayList cabinas = new ArrayList();
         string idCrucero;
-
+        VentanaSeleccionarviaje ventanaAnterior;
 
         private int id_pago;
-        public Compra(Cliente cliente,int idViaje,ArrayList cabinas,string idCrucero, int cant_pasajes)
+        public Compra(Cliente cliente,int idViaje,ArrayList cabinas,string idCrucero, int cant_pasajes, VentanaSeleccionarviaje ventanaAnterior)
         {
+            this.ventanaAnterior = ventanaAnterior;
             this.cant_pasajes = cant_pasajes;
             if(cabinas.Count == 0) throw new Exception("Error seleccione las cabinas antes de proceder con la compra");
             this.cabinas=cabinas;
@@ -34,6 +35,13 @@ namespace FrbaCrucero.CompraReservaPasaje
             this.cliente = cliente;
             InitializeComponent();
         }
+
+        public void CerrarPorOperacionTerminada()
+        {
+            this.ventanaAnterior.CerrarPorOperacionTerminada();
+            this.Close();
+        }
+
         public void RecibirIDPago(int id)
         {
             this.id_pago = id;
@@ -77,7 +85,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                         return;
                     }
                 }
-                new MostrarVoucher(id_pago).Show();
+                new MostrarVoucher(id_pago,this,null).Show();
             }
             catch (Exception exception)
             {

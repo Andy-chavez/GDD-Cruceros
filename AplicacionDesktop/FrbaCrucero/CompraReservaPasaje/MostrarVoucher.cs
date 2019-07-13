@@ -8,17 +8,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrbaCrucero.Clases;
+using FrbaCrucero.PagoReserva;
 using System.Data.SqlClient;
 
 namespace FrbaCrucero.CompraReservaPasaje
 {
     public partial class MostrarVoucher : Form
     {
-        public MostrarVoucher(int id_pago)
+        Compra compra;
+        VentanaPagoDeReserva pagoRes;
+        public MostrarVoucher(int id_pago, Compra compra, VentanaPagoDeReserva pagoRes)
         {
+            if (compra != null) this.compra = compra;
+            else if (pagoRes != null) this.pagoRes = pagoRes;
             InitializeComponent();
             Voucher(id_pago);
+            this.FormClosing += Cerrando;
         }
+
+        void Cerrando(Object sender, FormClosingEventArgs e)
+        {
+            if (compra != null) compra.CerrarPorOperacionTerminada();
+            else if (pagoRes != null) pagoRes.CerrarPorOperacionTerminada();
+        }
+
         public void Voucher(int id_pago)
         {
             try

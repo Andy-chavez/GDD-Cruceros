@@ -53,6 +53,11 @@ namespace FrbaCrucero.CompraReservaPasaje
 
         }
 
+        public void CerrarPorOperacionTerminada()
+        {
+            this.Close();
+        }
+
         private void SetDefaults()
         {
             this.dateTimePicker1.MinDate = fechaConfig;
@@ -253,7 +258,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 int viaje = (int)this.viajesDisponibles.CurrentRow.Cells["IdViaje"].Value;
                 string id_crucero = this.viajesDisponibles.CurrentRow.Cells["CruceroAsignado"].Value.ToString();
                 int cantidad_pasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
-                new Compra(cliente, viaje, this.cabinas, id_crucero, cantidad_pasajes).Show();//necesita origen,destino,viaje,inicio,cantidad
+                new Compra(cliente, viaje, this.cabinas, id_crucero, cantidad_pasajes,this).Show();//necesita origen,destino,viaje,inicio,cantidad
                                                                                                  //compra va a crear la ventana medio de pago new ventanamediodepago(this,cliente.id).Show()
             }
             catch

@@ -1614,7 +1614,7 @@ as
 			deallocate sumador
 		update [LEISTE_EL_CODIGO?].PagoDeViaje
 		set cantidad_de_pasajes = @cantidadDePasajes,
-		monto_total = @montoTotal*@cantidadDePasajes
+		monto_total = @montoTotal--*@cantidadDePasajes
 		where id_pago=@idPago
 	end
 go

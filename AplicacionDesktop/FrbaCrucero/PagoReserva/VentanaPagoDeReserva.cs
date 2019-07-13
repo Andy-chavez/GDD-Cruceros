@@ -26,6 +26,11 @@ namespace FrbaCrucero.PagoReserva
             InitializeComponent();
         }
 
+        public void CerrarPorOperacionTerminada()
+        {
+            this.Close();
+        }
+
         private void Label2_Click(object sender, EventArgs e)
         {
 
@@ -80,7 +85,7 @@ namespace FrbaCrucero.PagoReserva
                     MessageBox.Show("Reserva pagada exitosamente.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     reserva.Clear();
                     int idPago = retorno;// Convert.ToInt32(procedure.Parameters["@idPago"].Value);
-                    new MostrarVoucher(idPago).Show();
+                    new MostrarVoucher(idPago,null,this).Show();
                 }
             }
             catch (Exception exception)
