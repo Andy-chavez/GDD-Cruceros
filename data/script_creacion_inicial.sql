@@ -1459,7 +1459,7 @@ go
 create procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles (@fecha_inicio datetime2(3),@origen nvarchar(255),@destino nvarchar(255),@fechaConfig datetime)
 as
 	begin
-		select  distinct v.id_viaje IdViaje,v.fecha_finalizacion_estimada FechaDeFinalizacion,v.id_crucero CruceroAsignado,
+		select distinct v.id_viaje IdViaje,v.fecha_finalizacion_estimada FechaDeFinalizacion,v.id_crucero CruceroAsignado,
 		cr.cantidadDeCabinas -
 		(select count(*) 
 		from [LEISTE_EL_CODIGO?].Reserva r
@@ -1474,9 +1474,22 @@ as
 		where MONTH(v.fecha_inicio) = MONTH(@fecha_inicio) and YEAR(v.fecha_inicio) = YEAR(@fecha_inicio) and
 		DAY(v.fecha_inicio)=DAY(@fecha_inicio) and rec.id_origen = @origen and rec.id_destino = @destino
 		and cr.baja_fuera_de_servicio = 'N' and cr.baja_fuera_vida_util = 'N'
-		and CAST(v.fecha_inicio as datetime) > @fechaConfig
+		and CAST(v.fecha_inicio as datetime) >= @fechaConfig
 	end
 go
+
+--drop procedure [LEISTE_EL_CODIGO?].mostrarViajesDisponibles
+--select * from [LEISTE_EL_CODIGO?].Recorrido where id_recorrido=43820866
+--select * from [LEISTE_EL_CODIGO?].Viaje order by id_viaje desc
+--declare @fechaConf date = '01-01-18'
+--declare @fechaConfig datetime = @fechaConf
+--select @fechaConfig
+--DECLARE @date date = '02-02-18';--mes dia año
+--DECLARE @inicio datetime2(3) = @date;
+--select @inicio
+
+--exec [LEISTE_EL_CODIGO?].mostrarViajesDisponibles @inicio,'PORTO-NOVO','GABERONES',@fechaConf
+
 ------------------------Mostrar butacas libres para ese viaje---------------
 USE GD1C2019
 go
@@ -1641,6 +1654,7 @@ as
 		where p.id_pago = @idPago
 	end
 go
+--select * from [LEISTE_EL_CODIGO?].Viaje order by id_viaje desc
 -------------------------------CALCULAR PRECIO PASAJE------------------------------
 USE GD1C2019
 go

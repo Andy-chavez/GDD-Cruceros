@@ -32,9 +32,13 @@ namespace FrbaCrucero
         {
             InitializeComponent();
             this.Visible = false;
-           
+            this.FormClosed += cerrarPrograma;
         }
         
+        void cerrarPrograma(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
 
         private void VentanaMenu_Load(object sender, EventArgs e)
         {
