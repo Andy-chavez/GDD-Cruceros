@@ -158,6 +158,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 int retorno = (int)procedure.Parameters["@retorno"].Value;
                 if (retorno != -1) //joya
                 {
+                    this.cabinas.Clear();
                     MessageBox.Show("Su numero de reserva es:"+retorno+"\nSi desea abonarlo, ingrese el codigo en la opcion Pagar del menú principal.", "FrbaCrucero", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
