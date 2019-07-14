@@ -35,9 +35,9 @@
             // 
             // botonAlta
             // 
-            this.botonAlta.Location = new System.Drawing.Point(66, 36);
+            this.botonAlta.Location = new System.Drawing.Point(42, 24);
             this.botonAlta.Name = "botonAlta";
-            this.botonAlta.Size = new System.Drawing.Size(139, 23);
+            this.botonAlta.Size = new System.Drawing.Size(125, 23);
             this.botonAlta.TabIndex = 0;
             this.botonAlta.Text = "Crear";
             this.botonAlta.UseVisualStyleBackColor = true;
@@ -45,9 +45,9 @@
             // 
             // botonBaja
             // 
-            this.botonBaja.Location = new System.Drawing.Point(66, 84);
+            this.botonBaja.Location = new System.Drawing.Point(42, 64);
             this.botonBaja.Name = "botonBaja";
-            this.botonBaja.Size = new System.Drawing.Size(139, 23);
+            this.botonBaja.Size = new System.Drawing.Size(125, 23);
             this.botonBaja.TabIndex = 1;
             this.botonBaja.Text = "Eliminar";
             this.botonBaja.UseVisualStyleBackColor = true;
@@ -55,9 +55,9 @@
             // 
             // botonModificar
             // 
-            this.botonModificar.Location = new System.Drawing.Point(66, 135);
+            this.botonModificar.Location = new System.Drawing.Point(42, 105);
             this.botonModificar.Name = "botonModificar";
-            this.botonModificar.Size = new System.Drawing.Size(139, 23);
+            this.botonModificar.Size = new System.Drawing.Size(125, 23);
             this.botonModificar.TabIndex = 2;
             this.botonModificar.Text = "Modificar";
             this.botonModificar.UseVisualStyleBackColor = true;
@@ -67,7 +67,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 197);
+            this.ClientSize = new System.Drawing.Size(204, 160);
             this.Controls.Add(this.botonModificar);
             this.Controls.Add(this.botonBaja);
             this.Controls.Add(this.botonAlta);

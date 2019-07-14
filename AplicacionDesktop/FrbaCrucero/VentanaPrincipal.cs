@@ -73,16 +73,16 @@ namespace FrbaCrucero
                     menu.ocultarBotones(casillaUsuario.Text);
                 }
                 else if (retorno == 0){ //hay intentos todavia
-                    MessageBox.Show("Contraseña incorrecta, pruebe nuevamente");
+                    MessageBox.Show("Contraseña incorrecta, pruebe nuevamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     casillaContraseña.Clear();
                 }
                 else if (retorno == -1){ //baja logica
-                    MessageBox.Show("Se excedió la cantidad de intentos posibles");
+                    MessageBox.Show("Se excedió la cantidad de intentos posibles", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Hide();
                 }
                 else
                 { //no existe usuario
-                    MessageBox.Show("No Existe Usuario");
+                    MessageBox.Show("No Existe Usuario", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     casillaUsuario.Clear();
                     casillaContraseña.Clear();
                 }

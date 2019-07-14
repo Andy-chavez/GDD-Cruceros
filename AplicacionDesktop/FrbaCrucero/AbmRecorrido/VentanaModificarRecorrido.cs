@@ -72,14 +72,14 @@ namespace FrbaCrucero.AbmRecorrido
                 int result = bd.ejecutarConsultaDevuelveInt(procedure);
                 if (result > 0)
                 {
-                    MessageBox.Show("Se dió de baja el recorrido");
+                    MessageBox.Show("Se dió de baja el recorrido", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.dataGridTramos.DataSource = null;
                     VentanaModificarRecorrido_Load(null, null);
                 }
-                else MessageBox.Show("No existe el recorrido");
+                else MessageBox.Show("No existe el recorrido", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             } catch
             {
-                MessageBox.Show("Debe elegir un recorrido");
+                MessageBox.Show("Debe elegir un recorrido", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -150,7 +150,7 @@ namespace FrbaCrucero.AbmRecorrido
             }
             else
             {
-                MessageBox.Show("No hay nada para mostrar ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("No hay nada para mostrar ", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
         }
@@ -192,6 +192,11 @@ namespace FrbaCrucero.AbmRecorrido
             this.textoRecorridoSeleccionado.Text = "";
             VentanaModificarRecorrido_Load(null, null);
             this.dataGridTramos.DataSource = null;
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

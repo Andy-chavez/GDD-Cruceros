@@ -154,7 +154,7 @@ namespace FrbaCrucero.AbmRecorrido
         {
             if (this.dataGridTramos.Rows.Count == 1 || this.dataGridTramos.Rows.Count == 0)
             {
-                MessageBox.Show("Debe ingresar al menos un origen y un destino");
+                MessageBox.Show("Debe ingresar al menos un origen y un destino", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -167,13 +167,13 @@ namespace FrbaCrucero.AbmRecorrido
                 decimal testval;
                 if (!Decimal.TryParse(this.dataGridTramos.Rows[i].Cells["Precio"].Value.ToString(), out testval))
                 {
-                    MessageBox.Show("El precio de la fila " + (i + 1) + " es invalido");
+                    MessageBox.Show("El precio de la fila " + (i + 1) + " es invalido", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 decimal limit = 0.0099999999999999999999999999m;
                 if (testval <= limit)
                 {
-                    MessageBox.Show("El precio de la fila " + (i + 1) + " es menor o igual a 0,00");
+                    MessageBox.Show("El precio de la fila " + (i + 1) + " es menor o igual a 0,00", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -192,7 +192,7 @@ namespace FrbaCrucero.AbmRecorrido
             }
             catch
             {
-                MessageBox.Show("No se pudo crear el recorrido, error desconocido");
+                MessageBox.Show("No se pudo crear el recorrido, error desconocido", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -216,27 +216,27 @@ namespace FrbaCrucero.AbmRecorrido
                         case 1:
                             break;
                         case -1:
-                            MessageBox.Show("El origen y destino del tramo " + i + " son el mismo");
+                            MessageBox.Show("El origen y destino del tramo " + i + " son el mismo", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             BajarRecFallido(idRec);
                             return;
                         case -2:
-                            MessageBox.Show("El origen del tramo " + i + " no coincide con el destino del tramo anterior");
+                            MessageBox.Show("El origen del tramo " + i + " no coincide con el destino del tramo anterior", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             BajarRecFallido(idRec);
                             return;
                         default:
-                            MessageBox.Show("No se pudo crear el recorrido, error desconocido");
+                            MessageBox.Show("No se pudo crear el recorrido, error desconocido", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             BajarRecFallido(idRec);
                             return;
                     }
                 }
                 catch
                 {
-                    MessageBox.Show("No se pudo crear el recorrido, error desconocido");
+                    MessageBox.Show("No se pudo crear el recorrido, error desconocido", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     BajarRecFallido(idRec);
                     return;
                 }
             }
-            MessageBox.Show("Recorrido creado correctamente");
+            MessageBox.Show("Recorrido creado correctamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BajarRecFallido(decimal idRec)

@@ -283,6 +283,7 @@
             // 
             this.dataGridTramos.AllowUserToAddRows = false;
             this.dataGridTramos.AllowUserToDeleteRows = false;
+            this.dataGridTramos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridTramos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridTramos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridTramos.Enabled = false;

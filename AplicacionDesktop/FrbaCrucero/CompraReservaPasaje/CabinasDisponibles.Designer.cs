@@ -37,7 +37,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CabinasParaSeleccionar)).BeginInit();
+            this.Cabinas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridSeleccionadas)).BeginInit();
+            this.Selec.SuspendLayout();
             this.SuspendLayout();
             // 
             // CabinasParaSeleccionar
@@ -45,19 +47,22 @@
             this.CabinasParaSeleccionar.AllowDrop = true;
             this.CabinasParaSeleccionar.AllowUserToAddRows = false;
             this.CabinasParaSeleccionar.AllowUserToDeleteRows = false;
+            this.CabinasParaSeleccionar.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.CabinasParaSeleccionar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CabinasParaSeleccionar.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.CabinasParaSeleccionar.Location = new System.Drawing.Point(22, 57);
+            this.CabinasParaSeleccionar.Location = new System.Drawing.Point(6, 19);
             this.CabinasParaSeleccionar.Name = "CabinasParaSeleccionar";
-            this.CabinasParaSeleccionar.Size = new System.Drawing.Size(330, 241);
+            this.CabinasParaSeleccionar.Size = new System.Drawing.Size(733, 201);
             this.CabinasParaSeleccionar.TabIndex = 0;
             this.CabinasParaSeleccionar.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
             // 
             // Cabinas
             // 
+            this.Cabinas.Controls.Add(this.CabinasParaSeleccionar);
+            this.Cabinas.Controls.Add(this.SeleccionCabina);
             this.Cabinas.Location = new System.Drawing.Point(22, 38);
             this.Cabinas.Name = "Cabinas";
-            this.Cabinas.Size = new System.Drawing.Size(330, 13);
+            this.Cabinas.Size = new System.Drawing.Size(745, 254);
             this.Cabinas.TabIndex = 1;
             this.Cabinas.TabStop = false;
             this.Cabinas.Text = "Elija la/s Cabinas";
@@ -65,9 +70,9 @@
             // 
             // SeleccionCabina
             // 
-            this.SeleccionCabina.Location = new System.Drawing.Point(121, 322);
+            this.SeleccionCabina.Location = new System.Drawing.Point(613, 226);
             this.SeleccionCabina.Name = "SeleccionCabina";
-            this.SeleccionCabina.Size = new System.Drawing.Size(93, 23);
+            this.SeleccionCabina.Size = new System.Drawing.Size(126, 23);
             this.SeleccionCabina.TabIndex = 2;
             this.SeleccionCabina.Text = "Agregar Cabina";
             this.SeleccionCabina.UseVisualStyleBackColor = true;
@@ -76,16 +81,18 @@
             // dataGridSeleccionadas
             // 
             this.dataGridSeleccionadas.AllowDrop = true;
+            this.dataGridSeleccionadas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridSeleccionadas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridSeleccionadas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridSeleccionadas.Location = new System.Drawing.Point(422, 57);
+            this.dataGridSeleccionadas.Location = new System.Drawing.Point(6, 19);
             this.dataGridSeleccionadas.Name = "dataGridSeleccionadas";
-            this.dataGridSeleccionadas.Size = new System.Drawing.Size(330, 241);
+            this.dataGridSeleccionadas.Size = new System.Drawing.Size(733, 201);
             this.dataGridSeleccionadas.TabIndex = 3;
+            this.dataGridSeleccionadas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridSeleccionadas_CellContentClick);
             // 
             // Quitar
             // 
-            this.Quitar.Location = new System.Drawing.Point(533, 322);
+            this.Quitar.Location = new System.Drawing.Point(613, 229);
             this.Quitar.Name = "Quitar";
             this.Quitar.Size = new System.Drawing.Size(126, 23);
             this.Quitar.TabIndex = 4;
@@ -95,9 +102,11 @@
             // 
             // Selec
             // 
-            this.Selec.Location = new System.Drawing.Point(422, 38);
+            this.Selec.Controls.Add(this.dataGridSeleccionadas);
+            this.Selec.Controls.Add(this.Quitar);
+            this.Selec.Location = new System.Drawing.Point(22, 298);
             this.Selec.Name = "Selec";
-            this.Selec.Size = new System.Drawing.Size(330, 13);
+            this.Selec.Size = new System.Drawing.Size(745, 258);
             this.Selec.TabIndex = 5;
             this.Selec.TabStop = false;
             this.Selec.Text = "Cabinas Seleccionadas";
@@ -114,9 +123,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(22, 349);
+            this.button1.Location = new System.Drawing.Point(22, 562);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(112, 23);
             this.button1.TabIndex = 13;
             this.button1.Text = "Volver";
             this.button1.UseVisualStyleBackColor = true;
@@ -126,21 +135,20 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(809, 384);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(809, 598);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Selec);
-            this.Controls.Add(this.Quitar);
-            this.Controls.Add(this.dataGridSeleccionadas);
-            this.Controls.Add(this.SeleccionCabina);
             this.Controls.Add(this.Cabinas);
-            this.Controls.Add(this.CabinasParaSeleccionar);
             this.Name = "CabinasDisponibles";
             this.Text = "CabinasDisponibles";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.CabinasDisponibles_Load);
             ((System.ComponentModel.ISupportInitialize)(this.CabinasParaSeleccionar)).EndInit();
+            this.Cabinas.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridSeleccionadas)).EndInit();
+            this.Selec.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

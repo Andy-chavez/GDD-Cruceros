@@ -106,12 +106,12 @@ namespace FrbaCrucero.CompraReservaPasaje
             }
             if (cantidadPasajes == 0)
             {
-                MessageBox.Show("Cabinas seleccionadas exitosamente proceda con el pago/reserva del pasaje o a cargar sus datos");
+                MessageBox.Show("Cabinas seleccionadas exitosamente proceda con el pago/reserva del pasaje o a cargar sus datos", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //this.Hide();
             }
             else
             {
-                MessageBox.Show("Cabina seleccionada, le faltan seleccionar "+ cantidadPasajes + " cabina/s");
+                MessageBox.Show("Cabina seleccionada, le faltan seleccionar "+ cantidadPasajes + " cabina/s", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
@@ -173,6 +173,11 @@ namespace FrbaCrucero.CompraReservaPasaje
         private void Button1_Click_2(object sender, EventArgs e)
         {
             this.Hide();
+        }
+
+        private void DataGridSeleccionadas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

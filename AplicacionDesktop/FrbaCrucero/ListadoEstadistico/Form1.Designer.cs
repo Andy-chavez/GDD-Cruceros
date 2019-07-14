@@ -86,7 +86,7 @@
             "2012",
             "2011",
             "2010"});
-            this.comboBoxAnio.Location = new System.Drawing.Point(228, 22);
+            this.comboBoxAnio.Location = new System.Drawing.Point(189, 22);
             this.comboBoxAnio.Name = "comboBoxAnio";
             this.comboBoxAnio.Size = new System.Drawing.Size(87, 21);
             this.comboBoxAnio.TabIndex = 4;
@@ -99,9 +99,9 @@
             this.comboBoxSemestre.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.comboBoxSemestre.Location = new System.Drawing.Point(376, 22);
+            this.comboBoxSemestre.Location = new System.Drawing.Point(340, 22);
             this.comboBoxSemestre.Name = "comboBoxSemestre";
-            this.comboBoxSemestre.Size = new System.Drawing.Size(79, 21);
+            this.comboBoxSemestre.Size = new System.Drawing.Size(87, 21);
             this.comboBoxSemestre.TabIndex = 5;
             // 
             // dataGridViewTop5s

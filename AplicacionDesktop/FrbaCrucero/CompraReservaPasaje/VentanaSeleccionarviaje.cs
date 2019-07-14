@@ -134,12 +134,12 @@ namespace FrbaCrucero.CompraReservaPasaje
             int cantidad_pasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
             if (cantidad_pasajes != 1)
             {
-                MessageBox.Show("Solo puede reservar un pasaje, si quiere múltiples debe comprarlos");
+                MessageBox.Show("Solo puede reservar de a un pasaje por vez, si quiere múltiples debe comprarlos", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             if (this.cabinas.Count < cantidad_pasajes)
             {
-                MessageBox.Show("Seleccione la cabina antes de realizar una reserva");
+                MessageBox.Show("Seleccione la cabina antes de realizar una reserva", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             try
@@ -264,7 +264,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             }
             catch
             {
-                MessageBox.Show("Seleccione la cabina antes de realizar una compra");
+                MessageBox.Show("Seleccione la cabina antes de realizar una compra", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -296,7 +296,7 @@ namespace FrbaCrucero.CompraReservaPasaje
                 int cantidadPasajes = Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem);
                 if (Convert.ToInt32(this.comboBoxCantPasajes.SelectedItem) > (int)this.viajesDisponibles.CurrentRow.Cells["cantidadDeCabinasDisponibles"].Value)
                 {
-                    MessageBox.Show("No puede comprar mas pasajes que los disponibles");
+                    MessageBox.Show("No puede comprar mas pasajes que los disponibles", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
                 this.cabinas = new ArrayList();
@@ -304,7 +304,7 @@ namespace FrbaCrucero.CompraReservaPasaje
             }
             catch
             {
-                MessageBox.Show("Por favor seleccione primero el viaje deseado");
+                MessageBox.Show("Por favor seleccione primero el viaje deseado", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         public void crearNuevaLista()

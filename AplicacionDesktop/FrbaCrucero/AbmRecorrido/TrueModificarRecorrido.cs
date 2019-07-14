@@ -199,13 +199,13 @@ namespace FrbaCrucero.AbmRecorrido
         {
             if (idRec < 0)
             {
-                MessageBox.Show("Primero elija el recorrido a modificar");
+                MessageBox.Show("Primero elija el recorrido a modificar", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             if (this.dataGridTramos.Rows.Count == 1 || this.dataGridTramos.Rows.Count == 0)
             {
-                MessageBox.Show("Debe ingresar al menos un origen y un destino");
+                MessageBox.Show("Debe ingresar al menos un origen y un destino", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -218,13 +218,13 @@ namespace FrbaCrucero.AbmRecorrido
                 decimal testval;
                 if (!Decimal.TryParse(this.dataGridTramos.Rows[i].Cells["Precio"].Value.ToString(), out testval))
                 {
-                    MessageBox.Show("El precio de la fila " + (i + 1) + " es invalido");
+                    MessageBox.Show("El precio de la fila " + (i + 1) + " es invalido", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 decimal limit = 0.0099999999999999999999999999m;
                 if (testval <= limit)
                 {
-                    MessageBox.Show("El precio de la fila " + (i + 1) + " es menor o igual a 0,00");
+                    MessageBox.Show("El precio de la fila " + (i + 1) + " es menor o igual a 0,00", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -241,13 +241,13 @@ namespace FrbaCrucero.AbmRecorrido
                 int result = Convert.ToInt32(procedure.Parameters["@retorno"].Value);
                 if (result == -1)
                 {
-                    MessageBox.Show("No se puede modificar este recorrido porque todavia hay pasajes vendidos q no hicieron el viaje");
+                    MessageBox.Show("No se puede modificar este recorrido porque todavia hay pasajes vendidos q no hicieron el viaje", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
             catch
             {
-                MessageBox.Show("ERROR: No se pudo verificar que el recorrido es modificable");
+                MessageBox.Show("ERROR: No se pudo verificar que el recorrido es modificable", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             
@@ -261,7 +261,7 @@ namespace FrbaCrucero.AbmRecorrido
             }
             catch
             {
-                MessageBox.Show("ERROR: No se pudieron borrar los tramos anteriores del recorrido, por favor vuelva a intentarlo");
+                MessageBox.Show("ERROR: No se pudieron borrar los tramos anteriores del recorrido, por favor vuelva a intentarlo", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             for (int i = 0; i < this.dataGridTramos.Rows.Count - 1; i++)
@@ -297,7 +297,7 @@ namespace FrbaCrucero.AbmRecorrido
                 }
                 catch
                 {
-                    MessageBox.Show("No se pudo modificar el recorrido, error desconocido");
+                    MessageBox.Show("No se pudo modificar el recorrido, error desconocido", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -316,7 +316,7 @@ namespace FrbaCrucero.AbmRecorrido
             }
             catch
             {
-                MessageBox.Show("No se pudo modificar el recorrido", "Error Desconocido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se pudo modificar el recorrido", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

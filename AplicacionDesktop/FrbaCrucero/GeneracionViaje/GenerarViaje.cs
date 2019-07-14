@@ -70,12 +70,12 @@ namespace FrbaCrucero.GeneracionViaje
             int ret = DateTime.Compare(this.dateTimePickerInicio.Value, this.dateTimePickerFin.Value);
             if (ret == 0)
             {
-                MessageBox.Show("La fecha de inicio y fin son iguales");
+                MessageBox.Show("La fecha de inicio y fin son iguales", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             else if (ret > 0)
             {
-                MessageBox.Show("La fecha de inicio es mayor a la de fin");
+                MessageBox.Show("La fecha de inicio es mayor a la de fin", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
@@ -124,11 +124,11 @@ namespace FrbaCrucero.GeneracionViaje
                 int ret = DateTime.Compare(this.dateTimePickerInicio.Value,this.dateTimePickerFin.Value);
                 if (ret == 0)
                 {
-                    MessageBox.Show("La fecha de inicio y fin son iguales");
+                    MessageBox.Show("La fecha de inicio y fin son iguales", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }else if (ret > 0)
                 {
-                    MessageBox.Show("La fecha de inicio es mayor a la de fin");
+                    MessageBox.Show("La fecha de inicio es mayor a la de fin", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -145,24 +145,24 @@ namespace FrbaCrucero.GeneracionViaje
                 switch (retorno)
                 {
                     case 1:
-                        MessageBox.Show("Viaje cargado correctamente");
+                        MessageBox.Show("Viaje cargado correctamente", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         break;
                     case -1:
-                        MessageBox.Show("Fecha mal ingresada, se quiere generar viaje de fecha anterior a la actual");
+                        MessageBox.Show("Fecha mal ingresada, se quiere generar viaje de fecha anterior a la actual", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
                     case -2:
-                        MessageBox.Show("Crucero ocupado entre esas fechas");
+                        MessageBox.Show("Crucero ocupado entre esas fechas", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
                     case -3:
-                        MessageBox.Show("Recorrido inhabilitado");
+                        MessageBox.Show("Recorrido inhabilitado", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
                     case -4:
-                        MessageBox.Show("Crucero inhabilitado");
+                        MessageBox.Show("Crucero inhabilitado", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
                 }
             }catch(Exception exception)
             {
-                MessageBox.Show("Primero seleccione el recorrido y el crucero");
+                MessageBox.Show("Primero seleccione el recorrido y el crucero", "FrbaCruceros", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
