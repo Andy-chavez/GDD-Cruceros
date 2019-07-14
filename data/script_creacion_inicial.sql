@@ -1639,11 +1639,11 @@ as
 
 	begin
 		exec [LEISTE_EL_CODIGO?].actualizarMontoTotal @idPago --porque cuando se ejecuta voucher es que se termino la compra
-		select @idPago voucher,c.nombre +',' + c.apellido nombrePasajero,v.fecha_inicio,v.id_crucero Crucero,r.id_origen Origen,
+		select @idPago voucher,c.nombre +',' + c.apellido nombrePasajero,v.fecha_inicio,v.fecha_finalizacion_estimada,v.id_crucero Crucero,r.id_origen Origen,
 		r.id_destino Destino,p.precio precioPasaje,pv.monto_total, (select cuotas_sin_interes
 																	from [LEISTE_EL_CODIGO?].MedioDePago m1 join [LEISTE_EL_CODIGO?].PagoDeViaje pv1
 																	On m1.id_medio_de_pago = pv1.id_medio_de_pago
-																	where id_pago = @idPago) cuotasSinInteres
+																	where id_pago = @idPago) cuotasSinInteres,ca.piso Piso,ca.numero Numero,tc.id_tipo TipoDeCabina
 		from [LEISTE_EL_CODIGO?].Pasaje p join [LEISTE_EL_CODIGO?].Cliente c
 		ON p.id_cliente = c.id_cliente
 		join [LEISTE_EL_CODIGO?].PagoDeViaje pv
@@ -1651,6 +1651,8 @@ as
 		join [LEISTE_EL_CODIGO?].Viaje v 
 		on p.id_viaje = v.id_viaje
 		join [LEISTE_EL_CODIGO?].Recorrido r on v.id_recorrido = r.id_recorrido
+		join [LEISTE_EL_CODIGO?].Cabina ca On p.id_cabina = ca.id_cabina
+		join [LEISTE_EL_CODIGO?].TipoCabina tc ON ca.id_tipo = tc.id_tipo
 		where p.id_pago = @idPago
 	end
 go

@@ -281,7 +281,11 @@
             // 
             // dataGridTramos
             // 
+            this.dataGridTramos.AllowUserToAddRows = false;
+            this.dataGridTramos.AllowUserToDeleteRows = false;
             this.dataGridTramos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridTramos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGridTramos.Enabled = false;
             this.dataGridTramos.Location = new System.Drawing.Point(7, 20);
             this.dataGridTramos.Name = "dataGridTramos";
             this.dataGridTramos.Size = new System.Drawing.Size(458, 150);
